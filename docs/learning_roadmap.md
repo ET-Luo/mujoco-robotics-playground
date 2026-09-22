@@ -1,6 +1,7 @@
 # Learning roadmap
 
-Only example 01 is runnable. Work through each phase manually and record observations.
+The basic simulation and UR5e basics demos are runnable. Work through each phase
+manually and record observations; subsequent stages remain placeholders.
 
 ## Phase 1 — MuJoCo Fundamentals
 - `MjModel`: compiled model configuration
@@ -11,7 +12,14 @@ Only example 01 is runnable. Work through each phase manually and record observa
 - `ctrl`: actuator control inputs
 - body, joint, geom, site, actuator: scene and actuation building blocks
 
-Start with example 01; explain its state output before adding actuation in example 02.
+Follow this order:
+
+1. `examples/01_basic_simulation`: explain state and simulation time on one hinge.
+2. `examples/02_ur5e_basics`: load the official UR5e, inspect joint/actuator mappings,
+   and observe one small target change using the model's existing position servos.
+3. `examples/02_joint_control`: the next learning stage, still documentation only.
+
+The UR5e demo adds no custom controller or advanced algorithm.
 
 ## Phase 2 — Robotics Fundamentals
 - Joint-space control and PD control

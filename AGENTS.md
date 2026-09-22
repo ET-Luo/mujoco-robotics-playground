@@ -1,5 +1,14 @@
 # Repository rules
 
+## Session Startup and Handoff
+- At the start of every new conversation, read this file, then read [project experience and progress](docs/project_handoff.md) before planning, editing, or running project code.
+- Read the relevant example README and source next; consult [the roadmap](docs/learning_roadmap.md) for stage order.
+- Check `pwd` and `git status --short` before editing. Preserve existing uncommitted work.
+- Treat the handoff's versions and validation results as dated observations, not proof of the current environment. Recheck the environment before execution.
+- Follow the user's current request; the handoff's suggested next task is context, not permission to implement later learning stages automatically.
+- After meaningful changes or new findings, update `docs/project_handoff.md` with progress, commands/results, known issues, and the next small learning task. Distinguish verified results from hypotheses and untested advice.
+- Keep the handoff concise and current; link to detailed example notes instead of accumulating a conversation transcript. Do not mark GUI operation or learning mastery complete based only on headless validation.
+
 ## Environment Rules
 - This repository MUST be developed inside WSL2 Ubuntu 24.04.
 - The required conda environment is `mujoco`.
