@@ -1,0 +1,33 @@
+# Python caches and packaging
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+# Local environments (do not ignore the learning environments/ directory)
+.conda/
+.venv/
+venv/
+env/
+
+# Editor and notebook state
+.vscode/settings.json
+.vscode/*.local.json
+.ipynb_checkpoints/
+*.swp
+*.swo
+*~
+
+# Generated logs, temporary files, and OS metadata
+*.log
+logs/
+tmp/
+*.tmp
+.DS_Store
+Thumbs.db
