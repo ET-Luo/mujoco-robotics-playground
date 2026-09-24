@@ -1,9 +1,26 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-22。供新会话的 Codex 和学习者快速恢复上下文。
+最后整理：2026-09-24。供新会话的 Codex 和学习者快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
+
+2026-09-24 排查更新：用户已明确允许本会话主动激活 `mujoco` 环境。
+激活后确认 Python 为 `/home/lucas/miniconda3/envs/mujoco/bin/python`，版本
+3.12.14，MuJoCo 3.13.0，Menagerie 2026.9.2；没有安装或升级依赖。
+`python examples/02_ur5e_basics/main.py --headless` 完成 1,000 步，退出码 0，
+模块缺失未复现。`timeout --kill-after=3s 30s python -u
+examples/02_ur5e_basics/main.py --viewer --steps 2500` 完成 5.000 秒仿真，
+退出码 0，此次未复现历史 GUI 退出崩溃；桌面画面及交互仍待用户确认。
+另已启动 `--viewer --steps 150000` 供用户观察，其完成结果尚未验证。
+用户随后确认只看到 `WARN:COPY MODE`，没有仿真画面，因此 GUI 显示仍未通过。
+现场 WSLg 版本为 1.0.73.2；`/mnt/wslg/weston.log` 启动日志记录
+`rdp_allocate_shared_memory: Failed to open "/mnt/shared_memory/{...}" with error: Input/output error`，
+随后 `use_gfxredir = 0`、`enable_copy_warning_title = 1`。MuJoCo 窗口已登记到 WSLg，
+长时仿真进程检查时仍存活且未输出新错误。证据指向 WSLg 共享内存/窗口传输问题，
+但尚未验证恢复方法。建议保存工作后在 Windows PowerShell 执行 `wsl --shutdown`，
+重开 WSL 后复测；若仍失败，再按微软文档更新 WSL。未代为关闭 WSL，以免中断其他工作。
+下一小步：重启 WSLg 后确认 UR5e 画面可见；此前退出码 0 仅代表进程测试通过。
 
 这是面向 Robotics Software Engineering、Embodied AI、Robot Learning 和机械臂操作的
 个人学习与面试准备仓库。采用官方 MuJoCo API，CPU 优先，一次学习一个概念。
