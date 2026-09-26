@@ -1,5 +1,23 @@
 # UR5e basics
 
+## Stage 1: start with the simulation pipeline
+
+Read [simulation_pipeline.py](simulation_pipeline.py) first for the minimal
+XML → MjModel → MjData → mj_step loop. It does not select the home keyframe or
+assign ctrl. After activating and checking the `mujoco` environment:
+
+```bash
+python examples/02_ur5e_basics/simulation_pipeline.py
+python examples/02_ur5e_basics/simulation_pipeline.py --headless --steps 1000
+```
+
+The default opens a viewer for 10,000 steps (20 simulated seconds); closing it
+ends the loop early. Avoid changing Control values or applying mouse forces in
+this observation experiment. The existing `main.py` below remains a later,
+more detailed model inspection and target-change reference.
+Concepts, actual validation results, and unanswered observation questions are in
+[the Stage 1 note](../../docs/01_mujoco_basics.md). Learning completion is pending.
+
 ## Learning goals
 
 - Load the official Universal Robots UR5e robot model.

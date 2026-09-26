@@ -27,10 +27,10 @@
 | 官方 UR5e 检查演示 | 加载、打印状态、单目标微调已验证 | 待逐项理解状态和执行器映射 |
 | 自定义关节/PD 控制及后续阶段 | 未实现 | 未开始 |
 
-当前处于 **Stage 0 收尾与 Stage 1 学习准备**；已有代码触及 Stage 2 的目标设置，
+当前已开始 **Stage 1 — Task 1 simulation pipeline**，代码已实现，核心概念问答已通过；已有代码触及 Stage 2 的目标设置，
 但不代表已经完成关节控制学习。2026-09-26 用户确认 GUI 显示问题已解决，画面可见。
 历史退出错误和显示问题仍保留作参考；具体交互与本次退出状态未单独确认。详见
-[交接文档](docs/project_handoff.md)。本次框架整理没有重新运行仿真。
+[交接文档](docs/project_handoff.md)。新最小示例 headless 已通过；本次 GUI 在最终输出后退出码为 139。
 
 ## Environment and Quick Start
 
@@ -107,6 +107,8 @@ requirements.txt            # 最小依赖
 
 ### Stage 1 — MuJoCo Basics
 
+- [ ] Task 1（1～2h，进行中）：运行 [最小 UR5e pipeline](examples/02_ur5e_basics/simulation_pipeline.py)，观察默认 ctrl 下的 time/qpos/qvel，并亲自解释 MjModel、MjData 与 mj_step。
+  本人观察与核心概念问答已完成，已写入[实验笔记](docs/01_mujoco_basics.md)；headless 通过，GUI 正常退出仍待确认，整个任务暂不勾选。
 - [ ] S1.1（0.5～1h）：逐行阅读单铰链 XML，指出 body、joint、geom 和重力运动关系。
 - [ ] S1.2（1h）：解释 MjModel/MjData、qpos/qvel/time；先预测再对比 500 与 1,000 步结果。
 - [ ] S1.3（1h）：在 UR5e 输出中对应 nq/nv/nu、关节名称和状态数组的单位。
@@ -182,4 +184,4 @@ requirements.txt            # 最小依赖
 
 每个学习 Task：先写预测和 API 输入/输出，再完成最小实现或阅读实验，最后记录实测
 结果、问题和 3～5 个面试问题。本人能够解释后才更新 checkbox。
-纯文档维护不勾选学习任务，不虚构实验；本次仅整理框架，未开始 Stage 1。
+纯文档维护不虚构实验；当前 Stage 1 Task 1 核心概念问答已通过，GUI 正常退出验证仍未通过。
