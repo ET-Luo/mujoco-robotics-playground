@@ -1,45 +1,55 @@
-# Learning roadmap
+# 学习路线与仓库评估
 
-The basic simulation and UR5e basics demos are runnable. Work through each phase
-manually and record observations; subsequent stages remain placeholders.
+评估日期：2026-09-26；基于代码与历史记录静态检查，本次没有运行新实验。
+任务清单和学习 checkbox 统一维护在 [README](../README.md#learning-roadmap)，避免两份进度漂移。
 
-## Phase 1 — MuJoCo Fundamentals
-- `MjModel`: compiled model configuration
-- `MjData`: changing state and computed quantities
-- `mj_step`: advance simulation time
-- `qpos`: generalized positions
-- `qvel`: generalized velocities
-- `ctrl`: actuator control inputs
-- body, joint, geom, site, actuator: scene and actuation building blocks
+## 当前代码如何使用
 
-Follow this order:
+| 文件或目录 | 当前功能 | 学习用途 |
+| --- | --- | --- |
+| `examples/01_basic_simulation/main.py` 与 XML | 加载一个铰链、打印状态、推进仿真、可选 GUI | 首选入口，保留显式 API 和短循环 |
+| `examples/02_ur5e_basics/main.py` | 官方模型加载、名称/状态打印、home 初始化、单目标变化 | 第二个入口；先读加载与打印，再读执行器检查 |
+| `scripts/check_env.sh` | 检查 conda、解释器归属及 MuJoCo 导入 | 保留为环境工具，不作为机器人算法学习主线 |
+| `controllers/__init__.py` | 只有包说明 | 不是已实现的控制器，不必提前设计类层次 |
+| 后续 examples、environments、rl、assets、notebooks、tests | README 占位 | 不是已完成模块；tests 目前没有自动化套件 |
+| 既有 docs | 历史记录、流程、概念占位与交接 | 保留；实验答案逐步写入对应编号笔记 |
 
-1. `examples/01_basic_simulation`: explain state and simulation time on one hinge.
-2. `examples/02_ur5e_basics`: load the official UR5e, inspect joint/actuator mappings,
-   and observe one small target change using the model's existing position servos.
-3. `examples/02_joint_control`: the next learning stage, still documentation only.
+从代码本身不能可靠判断生成来源。现有基础框架来自此前助手协作；需要警惕的是
+学习顺序，而不是简单把生成代码判为无用：
 
-The UR5e demo adds no custom controller or advanced algorithm.
+- UR5e 的 `is_position_servo` 多条件检查同时引入 transmission、gain/bias、gear、
+  actuator dynamics。检查有价值，但初学状态读取时认知负担较大；先理解输出，
+  到 Stage 2 再逐项讲解。此次保留全部代码，不把检查隐藏进新框架。
+- UR5e 内置位置伺服已经产生反馈行为，但修改 ctrl 不等于自己实现了 PD。
+- argparse、GUI 计时/同步、异常检查属于支持代码；第一次阅读可先沿 headless 分支。
+- 大量未来目录和通用 TODO 只是导航，不以填满目录衡量进步。
 
-## Phase 2 — Robotics Fundamentals
-- Joint-space control and PD control
-- Forward kinematics and Jacobian
-- Inverse kinematics and singularities
-- Cartesian control
+当前工程已有基础仿真、UR5e 加载与状态读取，触及一个目标命令实验；个人学习完成度
+尚未确认。定位为 Stage 0 收尾 / Stage 1 准备，而不是已完成 Joint Control。
+GUI 画面已由用户于 2026-09-26 确认可见，显示问题不再阻塞学习；交互与本次退出
+状态未单独确认。最新证据见 [交接记录](project_handoff.md)。
 
-Use examples 02–07. Explain each concept before writing a small manual implementation.
+## Stage 与笔记映射
 
-## Phase 3 — Manipulation
-- End-effector control and gripper
-- Collision, contact, and grasping
-- Reach, pick, and pick-and-place
+| Stage | 笔记 |
+| --- | --- |
+| 0 Environment | [开发流程](development_workflow.md)、[交接记录](project_handoff.md) |
+| 1 MuJoCo Basics | [01 MuJoCo](01_mujoco_basics.md)、[02 UR5e](02_ur5e_model.md) |
+| 2 Joint Control | [03 Joint Control](03_joint_control.md) |
+| 3 PD Control | [04 PD Control](04_pd_control.md) |
+| 4 Robot Kinematics | [05 FK](05_forward_kinematics.md)、[06 Jacobian](06_jacobian.md) |
+| 5 Inverse Kinematics | [07 IK](07_inverse_kinematics.md) |
+| 6 Cartesian Control | [08 Cartesian Control](08_cartesian_control.md) |
+| 7 Manipulation | [09 Manipulation](09_manipulation.md) |
+| 8 Robot Learning | [10 Robot Learning](10_robot_learning.md) |
+| 9 Domain Randomization / Sim-to-Real | 后续实验时在 10 中补充，必要时再拆分 |
 
-Use example 08 and the future task environments. Define success before implementing tasks.
+编号笔记现在仅有五个标题。由本人实验后填写，不预先生成结论或面试答案。
+旧的四个 Phase 已映射为 README 的 Stage 0～9；现有示例目录名称保持不变。
 
-## Phase 4 — Robot Learning
-- Gymnasium, observation space, and action space
-- Reward design
-- PPO and SAC
-- Domain randomization and sim-to-real
+## 下一项建议
 
-The `rl/` directories are placeholders. Add learning dependencies only when explicitly requested.
+先做 **S0.1：亲自核对环境并记录版本**（约 30 分钟）。此前版本记录有变化，不能
+直接当作当前配置。验收产物是解释器路径、依赖版本、检查结果，以及能说明为何不用
+base/system Python。之后再做 S0.2 / S0.3；GUI 排查超过两小时应独立记录，不阻塞
+后续可 headless 完成的概念学习。本次只建立框架，没有执行这些任务。

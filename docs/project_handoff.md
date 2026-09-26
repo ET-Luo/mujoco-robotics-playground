@@ -1,11 +1,27 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-24。供新会话的 Codex 和学习者快速恢复上下文。
+最后整理：2026-09-26（文档整理；最近运行证据仍为 2026-09-24）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
 
-2026-09-24 排查更新：用户已明确允许本会话主动激活 `mujoco` 环境。
+本次完成学习框架整理：README 统一为 Stage 0～9，每个子任务 0.5～2 小时；
+新增十份只有五个标题的编号笔记，AGENTS 增加导师角色、API 输入输出解释、避免过度
+设计和实验后记录要求。详见 [仓库评估与笔记索引](learning_roadmap.md)。
+保留全部 Python/XML/Shell 代码，没有安装依赖或运行新实验，也没有开始 Stage 1。
+学习 checkbox 与工程验证分开：两个示例已有代码，但本人掌握程度尚未确认。
+下一项建议为 S0.1：亲自核对解释器和依赖版本并记录结果；不要自动执行下一阶段。
+
+### 最新用户确认（2026-09-26）
+
+用户确认此前无法看到 GUI 的问题已解决，现在能看到 GUI 画面。
+画面显示不再是当前阻塞项，不要继续把 `WARN:COPY MODE` 当作未解决问题。
+具体修复步骤未提供，不推断是哪项操作生效；视角/控制交互和本次退出状态未单独确认。
+本次仅根据用户反馈更新文档，没有重新运行 GUI。
+
+### 历史运行证据（2026-09-24）
+
+当次排查中用户曾明确允许主动激活 `mujoco` 环境；这是一条历史记录，后续按当前用户指令和环境规则执行。
 激活后确认 Python 为 `/home/lucas/miniconda3/envs/mujoco/bin/python`，版本
 3.12.14，MuJoCo 3.13.0，Menagerie 2026.9.2；没有安装或升级依赖。
 `python examples/02_ur5e_basics/main.py --headless` 完成 1,000 步，退出码 0，
@@ -20,11 +36,12 @@ examples/02_ur5e_basics/main.py --viewer --steps 2500` 完成 5.000 秒仿真，
 长时仿真进程检查时仍存活且未输出新错误。证据指向 WSLg 共享内存/窗口传输问题，
 但尚未验证恢复方法。建议保存工作后在 Windows PowerShell 执行 `wsl --shutdown`，
 重开 WSL 后复测；若仍失败，再按微软文档更新 WSL。未代为关闭 WSL，以免中断其他工作。
-下一小步：重启 WSLg 后确认 UR5e 画面可见；此前退出码 0 仅代表进程测试通过。
+当时建议重启 WSLg 后确认画面；此显示待办已由 9 月 26 日用户反馈关闭。
+此前退出码 0 仅代表当次进程测试通过。
 
 这是面向 Robotics Software Engineering、Embodied AI、Robot Learning 和机械臂操作的
 个人学习与面试准备仓库。采用官方 MuJoCo API，CPU 优先，一次学习一个概念。
-用户最近关注：如何打开 UR5e GUI，并在窗口中操作机械臂。
+用户当前重点：先理解 → 再实现 → 再实验 → 再总结；GUI 画面已确认可见。
 
 已完成基础搭建和 UR5e 加载/检查演示。没有实现自定义控制器、PD、IK、Cartesian
 control、轨迹规划、RL 或任务环境。后续阶段仅有文档占位；不要自行推进高级算法。
@@ -37,7 +54,8 @@ control、轨迹规划、RL 或任务环境。后续阶段仅有文档占位；�
 | 仓库结构、环境规则、检查脚本、最小依赖 | 已完成 | [根 README](../README.md)、[环境检查](../scripts/check_env.sh) |
 | 单铰链基础仿真 | 无界面验证通过 | [示例 01](../examples/01_basic_simulation/README.md) |
 | 官方 UR5e 加载、关节/执行器检查、单目标微调 | 无界面验证通过 | [UR5e 示例](../examples/02_ur5e_basics/README.md)、[代码](../examples/02_ur5e_basics/main.py) |
-| GUI 正常操作与干净退出 | 尚未完整验证；有退出错误 | 下文“GUI 已知问题” |
+| GUI 显示 | 9 月 26 日用户确认可见，显示问题已解决 | 上方最新用户确认 |
+| GUI 交互与退出 | 9 月 24 日进程退出正常；最新交互与退出未单独确认 | 下文历史记录 |
 | Joint control 及后续阶段 | 未实现 | [学习路线](learning_roadmap.md) |
 
 学习顺序：`01_basic_simulation` → `02_ur5e_basics` → `02_joint_control`。
@@ -49,7 +67,8 @@ control、轨迹规划、RL 或任务环境。后续阶段仅有文档占位；�
 
 - Ubuntu 24.04 / WSL2，Miniconda 环境名 `mujoco`，VS Code 连接 WSL。
 - Python 路径：`/home/lucas/miniconda3/envs/mujoco/bin/python`。
-- Python 3.12.14、MuJoCo 3.14.0、`mujoco-menagerie` 2026.9.1。
+- 9 月 24 日记录：Python 3.12.14、MuJoCo 3.13.0、Menagerie 2026.9.2。
+  9 月 22 日历史记录为 MuJoCo 3.14.0 / Menagerie 2026.9.1；以重新检查为准。
 - 代码兼容目标为 Python 3.11，但尚未在 3.11 运行验证；不要擅自替换现有环境。
 - 依赖仅有 `mujoco`、`numpy`、`matplotlib`、`mujoco-menagerie`，版本未锁定。
 
@@ -108,7 +127,9 @@ python examples/02_ur5e_basics/main.py --viewer --steps 150000
 ```
 
 当前 timestep 下约为五分钟仿真时间，实际墙钟时间可能更长。默认 1,000 步约两秒
-就结束；自动关窗不一定是模型加载失败。此长时交互命令已向用户建议，但尚未实测。
+就结束；自动关窗不一定是模型加载失败。9 月 24 日已启动长时命令，但完整运行结果
+未验证，当时用户只看到 `WARN:COPY MODE`。9 月 26 日用户确认画面已可见；
+具体交互效果仍未单独确认。
 
 | 操作 | 方法 |
 | --- | --- |
@@ -128,7 +149,9 @@ python examples/02_ur5e_basics/main.py --viewer --steps 150000
 操作依据：[官方 viewer 文档](https://mujoco.readthedocs.io/en/stable/python.html#passive-viewer)、
 [官方快捷键](https://mujoco.readthedocs.io/en/stable/programming/samples.html#shortcuts)。
 
-## GUI 已知问题（保持与 headless 结果分开）
+## GUI 历史问题（保持与 headless 结果分开）
+
+以下为 9 月 22 日历史错误；9 月 24 日未复现退出崩溃，但出现画面传输问题，见上文。
 
 1. 基础示例：仿真到达 2.000 秒后出现 `GLXBadDrawable` / `X_GLXSwapBuffers`，
    随后测试超时，退出码 124。
@@ -141,7 +164,8 @@ timeout: the monitored command dumped core
 
 此前诊断发现 `DISPLAY=:0`、`WAYLAND_DISPLAY=wayland-0`、WSLg 1.0.66，
 没有 `glxinfo`。第一类错误疑似 GLX/WSLg 或关闭路径问题；第二类表现在 native
-GUI/线程退出路径。**确切原因都未确认，也未修复**，不能声称 GUI 已验证正常。
+GUI/线程退出路径。历史错误的确切原因未确认；9 月 24 日未复现退出崩溃，
+9 月 26 日用户确认显示问题已解决。保留这些记录供复发时参考，不作为当前显示故障。
 没有安装额外图形依赖或设置渲染后端 workaround。
 
 若用户要求诊断 GUI，先保留准确报错、退出码、是否打印最终状态，分别复测 headless
@@ -151,9 +175,8 @@ GUI/线程退出路径。**确切原因都未确认，也未修复**，不能声
 ## 下次如何继续
 
 1. 读 `AGENTS.md` → 本文 → 与当前请求有关的示例 README/代码。
-2. 检查 `git status --short`；此前 UR5e 工作仍有未提交修改，不要清理或覆盖。
-   此记录不保证新会话时的 Git 状态，必须现场核对。
-3. 按用户当次目标推进；若只是继续学习，建议先理解一个执行器目标与实际关节角的关系。
+2. 检查 `git status --short`；9 月 26 日本次编辑前工作树干净。新会话必须现场核对，保留已有修改。
+3. 按用户当次目标推进；默认建议先做 README 的 S0.1 环境确认，再逐步学习状态和执行器。
 4. 用户若要求改善交互，可在这个示例中增量增加暂停/持续运行功能；这些目前尚未实现。
 5. 完成工作后更新本文的状态和实测结果；同步相关 README，避免把建议写成已完成事项。
 
