@@ -24,8 +24,11 @@ def main():
     dt = model.opt.timestep  # Simulated seconds advanced by each mj_step.
     print(f"XML: {xml_path}\ndt={dt} s; nq={model.nq}, nv={model.nv}, nu={model.nu}")
     for joint_id in range(model.njnt):
-        # Named model access identifies the joint; jnt_qposadr locates its angle.
-        print(f"qpos[{model.jnt_qposadr[joint_id]}]: {model.joint(joint_id).name}")
+        # Each address array maps a joint ID to its first state-array element.
+        qpos_index = model.jnt_qposadr[joint_id]
+        qvel_index = model.jnt_dofadr[joint_id]  # Velocity address, not a qpos address.
+        print(f"{model.joint(joint_id).name}: qpos[{qpos_index}] (rad), "
+              f"qvel[{qvel_index}] (rad/s)")
     print(f"Initial time={data.time:.3f}; qpos={data.qpos}; qvel={data.qvel}")
     print(f"Initial ctrl={data.ctrl}", flush=True)
 
@@ -59,6 +62,13 @@ def main():
     # zero here unless changed through the GUI. Zero does not disable the servos.
     print(f"Final time={data.time:.3f}; qpos={data.qpos}; qvel={data.qvel}")
     print(f"Final ctrl={data.ctrl}", flush=True)
+    print("Final state by joint (this UR5e has one angle and velocity per joint):")
+    for joint_id in range(model.njnt):
+        qpos_index = model.jnt_qposadr[joint_id]
+        qvel_index = model.jnt_dofadr[joint_id]
+        print(f"{model.joint(joint_id).name}: "
+              f"qpos[{qpos_index}]={data.qpos[qpos_index]:.8e} rad, "
+              f"qvel[{qvel_index}]={data.qvel[qvel_index]:.8e} rad/s")
 
 
 if __name__ == "__main__":

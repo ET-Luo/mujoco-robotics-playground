@@ -23,7 +23,7 @@
 | 已有内容 | 工程状态 | 学习状态 |
 | --- | --- | --- |
 | 环境检查与仓库基础 | 已建立，历史验证通过；用户已确认 GUI 可见 | 交互操作与学习掌握程度待确认 |
-| 单铰链仿真 | 默认 1,000 步，历史运行到 2 秒 | 待本人解释模型与状态 |
+| 单铰链仿真 | 默认 1,000 步，本人运行到 2 秒 | 已完成模型阅读、预测与状态解释 |
 | 官方 UR5e 检查演示 | 加载、打印状态、单目标微调已验证 | 待逐项理解状态和执行器映射 |
 | 自定义关节/PD 控制及后续阶段 | 未实现 | 未开始 |
 
@@ -109,15 +109,18 @@ requirements.txt            # 最小依赖
 
 - [ ] Task 1（1～2h，进行中）：运行 [最小 UR5e pipeline](examples/02_ur5e_basics/simulation_pipeline.py)，观察默认 ctrl 下的 time/qpos/qvel，并亲自解释 MjModel、MjData 与 mj_step。
   本人观察与核心概念问答已完成，已写入[实验笔记](docs/01_mujoco_basics.md)；headless 通过，GUI 正常退出仍待确认，整个任务暂不勾选。
-- [ ] S1.1（0.5～1h）：逐行阅读单铰链 XML，指出 body、joint、geom 和重力运动关系。
-- [ ] S1.2（1h）：解释 MjModel/MjData、qpos/qvel/time；先预测再对比 500 与 1,000 步结果。
-- [ ] S1.3（1h）：在 UR5e 输出中对应 nq/nv/nu、关节名称和状态数组的单位。
-- [ ] S1.4（1～2h）：整理 UR5e body/joint/geom/site/actuator 的区别，列出关节与执行器映射。
-- [ ] S1.5（1h）：用一个状态修改对比 mj_forward 与 mj_step，记录是否推进时间。
+- [x] S1.1（0.5～1h）：逐行阅读单铰链 XML，指出 body、joint、geom 和重力运动关系。2026-09-27 本人提供运行结果，并用 qpos 变化解释铰链转动。
+- [x] S1.2（1h）：解释 MjModel/MjData、qpos/qvel/time；先预测再对比 500 与 1,000 步结果。2026-09-27 本人提供结果并正确解释。
+- [x] S1.3（1h）：在 UR5e 输出中对应 nq/nv/nu、关节名称和状态数组的单位。
+  2026-09-27 本人正确读取 elbow_joint 的索引、角度与角速度，并解释位置正负及运动方向。
+- [x] S1.4（1～2h）：整理 UR5e body/joint/geom/site/actuator 的区别，列出关节与执行器映射。2026-09-27 本人完成元素问答并正确列出六组映射。
+- [x] S1.5（1h）：用一个状态修改对比 mj_forward 与 mj_step，记录是否推进时间。
+  2026-09-27 本人正确预测并确认缓存与时间变化，理解直接赋值姿态不是物理运动；[实验代码](examples/02_ur5e_basics/forward_vs_step.py) headless 已验证。
 
 ### Stage 2 — Joint Control
 
 - [ ] S2.1（1h）：阅读一个 UR5e 执行器定义，确认 ctrl 含义、gear 和有效范围。
+  2026-09-27 已开始 shoulder_pan 参数阅读，见[笔记](docs/03_joint_control.md)；本人理解问答待完成，未实现控制器。
 - [ ] S2.2（1h）：理解 home 初始化，只改变一个目标 0.05 rad，记录目标与实际角度。
 - [ ] S2.3（1～2h）：采样一个关节的时间、目标和角度，画一张响应图。
 - [ ] S2.4（1h）：对比两个小目标变化，说明误差、限制及其他关节是否运动。

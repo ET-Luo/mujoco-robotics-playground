@@ -1,5 +1,18 @@
 # UR5e basics
 
+## S1.5: refresh versus step
+
+After activating and checking `mujoco`, run:
+
+```bash
+python examples/02_ur5e_basics/forward_vs_step.py
+```
+
+This headless experiment directly sets shoulder_lift_joint to -0.2 rad, prints
+the cached site position, calls mj_forward to refresh it without advancing time,
+then calls mj_step once. This is a pose assignment, not a motion command.
+See [the experiment note](../../docs/01_mujoco_basics.md#s15--mj_forward-与-mj_step).
+
 ## Stage 1: start with the simulation pipeline
 
 Read [simulation_pipeline.py](simulation_pipeline.py) first for the minimal

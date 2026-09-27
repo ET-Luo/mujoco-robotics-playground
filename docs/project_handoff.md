@@ -1,9 +1,18 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-26（Stage 1 Task 1 实现与验证）。供新会话快速恢复上下文。
+最后整理：2026-09-27（S1.2 本人实验与解释完成）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
+
+2026-09-27 当前请求已进入 S2.1：只理解 shoulder_pan 的目标角度单位、gear 和范围。
+助手静态核对本地缓存 XML 与官方参数文档；ctrl 单位 rad，gear 默认第一项为 1，
+ctrlrange 为 ±6.2831 rad。详细来源与待答问题见 [03 Joint Control](03_joint_control.md)。
+本人尚未回答本步理解题，S2.1 保持未勾选；下一小步是解释这些参数，不进入 S2.2。
+本次检查 pwd/git status，保留原有未提交修改；WSL2 Ubuntu 24.04.5，终端为 base，
+Python 路径 /home/lucas/miniconda3/bin/python，因此没有执行 Python、仿真或 GUI。
+本次仅更新学习文档，检查相对链接与 git diff --check；不新增运行验证结论。
+下文 Stage 1 描述为此前过程记录，其中“下一项建议 S2.1”已由本次请求推进。
 
 用户已正式开始 Stage 1 Task 1，只学习基础 simulation pipeline。新增
 `examples/02_ur5e_basics/simulation_pipeline.py`：显式加载官方 XML、创建 model/data、
@@ -21,7 +30,37 @@ GUI 1,000 步完成最终打印后退出 139，提示 `timeout: the monitored co
 用户此前能看到 GUI 与本次退出异常分开记录；确切根因未知。命令与结果见
 [本次实验笔记](01_mujoco_basics.md)。
 
-当前下一步建议：先预测再比较 500/1,000 步的时间及同一关节状态；仅推荐，未执行。
+S1.2 已完成：用户先正确预测 500/1,000 步分别为 1/2 秒，角度不一定翻倍，
+再提供 qpos[1]/qvel[1] 的两组结果，正确用很小的角速度判断该关节接近静止。
+数据和原话见 `01_mujoco_basics.md`；本次仅记录用户实验，没有助手重跑。
+README S1.2 已勾选。S1.3 已开始：用户正确回答 nq 是数量、qvel 单位 rad/s，
+六个转动关节与三个控制输入对应 nq=nv=6、nu=3。
+最小 pipeline 已补充 jnt_qposadr/jnt_dofadr 映射和最终逐关节状态输出；
+2026-09-27 激活并检查 mujoco 后 headless 1,000 步退出 0、time=2.000 s，未复测 GUI。
+2026-09-27 用户已正确读取 elbow_joint：两种索引均为 2，qpos=6.66674796e-03 rad，
+qvel=-4.20118884e-06 rad/s，并解释角度为正、正在减小。S1.3 已勾选完成。
+S1.4 的 body/joint/geom 问答已通过：用户正确理解多个 geom 随 body 运动、
+删除例子中的 visual geom 不会删除 joint。没有实际修改 XML。
+site 基础问答已通过：用户正确回答不增加关节、局部位置不变、世界位置可能改变。
+依据 wrist_3_link 内 attachment_site 的官方定义进行阅读预测，没有位置读取实验。
+当前 actuator 小步已开始：只读官方 XML 的 shoulder_pan 执行器，
+通过 joint="shoulder_pan_joint" 识别映射，区分运动自由度与驱动力来源。
+解释该模型 general 的位置伺服语义，但不推导控制公式。用户已正确辨认执行器与关节，
+并理解删除执行器不删除自由度，其他执行器的作用仍可能通过连接影响运动。
+2026-09-27 本人正确列出全部六组 name → joint 映射，记录于 `02_ur5e_model.md`；
+元素基础问答与映射练习均完成，README S1.4 已勾选。
+S1.5 已开始：用户正确预测 forward 不推进时间、step 后时间为 0.002 s。
+新增 `forward_vs_step.py`，直接将 shoulder_lift qpos 设为 -0.2 rad，打印旧缓存，
+forward 刷新 site 世界位置，再 step 一次。2026-09-27 在已检查的 mujoco 环境运行退出 0。
+forward 后 time=0、angle=-0.2；step 后 time=0.002、angle 约 -0.199676。
+用户随后正确反馈：直接改 qpos 后 site 缓存未变，forward 后 site 位置改变但时间不变，
+直接赋值不是物理运动。S1.5 已勾选；本次仅记录反馈，未复测 GUI，未引入控制算法或新依赖。
+S1.1 已完成：本人预测 nq=nv=1、nu=0，辨认 hinge 约束；运行基础示例后提供
+qpos 0→3.05127557 rad、qvel 0→-2.41849323 rad/s、time=2.000 s，
+并正确用 qpos 变化说明杆绕铰链转动。本次仅记录反馈，未修改代码或重跑。
+S1.1～S1.5 学习练习均已勾选；Task 1 的 GUI 正常退出问题独立保留，不宣称全部工程验证完成。
+下一项建议 S2.1：读一个 UR5e 执行器的 ctrl 单位、gear 和范围；待用户选择，不自动推进。
+本次笔记见 `02_ur5e_model.md`，不进入控制算法。
 GUI 退出异常独立跟踪，不阻塞 headless 学习；完整 Task 勾选仍须正常运行证据。
 此前框架和路线评估见 [索引](learning_roadmap.md)。
 
@@ -189,7 +228,7 @@ GUI/线程退出路径。历史错误的确切原因未确认；9 月 24 日未�
 
 1. 读 `AGENTS.md` → 本文 → 与当前请求有关的示例 README/代码。
 2. 检查 `git status --short`；9 月 26 日本次编辑前工作树干净。新会话必须现场核对，保留已有修改。
-3. 按用户当次目标推进；当前优先完成 Stage 1 Task 1 的观察与理解验收，不退回旧的 S0.1 建议。
+3. 按用户当次目标推进；核心问答、S1.1～S1.5 已完成，下一项可选 S2.1 的执行器参数阅读；不要重复旧验收或自动实现下一任务。
 4. 用户若要求改善交互，可在这个示例中增量增加暂停/持续运行功能；这些目前尚未实现。
 5. 完成工作后更新本文的状态和实测结果；同步相关 README，避免把建议写成已完成事项。
 
