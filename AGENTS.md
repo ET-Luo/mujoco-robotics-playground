@@ -13,7 +13,8 @@
 - This repository MUST be developed inside WSL2 Ubuntu 24.04.
 - The required conda environment is `mujoco`.
 - Before running Python, tests, scripts, or installing dependencies, check `echo $CONDA_DEFAULT_ENV` and `which python`. The environment must be `mujoco`, and Python must belong to that environment.
-- If the environment is not active, stop and report the issue. The user can activate it with `conda activate mujoco` before work resumes.
+- If the current environment is not `mujoco` (including `base` or no active environment), the agent may activate the existing `mujoco` environment automatically with `conda activate mujoco`, initializing the conda shell hook if needed. No additional user confirmation is required.
+- After activation, recheck `echo $CONDA_DEFAULT_ENV` and `which python` in the same shell used for execution. Continue only if the environment is `mujoco` and Python belongs to it. If activation or verification fails, stop and report the issue; never fall back to base or system Python.
 - Never install into `base`, use system Python, or use `sudo pip`.
 - Prefer `python -m pip install ...` over bare `pip`.
 

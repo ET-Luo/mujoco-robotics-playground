@@ -2,6 +2,7 @@
 
 import argparse
 import time
+from pathlib import Path
 
 import mujoco
 import mujoco_menagerie
@@ -26,9 +27,15 @@ def main() -> None:
     mode.add_argument("--headless", action="store_true", help="run without a window (default)")
     mode.add_argument("--viewer", action="store_true", help="open the optional MuJoCo viewer")
     parser.add_argument("--steps", type=int, default=1000, help="number of physics steps")
+    parser.add_argument("--delta", type=float, default=0.05, help="target change from home in radians")
+    parser.add_argument("--plot", type=Path, help="save headless response as PNG and matching CSV")
     args = parser.parse_args()
     if args.steps <= 0:
         parser.error("--steps must be positive")
+    if not np.isfinite(args.delta):
+        parser.error("--delta must be finite")
+    if args.plot and (args.viewer or args.plot.suffix.lower() != ".png"):
+        parser.error("--plot requires headless mode and a .png output path")
 
     robot = mujoco_menagerie.get("universal_robots_ur5e")
     # The official loader downloads only this model into the user's package cache.
@@ -98,6 +105,7 @@ def main() -> None:
     # Actuator IDs and qpos indices are different concepts: resolve the joint address.
     qpos_address = int(model.jnt_qposadr[joint_id])
     initial_angle = float(data.qpos[qpos_address])
+    initial_qpos = data.qpos.copy()  # Snapshot; data.qpos itself changes during stepping.
     lower, upper = model.actuator_ctrlrange[actuator_id]
     if model.jnt_limited[joint_id]:
         lower = max(lower, model.jnt_range[joint_id, 0])
@@ -105,16 +113,20 @@ def main() -> None:
     old_target = float(data.ctrl[actuator_id])
     if not lower <= old_target <= upper:
         raise RuntimeError("Initial target is outside the joint/actuator bounds.")
-    # Prefer +0.05 rad; move inward if already at the upper limit.
-    target = min(old_target + 0.05, upper)
-    if np.isclose(target, old_target):
-        target = max(old_target - 0.05, lower)
-    if np.isclose(target, old_target):
-        raise RuntimeError("No room for a small target change within the model limits.")
+    # Reject out-of-range requests so each experiment uses the requested change exactly.
+    target = old_target + args.delta
+    if not lower <= target <= upper:
+        parser.error(f"requested target {target:.5f} rad is outside [{lower:.5f}, {upper:.5f}]")
     data.ctrl[actuator_id] = target  # Only this one command changes; no custom controller.
     print(f"\nChanged {model.actuator(actuator_id).name}: {old_target:.5f} -> {target:.5f} rad")
     print(f"Allowed target interval: [{lower:.5f}, {upper:.5f}] rad")
     print_state("Before stepping (one target changed)", data)
+
+    # Each row stores scalar snapshots: simulation time (s), target (rad), angle (rad).
+    # Keep t=0 after changing the target, so N steps produce N+1 samples.
+    if args.plot:
+        samples = np.empty((args.steps + 1, 3))
+        samples[0] = (data.time, data.ctrl[actuator_id], data.qpos[qpos_address])
 
     if args.viewer:
         from mujoco import viewer as mujoco_viewer
@@ -129,15 +141,48 @@ def main() -> None:
                 viewer.sync()
                 time.sleep(max(0.0, model.opt.timestep - (time.monotonic() - start)))
     else:
-        for _ in range(args.steps):
+        for step in range(args.steps):
             # mj_step advances physics using the model's existing actuator definitions.
             mujoco.mj_step(model, data)
+            if args.plot:
+                samples[step + 1] = (data.time, data.ctrl[actuator_id], data.qpos[qpos_address])
 
     print_state("After simulation", data)
     if not all(np.isfinite(values).all() for values in (data.qpos, data.qvel, data.ctrl)):
         raise RuntimeError("Simulation produced non-finite state or controls.")
     print(f"Observed {model.joint(joint_id).name} angle change: "
           f"{data.qpos[qpos_address] - initial_angle:.6f} rad")
+    print(f"Final target minus angle: {data.ctrl[actuator_id] - data.qpos[qpos_address]:.9e} rad")
+    print("Joint angle changes from home (rad):")
+    for joint_id in range(model.njnt):
+        address = int(model.jnt_qposadr[joint_id])
+        print(f"  {model.joint(joint_id).name}: {data.qpos[address] - initial_qpos[address]:+.9e}")
+
+    if args.plot:
+        import matplotlib
+
+        matplotlib.use("Agg")  # Save a file without opening a GUI window.
+        import matplotlib.pyplot as plt
+
+        if not np.isfinite(samples).all():
+            raise RuntimeError("Response samples contain non-finite values.")
+        args.plot.parent.mkdir(parents=True, exist_ok=True)
+        csv_path = args.plot.with_suffix(".csv")
+        np.savetxt(csv_path, samples, delimiter=",", header="time_s,target_rad,angle_rad", comments="")
+        # subplots returns a figure and axes; plot adds a line using x/y arrays.
+        fig, ax = plt.subplots()
+        ax.plot(samples[:, 0], samples[:, 1], "--", label="Target")
+        ax.plot(samples[:, 0], samples[:, 2], label="Actual angle")
+        ax.set(xlabel="Simulation time (s)", ylabel="Joint angle (rad)",
+               title=f"{model.actuator(actuator_id).name}: {target - old_target:+.2f} rad target response")
+        ax.ticklabel_format(axis="y", style="plain", useOffset=False)
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+        fig.tight_layout()
+        fig.savefig(args.plot, dpi=150)
+        plt.close(fig)
+        print(f"Saved {len(samples)} samples: {csv_path}")
+        print(f"Saved response plot: {args.plot}")
 
 
 if __name__ == "__main__":

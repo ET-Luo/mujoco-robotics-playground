@@ -40,6 +40,17 @@ Concepts, actual validation results, and unanswered observation questions are in
 
 ## Run
 
+S2.3: save the single-joint response after activating and verifying `mujoco`:
+
+```bash
+python examples/02_ur5e_basics/main.py --headless --steps 1000 --plot tmp/shoulder_pan_response.png
+```
+
+`--plot` records t=0 and each post-step state, then saves a PNG and matching CSV
+(time in seconds, target and actual angle in radians). It requires headless mode.
+The tmp directory is ignored by Git. This uses the existing position servo.
+See [the lesson and validation](../../docs/03_joint_control.md).
+
 From the repository root:
 
 ```bash
@@ -75,9 +86,16 @@ UR5e has six hinge joints, so positions are in radians and velocities in rad/s.
 Here `nq = nv = nu = 6`; these dimensions need not match for other models.
 `ctrl` means a target angle only after checking this model's actuator configuration.
 
+S2.4: use `--delta 0.02` or `--delta 0.05` to compare two runs, each initialized
+from home. For example, append `--delta 0.02` to the plot command above and use
+`tmp/response_002.png`; use `tmp/response_005.png` for the other run.
+The default delta is +0.05 rad. Non-finite inputs and targets outside the joint/control
+bounds are rejected; requests are not clipped or reversed. Output includes final
+target-minus-angle error and each joint's angle change from home, all in radians.
+
 The script prints every actuator-to-joint mapping and checks the compiled gain,
 bias, dynamics, gear, and control limits. It initializes from the model's `home`
-keyframe, then changes one verified position-servo target by at most 0.05 rad,
+keyframe, then changes one verified position-servo target by the requested delta,
 within both actuator and joint bounds. Other commands keep their home values.
 The model already provides the servo behavior; no custom controller is implemented.
 Other joints can still move due to gravity and coupled dynamics, and measured
