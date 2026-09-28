@@ -1,0 +1,18 @@
+<mujoco model="pd_single_joint">
+  <compiler angle="radian"/>
+  <!-- No gravity or passive damping: isolate the learner's PD feedback. -->
+  <option timestep="0.002" gravity="0 0 0"/>
+  <worldbody>
+    <body name="arm" pos="0 0 0.5">
+      <joint name="hinge" type="hinge" axis="0 0 1"
+             damping="0" frictionloss="0" stiffness="0" limited="false"/>
+      <geom name="link" type="capsule" fromto="0 0 0 0.4 0 0"
+            size="0.03" mass="1" rgba="0.2 0.5 0.9 1"/>
+    </body>
+  </worldbody>
+  <actuator>
+    <!-- Unit gear + direct hinge motor: ctrl equals joint torque in N*m. -->
+    <motor name="torque_motor" joint="hinge" gear="1"
+           ctrllimited="false" forcelimited="false"/>
+  </actuator>
+</mujoco>
