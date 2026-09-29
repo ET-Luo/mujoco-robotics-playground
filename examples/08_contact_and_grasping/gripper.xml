@@ -1,0 +1,30 @@
+<mujoco model="minimal parallel gripper">
+  <option timestep="0.002" gravity="0 0 0"/>
+
+  <worldbody>
+    <body name="gripper_base">
+      <geom name="base_visual" type="box" size="0.06 0.025 0.01"
+            pos="0 0 -0.05" contype="0" conaffinity="0" rgba="0.3 0.3 0.3 1"/>
+
+      <body name="left_finger" pos="-0.015 0 0">
+        <joint name="left_slide" type="slide" axis="-1 0 0" range="0 0.04" damping="2"/>
+        <geom name="left_finger_geom" type="box" size="0.005 0.02 0.04" mass="0.1"
+              rgba="0.2 0.5 0.9 1"/>
+      </body>
+
+      <body name="right_finger" pos="0.015 0 0">
+        <joint name="right_slide" type="slide" axis="1 0 0" range="0 0.04" damping="2"/>
+        <geom name="right_finger_geom" type="box" size="0.005 0.02 0.04" mass="0.1"
+              rgba="0.2 0.5 0.9 1"/>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <!-- With unit transmission gear, ctrl and slide-joint target are both meters. -->
+    <position name="left_position" joint="left_slide" kp="100"
+              ctrlrange="0 0.04" forcerange="-10 10"/>
+    <position name="right_position" joint="right_slide" kp="100"
+              ctrlrange="0 0.04" forcerange="-10 10"/>
+  </actuator>
+</mujoco>

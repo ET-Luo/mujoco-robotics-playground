@@ -116,6 +116,9 @@ S6.2 已勾选。S6.3 已开始从控制周期与最大速度推导每轮最大�
 S7.1 本人正确完成最小球体—地面接触预测；助手运行实验，第 88 步在球心
 z≈0.049789 m 时记录 ground/ball_collision 接触，模型自由度不变。本人正确解释动态
 接触、固定模型拓扑和离散软接触穿入，S7.1 已勾选。S7.2 已开始两滑动关节夹爪手算，见
-[Cartesian Control 笔记](08_cartesian_control.md)和[Manipulation 笔记](09_manipulation.md)。
+本人经纠正确认开口与目标语义；助手运行独立夹爪实验，核对执行器映射并使开口从
+0.04 m 增至 0.08 m。本人正确解释开口变化、映射及空载实验不能证明抓取，S7.2 已勾选。
+S7.3 已开始世界系位置距离与严格 0.01 m 容差的 Reach 判据手算，尚未实现，见
+[Manipulation 笔记](09_manipulation.md)。
 详见 [PD 笔记](04_pd_control.md)。用户已授权自动激活 mujoco，见 AGENTS.md。
 GUI 退出异常独立记录，不把 headless 成功当作 GUI 成功，也不以能跑替代本人理解。

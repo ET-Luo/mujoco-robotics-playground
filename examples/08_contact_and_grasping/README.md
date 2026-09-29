@@ -22,4 +22,18 @@ Learner interpretation is pending; no GUI was run and no dependency was added.
 The learner confirmed that contacts are temporary MjData constraints that do not change
 model topology, and that discrete stepping plus soft contact explains the slight
 penetration. S7.1 is complete. S7.2 has started with a two-slide-joint parallel-gripper
-command and opening-width exercise; no gripper model exists yet.
+command and opening-width exercise.
+
+[gripper.xml](gripper.xml) defines two opposite-axis slide joints and one position
+actuator per finger; [gripper.py](gripper.py) verifies name/transmission mappings and
+tests opening without an object. On 2026-09-29 it ran in WSL2 Ubuntu 24.04.5 in the
+checked mujoco environment with Python 3.12.14/MuJoCo 3.13.0: exit 0, no import errors.
+Initial qpos (0.01, 0.01) m gave 0.04 m opening. Writing ctrl (0.03, 0.03) m did not
+immediately change qpos. After 1000 steps (2 s), qpos reached (0.03, 0.03) m and opening
+was 0.08 m. Target and symmetry assertions passed. Learner interpretation is pending;
+no object contact or GUI was tested.
+
+The learner confirmed the two-finger opening change, actuator-to-joint target mapping,
+and why unloaded opening does not prove grasp success. S7.2 is complete. S7.3 has
+started with a world-frame Euclidean position-distance criterion using a strict 0.01 m
+tolerance; no Reach criterion script or motion controller exists yet.

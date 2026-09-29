@@ -68,6 +68,51 @@ ctrl 单位为 m；修改 ctrl 不会瞬间修改 qpos，必须经过 mj_step �
 命令是打开还是闭合；step 前 qpos 是否立即变为 0.03 m。之后再创建最小模型。
 S7.2 未勾选，未运行 Python/MuJoCo/GUI。
 
+本人首次回答开口 0.02 m、命令打开、step 前 qpos 不会变化（理由为“只是计算”）。
+第 2 项正确；第 1 项漏加两侧各 0.01 m，正确开口为 0.02+0.01+0.01=0.04 m。
+第 3 项结论正确，原因应为写 ctrl 只改变执行器目标而不推进动力学；调用 mj_step 后
+qpos 才在执行器作用下逐步响应，且不保证一步就等于目标。待本人确认后创建模型。
+
+本人确认 q_left=q_right=0.01 m 时开口 0.04 m，并确认写 ctrl 只改变目标，qpos 需经
+mj_step 才逐步响应。助手新增 [gripper.xml](../examples/08_contact_and_grasping/gripper.xml)
+和 [gripper.py](../examples/08_contact_and_grasping/gripper.py)。模型有两个方向相反的 slide
+关节和两个一一对应的位置执行器；无重力，不含被抓物体。
+
+脚本通过 `mj_name2id` 查 joint/actuator ID，用 `jnt_qposadr` 定位 qpos，并用
+`actuator_trnid` 核对执行器传动到预期关节。2026-09-29 在 WSL2 Ubuntu 24.04.5、
+已核验 mujoco 环境、Python 3.12.14/MuJoCo 3.13.0 运行
+`python examples/08_contact_and_grasping/gripper.py`，退出 0，无导入错误。
+映射为 left_position→left_slide、right_position→right_slide，ID/qpos 地址分别为 0/1。
+初态 qpos=(0.01,0.01) m、开口 0.04 m；写 ctrl=(0.03,0.03) m 后、step 前 qpos 不变。
+1000 步（2 s）后 qpos=(0.03,0.03) m、开口 0.08 m；目标容差 1e-4 m 和左右对称
+1e-12 m 断言通过。
+
+以上是助手运行观察。待本人解释为何开口增加 0.04 m、如何从映射确认每个 actuator
+控制哪个 joint，以及该实验是否已证明能抓住物体，再完成 S7.2。未运行 GUI、无新依赖。
+
+本人首次解释：开口增加因基础开口为 0.02 m；执行器“决定”关节运动距离；抓取还要
+看能否正确计算抓取位姿。需进一步精确：开口变化量中固定基础开口前后抵消，增加量是
+左指 0.02 m 加右指 0.02 m，共 0.04 m。`left_position -> left_slide` 表示该 actuator
+的 transmission 指向该 joint，ctrl 是该关节的位置目标；实际位移仍由动力学逐步响应，
+不保证瞬间或精确等于目标。当前实验没有物体、接触、摩擦、夹持力或抬升保持测试，
+所以不能证明抓取成功；抓取位姿/对齐只是后续条件之一。待本人重新确认后完成 S7.2。
+
+本人确认：开口增加量为两指各 0.02 m 之和；actuator 为对应 joint 提供位置目标，
+实际运动经动力学产生；空载开合未验证物体接触、摩擦与保持，不能证明抓取成功。
+S7.2 已勾选。
+
+## S7.3 固定目标 Reach 成功判据（2026-09-29，手算开始）
+
+本课只判断位置 Reach，不要求末端朝向，也不把接触或夹爪闭合作为成功条件。
+末端 site 世界位置 `p_W` 与固定目标 `p_target_W` 都是形状 (3,) 的向量、单位 m。
+位置误差 `e_W=p_target_W-p_W`，距离 `d=||e_W||_2`，单位 m。
+定义 `position_tolerance=0.01 m`，仅当 `d < position_tolerance` 时成功；本课使用严格
+小于，因此恰好 0.01 m 不成功。超时是失败/截断条件，不等于成功。
+
+手算例：p_W=(0.100,-0.020,0.300) m，目标 p_target_W=(0.106,-0.018,0.300) m。
+待本人计算误差向量、欧氏距离并与 0.01 m 比较；再判断若距离恰好 0.01 m 是否成功。
+之后实现最小判据并验证成功/失败边界，不实现运动控制。S7.3 未勾选。
+
 # What I Learned
 
 # Interview Questions
