@@ -1,4 +1,4 @@
-"""Minimal reset and observation interface for a planar two-link Reach task."""
+"""Minimal Gymnasium interface for a planar two-link Reach task."""
 
 import gymnasium as gym
 import numpy as np
@@ -6,11 +6,23 @@ from gymnasium import spaces
 
 
 class PlanarReachEnv(gym.Env):
-    """Expose reset observations before adding actions or simulation stepping."""
+    """Use joint velocity commands to move a planar two-link end effector."""
 
     def __init__(self):
         self.link_lengths = np.array([0.4, 0.3], dtype=np.float64)
         self.target_xy = np.array([0.5, 0.2], dtype=np.float64)
+        self.control_dt = 0.02
+        self.max_joint_speed = 0.2
+        self.success_tolerance = 0.01
+        self.max_steps = 100
+
+        # Action: commanded joint velocities in rad/s.
+        self.action_space = spaces.Box(
+            low=-self.max_joint_speed,
+            high=self.max_joint_speed,
+            shape=(2,),
+            dtype=np.float64,
+        )
 
         # Observation: q (rad), qvel (rad/s), end-effector xy (m), target xy (m).
         self.observation_space = spaces.Box(
@@ -52,3 +64,24 @@ class PlanarReachEnv(gym.Env):
         observation = self._get_observation()
         info = {}
         return observation, info
+
+    def step(self, action):
+        """Apply one geometric velocity update and return Gymnasium's five values."""
+        # These state-update and ending expressions were written by the learner.
+        clipped_action = np.clip(
+            action,
+            -self.max_joint_speed,
+            self.max_joint_speed,
+        )
+        self.qvel[:] = clipped_action
+        self.q[:] = self.q + self.qvel * self.control_dt
+        self.step_count += 1
+
+        observation = self._get_observation()
+        distance = np.linalg.norm(self._end_effector_xy() - self.target_xy)
+        reward = -distance
+        terminated = distance < self.success_tolerance
+        truncated = self.step_count >= self.max_steps and not terminated
+        info = {"distance": distance}
+
+        return observation, reward, terminated, truncated, info
