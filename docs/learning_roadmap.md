@@ -106,7 +106,14 @@ S5.3 本人已正确完成候选角与停止状态判断，并正确填写 itera
 S5.4 本人正确预测 target=(0.8,0) m 至少有 0.1 m 残差；助手运行后在第 20 次以
 约 0.165764 m 残差报告次数上限失败。本人正确区分直接终止原因与几何不可达证明，
 S5.4 已勾选，Stage 5 完成。S6.1 已开始关节目标与世界系末端目标的单位/映射辨析，
-尚未实现 Cartesian controller，见[IK 笔记](07_inverse_kinematics.md)和
-[Cartesian Control 笔记](08_cartesian_control.md)。
+本人正确回答参考系、输入输出和单位，S6.1 已勾选。S6.2 已开始对原始关节增量做
+公共比例限制的手算；本人经纠正后确认比例、受限增量和线性位移。助手运行单步示例，
+FK 真实误差从 3 mm 降至约 1.8 mm；本人正确解释限制和圆弧造成的线性化差异，
+S6.2 已勾选。S6.3 已开始从控制周期与最大速度推导每轮最大增量，见[IK 笔记](07_inverse_kinematics.md)和
+本人确认周期减半则每轮增量减半；助手运行重复几何更新，3 次更新后误差约
+5.90e-7 m，所有命令速度满足 0.2 rad/s 限制。本人正确解释初态记录、限幅饱和和
+几何命令速度与实际 qvel 的区别，S6.3 已勾选，Stage 6 完成。
+S7.1 已开始最小球体—地面接触预测，尚未创建或运行场景，见
+[Cartesian Control 笔记](08_cartesian_control.md)和[Manipulation 笔记](09_manipulation.md)。
 详见 [PD 笔记](04_pd_control.md)。用户已授权自动激活 mujoco，见 AGENTS.md。
 GUI 退出异常独立记录，不把 headless 成功当作 GUI 成功，也不以能跑替代本人理解。
