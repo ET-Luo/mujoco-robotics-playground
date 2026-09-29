@@ -178,15 +178,19 @@ requirements.txt            # 最小依赖
   本人正确预测并解释初态无接触、球心约 0.05 m 时接触、`ncon` 随状态变化、临时接触不改变模型拓扑，以及离散软接触造成的少量穿入。
 - [x] S7.2（1～2h）：检查一个夹爪模型的关节与命令，独立测试开合。
   本人经纠正确认开口变化来自两指位移之和、执行器—关节传动映射只规定目标来源，并理解空载开合不能证明抓取成功；[独立实验](examples/08_contact_and_grasping/gripper.py)开口从 0.04 m 增至 0.08 m。
-- [ ] S7.3（1～2h）：定义并验证一个固定目标 Reach 的成功判据。
-  已开始世界系位置距离与 1 cm 容差的手算；尚未实现判据脚本。
-- [ ] S7.4（1～2h）：从预设对齐姿态做一次闭爪接触实验，记录成功/失败现象。
-- [ ] S7.5（1～2h）：在已成功抓住的初始条件下测试一次小幅抬升。
-- [ ] S7.6（1～2h）：在已持物的初始条件下测试放置和释放，写出后续组合任务清单。
+- [x] S7.3（1～2h）：定义并验证一个固定目标 Reach 的成功判据。
+  本人正确手算并验证世界系位置距离与严格 1 cm 边界，且正确区分 Reach、抓取成功和超时未成功；见[判据脚本](examples/08_contact_and_grasping/reach_criterion.py)。
+- [x] S7.4（1～2h）：从预设对齐姿态做一次闭爪接触实验，记录成功/失败现象。
+  本人正确解释双侧接触、软接触穿入、接触阻挡导致 `qpos != ctrl`，并理解双侧接触尚不能证明稳定抓取；见[闭爪实验](examples/08_contact_and_grasping/close_contact.py)。
+- [x] S7.5（1～2h）：在已成功抓住的初始条件下测试一次小幅抬升。
+  本人正确解释物体高度与相对滑移判据、有限刚度位置伺服的重力稳态下垂及负相对 z；[实验](examples/08_contact_and_grasping/lift.py)使物体升约 0.04062 m并满足判据。
+- [x] S7.6（1～2h）：在已持物的初始条件下测试放置和释放，写出后续组合任务清单。
+  本人正确解释地面支撑、无手指接触、目标位置与低速度各自排除的失败；[放置释放实验](examples/08_contact_and_grasping/place_release.py)四项检查通过，完整组合流程已写入 Manipulation 笔记。Stage 7 完成。
 
 ### Stage 8 — Robot Learning
 
 - [ ] S8.1（1h）：为已有 Reach 实验写出 observation/action/reward 和结束条件。
+  已开始为平面两关节 Reach 定义 8 维 observation、关节速度 action、距离 reward 与 terminated/truncated。
 - [ ] S8.2（1～2h）：明确请求依赖后，仅实现 reset 和 observation 的最小接口。
 - [ ] S8.3（1～2h）：加入 step，区分 terminated/truncated，用短随机动作回合检查接口。
 - [ ] S8.4（1h）：对比两种距离奖励的数值，检查奖励是否符合任务目标。

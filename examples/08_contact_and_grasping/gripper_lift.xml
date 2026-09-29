@@ -1,0 +1,40 @@
+<mujoco model="gripper small lift">
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+
+  <worldbody>
+    <geom name="ground" type="plane" size="0.3 0.3 0.02" rgba="0.8 0.8 0.8 1"/>
+
+    <body name="gripper_base" pos="0 0 0.08">
+      <joint name="lift_slide" type="slide" axis="0 0 1" range="-0.06 0.08" damping="20"/>
+      <geom name="base_visual" type="box" size="0.06 0.025 0.01"
+            pos="0 0 -0.06" mass="1" contype="0" conaffinity="0" rgba="0.3 0.3 0.3 1"/>
+
+      <body name="left_finger" pos="-0.015 0 0">
+        <joint name="left_slide" type="slide" axis="-1 0 0" range="0 0.04" damping="2"/>
+        <geom name="left_finger_geom" type="box" size="0.005 0.02 0.04" mass="0.1"
+              friction="2 0.005 0.0001" rgba="0.2 0.5 0.9 1"/>
+      </body>
+
+      <body name="right_finger" pos="0.015 0 0">
+        <joint name="right_slide" type="slide" axis="1 0 0" range="0 0.04" damping="2"/>
+        <geom name="right_finger_geom" type="box" size="0.005 0.02 0.04" mass="0.1"
+              friction="2 0.005 0.0001" rgba="0.2 0.5 0.9 1"/>
+      </body>
+    </body>
+
+    <body name="object" pos="0 0 0.08">
+      <freejoint name="object_free"/>
+      <geom name="object_geom" type="box" size="0.02 0.015 0.03" mass="0.05"
+            friction="2 0.005 0.0001" rgba="0.9 0.5 0.2 1"/>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position name="lift_position" joint="lift_slide" kp="5000"
+              ctrlrange="-0.06 0.08" forcerange="-200 200"/>
+    <position name="left_position" joint="left_slide" kp="200"
+              ctrlrange="0 0.04" forcerange="-10 10"/>
+    <position name="right_position" joint="right_slide" kp="200"
+              ctrlrange="0 0.04" forcerange="-10 10"/>
+  </actuator>
+</mujoco>
