@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-29（S7.3 完成，S7.4 预对齐闭爪接触预测开始）。供新会话快速恢复上下文。
+最后整理：2026-09-29（S8.1 完成，下一步 S8.2）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -111,7 +111,22 @@ z 与四项证据，再完成 S7.6 和组合任务清单。未运行 GUI。详�
 对齐、闭爪、保持、抬升、转移、下降、支撑、释放/撤离到终检；仅为清单，未实现状态机。
 S8.1 开始为平面 Reach 定义接口：observation 8 维（q/qvel/末端 xy/目标 xy），action 为
 ±0.2 rad/s 两关节速度命令，dt=0.02 s；reward=-distance；distance<0.01 terminated，
-第 100 步未成功则 truncated。待本人纸面计算；未安装 Gymnasium/RL 库或实现接口。
+第 100 步未成功则 truncated。本人正确写出 observation 形状 `(8,)` 及四段单位
+rad/rad/s/m/m；距离 0.006 m 时正确得到 reward=-0.006、terminated=True；第 100 步
+距离 0.012 m 时正确得到 terminated=False、truncated=True。S8.1 已勾选；未安装
+Gymnasium/RL 库或实现接口。下一小任务为 S8.2：先明确最小接口与依赖，再只实现
+reset 和 observation。
+S8.2 开始：本人确认 reset 后 q=(0,0) 时末端为 (0.7,0) m，因为 reset 恢复初始关节
+状态，末端再由 FK 得到。已说明 Gymnasium 用于标准 Env/Box/seed 接口，将其加入
+requirements，并在核验的 mujoco 环境安装 Gymnasium 1.3.0。新增 reach_env.py 骨架，
+包含固定状态、FK、observation space 和 reset；本人正确填写四段 observation 拼接。
+2026-09-29 在核验的 mujoco 环境运行：reset 返回预期 8 维 float64 数组，space 包含
+检查通过；人为修改状态后再次 reset 正确恢复 q/qvel/step_count。待本人解释 reset
+返回值和 FK 重算语义；尚未实现 step 或训练算法。
+本人正确解释 observation 是智能体看到的状态输入、info 是额外信息；经补充明确 policy
+通常不使用 info。本人正确解释末端 xy 是当前 q 的 FK 派生量，不能保留上一回合的值。
+S8.2 已勾选，下一小任务为 S8.3：加入 step，区分 terminated/truncated，并用短随机
+动作回合检查接口。
 
 当前接续 S5.2：本人正确提交 error、delta_q、q_new 三行 NumPy 表达式，
 助手原样集成 examples/06_inverse_kinematics/main.py。重新核验 WSL2 Ubuntu 24.04.5，

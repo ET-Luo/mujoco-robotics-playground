@@ -189,9 +189,10 @@ requirements.txt            # 最小依赖
 
 ### Stage 8 — Robot Learning
 
-- [ ] S8.1（1h）：为已有 Reach 实验写出 observation/action/reward 和结束条件。
-  已开始为平面两关节 Reach 定义 8 维 observation、关节速度 action、距离 reward 与 terminated/truncated。
-- [ ] S8.2（1～2h）：明确请求依赖后，仅实现 reset 和 observation 的最小接口。
+- [x] S8.1（1h）：为已有 Reach 实验写出 observation/action/reward 和结束条件。
+  本人正确写出 8 维 observation 各段单位、距离奖励，以及成功与时间截断的纸面结果；尚未实现接口或安装 RL 依赖。
+- [x] S8.2（1～2h）：明确请求依赖后，仅实现 reset 和 observation 的最小接口。
+  本人正确完成 observation 拼接并解释 observation/info 与 FK 派生量；reset 数值、shape、dtype、space 包含关系和状态恢复检查通过。
 - [ ] S8.3（1～2h）：加入 step，区分 terminated/truncated，用短随机动作回合检查接口。
 - [ ] S8.4（1h）：对比两种距离奖励的数值，检查奖励是否符合任务目标。
 - [ ] S8.5（1～2h）：解释 PPO 的采样和更新数据流，手算一个小样本目标；留下实现 TODO。

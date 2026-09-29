@@ -1,6 +1,6 @@
 # What I Need to Understand
 
-S8.1 于 2026-09-29 开始：把已有平面两关节 Reach 写成任务数据接口，先明确
+S8.1 于 2026-09-29 完成：把已有平面两关节 Reach 写成任务数据接口，先明确
 observation、action、reward、terminated 与 truncated，不安装 Gymnasium 或训练算法。
 
 # Key Concepts
@@ -22,9 +22,22 @@ reward 先用最小密集奖励 `reward=-||target_xy-ee_xy||_2`，为单个标�
 
 # Experiments
 
-待本人完成三项纸面检查：列出 observation 形状与各段单位；距离 0.006 m 时算 reward
-并判断 terminated；第 100 步距离 0.012 m 时判断 terminated/truncated。尚未实现接口、
-运行 Python/MuJoCo 或安装 RL 依赖，S8.1 未勾选。
+本人完成三项纸面检查：正确写出 observation 形状 `(8,)`，并将 q、qvel、末端/目标
+位置的单位依次写为 rad、rad/s、m、m；距离 0.006 m 时正确得到 reward=-0.006、
+terminated=True；第 100 步距离 0.012 m 时正确得到 terminated=False、truncated=True。
+尚未实现接口、运行 Python/MuJoCo 或安装 RL 依赖；S8.1 已勾选。
+
+S8.2 于 2026-09-29 开始。已说明 Gymnasium 在本步只提供标准 `Env`、`Box` 和 seed
+处理，将其加入 requirements 并安装到核验后的 `mujoco` 环境。`reach_env.py` 已包含
+固定初态、平面 FK、8 维 observation space 和 reset 状态更新；observation 的四段数组
+拼接由本人正确填写。2026-09-29 在核验的 `mujoco` 环境运行 reset 检查：返回
+`[0,0,0,0,0.7,0,0.5,0.2]`，shape `(8,)`、dtype float64，space 包含检查通过；
+人为修改 q/qvel/step_count 后再次 reset 也恢复初态。待本人解释 reset 返回值与为何
+末端位置应由 FK 重算；尚未实现 step 或训练算法。
+
+本人随后正确解释 observation 是智能体实际看到的输入，info 是额外信息；补充说明
+policy 通常不使用 info。本人也正确解释 `end_effector_xy` 不是独立状态，而是由当前 q
+通过 FK 得到的派生量，不能沿用上一回合的值。S8.2 已勾选。
 
 # What I Learned
 
