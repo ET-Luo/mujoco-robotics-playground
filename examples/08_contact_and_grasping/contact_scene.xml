@@ -1,0 +1,13 @@
+<mujoco model="falling sphere contact">
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+
+  <worldbody>
+    <geom name="ground" type="plane" size="1 1 0.1" rgba="0.8 0.8 0.8 1"/>
+    <body name="ball" pos="0 0 0.2">
+      <!-- A free joint gives the ball 3 translation and 3 rotation velocity DOFs. -->
+      <freejoint name="ball_free"/>
+      <geom name="ball_collision" type="sphere" size="0.05" mass="0.1"
+            rgba="0.2 0.5 0.9 1"/>
+    </body>
+  </worldbody>
+</mujoco>
