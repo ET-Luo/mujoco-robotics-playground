@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-30（S8.7 与 Stage 8 完成）。供新会话快速恢复上下文。
+最后整理：2026-09-30（Stage 9 完成）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -211,6 +211,19 @@ distance 可能虚假变好或变差。新增 `compare_observation_noise.py`。�
 噪声、初态、目标和控制器。S9.3 已勾选。下一小任务为 S9.4：根据已有实验列出模型误差、
 执行器限制和真实部署前待验证事项，不连接真实机器人。未运行 MuJoCo/GUI。
 
+S9.4 本人完成部署前总结：模型误差覆盖几何、质量/惯量、摩擦、接触和传感器；执行器
+限制覆盖速度、力矩/电流、加速度/jerk、带宽、延迟、死区/backlash 和内部安全控制。
+本人正确解释几何 qdot 只是参考命令，真实 qdot 由控制器与机械动力学共同决定。部署清单
+覆盖 frame/TCP 标定、软硬限位、奇异点限制、硬件急停、异常软件停止、碰撞安全、噪声/
+延迟/时间戳、控制周期 jitter、低速小幅首次动作及完整日志。本人最终正确说明仿真成功
+仅在给定模型假设下成立，真实部署仍须标定、限幅、安全检查和逐步硬件验证。S9.4 已勾选，
+Stage 9 完成；未连接或运行真实机器人。随后本人于 2026-09-30 明确确认 Stage 0 的
+环境、headless、GUI 操作/退出与 Git 基础练习均已完成，S0.1～S0.4 已勾选。此处记录
+本人学习确认，不冒充本轮重新运行证据。README 中 S0～S9 编号任务现已全部完成；遗留的
+Stage 1 `Task 1` 总任务随后也由本人明确确认完成，已在 README 与 MuJoCo 基础笔记中勾选；
+这不是从 Stage 0 确认推断的结果。
+后续任务应由用户另行选择，不自动扩展路线。
+
 当前接续 S5.2：本人正确提交 error、delta_q、q_new 三行 NumPy 表达式，
 助手原样集成 examples/06_inverse_kinematics/main.py。重新核验 WSL2 Ubuntu 24.04.5，
 激活核验 mujoco 与所属 Python 3.12.14 后运行该脚本，退出 0，无导入错误。
@@ -392,14 +405,15 @@ Python 路径 /home/lucas/miniconda3/bin/python，因此没有执行 Python、�
 本次仅更新学习文档，检查相对链接与 git diff --check；不新增运行验证结论。
 下文 Stage 1 描述为此前过程记录，其中“下一项建议 S2.1”已由本次请求推进。
 
-用户已正式开始 Stage 1 Task 1，只学习基础 simulation pipeline。新增
+（历史记录）用户曾正式开始 Stage 1 Task 1，只学习基础 simulation pipeline。新增
 `examples/02_ur5e_basics/simulation_pipeline.py`：显式加载官方 XML、创建 model/data、
 默认打开 viewer、循环 step 并打印状态。不设置 ctrl，不选 home keyframe，保留原有代码。
 讲解已先于实现完成；没有引入控制器或新依赖。本人已提供观察并通过核心概念问答。
 原先把零 ctrl 理解为保持任意当前姿态，经问答已纠正，能回答保持 -0.2 rad 要设 -0.2 rad。
 最终原话“这次实验没有给 ctrl 赋值，但 qpos 仍然变化，是重力、执行器作用等共同影响的结果”
 已记录到 `01_mujoco_basics.md` 的 What I Learned。不要重复将理解状态写为未验收。
-README 的整个 Task 1 暂不勾选：headless 通过，但 GUI 正常退出仍待确认。
+当时 README 的整个 Task 1 暂不勾选：headless 通过，但 GUI 正常退出仍待确认；该历史待办
+已由用户后续确认完成。
 
 本会话用户明确授权 Codex 在执行 shell 主动激活 mujoco；激活后必须再次检查环境和路径。
 实测 Python 3.12.14、MuJoCo 3.14.0、Menagerie 2026.9.1；环境检查 PASS。
@@ -436,7 +450,7 @@ forward 后 time=0、angle=-0.2；step 后 time=0.002、angle 约 -0.199676。
 S1.1 已完成：本人预测 nq=nv=1、nu=0，辨认 hinge 约束；运行基础示例后提供
 qpos 0→3.05127557 rad、qvel 0→-2.41849323 rad/s、time=2.000 s，
 并正确用 qpos 变化说明杆绕铰链转动。本次仅记录反馈，未修改代码或重跑。
-S1.1～S1.5 学习练习均已勾选；Task 1 的 GUI 正常退出问题独立保留，不宣称全部工程验证完成。
+S1.1～S1.5 学习练习均已勾选；Task 1 的 GUI 待办已由用户后续确认完成。
 下一项建议 S2.1：读一个 UR5e 执行器的 ctrl 单位、gear 和范围；待用户选择，不自动推进。
 本次笔记见 `02_ur5e_model.md`，不进入控制算法。
 GUI 退出异常独立跟踪，不阻塞 headless 学习；完整 Task 勾选仍须正常运行证据。

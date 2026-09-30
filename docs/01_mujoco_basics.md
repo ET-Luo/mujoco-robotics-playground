@@ -1,6 +1,6 @@
 # Stage 1 — Task 1: UR5e simulation pipeline
 
-状态：示例已实现；本人已提供观察并通过核心概念问答。Headless 通过，GUI 正常退出仍待确认，整个 Task 暂不勾选。
+状态：示例已实现；本人已提供观察并通过核心概念问答，且确认 GUI 验证完成。Task 1 已勾选。
 
 ## Concepts
 
