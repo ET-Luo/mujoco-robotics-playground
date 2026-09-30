@@ -8,8 +8,11 @@ from gymnasium import spaces
 class PlanarReachEnv(gym.Env):
     """Use joint velocity commands to move a planar two-link end effector."""
 
-    def __init__(self):
-        self.link_lengths = np.array([0.4, 0.3], dtype=np.float64)
+    def __init__(self, randomize_link_length=False):
+        self.nominal_link_lengths = np.array([0.4, 0.3], dtype=np.float64)
+        self.link_lengths = self.nominal_link_lengths.copy()
+        self.randomize_link_length = randomize_link_length
+        self.second_link_length_range = (0.27, 0.33)
         self.target_xy = np.array([0.5, 0.2], dtype=np.float64)
         self.control_dt = 0.02
         self.max_joint_speed = 0.2
@@ -55,14 +58,20 @@ class PlanarReachEnv(gym.Env):
         return observation
 
     def reset(self, *, seed=None, options=None):
-        """Restore the fixed initial state and return ``(observation, info)``."""
+        """Restore state, optionally sample link length, and return observation/info."""
+        # Gymnasium initializes self.np_random here. Passing a seed restarts its sequence.
         super().reset(seed=seed)
         self.q[:] = 0.0
         self.qvel[:] = 0.0
         self.step_count = 0
 
+        self.link_lengths[:] = self.nominal_link_lengths
+        if self.randomize_link_length:
+            low, high = self.second_link_length_range
+            self.link_lengths[1] = self.np_random.uniform(low, high)
+
         observation = self._get_observation()
-        info = {}
+        info = {"second_link_length": float(self.link_lengths[1])}
         return observation, info
 
     def step(self, action):

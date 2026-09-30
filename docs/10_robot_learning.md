@@ -102,6 +102,22 @@ rollout 与 train 指标，总耗时约 0.132 s。确定性评估训练前/后�
 更准确的限制是训练数据和更新极少，单次评估不代表总体趋势。S8.7 已勾选，Stage 8 完成；
 未运行 MuJoCo/GUI，也未保存模型文件。
 
+S9.1 开始，只随机化平面 Reach 的第二连杆长度，标称值 0.30 m，均匀采样范围
+`[0.27, 0.33]` m。本人控制变量与 seed 序列含义解释正确；伸直位置公式正确，但首次加法
+误算为 0.57/0.63 m，经纠正后确认边界位置应为 0.67/0.73 m。环境新增显式开关，默认仍
+使用固定长度；随机模式在 `super().reset(seed=seed)` 初始化环境 RNG 后用
+`self.np_random.uniform` 采样，并通过 `info` 报告本回合长度。
+
+2026-09-30 在核验后的 `mujoco` 环境运行
+`python -m environments.reach.domain_randomization`：seed 7 的两套独立五回合序列均为
+`[0.30750573, 0.32383283, 0.31654114, 0.28351243, 0.28800998]` m，范围、复现和回合间
+变化断言均通过。默认环境仍为 0.30 m，伸直末端为 `(0.70,0)` m；固定/随机环境均通过
+Gymnasium checker，仅保留既有的无限 observation bounds 和未注册 render mode 警告。
+`python -m rl.ppo.train_smoke` 回归退出 0，结果与此前一致；未运行 MuJoCo/GUI。
+本人正确解释两个独立环境序列相同证明相同 seed 与调用顺序下可复现，单序列内部变化
+证明每回合随机化仍在工作；也正确解释只在首轮传 seed 初始化 RNG，后续无 seed reset
+使序列继续前进，而每轮重新传相同 seed 会重置 RNG 并重复首个样本。S9.1 已勾选。
+
 # What I Learned
 
 # Interview Questions
@@ -115,3 +131,7 @@ rollout 与 train 指标，总耗时约 0.132 s。确定性评估训练前/后�
 7. advantage 的正负如何影响动作概率，clipped objective 如何限制单次变化？
 8. SAC 为什么能复用 replay 中的旧数据，而 PPO 通常不能长期复用旧 rollout？
 9. 双 critic 的较小值和 entropy 系数分别解决什么问题？
+10. Domain randomization 为什么先只改变一个参数？
+11. 固定 seed 如何兼顾回合间变化与实验复现？
+12. 为什么每次 reset 都重新传同一个 seed 会破坏期望的随机序列？
+13. 随机化连杆长度会如何改变同一关节角下的末端位置？

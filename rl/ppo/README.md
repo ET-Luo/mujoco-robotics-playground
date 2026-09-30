@@ -27,6 +27,13 @@ paper checks only. No PPO library, network, optimizer, or training loop has been
 deterministic episode before and after training plus the standard rollout/train metrics.
 This is an integration and timing check, not a convergence experiment.
 
+Run it from the repository root as a module so the sibling `environments` package is on
+Python's import path:
+
+```bash
+python -m rl.ppo.train_smoke
+```
+
 Verified on 2026-09-30 with Stable-Baselines3 2.9.0 and PyTorch 2.14.0+cpu. CUDA was
 unavailable as intended. The 256-step run took about 0.132 s. Before/after deterministic
 evaluation distances were about 0.286/0.301 m, and both episodes truncated at 100 steps.

@@ -165,6 +165,27 @@ epochs、256 总步和 `[32,32]` 网络在 CPU 运行退出 0，耗时约 0.132 
 未运行 MuJoCo/GUI，未保存模型。下一小任务为 S9.1：先理解只随机化一个物理参数、
 固定 seed 与复现检查；未经当前请求不实现。
 
+2026-09-30 换用另一台电脑后重新核验：WSL2 Ubuntu 24.04.5 正常，初始 shell 位于 base
+且为 Python 3.14.7；自动激活 `mujoco` 后确认解释器为
+`/home/lucas/miniconda3/envs/mujoco/bin/python`、Python 3.12.14。MuJoCo 3.13.0、
+NumPy 2.5.3、Matplotlib 3.11.2、Menagerie 2026.9.2、Gymnasium 1.3.0 已存在；补装缺失的
+PyTorch 2.14.0+cpu 与 Stable-Baselines3 2.9.0，`pip check` 无冲突且 CUDA 不可用。
+`scripts/check_env.sh` 通过。直接执行 `python rl/ppo/train_smoke.py` 因仓库根目录不在
+模块搜索路径而报 `ModuleNotFoundError: environments`；改用仓库根目录下的模块入口
+`python -m rl.ppo.train_smoke` 后退出 0，结果与原记录一致，耗时约 0.133 s。未运行 GUI。
+
+S9.1 开始，只随机化 Reach 第二连杆长度，标称 0.30 m、范围 `[0.27,0.33]` m。本人正确
+解释控制变量与可复现随机序列；伸直边界位置首次算术误答 0.57/0.63 m，随后确认正确值
+0.67/0.73 m。`PlanarReachEnv` 新增默认关闭的随机化开关，保持 S8 行为不变；新增
+`domain_randomization.py`。2026-09-30 在核验后的 mujoco/Python 3.12.14 环境运行：
+seed 7 的两套独立五回合采样序列完全一致，单序列内部不同且全部位于范围内；默认环境
+仍为 l2=0.30 m、伸直末端 `(0.70,0)` m。固定/随机环境 Gymnasium checker 通过，只有
+既有 bounds/render 警告；PPO 烟雾回归退出 0。本人正确解释独立序列相同证明可复现、
+序列内部不同证明逐回合随机化仍工作，也正确解释首次 reset 传 seed 初始化 RNG，后续
+无 seed reset 推进序列；每轮重传相同 seed 会重复首个样本。S9.1 已勾选。
+下一小任务为 S9.2：用已有控制方法比较少量固定参数与随机参数回合，记录同一指标；
+未经当前请求不实现。未运行 MuJoCo/GUI。
+
 当前接续 S5.2：本人正确提交 error、delta_q、q_new 三行 NumPy 表达式，
 助手原样集成 examples/06_inverse_kinematics/main.py。重新核验 WSL2 Ubuntu 24.04.5，
 激活核验 mujoco 与所属 Python 3.12.14 后运行该脚本，退出 0，无导入错误。

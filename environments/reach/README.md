@@ -33,3 +33,14 @@ and 0.20 m, the learner correctly calculated linear rewards of -0.02/-0.20 and s
 rewards of -0.0004/-0.04. Both prefer smaller distance. Squaring increases the far/near
 ratio while reducing absolute reward magnitude for distances below 1 m. The numerical
 values, improvements, and monotonic preference checks pass. S8.4 is complete.
+
+S9.1 adds an opt-in randomization of only the second link length in `[0.27, 0.33]` m.
+The default environment remains fixed at 0.30 m. `reset(seed=...)` initializes Gymnasium's
+environment RNG before the length is sampled; later unseeded resets continue that sequence.
+With seed 7, two independent environments both produced
+`[0.30750573, 0.32383283, 0.31654114, 0.28351243, 0.28800998]` m. All samples were in
+range and varied between episodes. The fixed environment still reset to end-effector
+position `(0.70, 0)` m. The learner correctly explained that matching independent sequences
+show reproducibility, while variation within each sequence shows per-episode randomization.
+They also explained why the RNG is seeded once and then allowed to advance; reseeding every
+reset would repeat the first sample. Engineering and learning checks pass; S9.1 is complete.
