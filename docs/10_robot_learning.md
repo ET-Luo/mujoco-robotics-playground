@@ -84,6 +84,19 @@ S8.6 梳理 SAC 的 replay、双 critic 与 entropy。本人对非终止样本 `
 entropy，通常鼓励探索并使动作分布更分散。S8.6 已勾选；SAC 的 replay buffer、网络、
 优化器和训练循环均保留 TODO，未安装训练依赖或运行 Python/MuJoCo/GUI。
 
+S8.7 经本人单独授权选择 PPO 做 CPU 短运行。新增 Stable-Baselines3 2.9.0，并明确安装
+PyTorch 2.14.0+cpu；首次解析到带 CUDA 13 依赖的通用 Linux wheel 后立即中止，未安装
+NVIDIA 包，改用 PyTorch 官方 CPU wheel。新增 `rl/ppo/train_smoke.py`：两层各 32 单元，
+rollout 64 步、每批 2 个 update epoch，总计 256 环境步，固定 seed=7 并强制 CPU。
+
+2026-09-30 在核验后的 `mujoco` 环境运行退出 0，`cuda_available=False`。训练日志包含
+rollout 与 train 指标，总耗时约 0.132 s。确定性评估训练前/后的回报约 -28.466/-29.200，
+末端距离约 0.286/0.301 m，均在第 100 步 `terminated=False, truncated=True`；如此短的
+运行不能证明收敛，训练后略差也不能据此判定 PPO 失败。另以密集网格核对当前回合预算：
+每关节最大累计变化 0.4 rad，在该角度方框内到目标的最小距离约 0.1478 m，超过 0.01 m
+容差，所以当前任务配置本身无法成功。S8.7 待本人解释烟雾测试证据边界与不可达原因后
+再勾选；未运行 MuJoCo/GUI，也未保存模型文件。
+
 # What I Learned
 
 # Interview Questions

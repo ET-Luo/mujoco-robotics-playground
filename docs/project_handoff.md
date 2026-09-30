@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-30（S8.6 完成，S8.7 需单独授权）。供新会话快速恢复上下文。
+最后整理：2026-09-30（S8.7 CPU 烟雾测试完成，待本人解释）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -152,6 +152,14 @@ S8.6 本人正确得到双 critic 较小值 -0.20、entropy 修正值 -0.15 和 
 PPO on-policy rollout，也正确解释增大 alpha 更强调 entropy、通常使策略更分散。
 S8.6 已勾选；SAC README 已记录数据流，训练实现保持 TODO。未安装训练依赖或运行
 Python/MuJoCo/GUI。S8.7 按路线要求需用户单独授权后，才能选择一种算法做 CPU 短运行。
+用户已单独授权 S8.7 并选择建议的 PPO。安装 Stable-Baselines3 2.9.0；默认解析曾开始
+下载带 CUDA 13 依赖的 PyTorch，发现后中止且未安装，改为 PyTorch 2.14.0+cpu，
+requirements 已固定 CPU index/版本。新增 train_smoke.py，以 64 步 rollout、2 update
+epochs、256 总步和 `[32,32]` 网络在 CPU 运行退出 0，耗时约 0.132 s；训练日志正常。
+训练前/后确定性距离约 0.286/0.301 m，均在 100 步截断，不能证明收敛或失败。密集网格
+进一步验证每关节 ±0.4 rad 的回合可达角范围内最小距离约 0.1478 m，当前 0.01 m 目标
+事实上不可达。待本人解释烟雾测试证明了什么/未证明什么，以及动作、dt、horizon 如何
+造成不可达后再勾选 S8.7。未运行 MuJoCo/GUI，未保存模型。
 
 当前接续 S5.2：本人正确提交 error、delta_q、q_new 三行 NumPy 表达式，
 助手原样集成 examples/06_inverse_kinematics/main.py。重新核验 WSL2 Ubuntu 24.04.5，

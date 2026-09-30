@@ -3,4 +3,6 @@ numpy
 matplotlib
 mujoco-menagerie
 gymnasium
-stable-baselines3
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.0+cpu
+stable-baselines3==2.9.0
