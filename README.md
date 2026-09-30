@@ -201,7 +201,8 @@ requirements.txt            # 最小依赖
   本人正确计算单步 critic target、advantage，以及正负 advantage 下的 PPO clipped objective，并解释裁剪用于限制单批旧数据推动的策略变化；训练实现仍保留 TODO。
 - [x] S8.6（1～2h）：解释 SAC 的 replay/critic/entropy，手算一个简化目标；留下实现 TODO。
   本人正确计算含 entropy 的双 critic target，并解释 replay 的 off-policy 数据复用、较小 critic 值对高估的约束，以及 `alpha` 对策略随机性的影响；训练实现仍保留 TODO。
-- [ ] S8.7（1～2h）：后续单独授权后，选一种算法做 CPU 短运行检查，记录数据和耗时，不要求收敛。
+- [x] S8.7（1～2h）：后续单独授权后，选一种算法做 CPU 短运行检查，记录数据和耗时，不要求收敛。
+  PPO CPU 烟雾测试完成；本人正确区分流程连通与策略收敛，解释了短训练的证据边界，并由动作速度、控制周期和回合长度推出每关节最多变化 0.4 rad，确认当前回合预算内目标不可达。Stage 8 完成。
 
 ### Stage 9 — Domain Randomization / Sim-to-Real
 
