@@ -44,3 +44,14 @@ position `(0.70, 0)` m. The learner correctly explained that matching independen
 show reproducibility, while variation within each sequence shows per-episode randomization.
 They also explained why the RNG is seeded once and then allowed to advance; reseeding every
 reset would repeat the first sample. Engineering and learning checks pass; S9.1 is complete.
+
+S9.2 reuses the limited Jacobian feedback controller from Stage 6. Actual end-effector
+positions use each episode's sampled link length, while the controller deliberately retains
+the nominal 0.30 m Jacobian model. The fixed case succeeded in 3 updates with final distance
+about 0.000000590 m. All five seed-7 randomized cases also met the 0.0001 m tolerance, but
+needed 7, 17, 13, 11, and 8 updates. Their mean/max distances when success was detected were
+about 0.000020622/0.000082822 m. This small geometric experiment shows slower convergence,
+not random-case failure or general sim-to-real robustness. The learner correctly explained
+that repeated actual-position feedback can correct small nominal-Jacobian errors, while the
+extra updates show reduced convergence efficiency. They also limited the evidence to this
+link-length range, initial state, target, and geometric model. S9.2 is complete.
