@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-29（S8.4 完成，下一步 S8.5）。供新会话快速恢复上下文。
+最后整理：2026-09-30（S8.6 完成，S8.7 需单独授权）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -141,6 +141,17 @@ S8.4 本人正确计算 `-d` 与 `-(d^2)` 在 0.02/0.20 m 的四个值，以及�
 打印值与单调性/数值断言通过。S8.4 已勾选；未运行 MuJoCo、GUI 或训练算法。
 下一小任务为 S8.5：只解释 PPO 的 rollout 与更新数据流并手算一个小样本目标，保留
 实现 TODO，不安装或运行训练框架。
+S8.5 本人正确计算单步 critic target=-0.149、advantage=0.051，并正确完成正 advantage
+下 ratio 1.30→1.20、最终 objective 0.0612，以及负 advantage 下 ratio 0.70→0.80、
+最终 objective -0.04 的裁剪手算。本人解释正负 advantage 对动作概率的方向，以及
+裁剪限制一次策略变化。PPO README 已记录 rollout→target/advantage→有限轮更新的数据流；
+S8.5 已勾选。未安装训练依赖或实现网络/优化器。下一小任务为 S8.6：解释 SAC 的
+replay、双 critic 和 entropy，并手算一个简化 target；保留实现 TODO。
+S8.6 本人正确得到双 critic 较小值 -0.20、entropy 修正值 -0.15 和 critic target
+-0.1985，并解释较小值用于约束过高估计。本人正确区分 SAC off-policy replay 复用与
+PPO on-policy rollout，也正确解释增大 alpha 更强调 entropy、通常使策略更分散。
+S8.6 已勾选；SAC README 已记录数据流，训练实现保持 TODO。未安装训练依赖或运行
+Python/MuJoCo/GUI。S8.7 按路线要求需用户单独授权后，才能选择一种算法做 CPU 短运行。
 
 当前接续 S5.2：本人正确提交 error、delta_q、q_new 三行 NumPy 表达式，
 助手原样集成 examples/06_inverse_kinematics/main.py。重新核验 WSL2 Ubuntu 24.04.5，

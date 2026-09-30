@@ -197,8 +197,10 @@ requirements.txt            # 最小依赖
   本人正确实现动作限幅、几何速度积分、距离奖励和两种结束条件，并解释随机策略超时不代表接口失败，以及命令速度不同于 MuJoCo 动力学的实际 `qvel`；环境与边界检查通过。
 - [x] S8.4（1h）：对比两种距离奖励的数值，检查奖励是否符合任务目标。
   本人正确计算线性与平方距离奖励及改善量，并理解平方形式会放大远近的比例差异，但在小于 1 m 时数值绝对值更小；最小数值检查通过。
-- [ ] S8.5（1～2h）：解释 PPO 的采样和更新数据流，手算一个小样本目标；留下实现 TODO。
-- [ ] S8.6（1～2h）：解释 SAC 的 replay/critic/entropy，手算一个简化目标；留下实现 TODO。
+- [x] S8.5（1～2h）：解释 PPO 的采样和更新数据流，手算一个小样本目标；留下实现 TODO。
+  本人正确计算单步 critic target、advantage，以及正负 advantage 下的 PPO clipped objective，并解释裁剪用于限制单批旧数据推动的策略变化；训练实现仍保留 TODO。
+- [x] S8.6（1～2h）：解释 SAC 的 replay/critic/entropy，手算一个简化目标；留下实现 TODO。
+  本人正确计算含 entropy 的双 critic target，并解释 replay 的 off-policy 数据复用、较小 critic 值对高估的约束，以及 `alpha` 对策略随机性的影响；训练实现仍保留 TODO。
 - [ ] S8.7（1～2h）：后续单独授权后，选一种算法做 CPU 短运行检查，记录数据和耗时，不要求收敛。
 
 ### Stage 9 — Domain Randomization / Sim-to-Real
