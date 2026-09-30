@@ -55,3 +55,17 @@ not random-case failure or general sim-to-real robustness. The learner correctly
 that repeated actual-position feedback can correct small nominal-Jacobian errors, while the
 extra updates show reduced convergence efficiency. They also limited the evidence to this
 link-length range, initial state, target, and geometric model. S9.2 is complete.
+
+S9.3 adds only independent 1 mm standard-deviation noise to each observed world-xy
+end-effector coordinate. The controller consumes the noisy position, while evaluation uses
+the true FK position. Both baseline and noisy cases run exactly 20 updates. The baseline
+reached numerical zero true error and stayed there. With seed 7, the noisy case finished at
+about 0.000570127 m true distance, with a 0.000929092 m true-distance RMS over the final five
+records. The non-monotonic distance history shows continued corrections around the target.
+The first implementation also exposed two zero-division cases after the baseline reached
+exactly zero: zero joint increment in the limiter and an undefined noisy/baseline ratio.
+These were handled by keeping q unchanged for zero increment and reporting absolute metric
+increases instead of a ratio. The learner correctly distinguished the final instantaneous
+error from the tail RMS stability metric, explained why zero-mean noise still causes
+stepwise corrections, and limited the evidence to one seed and one noise scale. S9.3 is
+complete.
