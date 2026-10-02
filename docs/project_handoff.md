@@ -1,9 +1,24 @@
 # 项目经验与进度交接
 
-最后整理：2026-09-30（Stage 9 完成）。供新会话快速恢复上下文。
+最后整理：2026-10-02（P0 Stage 10～11 路线建立，S10.1 开始）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
+
+P0 定义为 Stage 10 Full UR5e 6D Motion 与 Stage 11 Known-Pose Pick & Place。
+2026-10-02 完成静态仓库审计并把优化后的未完成任务加入 README；没有修改 Stage 0～9
+checkbox，没有实现 P0 算法或运行新仿真。S10.8 拆成线性与 cubic 两课；S11.6 拆成
+带物下降与支撑后释放两课，避免单课超过两小时。四份新笔记只包含结构，不预填本人结论。
+
+审计确认：真实 UR5e 已用于模型/执行器检查、`attachment_site` 世界位姿读取，以及
+3×6 position Jacobian 单列有限差分；二维两连杆用于基础 FK、IK、Cartesian tracking、
+速度限制和 Stage 9 的几何控制实验。Stage 7 的抓取、抬升与放置使用独立简化夹爪，
+尚未与 UR5e 集成。可直接复用 `site_pose.py` 的模型加载/位姿读取、Jacobian 示例的
+`mj_jacSite` 调用结构、UR5e home/位置执行器映射，以及 Stage 7 的接触对与成功判据；
+不能把二维 IK 或独立夹爪结果称为 UR5e 6D manipulation。
+
+当前只推进 S10.1 的理解/预测阶段：本人需先回答 `docs/11_ur5e_6d_pose.md` 中五个
+shape/unit/frame 问题，并预测最小位姿比较实验；之后才搭建读取代码。S10.1 未勾选。
 
 用户已选择 S5.3。讲解每轮重算 FK/Jacobian、最多接受 20 次更新、最后一次也检查误差。
 教学关节范围均为 [-π,π] rad，候选越界则拒绝并停止；不据此判定目标不可达。

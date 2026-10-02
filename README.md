@@ -215,10 +215,33 @@ requirements.txt            # 最小依赖
 - [x] S9.4（1h）：根据实验列出模型误差、执行器限制和真实部署前待验证事项，不连接真实机器人。
   本人基于已有实验整理了几何/动力学/接触/传感器模型误差、真实执行器限制及部署检查清单，并正确说明仿真成功不是现实安全许可。Stage 9 完成。
 
+### Stage 10 — Full UR5e 6D Motion
+
+- [ ] S10.1（0.5～1h）：只读取并比较 UR5e `attachment_site` 的完整世界位姿，复习旋转矩阵三列的物理意义；不控制机器人。见 [6D Pose 笔记](docs/11_ur5e_6d_pose.md)。
+- [ ] S10.2（1～2h）：从相对旋转、轴角与旋转向量建立三维 orientation error，明确单位、参考系和误差方向，并完成一次手算；不直接相减两个旋转矩阵。
+- [ ] S10.3（1～2h）：读取 UR5e 的 6×6 site Jacobian，用一个关节的小角度有限差分同时核对世界系位置与朝向变化。
+- [ ] S10.4（1～2h）：为很小的目标位姿完成一次 6D IK 更新；本人填写核心更新 TODO，并比较更新前后的 position/orientation error。
+- [ ] S10.5（1～2h）：在接近奇异的 UR5e 姿态比较普通最小二乘与两档阻尼的 DLS，记录关节增量范数、误差下降、条件数和稳定性。
+- [ ] S10.6（1～2h）：把 DLS 扩展为有次数、双容差、单步和关节位置限制的迭代 6D IK，分别测试小目标、困难目标和无效/未收敛目标；次数耗尽不等同于数学不可达。
+- [ ] S10.7（0.5～1h）：由 `qdot_max * control_dt` 推导并检查每轮关节增量限制，明确区分几何命令速度与 MuJoCo `data.qvel`。
+- [ ] S10.8a（1～2h）：生成并绘制 joint-space 线性插值的 `q(t)` 与分段速度，解释端点速度突变和直接跳变目标的问题。
+- [ ] S10.8b（1～2h）：生成并绘制满足端点边界条件的 cubic trajectory，比较线性轨迹的 position、velocity 和 acceleration。见 [Trajectory 笔记](docs/13_trajectory.md)。
+
+### Stage 11 — UR5e Known-Pose Pick & Place
+
+- [ ] S11.1（1～2h）：把简化双指夹爪接到 UR5e 末端，核对 attachment frame、关节/执行器映射和碰撞几何；只验证空载开合。
+- [ ] S11.2（1h）：为已知位姿的简单方块手工定义 grasp 与 pre-grasp pose，解释 offset、world/base/end-effector frame 和朝向要求；不执行抓取。
+- [ ] S11.3（1～2h）：复用 Stage 10 的 IK 与轨迹，从 home 到 pre-grasp，并检查位置/朝向容差、关节限制和碰撞。
+- [ ] S11.4（1～2h）：沿末端局部轴从 pre-grasp 接近并闭爪，比较 world-frame 与 end-effector-frame 位移，只以双侧接触作为本步现象。
+- [ ] S11.5（1～2h）：小幅抬升，分别检查物体世界高度、相对滑移和接触保持；不把瞬时接触自动视为稳定抓取。
+- [ ] S11.6a（1～2h）：持物限速转移并下降到已知放置位姿，监测掉落、位姿误差和物体—支撑面接触；尚不释放。
+- [ ] S11.6b（1～2h）：确认支撑后释放并撤离，检查最终物体位置、支撑接触、手指接触消失和低末速度，完成一次完整 known-pose pick-and-place。
+- [ ] S11.7（1～2h）：对物体 xy、摩擦和质量的小范围固定-seed 变化运行 20 次，统计成功率、失败阶段与最终位姿误差；不扩展为复杂 domain randomization。见 [Pick & Place 笔记](docs/14_pick_place.md)。
+
 ## Learning Notes and Workflow
 
 新会话先读 [AGENTS.md](AGENTS.md) → [交接文档](docs/project_handoff.md) → 相关示例。
-十份编号笔记按主题保留空白，实验后逐步填写；不预写答案。
+编号笔记按主题记录，实验后逐步填写；不预写本人的结论或面试题答案。
 [仓库评估与笔记索引](docs/learning_roadmap.md)说明哪些代码适合先读。
 
 每个学习 Task：先写预测和 API 输入/输出，再完成最小实现或阅读实验，最后记录实测

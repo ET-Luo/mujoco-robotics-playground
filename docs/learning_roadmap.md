@@ -44,8 +44,11 @@ GUI 画面已由用户于 2026-09-26 确认可见，显示问题不再阻塞学�
 | 7 Manipulation | [09 Manipulation](09_manipulation.md) |
 | 8 Robot Learning | [10 Robot Learning](10_robot_learning.md) |
 | 9 Domain Randomization / Sim-to-Real | 后续实验时在 10 中补充，必要时再拆分 |
+| 10 Full UR5e 6D Motion | [11 UR5e 6D Pose](11_ur5e_6d_pose.md)、[12 UR5e 6D IK](12_ur5e_6d_ik.md)、[13 Trajectory](13_trajectory.md) |
+| 11 Known-Pose Pick & Place | [14 Pick & Place](14_pick_place.md) |
 
-编号笔记现在仅有五个标题。由本人实验后填写，不预先生成结论或面试答案。
+Stage 10～11 已加入 README；所有新 checkbox 保持未完成。新笔记只建立结构和当前任务入口，
+由本人实验后填写结论，不预先生成 `What I learned` 或面试题答案。
 旧的四个 Phase 已映射为 README 的 Stage 0～9；现有示例目录名称保持不变。
 
 ## 下一项建议
