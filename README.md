@@ -217,7 +217,7 @@ requirements.txt            # 最小依赖
 
 ### Stage 10 — Full UR5e 6D Motion
 
-- [ ] S10.1（0.5～1h）：只读取并比较 UR5e `attachment_site` 的完整世界位姿，复习旋转矩阵三列的物理意义；不控制机器人。见 [6D Pose 笔记](docs/11_ur5e_6d_pose.md)。
+- [x] S10.1（0.5～1h）：只读取并比较 UR5e `attachment_site` 的完整世界位姿，复习旋转矩阵三列的物理意义；不控制机器人。本人完成 shape/frame 校准、运行前预测与结果解释，理解轴上 site 可只改变朝向，并正确限定该特殊几何结论。见 [6D Pose 笔记](docs/11_ur5e_6d_pose.md)。
 - [ ] S10.2（1～2h）：从相对旋转、轴角与旋转向量建立三维 orientation error，明确单位、参考系和误差方向，并完成一次手算；不直接相减两个旋转矩阵。
 - [ ] S10.3（1～2h）：读取 UR5e 的 6×6 site Jacobian，用一个关节的小角度有限差分同时核对世界系位置与朝向变化。
 - [ ] S10.4（1～2h）：为很小的目标位姿完成一次 6D IK 更新；本人填写核心更新 TODO，并比较更新前后的 position/orientation error。

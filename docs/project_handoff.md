@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-02（P0 Stage 10～11 路线建立，S10.1 开始）。供新会话快速恢复上下文。
+最后整理：2026-10-02（S10.1 完成，S10.2 开始）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -17,8 +17,19 @@ checkbox，没有实现 P0 算法或运行新仿真。S10.8 拆成线性与 cubi
 `mj_jacSite` 调用结构、UR5e home/位置执行器映射，以及 Stage 7 的接触对与成功判据；
 不能把二维 IK 或独立夹爪结果称为 UR5e 6D manipulation。
 
-当前只推进 S10.1 的理解/预测阶段：本人需先回答 `docs/11_ur5e_6d_pose.md` 中五个
-shape/unit/frame 问题，并预测最小位姿比较实验；之后才搭建读取代码。S10.1 未勾选。
+S10.1：本人正确回答 pose 的 shape/unit/frame；首次把 reshape 后 shape 写成原始 `(9,)`，
+已校准为 reshape 后 `(3,3)`。新增 `examples/09_ur5e_6d_pose/main.py` 与 README。
+2026-10-02 在 WSL2、核验后的 mujoco 环境、Python 3.12.14/MuJoCo 3.14.0 运行退出 0：
+wrist_3 轴与 joint→site 向量均为局部 +y，轴距和世界位置变化均为零，朝向改变，局部
+定义与时间不变。本人正确解释轴上原点、旋转矩阵列、joint/site frame 的区别，并限定
+这不是任意关节的结论。S10.1 已勾选，未运行 GUI 或动力学。
+
+S10.2 已开始，只讲 world-frame orientation error：约定 `R_error_world=R_WT*R_WC^T`，
+先由本人完成 current=I、target=绕 world +z 旋转 +90° 的 relative rotation、axis-angle、
+rotation vector 及 shape/unit/frame 手算，并解释为何不能直接用矩阵差。本人首次将 relative
+rotation 误答为 I；已校准 `R_WC=I` 时结果就是 `R_WT`。轴 `+z`、90°、shape/unit/frame
+回答正确，但仍需补出 rotation-vector 三个分量，并完整解释矩阵差为何不是三维旋转误差；
+尚未写代码，S10.2 未勾选。
 
 用户已选择 S5.3。讲解每轮重算 FK/Jacobian、最多接受 20 次更新、最后一次也检查误差。
 教学关节范围均为 [-π,π] rad，候选越界则拒绝并停止；不据此判定目标不可达。
