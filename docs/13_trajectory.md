@@ -1,6 +1,7 @@
 # Joint-Space Trajectory Generation
 
-本章覆盖 S10.8a～S10.8b。当前只完成 linear interpolation；cubic trajectory 留到 S10.8b。
+本章覆盖 S10.8a～S10.8b：先观察 linear interpolation 的端点速度跳变，再用 cubic time
+scaling 满足端点零速度约束。
 
 ## S10.8a — Linear Joint-Space Trajectory
 
@@ -159,10 +160,188 @@ actuator tracking or collision safety.
 
 ### 15. My Verification
 
-- [ ] Run: personally generate and inspect the 2-second CSV/PNG.
-- [ ] Modify: run `--duration 4` and compare velocity and acceleration peaks with 2 seconds.
-- [ ] Explain: answer the handoff questions in your own words.
+- [x] Run: personally generated and inspected the 2-second CSV/PNG.
+- [x] Modify: ran `--duration 4` and compared velocity and acceleration peaks with 2 seconds.
+- [x] Explain: explained time scaling, continuity, endpoint impulse, Cartesian curvature, and tracking limits.
 
 Engineering: Code [x] · Experiment [x] · Docs [x]
 
-Learning: Run [ ] · Modify [ ] · Explain [ ]
+Learning: Run [x] · Modify [x] · Explain [x] — Mastered
+
+本人验证记录（2026-10-03）：亲自完成 2/4 s 两组运行与数据对比；由固定位移和两倍时间
+解释速度减半，指出 linear trajectory 只有 position continuous、端点 velocity 不连续，
+其 acceleration 在普通函数意义下不存在并可理解为 impulse。本人也正确说明 nonlinear FK
+使 joint-space 直线通常映射为弯曲 Cartesian path，且 reference tracking 还受 torque/
+velocity limits、inertia、gravity 等动力学因素影响。S10.8a Learning Mastered。
+
+## S10.8b — Cubic Joint-Space Trajectory
+
+### 1. Problem / Why
+
+S10.8a 的 position reference 连续，但静止 hold 与恒速段之间存在 velocity jump。真实机构
+无法瞬间改变速度。现在需要连接相同的 `q_start` 和 `q_goal`，同时满足：
+
+```text
+q(0)=q_start, q(T)=q_goal, qdot(0)=0, qdot(T)=0
+```
+
+四个标量边界条件正好确定一个三次多项式的四个系数。
+
+### 2. Intuition / Core Concepts
+
+令归一化时间 `tau=t/T`。cubic time scaling 在开头逐渐加速、中点达到最大速度、末尾逐渐
+减速。它改变沿 joint-space path 的时间规律，但 path 仍是 `q_start` 到 `q_goal` 的直线。
+
+- `T` 决定时间尺度；`tau` 无量纲。
+- position 与 velocity 在静止段连接处连续，因此是 C1。
+- acceleration 在起点由 0 跳到 `6 delta_q/T²`，终点再跳回 0，因此不是 C2。
+- 平滑启停并非“更慢”：相同 `delta_q` 和 `T` 下，其 peak velocity 是 linear 的 1.5 倍。
+
+### 3. Mathematics, Shapes, Units
+
+```text
+s(tau)       = 3 tau² - 2 tau³
+ds/dt        = (6 tau - 6 tau²) / T
+d²s/dt²      = (6 - 12 tau) / T²
+
+q(t)         = q_start + s(tau) delta_q
+qdot(t)      = ds/dt delta_q
+qddot(t)     = d²s/dt² delta_q
+```
+
+| quantity | shape | unit | frame / meaning |
+| --- | --- | --- | --- |
+| `tau`, `s` | scalar per sample | dimensionless | normalized time / path progress |
+| `q`, `delta_q` | `(N,6)`, `(6,)` | rad | UR5e joint coordinates; no Cartesian frame |
+| `qdot` | `(N,6)` | rad/s | joint velocity reference |
+| `qddot` | `(N,6)` | rad/s² | joint acceleration reference |
+
+For each joint with displacement `delta_q_j`:
+
+```text
+max |qdot_j|  = 1.5 |delta_q_j| / T       at tau=0.5
+max |qddot_j| = 6 |delta_q_j| / T²        at the motion endpoints
+```
+
+Thus doubling `T` halves peak velocity and quarters peak acceleration.
+
+### 4. Math → Code / Minimal Experiment
+
+```python
+tau = time[moving] / duration
+phase = 3.0 * tau**2 - 2.0 * tau**3
+phase_rate = (6.0 * tau - 6.0 * tau**2) / duration
+phase_acceleration = (6.0 - 12.0 * tau) / duration**2
+
+q[moving] = q_start + phase[:, None] * delta
+qdot[moving] = phase_rate[:, None] * delta
+qddot[moving] = phase_acceleration[:, None] * delta
+```
+
+[cubic.py](../examples/11_trajectory/cubic.py) uses the same UR5e home and joint offset as S10.8a.
+It analytically computes both trajectories, asserts the cubic boundary conditions and peak formulas, then
+saves a comparison CSV and a three-panel PNG. MuJoCo is used only to read model metadata and limits;
+`MjData`, `mj_step`, actuators, dynamics, and tracking are not involved.
+
+### 5. Expected and Actual Result
+
+For the largest displacement `0.30 rad` and `T=2 s`, expect cubic peak velocity `0.225 rad/s` and peak
+acceleration `0.45 rad/s²`. With `T=4 s`, expect `0.1125 rad/s` and `0.1125 rad/s²`.
+
+2026-10-03 verified in WSL2, conda `mujoco`, Python 3.12.14, MuJoCo 3.14.0:
+
+```bash
+python examples/11_trajectory/cubic.py
+python examples/11_trajectory/cubic.py --duration 4
+```
+
+| T | linear peak `|qdot|` | cubic peak `|qdot|` | cubic peak `|qddot|` | result |
+| ---: | ---: | ---: | ---: | --- |
+| 2 s | 0.150 rad/s | 0.225 rad/s | 0.4500 rad/s² | PASS |
+| 4 s | 0.075 rad/s | 0.1125 rad/s | 0.1125 rad/s² | PASS |
+
+Both commands exited 0. Cubic endpoint velocities were zero and all samples were finite; the configured
+goal remained within joint limits. The plot shows linear velocity jumps versus the cubic velocity arch,
+and a finite cubic acceleration ramp. The plotted linear acceleration is zero on ordinary motion/hold
+intervals; its endpoint impulses are not representable as finite analytic samples in this comparison.
+This is reference-generation evidence only, not actuator tracking evidence.
+
+### 6. Explanation and Failure Cases
+
+The cubic's zero endpoint velocities remove the impulsive acceleration required by linear start/stop.
+However, its acceleration is nonzero at each motion endpoint and zero in the adjacent holds, so acceleration
+still jumps. A quintic polynomial can additionally impose zero endpoint acceleration and achieve C2 joins.
+
+- A short `T` can violate velocity and acceleration limits; check both because they scale differently.
+- Cubic does not enforce torque, jerk, collision, or Cartesian-path constraints.
+- Joint-space interpolation still maps through nonlinear FK to a generally curved end-effector path.
+- A coarse `dt` may miss the exact midpoint peak unless the samples include `tau=0.5`.
+- Analytic derivatives should be preferred here; finite differences add sampling artifacts at boundaries.
+- A feasible reference does not guarantee that actuators can track it under inertia, gravity, and contact.
+
+### 7. Robotics Context
+
+- Manipulation: smooths joint commands between IK waypoints before actuator tracking.
+- Motion planning: separates geometric joint path from its time parameterization.
+- Dexterous/surgical robots: endpoint smoothness reduces shock, but higher-order and dynamic constraints
+  are commonly needed.
+
+### 8. Interview Capsule
+
+**30 seconds:** A cubic time scaling `s=3 tau²-2 tau³` interpolates two joint configurations while making
+both endpoint velocities zero. It is C1 when joined to stationary holds and has finite analytic
+acceleration, but acceleration still jumps at the joins, so it is not C2. For fixed displacement, peak
+velocity scales as `1/T` and peak acceleration as `1/T²`.
+
+**2 minutes:** I used normalized time to separate a straight joint-space path from its timing. Four
+boundary conditions—two positions and two zero velocities—determine a cubic polynomial. Differentiation
+gives a parabolic velocity profile and linear acceleration profile. Compared with linear interpolation,
+the cubic removes endpoint velocity discontinuities but reaches 1.5 times the linear constant speed for
+the same duration. Doubling duration halves velocity and quarters acceleration. This only generates a
+kinematic reference; collision, torque limits, and dynamic tracking remain separate validation problems.
+
+### 9. Run / Modify / Explain
+
+Run:
+
+```bash
+python examples/11_trajectory/cubic.py
+```
+
+Modify:
+
+```bash
+python examples/11_trajectory/cubic.py --duration 4
+```
+
+Compare the two reported cubic peaks and inspect both PNGs.
+
+Explain:
+
+1. Why do four endpoint constraints require at least a cubic polynomial?
+2. Why is cubic peak velocity 1.5 times the linear velocity for the same `delta_q` and `T`?
+3. Why does doubling `T` divide peak acceleration by four rather than two?
+4. Which quantities are continuous when cubic motion is joined to stationary holds?
+5. What does this experiment still not prove about execution on a real robot?
+
+### 10. Must Remember / My Verification
+
+- Cubic time scaling enforces endpoint position and zero velocity.
+- It is C1, not C2, when joined to stationary holds.
+- Peak velocity scales with `1/T`; peak acceleration scales with `1/T²`.
+- Smooth timing does not guarantee a straight Cartesian path or feasible dynamic tracking.
+
+- [x] Run: personally ran the default comparison and inspected its output.
+- [x] Modify: ran `--duration 4` and compared both peak-scaling laws.
+- [x] Explain: answered the five questions above.
+
+Engineering: Code [x] · Experiment [x] · Docs [x]
+
+Learning: Run [x] · Modify [x] · Explain [x] — Mastered
+
+本人验证记录（2026-10-03）：亲自完成默认与 4 s 实验运行和数据对比；用四个独立边界条件
+需要四个多项式系数解释最低三次阶数，并从速度曲线面积说明 cubic 为补偿前后低速而具有
+更高的中点速度。本人确认 duration 翻倍使 peak acceleration 按 `1/T²` 缩放为四分之一，
+且 cubic 与静止 hold 连接时 position/velocity 连续、acceleration 不连续。本人也正确指出
+reference 未验证 actuator torque/velocity/acceleration capability 或 controller tracking。
+S10.8b Learning Mastered。

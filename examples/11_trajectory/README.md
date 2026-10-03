@@ -1,7 +1,9 @@
 # Joint-space trajectory generation
 
-S10.8a studies a linear UR5e joint-space trajectory. It is a NumPy command generator, not a MuJoCo
-dynamics or actuator-tracking experiment.
+These scripts generate UR5e joint-space references with NumPy. They do not run MuJoCo dynamics or
+demonstrate actuator tracking.
+
+## S10.8a — Linear
 
 ```bash
 python examples/11_trajectory/linear.py
@@ -14,3 +16,15 @@ Changing duration from 2 to 4 seconds should halve the constant in-motion veloci
 acceleration spikes are finite-difference representations of ideal instantaneous velocity changes; their
 magnitude depends on sampling `dt` and is not a physically realizable acceleration command.
 
+## S10.8b — Cubic comparison
+
+```bash
+python examples/11_trajectory/cubic.py
+python examples/11_trajectory/cubic.py --duration 4
+```
+
+The cubic time law `s=3 tau^2-2 tau^3` satisfies zero velocity at both endpoints. The generated CSV and
+three-panel PNG under `tmp/11_cubic_trajectory/` compare the first joint's linear and cubic position,
+velocity, and acceleration. For the same displacement and duration, cubic motion has a 1.5-times larger
+peak velocity than linear motion, but removes its endpoint velocity jumps. Cubic acceleration is finite
+inside the motion but jumps where it meets the stationary holds, so the trajectory is C1, not C2.

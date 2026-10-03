@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-03（S10.8a Engineering Complete；Learning 待验证）。供新会话快速恢复上下文。
+最后整理：2026-10-03（S11.2 Engineering Complete）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -98,8 +98,48 @@ S10.8a Engineering Complete：新增 `examples/11_trajectory/linear.py` 与 READ
 3.14.0 环境运行 duration=2/4 s 均退出 0：samples 203/403，最大 |qdot| 0.15/0.075 rad/s，
 同 dt=0.01 s 下端点离散 |qddot| peak 15/7.5 rad/s²。视觉检查确认 position ramp、constant
 velocity segment 和 endpoint spikes。明确离散尖峰代表解析速度不连续且依赖 dt，不是可执行
-的有限加速度；未运行 dynamics/actuator tracking。S10.8a Learning 为 Run [ ] / Modify [ ] /
-Explain [ ]。下一个工程 Task 是 S10.8b，需等待 handoff 完成/跳过并由本人明确要求继续。
+的有限加速度；未运行 dynamics/actuator tracking。本人随后报告完成 2/4 s Run/Modify，并
+解释时间缩放、C0 position continuity、端点 impulse、nonlinear Cartesian path 与动力学
+tracking 边界。S10.8a Learning 为 Run [x] / Modify [x] / Explain [x]，已 Mastered。
+本人随后明确要求继续到 S10.8b。
+
+S10.8b Engineering Complete：新增 `examples/11_trajectory/cubic.py`，用
+`s=3*tau^2-2*tau^3` 解析生成 cubic q/qdot/qddot，并与相同起终点、时长的 linear reference
+保存到 CSV 和三联 PNG。2026-10-03 在核验后的 mujoco/Python 3.12.14/MuJoCo 3.14.0
+环境运行 duration=2/4 s 均退出 0：linear peak velocity 为 0.15/0.075 rad/s，cubic peak
+velocity 为 0.225/0.1125 rad/s，cubic peak acceleration 为 0.45/0.1125 rad/s²；端点 cubic
+velocity 均为零，目标满足 joint limits。视觉检查确认 S-shaped position、parabolic velocity
+和 linear acceleration。明确 cubic 与静止 hold 连接时为 C1 而非 C2，且 reference generation
+不证明 actuator tracking。本人随后报告完成默认与 4 s Run/Modify，并解释四个边界条件对应
+三次多项式、cubic 中段峰值补偿、`1/T²` acceleration scaling、C1 continuity，以及 torque/
+velocity/acceleration capability 与 controller tracking 边界。S10.8b Learning 为
+Run [x] / Modify [x] / Explain [x]，已 Mastered。下一工程任务为 S11.1，等待本人明确要求。
+
+S11.1 Engineering Complete：新增 `examples/12_pick_place/gripper.xml` 与
+`integrated_gripper.py`，用 MuJoCo 3.14 `MjSpec.attach` 将简化双指子模型安装到官方 UR5e
+`attachment_site`。2026-10-03 在核验后的 mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行
+默认与 `--target 0.015` 均退出 0；site 与 gripper base 的 world position/rotation 误差为
+0，两个 actuator 正确映射到 slide joint，finger geom 的 contype/conaffinity 均为 1，
+空载过程无 finger contact。终态每指分别约 0.03/0.015 m，总开口 0.08/0.05 m。首次以
+`1e-12 m` 判断动力学对称性因约 `7.2e-8 m` 数值差失败；改用与目标检查一致的 `1e-4 m`
+物理容差后完整复跑通过。未加入物体、GUI 或机械臂运动，不能据此证明抓取或轨迹无碰撞。
+本人随后完成 Explain：确认同一 origin 不等于同一 pose；总开口包含 `0.02 m` 零位间距与
+两指位移；`ctrl` 是 actuator 目标而非强制改写 joint state；空载无接触不能证明稳定抓取、
+轨迹无碰撞或 visual/collision geometry 一致。本人又亲自运行默认与 `--target 0.015`
+两条命令，确认开口符合 0.08/0.05 m 预期且均 PASS。S11.1 Learning 为 Run [x] /
+Modify [x] / Explain [x]，已 Mastered。下一工程任务为 S11.2，等待本人明确要求。
+
+S11.2 Engineering Complete：新增 `examples/12_pick_place/pose_planning.py`，在 object frame
+中手工定义 top-down grasp，令 gripper `+z` 指向 world `-z`、`+x` 为手指开合轴，并以
+`T_WG=T_WO*T_OG` 复合 world target；pre-grasp 沿 `-z_G` 后退。2026-10-03 在核验后的
+mujoco/Python 3.12.14 环境运行默认 `d=0.10 m` 与 `--pregrasp-distance 0.15` 均退出 0：
+grasp 固定为 `[-0.45,0.20,0.065] m`，pre-grasp z 分别为 0.165/0.215 m；pre→grasp
+位移在 world 中为 `[0,0,-d]`、在 gripper 中为 `[0,0,+d]`。旋转正交性/行列式、finger
+center 对齐与 offset 断言均通过。脚本也显示当前 Menagerie base 与 world 同原点但绕 z
+相差 π，故同一 object 的 world/base 坐标为 `[-0.45,0.20,0.03]` 与
+`[0.45,-0.20,0.03] m`。未做 IK、trajectory、actuator、dynamics、contact 或 grasp。
+S11.2 Learning 为 Run [ ] / Modify [ ] / Explain [ ]；下一步是本人完成 handoff，不自动进入
+S11.3。
 
 用户已选择 S5.3。讲解每轮重算 FK/Jacobian、最多接受 20 次更新、最后一次也检查误差。
 教学关节范围均为 [-π,π] rad，候选越界则拒绝并停止；不据此判定目标不可达。

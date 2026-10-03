@@ -243,16 +243,17 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
   - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成 control-dt 对比并解释命令速度、实际 qvel 与安全边界）
 - S10.8a（1～2h）：生成并绘制 joint-space 线性插值的 `q(t)`、分段速度和端点加速度尖峰。见 [Trajectory 笔记](docs/13_trajectory.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs
-  - Learning：[ ] Run　[ ] Modify　[ ] Explain
-- [ ] S10.8b（1～2h）：生成并绘制满足端点边界条件的 cubic trajectory，比较线性轨迹的 position、velocity 和 acceleration。见 [Trajectory 笔记](docs/13_trajectory.md)。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成 2/4 s 对比并解释连续性、端点冲击与 tracking 边界）
+- S10.8b（1～2h）：生成并绘制满足端点零速度边界条件的 cubic trajectory，比较线性轨迹的 position、velocity 和 acceleration。见 [Trajectory 笔记](docs/13_trajectory.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成 2/4 s 对比并解释约束、时间缩放、连续性与 tracking 边界）
 
 ### Stage 11 — UR5e Known-Pose Pick & Place
 
-- [ ] S11.1（1～2h）：把简化双指夹爪接到 UR5e 末端，核对 attachment frame、关节/执行器映射和碰撞几何；只验证空载开合。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- [x] S11.1（1～2h）：把简化双指夹爪接到 UR5e 末端，核对 attachment frame、关节/执行器映射和碰撞几何；只验证空载开合。见 [Pick & Place 笔记](docs/14_pick_place.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行默认与 0.015 m 目标实验，两者均 PASS，并解释 pose、opening、servo target 与碰撞证据边界）
 - [ ] S11.2（1h）：为已知位姿的简单方块手工定义 grasp 与 pre-grasp pose，解释 offset、world/base/end-effector frame 和朝向要求；不执行抓取。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.3（1～2h）：复用 Stage 10 的 IK 与轨迹，从 home 到 pre-grasp，并检查位置/朝向容差、关节限制和碰撞。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.4（1～2h）：沿末端局部轴从 pre-grasp 接近并闭爪，比较 world-frame 与 end-effector-frame 位移，只以双侧接触作为本步现象。

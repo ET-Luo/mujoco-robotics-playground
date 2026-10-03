@@ -1,0 +1,29 @@
+<mujoco model="UR5e teaching gripper">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002"/>
+  <worldbody>
+    <!-- This root body is attached to the UR5e attachment_site by MjSpec. -->
+    <body name="gripper_base">
+      <geom name="gripper_palm_visual" type="box" size="0.04 0.025 0.01"
+            pos="0 0 -0.015" contype="0" conaffinity="0"
+            mass="0.10" rgba="0.25 0.25 0.25 1"/>
+      <body name="left_finger" pos="-0.015 0 0.035">
+        <joint name="left_slide" type="slide" axis="-1 0 0" range="0 0.04" damping="2"/>
+        <geom name="left_finger_collision" type="box" size="0.005 0.015 0.04"
+              mass="0.10" friction="1 0.005 0.0001" rgba="0.2 0.5 0.9 1"/>
+      </body>
+      <body name="right_finger" pos="0.015 0 0.035">
+        <joint name="right_slide" type="slide" axis="1 0 0" range="0 0.04" damping="2"/>
+        <geom name="right_finger_collision" type="box" size="0.005 0.015 0.04"
+              mass="0.10" friction="1 0.005 0.0001" rgba="0.2 0.5 0.9 1"/>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <!-- Unit transmission: ctrl and slide-joint position target are both meters. -->
+    <position name="left_finger_position" joint="left_slide" kp="100"
+              ctrlrange="0 0.04" forcerange="-10 10"/>
+    <position name="right_finger_position" joint="right_slide" kp="100"
+              ctrlrange="0 0.04" forcerange="-10 10"/>
+  </actuator>
+</mujoco>
