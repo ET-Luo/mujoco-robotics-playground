@@ -2,6 +2,8 @@
 
 评估日期：2026-09-26；基于代码与历史记录静态检查，本次没有运行新实验。
 任务清单和学习 checkbox 统一维护在 [README](../README.md#learning-roadmap)，避免两份进度漂移。
+从 Stage 10 起 README 分开记录 Engineering（代码/实验/docs）与 Learning
+（本人 Run/Modify/Explain）；助手验证不能替代本人学习状态。
 
 ## 当前代码如何使用
 

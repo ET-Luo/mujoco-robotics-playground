@@ -33,11 +33,18 @@
 ## Learning Philosophy
 - Learning first: this is primarily a learning project and secondarily a software engineering project. Act as a robotics mentor, MuJoCo API tutor, engineering assistant, code reviewer, and documentation assistant.
 - Adapt explanations to a learner with strong Python/C++ and CS foundations but limited robotics, mechanics, and dynamics background. Explain physical meaning, frames, and units explicitly.
-- Follow this sequence: understand → implement → experiment → summarize. Explain the concept and expected behavior before coding; do not replace the learner's reasoning with a complete solution prematurely.
+- Default to Sprint Learning Mode: for the current task, build one coherent package in the order Problem → Why → Intuition → Core Concepts → Mathematics → Math-to-Code → Minimal Experiment → Expected/Actual Result → Explanation → Failure Cases → Robotics Context → Interview Capsule → Run/Modify/Explain. Do not pause for repeated guessing questions when directly teaching a new concept.
+- The assistant may complete boilerplate, API integration, experiments, validation, plots, debugging, documentation, and a failure-analysis draft in one turn. Reserve only a small number of genuinely central algorithm expressions as learner TODOs when that materially improves understanding.
+- After the Engineering portion of the current task is complete, stop and hand over a specific Run command, one meaningful Modify exercise, and 3–5 Explain questions. Do not automatically implement the next task.
 - Each example should teach one primary concept in small incremental steps.
 - One concept at a time: a qpos/qvel lesson must not expand into IK, Gymnasium, or RL. Use the current task's scope and split work into 0.5–2 hour learning tasks.
-- Do not automatically implement advanced algorithms in full.
-- For PD control, Jacobian IK, Cartesian control, PPO, and SAC, explain the concept first, create a minimal skeleton only if needed, and leave clear TODOs for manual implementation.
+- The 0.5–2 hour size describes the learner's later reading/running/modifying effort; it does not require the assistant to stop repeatedly during package creation.
+
+## Engineering and Learning Status
+- Track Engineering Complete separately from Learning Mastered for every new task. Engineering covers code, experiment, validation, and curated docs.
+- Learning Mastered requires all three learner-owned checks: Run, Modify, and Explain.
+- Only mark Run, Modify, or Explain when the user explicitly reports completing that item. Assistant execution never counts as learner Run, and assistant-authored explanation never counts as learner Explain.
+- Do not infer mastery from passing tests. README is the single source of truth for both status groups from Stage 10 onward; do not rewrite Stage 0–9 history.
 
 ## Do Not Over-engineer
 - Prefer the most direct, readable implementation. Do not add complex frameworks, layers of wrappers, design patterns, or unnecessary abstractions for a hypothetical future architecture.
@@ -73,9 +80,8 @@ If a GUI viewer cannot open, report the error and explain whether WSLg, OpenGL, 
 
 ## Documentation Rules
 - Give every major learning stage a short README.
-- Keep documentation concise, technical, and aligned with actual repository state.
+- Keep documentation concise, technical, curated, and aligned with actual repository state. Write a reusable reasoning summary, not a chat transcript or the assistant's private thought process.
 - Use Markdown code blocks or Mermaid diagrams when useful.
-- Documentation after experiment: after each learning task, (1) review/update the relevant README checkbox, (2) update its numbered topic note, (3) record commands, predictions, and actual results, (4) record problems and remaining uncertainty, and (5) summarize 3–5 interview questions grounded in that experiment.
-- Keep engineering validation separate from learning mastery. Check a learning task only after the learner has done and can explain it; do not infer mastery from assistant-generated code.
-- Do not prefill the learner's `What I Learned` or interview answers. Initial note skeletons stay empty until experiments; distinguish assistant observations from the learner's conclusions.
-- README is the single source for Stage 0–9 task checkboxes; `docs/learning_roadmap.md` provides navigation and code assessment. Keep `docs/project_handoff.md` aligned with both.
+- Each new major topic should cover Why, Intuition, Core Concepts, Mathematics with meaning/shape/unit/frame, Math-to-Code, Minimal Experiment, Expected/Actual Result, Explanation, Failure Cases, relevant Robotics Applications, a 30-second and 2-minute Interview Capsule, 3–5 follow-up questions, Must Remember, and My Verification.
+- Documentation after experiment: update Engineering status, record exact commands/results and uncertainty, add interview preparation, and provide the Run/Modify/Explain handoff. Keep learner verification boxes unchecked until explicitly reported.
+- README is the single source for task status; from Stage 10 onward it separately tracks Engineering and Learning Run/Modify/Explain. `docs/learning_roadmap.md` provides navigation and code assessment. Keep `docs/project_handoff.md` aligned with both.

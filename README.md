@@ -217,26 +217,52 @@ requirements.txt            # 最小依赖
 
 ### Stage 10 — Full UR5e 6D Motion
 
-- [x] S10.1（0.5～1h）：只读取并比较 UR5e `attachment_site` 的完整世界位姿，复习旋转矩阵三列的物理意义；不控制机器人。本人完成 shape/frame 校准、运行前预测与结果解释，理解轴上 site 可只改变朝向，并正确限定该特殊几何结论。见 [6D Pose 笔记](docs/11_ur5e_6d_pose.md)。
-- [ ] S10.2（1～2h）：从相对旋转、轴角与旋转向量建立三维 orientation error，明确单位、参考系和误差方向，并完成一次手算；不直接相减两个旋转矩阵。
-- [ ] S10.3（1～2h）：读取 UR5e 的 6×6 site Jacobian，用一个关节的小角度有限差分同时核对世界系位置与朝向变化。
-- [ ] S10.4（1～2h）：为很小的目标位姿完成一次 6D IK 更新；本人填写核心更新 TODO，并比较更新前后的 position/orientation error。
-- [ ] S10.5（1～2h）：在接近奇异的 UR5e 姿态比较普通最小二乘与两档阻尼的 DLS，记录关节增量范数、误差下降、条件数和稳定性。
-- [ ] S10.6（1～2h）：把 DLS 扩展为有次数、双容差、单步和关节位置限制的迭代 6D IK，分别测试小目标、困难目标和无效/未收敛目标；次数耗尽不等同于数学不可达。
+Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs 决定；Learning 只有本人
+明确完成 Run、Modify、Explain 后才算 Mastered。旧流程下的助手运行不追认成本人的 Run。
+
+- S10.1（0.5～1h）：读取并比较 UR5e `attachment_site` 的完整世界位姿。见 [6D Pose 笔记](docs/11_ur5e_6d_pose.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S10.2（1～2h）：由相对旋转、轴角和旋转向量建立 world-frame orientation error。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S10.3（1～2h）：读取 UR5e 6×6 site Jacobian，用单关节有限差分同时核对位置与朝向。见 [6D IK 笔记](docs/12_ur5e_6d_ik.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行默认实验、完成 wrist_2 对比并确认单位修正）
+- S10.4（1～2h）：为很小的目标位姿完成一次未阻尼 6D IK 更新，分别比较 position 与 orientation error。见 [6D IK 笔记](docs/12_ur5e_6d_ik.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行默认与 5 倍目标实验并解释单步残差和奇异性风险）
+- S10.5（1～2h）：在近奇异 UR5e 姿态比较普通最小二乘与两档 DLS，记录关节增量、残差、奇异值和稳定性。见 [6D IK 笔记](docs/12_ur5e_6d_ik.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成近奇异/远离奇异对比并解释 SVD 增益与阻尼折衷）
+- S10.6（1～2h）：把 DLS 扩展为有次数、双容差、单步和关节位置限制的迭代 6D IK，测试可达、困难、不可达和无效目标。见 [6D IK 笔记](docs/12_ur5e_6d_ik.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成四场景运行、步长对比及终止状态解释）
 - [ ] S10.7（0.5～1h）：由 `qdot_max * control_dt` 推导并检查每轮关节增量限制，明确区分几何命令速度与 MuJoCo `data.qvel`。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S10.8a（1～2h）：生成并绘制 joint-space 线性插值的 `q(t)` 与分段速度，解释端点速度突变和直接跳变目标的问题。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S10.8b（1～2h）：生成并绘制满足端点边界条件的 cubic trajectory，比较线性轨迹的 position、velocity 和 acceleration。见 [Trajectory 笔记](docs/13_trajectory.md)。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 
 ### Stage 11 — UR5e Known-Pose Pick & Place
 
 - [ ] S11.1（1～2h）：把简化双指夹爪接到 UR5e 末端，核对 attachment frame、关节/执行器映射和碰撞几何；只验证空载开合。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.2（1h）：为已知位姿的简单方块手工定义 grasp 与 pre-grasp pose，解释 offset、world/base/end-effector frame 和朝向要求；不执行抓取。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.3（1～2h）：复用 Stage 10 的 IK 与轨迹，从 home 到 pre-grasp，并检查位置/朝向容差、关节限制和碰撞。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.4（1～2h）：沿末端局部轴从 pre-grasp 接近并闭爪，比较 world-frame 与 end-effector-frame 位移，只以双侧接触作为本步现象。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.5（1～2h）：小幅抬升，分别检查物体世界高度、相对滑移和接触保持；不把瞬时接触自动视为稳定抓取。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.6a（1～2h）：持物限速转移并下降到已知放置位姿，监测掉落、位姿误差和物体—支撑面接触；尚不释放。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.6b（1～2h）：确认支撑后释放并撤离，检查最终物体位置、支撑接触、手指接触消失和低末速度，完成一次完整 known-pose pick-and-place。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.7（1～2h）：对物体 xy、摩擦和质量的小范围固定-seed 变化运行 20 次，统计成功率、失败阶段与最终位姿误差；不扩展为复杂 domain randomization。见 [Pick & Place 笔记](docs/14_pick_place.md)。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 
 ## Learning Notes and Workflow
 
@@ -244,6 +270,6 @@ requirements.txt            # 最小依赖
 编号笔记按主题记录，实验后逐步填写；不预写本人的结论或面试题答案。
 [仓库评估与笔记索引](docs/learning_roadmap.md)说明哪些代码适合先读。
 
-每个学习 Task：先写预测和 API 输入/输出，再完成最小实现或阅读实验，最后记录实测
-结果、问题和 3～5 个面试问题。本人能够解释后才更新 checkbox。
+Stage 10 起采用 Sprint Learning Mode：Codex 一次完成当前 Task 的 Engineering package，
+然后本人按指定内容完成 Run → Modify → Explain；三项均明确完成后才标记 Learning Mastered。
 纯文档维护不虚构实验；Stage 1 Task 1 已由本人确认完成。

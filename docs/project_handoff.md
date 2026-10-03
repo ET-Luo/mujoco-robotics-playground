@@ -1,9 +1,14 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-02（S10.1 完成，S10.2 开始）。供新会话快速恢复上下文。
+最后整理：2026-10-03（S10.6 Engineering Complete + Learning Mastered）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
+
+用户要求从本次起采用 Sprint Learning Mode：Codex 一次完成当前 Task 的代码、实验、验证、
+整理后的 docs 与面试材料，再交给本人 Run→Modify→Explain。README 从 Stage 10 起分开记录
+Engineering 与 Learning；助手运行不计作本人 Run，只有本人明确报告三项完成才标记
+Learning Mastered。每次 Engineering 完成后停止，不自动进入下一 Task。AGENTS.md 已同步。
 
 P0 定义为 Stage 10 Full UR5e 6D Motion 与 Stage 11 Known-Pose Pick & Place。
 2026-10-02 完成静态仓库审计并把优化后的未完成任务加入 README；没有修改 Stage 0～9
@@ -24,12 +29,57 @@ wrist_3 轴与 joint→site 向量均为局部 +y，轴距和世界位置变化�
 定义与时间不变。本人正确解释轴上原点、旋转矩阵列、joint/site frame 的区别，并限定
 这不是任意关节的结论。S10.1 已勾选，未运行 GUI 或动力学。
 
-S10.2 已开始，只讲 world-frame orientation error：约定 `R_error_world=R_WT*R_WC^T`，
-先由本人完成 current=I、target=绕 world +z 旋转 +90° 的 relative rotation、axis-angle、
-rotation vector 及 shape/unit/frame 手算，并解释为何不能直接用矩阵差。本人首次将 relative
-rotation 误答为 I；已校准 `R_WC=I` 时结果就是 `R_WT`。轴 `+z`、90°、shape/unit/frame
-回答正确，但仍需补出 rotation-vector 三个分量，并完整解释矩阵差为何不是三维旋转误差；
-尚未写代码，S10.2 未勾选。
+S10.2：本人经一次校准确认 `R_error_world=R_WT*R_WC^T`；完成 world +z、+pi/2 的
+axis-angle 与 `[0,0,pi/2]` rad 手算，并解释矩阵差不表示旋转复合、SO(3) 只有三个自由度。
+本人填写 `orientation_error.py` 的 relative rotation 与 skew-vector 核心表达式。
+2026-10-03 在核验后的 mujoco 环境、Python 3.12.14 运行退出 0，得到 world-frame
+`[0,0,1.570796327]` rad、shape `(3,)`、norm=pi/2，断言通过。本人正确解释误差方向、
+符号及 `1/(2*sin(angle))` 在 0/pi 附近的数值不稳定。未运行 MuJoCo/GUI；S10.2 已勾选。
+
+S10.3 Engineering Complete：`full_jacobian.py` 读取 6×6 Jacobian 并对位置与旋转向量做
+单列有限差分；`docs/12_ur5e_6d_ik.md` 已整理为完整 Learning Package。基线验证结果为
+wrist_3 linear=0、angular≈`[3.67e-6,3.67e-6,-1]`，六维预测与实测在 `1e-9` 内一致。
+脚本新增 `--joint`/`--epsilon`。2026-10-03 在核验后的
+mujoco/Python 3.12.14/MuJoCo 3.14.0 环境默认与 `wrist_2_joint` 两条命令均退出 0；
+wrist_2 列 linear x≈-0.1 m/rad、angular 主要为 world +y，有限差分同样在 `1e-9` 内。
+本人随后明确报告完成默认 Run 与 wrist_2 Modify，并完成 Explain，S10.3 Learning 状态为
+Run [x] / Modify [x] / Explain [x]，已 Mastered。本人已确认单位校准：`jacp` 为
+m/rad（乘 Δq 后 m、乘 qdot 后
+m/s），`jacr` 为 rad/rad（乘 qdot 后 rad/s）。
+
+S10.4 Engineering Complete：新增 `examples/10_ur5e_6d_ik/main.py` 与 README。脚本用小
+joint offset 只生成可达 target pose；IK 实际输入是 world-frame 6D error 与当前 6×6
+Jacobian，并只做一次 `np.linalg.solve(J,e)`。无循环、DLS、actuator 或动力学。home
+condition≈8.310681。2026-10-03 在核验后的 mujoco/Python 3.12.14/MuJoCo 3.14.0
+运行默认与 `--target-scale 5` 均退出 0。默认 position/orientation norm 从
+1.405572 mm/4.528686 mrad 降至 1.922336 µm/1.123520 µrad；5 倍目标从
+7.022047 mm/22.663208 mrad 降至 47.973753 µm/27.950171 µrad，显示较大目标留下更大
+单步线性化残差；候选均满足 joint limits。`docs/12_ur5e_6d_ik.md` 已加入完整 package。
+本人随后报告亲自运行默认与 5 倍目标，两次退出 0；确认 condition≈8.31、joint limits
+通过和放大目标留下更大 residual，并完成 frame/unit、局部线性化与奇异性风险解释。
+S10.4 Learning 为 Run [x] / Modify [x] / Explain [x]，已 Mastered。下一个唯一工程 Task
+是 S10.5；本人已明确要求继续。
+
+S10.5 Engineering Complete：新增 `dls_comparison.py`，在 wrist_2=0.01 rad 的近奇异姿态
+沿最弱 left-singular direction 构造 `1e-3` 数值 6D error，比较 least-squares、
+λ=0.001 与 λ=0.01 的 DLS。2026-10-03 在核验后的 mujoco/Python 3.12.14/MuJoCo 3.14.0
+运行默认和 `--wrist-angle 0.05` 均退出 0。默认 condition=768.96，三种 `||Δq||` 分别
+0.36816/0.32422/0.02530 rad；medium damping 保持小更新但保留更多 residual。角度 0.05
+时 condition 降至 154.02，least-squares 更新降至 0.07374 rad 且实际误差有效下降。
+所有候选有限并满足 joint limits。本人亲自运行默认与 wrist-angle=0.05，两次 PASS；
+确认 condition 768.96→154.02、least-squares update 0.36816→0.07374 rad，并解释
+`1/σ → σ/(σ²+λ²)`、λ/scaling trade-off 与大步高阶残差。S10.5 Learning Mastered。
+
+S10.6 Engineering Complete：新增 `iterative_ik.py`，每轮重算 FK/error/Jacobian，用 DLS、
+公共比例 max-joint-step、双容差、update budget、joint limits 和输入校验，并返回显式状态。
+2026-10-03 在核验后的 mujoco/Python 3.12.14/MuJoCo 3.14.0 运行 all scenarios：reachable
+2 次成功；difficult 在 0.05 rad 限步下 8 次成功；unreachable 80 次后以 UPDATE_LIMIT
+结束、position residual≈1.166962 m；invalid 在 0 次以 INVALID_TARGET 拒绝。另以
+`--scenario difficult --max-joint-step 0.02` 运行，18 次成功，说明较小步长需要更多更新。
+两命令退出 0，断言通过；未把 UPDATE_LIMIT 等同一般不可达证明。S10.6 Learning 为
+Run [x] / Modify [x] / Explain [x]：本人完成四场景运行、0.02/0.05 rad 限步对比，并解释
+局部重算、双容差、公共缩放、budget failure 与真实部署边界。S10.6 Learning Mastered。
+下一个唯一工程 Task 是 S10.7，等待本人明确要求继续。
 
 用户已选择 S5.3。讲解每轮重算 FK/Jacobian、最多接受 20 次更新、最后一次也检查误差。
 教学关节范围均为 [-π,π] rad，候选越界则拒绝并停止；不据此判定目标不可达。

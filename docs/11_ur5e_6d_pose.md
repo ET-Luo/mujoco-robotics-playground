@@ -118,4 +118,38 @@ world frame，但尚未写出三个分量。本人指出旋转矩阵不是普通
 `R_error_world=R_WT I=R_WT`，不是单位矩阵。对应角度应以 rad 写作 `pi/2`；结合 world
 `+z` 单位轴，rotation vector 应由本人补写为具体三维分量。S10.2 尚未完成。
 
+2026-10-03 本人正确补充 rotation vector 为 `[0,0,pi/2]` rad（world frame），并正确
+指出矩阵差不表示旋转复合、通常不是合法旋转矩阵；旋转矩阵虽有九个元素，但 SO(3)
+约束使其只有三个自由度，九个差值不能直接作为三维角速度式误差。手算要求已完成。
+
+新增 [`orientation_error.py`](../examples/09_ur5e_6d_pose/orientation_error.py) 最小骨架。
+为保留核心推理，脚本尚有两处本人 TODO：
+
+1. 用 `current_rotation` 和 `target_rotation` 写出 world-frame `relative_rotation`。
+2. 从相对旋转矩阵写出顺序为
+   `[R32-R23, R13-R31, R21-R12]` 的 NumPy 三维数组。
+
+骨架随后用 `trace(R)` 计算角度、用 `2*sin(angle)` 恢复单位轴，再返回 axis×angle。
+本课明确排除接近 0 与 pi 的数值分支；TODO 完成前不运行，也不勾选 S10.2。
+
+本人随后正确提交两个核心表达式：`R_WT @ R_WC.T`，以及用 NumPy 零基下标提取
+`[R[2,1]-R[1,2], R[0,2]-R[2,0], R[1,0]-R[0,1]]`。助手仅将变量名对应到骨架的
+`target_rotation`/`current_rotation`；待运行验证和结果解释后再判断 S10.2 完成度。
+
+2026-10-03 助手在 WSL2 中激活并核验 `mujoco` 环境后运行：
+
+```bash
+python examples/09_ur5e_6d_pose/orientation_error.py
+```
+
+解释器为 `/home/lucas/miniconda3/envs/mujoco/bin/python`、Python 3.12.14。脚本退出 0，
+得到 world-frame error=`[0,0,1.570796327]` rad、shape `(3,)`、norm=`1.570796327` rad，
+与手算 `[0,0,pi/2]` 一致，断言通过。本脚本为 NumPy 几何检查，没有加载 MuJoCo 模型、
+运行 `mj_step` 或 GUI。待本人解释乘法顺序、正号和 0/pi 数值边界后完成 S10.2。
+
+本人最终解释：`R_WT @ R_WC.T` 定义 current→target 的 world-frame 相对旋转，所以本例
+为绕 world +z 的 +90°，rotation vector 为 `[0,0,pi/2]`；标准轴提取含
+`1/(2*sin(angle))`，在 angle 接近 0 或 pi 时分母趋近零，必须用特殊数值分支。
+推理、核心 TODO、运行结果与边界解释均完成，S10.2 已勾选。
+
 ## Interview questions
