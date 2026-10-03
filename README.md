@@ -238,10 +238,12 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
 - S10.6（1～2h）：把 DLS 扩展为有次数、双容差、单步和关节位置限制的迭代 6D IK，测试可达、困难、不可达和无效目标。见 [6D IK 笔记](docs/12_ur5e_6d_ik.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs
   - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成四场景运行、步长对比及终止状态解释）
-- [ ] S10.7（0.5～1h）：由 `qdot_max * control_dt` 推导并检查每轮关节增量限制，明确区分几何命令速度与 MuJoCo `data.qvel`。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
-- [ ] S10.8a（1～2h）：生成并绘制 joint-space 线性插值的 `q(t)` 与分段速度，解释端点速度突变和直接跳变目标的问题。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S10.7（0.5～1h）：由 `qdot_max * control_dt` 推导并检查每轮关节增量限制，区分几何命令速度与 MuJoCo `data.qvel`。见 [6D IK 笔记](docs/12_ur5e_6d_ik.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成 control-dt 对比并解释命令速度、实际 qvel 与安全边界）
+- S10.8a（1～2h）：生成并绘制 joint-space 线性插值的 `q(t)`、分段速度和端点加速度尖峰。见 [Trajectory 笔记](docs/13_trajectory.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs
+  - Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S10.8b（1～2h）：生成并绘制满足端点边界条件的 cubic trajectory，比较线性轨迹的 position、velocity 和 acceleration。见 [Trajectory 笔记](docs/13_trajectory.md)。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 

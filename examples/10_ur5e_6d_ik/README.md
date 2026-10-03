@@ -56,3 +56,19 @@ python examples/10_ur5e_6d_ik/iterative_ik.py --scenario difficult --max-joint-s
 The second command is the learner modification. A smaller per-update step should usually require more
 accepted updates while preserving bounded commands. `UPDATE_LIMIT` means the configured solver budget
 was exhausted; it is not a general mathematical proof that the target is unreachable.
+
+## S10.7 Joint velocity limits
+
+[`velocity_limited_ik.py`](velocity_limited_ik.py) converts each DLS increment into a geometric velocity
+command using `qdot_command = delta_q / control_dt` and enforces
+`|delta_q_i| <= qdot_max_i * control_dt` with one common scale:
+
+```bash
+python examples/10_ur5e_6d_ik/velocity_limited_ik.py
+python examples/10_ur5e_6d_ik/velocity_limited_ik.py --control-dt 0.01
+```
+
+The second command is the learner modification. Halving `control_dt` halves every per-update angle
+limit, so the same geometric path should require roughly more updates while respecting the same rad/s
+limit. The script directly integrates `qpos` and calls `mj_forward`; its `qdot_command` is not MuJoCo's
+actual `data.qvel`, because no actuator command or `mj_step` executes that velocity.

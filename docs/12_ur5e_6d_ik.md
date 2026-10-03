@@ -676,3 +676,163 @@ Learning: Run [x] · Modify [x] · Explain [x] — Mastered
 joint-space direction，并指出 step 太小等情况也会导致 UPDATE_LIMIT。本人正确限定真实
 系统还需要 trajectory、控制接口和动力学约束；补充的其他 budget-exhaustion 原因包括
 阻尼过大、近奇异和不良局部收敛。S10.6 Learning Mastered。
+
+## S10.7 — Joint Velocity Limits
+
+### 1. Why
+
+S10.6 的 `max_joint_step` 只限制“一轮最多走多少 rad”，没有时间尺度。机器人接口通常限制
+rad/s，因此必须结合控制周期把速度上限转换成每轮角度上限。否则同一 `Δq` 在 100 Hz 与
+50 Hz 下代表不同速度，无法判断命令是否安全或可执行。
+
+### 2. Intuition
+
+速度是单位时间内的角度变化。控制周期越短，同样的速度在一轮内允许走的角度越小：
+`qdot_max` 像限速牌，`control_dt` 是每帧经过的时间，两者乘积才是这一帧允许的路程。
+
+### 3. Core Concepts
+
+- `qdot_command`：几何算法希望发送的 joint velocity reference，单位 rad/s。
+- `control_dt`：假定的命令周期，单位 s。
+- `step_limit_i=qdot_max_i*control_dt`：每关节每轮角度上限，单位 rad。
+- Common scaling：用单个比例缩放整条 `Δq`，保留 DLS joint-space direction。
+- `data.qvel`：MuJoCo 动力学状态中的实际 generalized velocity；不是任意局部变量的别名。
+
+### 4. Mathematics
+
+```text
+Δq_limit,i = qdot_limit,i Δt
+s = min(1, min_i Δq_limit,i / |Δq_raw,i|)
+Δq_limited = s Δq_raw
+qdot_command = Δq_limited / Δt
+```
+
+| 量 | shape | unit | meaning |
+| --- | --- | --- | --- |
+| `qdot_limit` | `(6,)` | rad/s | 每关节命令速度上限 |
+| `control_dt` | scalar | s | 假定控制周期 |
+| `step_limit` | `(6,)` | rad/update | 每轮最大角度变化 |
+| `Δq_limited` | `(6,)` | rad | 本轮几何更新 |
+| `qdot_command` | `(6,)` | rad/s | 受限几何速度命令 |
+
+本实验中所有量都是 joint space，不涉及 world/local Cartesian frame。
+
+### 5. Math → Code
+
+```python
+step_limits = speed_limits * control_dt
+ratios = step_limits / abs(delta_q_raw)
+scale = min(1.0, min(ratios))
+delta_q = scale * delta_q_raw
+qdot_command = delta_q / control_dt
+```
+
+实现对零分量使用 `np.divide(..., where=...)`，避免除零。每轮断言所有
+`abs(qdot_command) <= speed_limits`。随后只是 `qpos += delta_q` 与 `mj_forward`，没有把命令
+写入 actuator 或调用 `mj_step`。
+
+### 6. Minimal Experiment
+
+[velocity_limited_ik.py](../examples/10_ur5e_6d_ik/velocity_limited_ik.py)跟踪 S10.6 的 difficult
+target，固定 `qdot_max=0.5 rad/s`，比较：
+
+- `control_dt=0.02 s` → `step_limit=0.01 rad/update`
+- `control_dt=0.01 s` → `step_limit=0.005 rad/update`
+
+记录首次 raw/limited update、最大命令速度、饱和轮数、更新总数、虚拟时间和 `data.qvel`。
+
+### 7. Expected Result
+
+周期减半后每轮角度上限减半，因此达到同一目标大约需要两倍更新；若速度上限相同，首轮
+最大 `|qdot_command|` 都应饱和在 0.5 rad/s。更新数乘周期得到的虚拟时间应大致接近。
+由于没有动力学推进，`data.qvel` 不会自动等于命令。
+
+### 8. Actual Result
+
+2026-10-03，WSL2、conda `mujoco`、Python 3.12.14、MuJoCo 3.14.0：
+
+```bash
+python examples/10_ur5e_6d_ik/velocity_limited_ik.py
+python examples/10_ur5e_6d_ik/velocity_limited_ik.py --control-dt 0.01
+```
+
+| `dt` | step limit | updates | virtual time | saturated | max command |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.02 s | 0.010 rad | 35 | 0.700 s | 34 | 0.500 rad/s |
+| 0.01 s | 0.005 rad | 69 | 0.690 s | 68 | 0.500 rad/s |
+
+两条命令退出 0，position/orientation 均满足 S10.6 容差；每轮速度断言通过，候选满足 joint
+limits。两组最终 `data.qvel=[0,0,0,0,0,0] rad/s`，`data.time=0 s`。
+
+### 9. Explanation
+
+`dt` 减半使允许的 `Δq` 减半，所以饱和阶段的更新数近似翻倍；35×0.02 与 69×0.01 给出
+相近虚拟时间。首轮 raw direction 相同，公共 scale 和 `dt` 同时减半，因此两组得到相同
+首轮 `qdot_command`，最大分量都是 -0.5 rad/s。
+
+`data.qvel=0` 不表示真实机器人会静止，只表示脚本从零速度状态开始、直接改 `qpos`，并且
+`mj_forward` 只刷新运动学派生量而不积分动力学。实际 qvel 需要 actuator/controller 和
+`mj_step`，并会受惯性、重力、摩擦、饱和、接触与带宽影响。
+
+### 10. Failure Cases
+
+- 使用错误或变化的实际周期：命令的真实 rad/s 与假定值不符。
+- 只限制 `Δq` 不考虑 `dt`：无法在不同控制频率间保持相同速度约束。
+- 逐元素 clipping：改变 DLS joint direction，可能降低 task-space一致性。
+- 只限速度：仍可能违反 acceleration、jerk、torque、collision 或 workspace 限制。
+- 把 command 当作 measured qvel：掩盖 tracking error 和动力学风险。
+
+### 11. Robotics Application
+
+- Manipulation：限制末端对准过程中的关节命令速度。
+- Dexterous hand：避免多指 IK 产生瞬时高速关节动作。
+- Motion/control：连接几何 IK 与周期性 joint-velocity controller。
+- Surgical robotics：速度限制是必要安全层，但还需加速度、力和工作空间约束。
+
+### 12. Interview Capsule
+
+#### 30 秒版本
+
+I convert a joint-velocity limit into a per-cycle IK step using `delta_q_max=qdot_max*control_dt`.
+I scale the complete DLS update with one factor, then compute `qdot_command=delta_q/control_dt` and
+verify every component. This is still a geometric command; it is not MuJoCo `data.qvel` until a controller
+and dynamics actually execute it.
+
+#### 2 分钟版本
+
+An angular step has no velocity meaning without a control period. For each joint I compute its allowed
+step from rad/s times seconds, then choose the most restrictive common scale so the DLS direction is
+preserved. With a 0.5 rad/s limit, changing dt from 0.02 to 0.01 seconds halved the step limit from 0.01
+to 0.005 rad and increased updates from 35 to 69, while virtual time stayed near 0.7 seconds. The script
+uses direct qpos integration and mj_forward, so data.qvel remains zero and does not validate tracking.
+
+### 13. Likely Follow-up Questions
+
+1. Why does halving `control_dt` halve the allowed joint increment?
+2. Why use a common scale instead of clipping every joint independently?
+3. What is the difference between `qdot_command` and measured `data.qvel`?
+4. Why are velocity limits insufficient without acceleration and torque limits?
+5. How would control-period jitter affect this calculation?
+
+### 14. Must Remember
+
+- `Δq_max=qdot_max*control_dt` connects rad/s to rad/update.
+- Recompute the limit if the actual control period changes.
+- Common scaling preserves the IK joint-space direction.
+- Geometric command velocity is not actual `data.qvel`.
+- Real deployment also needs acceleration, jerk, torque, collision and watchdog limits.
+
+### 15. My Verification
+
+- [x] Run: personally executed the default `dt=0.02 s` experiment.
+- [x] Modify: executed `--control-dt 0.01` and compared step limit, updates, virtual time, and max command.
+- [x] Explain: explained the time-step conversion, common scaling, command/state distinction, and safety gaps.
+
+Engineering: Code [x] · Experiment [x] · Docs [x]
+
+Learning: Run [x] · Modify [x] · Explain [x] — Mastered
+
+本人验证记录（2026-10-03）：亲自完成 dt=0.02/0.01 s 两组运行与结果对比；由
+`qdot=Δq/Δt` 推导 step limit，解释 dt 减半使每步距离减半、公共比例避免改变 joint-space
+direction，并区分期望的 `qdot_command` 与动力学状态 `data.qvel`。本人指出真实安全还需
+acceleration、jerk、collision avoidance 等约束。S10.7 Learning Mastered。

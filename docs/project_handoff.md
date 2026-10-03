@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-03（S10.6 Engineering Complete + Learning Mastered）。供新会话快速恢复上下文。
+最后整理：2026-10-03（S10.8a Engineering Complete；Learning 待验证）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -79,7 +79,27 @@ S10.6 Engineering Complete：新增 `iterative_ik.py`，每轮重算 FK/error/Ja
 两命令退出 0，断言通过；未把 UPDATE_LIMIT 等同一般不可达证明。S10.6 Learning 为
 Run [x] / Modify [x] / Explain [x]：本人完成四场景运行、0.02/0.05 rad 限步对比，并解释
 局部重算、双容差、公共缩放、budget failure 与真实部署边界。S10.6 Learning Mastered。
-下一个唯一工程 Task 是 S10.7，等待本人明确要求继续。
+本人已明确要求并完成推进到 S10.7 Engineering。
+
+S10.7 Engineering Complete：新增 `velocity_limited_ik.py`，以
+`step_limit=qdot_limit*control_dt` 将 DLS 更新转换为受限几何 `qdot_command`，用公共比例
+保持 joint direction，并逐轮断言六关节速度与 joint limits。2026-10-03 在核验后的
+mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行 dt=0.02/0.01 s 均退出 0：step limit
+0.01/0.005 rad，更新 35/69 次，虚拟时间 0.700/0.690 s，最大命令均为 0.5 rad/s，
+饱和 34/68 次。脚本只直接积分 qpos 并调用 mj_forward，故 data.qvel=0、time=0；这不是
+实际速度跟踪证据。本人随后报告完成两组 Run 与对比，并正确解释 `Δq=qdot·dt`、公共缩放、
+command vs actual qvel，以及 acceleration、
+jerk、collision 等额外安全要求。S10.7 Learning 为 Run [x] / Modify [x] / Explain [x]，
+已 Mastered；本人随后明确要求并完成推进到 S10.8a Engineering。
+
+S10.8a Engineering Complete：新增 `examples/11_trajectory/linear.py` 与 README，生成含运动
+前后 hold 的 UR5e joint-space linear reference，保存 q/qdot/qddot CSV 和三联 PNG 到已忽略
+的 `tmp/11_linear_trajectory/`。2026-10-03 在核验后的 mujoco/Python 3.12.14/MuJoCo
+3.14.0 环境运行 duration=2/4 s 均退出 0：samples 203/403，最大 |qdot| 0.15/0.075 rad/s，
+同 dt=0.01 s 下端点离散 |qddot| peak 15/7.5 rad/s²。视觉检查确认 position ramp、constant
+velocity segment 和 endpoint spikes。明确离散尖峰代表解析速度不连续且依赖 dt，不是可执行
+的有限加速度；未运行 dynamics/actuator tracking。S10.8a Learning 为 Run [ ] / Modify [ ] /
+Explain [ ]。下一个工程 Task 是 S10.8b，需等待 handoff 完成/跳过并由本人明确要求继续。
 
 用户已选择 S5.3。讲解每轮重算 FK/Jacobian、最多接受 20 次更新、最后一次也检查误差。
 教学关节范围均为 [-π,π] rad，候选越界则拒绝并停止；不据此判定目标不可达。
