@@ -252,8 +252,8 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
 
 - [x] S11.1（1～2h）：把简化双指夹爪接到 UR5e 末端，核对 attachment frame、关节/执行器映射和碰撞几何；只验证空载开合。见 [Pick & Place 笔记](docs/14_pick_place.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行默认与 0.015 m 目标实验，两者均 PASS，并解释 pose、opening、servo target 与碰撞证据边界）
-- [ ] S11.2（1h）：为已知位姿的简单方块手工定义 grasp 与 pre-grasp pose，解释 offset、world/base/end-effector frame 和朝向要求；不执行抓取。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- [x] S11.2（1h）：为已知位姿的简单方块手工定义 grasp 与 pre-grasp pose，解释 offset、world/base/end-effector frame 和朝向要求；不执行抓取。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证默认/修改实验，解释合法旋转、frame 表达与 IK 证据边界）
 - [ ] S11.3（1～2h）：复用 Stage 10 的 IK 与轨迹，从 home 到 pre-grasp，并检查位置/朝向容差、关节限制和碰撞。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
 - [ ] S11.4（1～2h）：沿末端局部轴从 pre-grasp 接近并闭爪，比较 world-frame 与 end-effector-frame 位移，只以双侧接触作为本步现象。

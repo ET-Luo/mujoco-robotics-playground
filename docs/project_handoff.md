@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-03（S11.2 Engineering Complete）。供新会话快速恢复上下文。
+最后整理：2026-10-03（S11.2 Engineering Complete + Learning Mastered）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -138,8 +138,11 @@ grasp 固定为 `[-0.45,0.20,0.065] m`，pre-grasp z 分别为 0.165/0.215 m；p
 center 对齐与 offset 断言均通过。脚本也显示当前 Menagerie base 与 world 同原点但绕 z
 相差 π，故同一 object 的 world/base 坐标为 `[-0.45,0.20,0.03]` 与
 `[0.45,-0.20,0.03] m`。未做 IK、trajectory、actuator、dynamics、contact 或 grasp。
-S11.2 Learning 为 Run [ ] / Modify [ ] / Explain [ ]；下一步是本人完成 handoff，不自动进入
-S11.3。
+本人随后报告已运行并验证默认/修改实验，并解释合法 rotation 需要正交且 determinant 为
+`+1`、同一向量在不同 frame 中坐标分量可不同、同一原点不代表同一朝向，以及合法几何
+pose 不能证明 IK 有解或解的质量。补充校准：也尚未证明 joint limits、奇异性、轨迹碰撞、
+动力学跟踪或抓取稳定。S11.2 Learning 为 Run [x] / Modify [x] / Explain [x]，已 Mastered。
+下一工程任务为 S11.3，等待本人明确要求。
 
 用户已选择 S5.3。讲解每轮重算 FK/Jacobian、最多接受 20 次更新、最后一次也检查误差。
 教学关节范围均为 [-π,π] rad，候选越界则拒绝并停止；不据此判定目标不可达。

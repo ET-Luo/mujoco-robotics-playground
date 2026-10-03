@@ -274,4 +274,10 @@ rotation。world/base/end-effector 是不同表达 frame；坐标可以不同但
 ### Status
 
 - Engineering: [x] Code [x] Experiment [x] Docs
-- Learning: [ ] Run [ ] Modify [ ] Explain
+- Learning: [x] Run [x] Modify [x] Explain — Mastered
+
+本人已运行并验证默认与修改实验。Explain 确认：合法 3D rotation 需正交且
+`det(R)=+1`，因此 `diag(1,-1,-1)` 是纯旋转，而 determinant 为 `-1` 的
+`diag(1,1,-1)` 是 reflection；同一几何向量在不同 frame 中可有不同坐标分量；同一原点
+不代表坐标轴朝向相同；几何目标合法不能证明 IK 有解或解的质量，也不能证明关节限位、
+奇异性、轨迹碰撞、动力学跟踪与抓取稳定。S11.2 Learning Mastered。
