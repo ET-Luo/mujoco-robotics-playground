@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-03（S11.2 Engineering Complete + Learning Mastered）。供新会话快速恢复上下文。
+最后整理：2026-10-04（S11.7 Engineering Complete + Learning Mastered）。供新会话快速恢复上下文。
 先读根目录 [AGENTS.md](../AGENTS.md)，再读本文；执行前重新检查实际环境。
 
 ## 当前目标与边界
@@ -143,6 +143,101 @@ center 对齐与 offset 断言均通过。脚本也显示当前 Menagerie base �
 pose 不能证明 IK 有解或解的质量。补充校准：也尚未证明 joint limits、奇异性、轨迹碰撞、
 动力学跟踪或抓取稳定。S11.2 Learning 为 Run [x] / Modify [x] / Explain [x]，已 Mastered。
 下一工程任务为 S11.3，等待本人明确要求。
+
+S11.3 Engineering Complete：新增 `examples/12_pick_place/pregrasp_motion.py`，在 UR5e +
+已安装夹爪 + 固定方块的编译模型中，只用六个 arm DOF 做受限 DLS IK 到 S11.2 的
+`d=0.10 m` pre-grasp，再生成 cubic joint reference；手指保持 0.08 m 开口。2026-10-04
+在核验后的 mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行 duration=3/5 s 均退出 0。
+IK 21 次更新成功，position/orientation residual 为 0.000062233 m/0.000001508 rad；
+3/5 s 分别有 301/501 samples，peak analytic qdot 为 0.443492/0.266095 rad/s。所有 sample
+均满足 arm joint limits，UR5e/夹爪/固定方块间 contact pair 为空，终点双容差通过。
+脚本直接设置 qpos 并调用 mj_forward，未加入 floor、未运行 mj_step/actuator tracking；
+0.01 s 离散无接触不是连续碰撞证明。本人随后实际运行并验证 3/5 s 两组实验，解释终点
+合法不能推出整条路径合法、`tau=t/T` 使 peak qdot 按 `1/T` 缩放、离散无碰撞不等于
+连续无碰撞，以及 pre-grasp 应只使用六个 arm DOF。补充校准：`mj_forward` 不推进时间，
+不能证明 actuator dynamics/tracking；finger joints 位于 attachment site 下游，对该 site 的
+Jacobian columns 为零，显式排除用于保持 arm-only 语义。S11.3 Learning 为 Run [x] /
+Modify [x] / Explain [x]，已 Mastered。下一工程任务为 S11.4，等待本人明确要求。
+
+S11.4 Engineering Complete：新增 `examples/12_pick_place/approach_and_close.py`，保持夹爪
+0.08 m 张开，以 11 个 warm-start IK targets 沿 local `+z_G` 从 pre-grasp 接近 grasp，
+再用 mj_step 闭爪并停在首次左右 finger–fixed-object 同时接触。2026-10-04 在核验后的
+mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行 approach distance=0.10/0.08 m 均退出 0；
+world/gripper 主位移分别约为 -0.099972/+0.099972 m 与 -0.079950/+0.079950 m，最大
+sampled line deviation 约 5.59e-5/6.79e-5 m，open approach 无 contact。两组均在闭爪第
+28 step、0.056 s 首次双侧接触，opening 约 0.03653 m，终止 contact set 恰好为左右两组
+finger–object pair。首次试跑发现 finger 同时接触未命名 wrist coarse geoms；改进 contact
+名称报告后定位 wrist₂/wrist₃，并仅对 mechanically adjacent wrist–finger body pairs 添加
+collision exclusions，修正后两组完整复跑及 S11.3 5 s regression 均通过。方块固定，故只
+验证 bilateral contact event，不证明 stable grasp、retention 或 lift。本人随后运行并验证
+0.10/0.08 m 两组实验，解释同一位移的 world/gripper frame 表达、IK tolerance 导致的
+横向 deviation，以及 `ncon>=2` 不能代替左右命名 geom pair 检查；并指出真实抓取需要足够
+摩擦抵抗重力。补充校准：固定方块没有自由度，瞬时 contact 未验证被推走/旋转/滑落、
+接触保持、相对滑移或抬升。S11.4 Learning 为 Run [x] / Modify [x] / Explain [x]，已
+Mastered。下一工程任务为 S11.5，等待本人明确要求。
+
+S11.5 Engineering Complete：新增 `examples/12_pick_place/lift_object.py`，将方块改为
+freejoint、加入 ground，在重力下闭爪稳定后用 UR5e position actuators 跟踪 cubic lift；
+分别检查 measured object world-z、object-to-gripper relative change 和 bilateral contact
+retention。2026-10-04 在核验后的 mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行请求
+lift=0.05/0.03 m 均退出 0。有限 stiffness 导致首次无 headroom 测试中默认 gripper/object
+仅升 0.04206/0.03225 m，物体相对下滑 0.00981 m，未达到 unchanged 0.04 m object-lift
+下限；未放宽判据，改为显式增加 0.01 m geometric EE target headroom。最终两组 actual
+gripper/object lift 为 0.05207/0.04212 m 与 0.03205/0.02244 m，relative z change 为
+-0.009952/-0.009610 m，750/750 lift steps 保持 bilateral，终态仅左右 finger–object contacts、
+无 ground contact。为防 finger tip 与桌面摩擦阻止闭合，finger collision z half-size 调为
+0.028 m，保留 2 mm clearance；S11.1 默认与 S11.4 0.08 m 回归通过。自由物体 home 后的
+7 个 qpos 需显式设为 world xyz + unit quaternion。未测试 transfer、placement、release 或
+robustness。本人随后运行并验证请求 0.05/0.03 m 两组实验，解释夹爪上升不等于物体上升、
+negative relative z 表示相对下滑而非 world-z 必然下降、bilateral fraction 与 final contact
+分别覆盖过程和终态，以及 headroom 是预留而非证据。补充校准：本例 headroom 主要补偿
+finite-stiffness arm tracking deficit，不能替代 measured object lift、relative slip 和 contact
+retention。S11.5 Learning 为 Run [x] / Modify [x] / Explain [x]，已 Mastered。下一工程
+任务为 S11.6a，等待本人明确要求。
+
+S11.6a Engineering Complete：新增 `examples/12_pick_place/transfer_and_descend.py`，从
+S11.5 held state 做水平 cubic transfer，再按实测 object-to-gripper offset 下降到已知
+`[-0.30,-0.10,0.03] m` ground pose；保持闭爪。2026-10-04 在核验后的
+mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行 transfer duration=3/2 s 均退出 0。
+peak command/actual qdot 为 0.28947/0.28454 与 0.43420/0.41803 rad/s；最差 relative-z
+change 为 -0.009989/-0.006908 m；transfer/descent bilateral fraction 均为 1。最终 object
+pose error norm 为 0.002090/0.001994 m，ground support 与左右 finger contact 均存在。
+额外 5 s 测试虽速度降至约 0.174 rad/s，却因时间累积滑移超过 -0.015 m 判据失败；尝试
+finger kp 200/300/400 未稳定消除，最终保留与 Stage 7 一致的 kp=200，并用 2 s 作 Modify，
+展示 speed margin 与 retention time 权衡。未 release/retreat。本人随后运行并验证 3/2 s
+两组实验，解释 relative slip 的时间累积、bilateral contact 不等于
+no-slip、完整 place 需机器人释放退出后物体仍稳定，以及下降目标应使用实测
+object-to-gripper offset。补充校准：ground support 表示已承载，finger bilateral 表示尚未
+释放；张爪、contact 消失、撤离、最终位姿与低速度留给 S11.6b。S11.6a Learning 为
+Run [x] / Modify [x] / Explain [x]，已 Mastered。下一工程任务为 S11.6b，等待本人明确要求。
+
+S11.6b Engineering Complete：重构 `transfer_and_descend.py` 暴露已支撑且闭爪的 helper，
+新增 `release_and_retreat.py`，严格执行 support-before-open、finger-contact-separation-before-
+retreat，最后检查 pose/support/no-finger-contact/opening/retreat/low twist。2026-10-04 在核验
+后的 mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行 retreat=0.08/0.12 m 均退出 0。
+两组在 opening=0.042585 m 时于第 5 step 确认释放；actual retreat=0.076992/0.116675 m，
+retreat 期间 finger-contact/unsupported steps 均为 0。最终 object position error norm
+0.002320 m，opening=0.08 m，linear speed≈0、angular speed≈1e-9 rad/s，contact set 仅
+ground–object。完成一次 nominal known-pose pick-and-place；未做 robustness variation。
+本人随后完成 0.08/0.12 m 两组 retreat 并分析：support-before-release 避免失稳；command
+不等于 physical state；pose 与 velocity 分别描述当前状态和运动趋势；ground contact 排除
+悬空/失去支撑/弹离。补充校准：no finger contact 排除仍夹持、单侧挂住和 retreat 拖拽，
+与 ground support 联合证明 load transfer。S11.6b Learning 为 Run [x] / Modify [x] /
+Explain [x]，已 Mastered。下一工程任务为 S11.7，等待本人明确要求。
+
+S11.7 Engineering Complete：参数化 integrated model 与 S11.6a/b helpers，新增
+`robustness_trials.py`，对 known object initial xy ±0.005 m、friction [1.8,2.2]、mass
+[0.045,0.055] kg 做 fixed-seed 20 次完整 pick-and-place，实际 sampled xy 仍输入 planner；
+失败分类为 TRANSFER_DESCENT/RELEASE_RETREAT。2026-10-04 在核验后的
+mujoco/Python 3.12.14/MuJoCo 3.14.0 环境运行 seed=20261004/7 均退出 0，两组均 20/20、
+failure stages为空；successful final position error mean 为 0.002299761/0.002302795 m，
+max 为 0.002344323/0.002346447 m。结论仅支持当前小范围与样本，不证明总体 100%、
+perception robustness、复杂 domain randomization 或 sim-to-real。本人随后完成默认 seed 与
+seed 7 两组 handoff，解释 fixed seed 只保证 reproducibility 而覆盖决定 robustness、20/20
+是 empirical rate、known sampled xy 输入 planner 隔离了 manipulation 而未测试 perception/
+calibration noise，以及 failure stage 与 successful final error 的统计口径不同。S11.7
+Learning 为 Run [x] / Modify [x] / Explain [x]，已 Mastered。Stage 11 规划内任务全部完成；
+不自动扩展新 Stage。
 
 用户已选择 S5.3。讲解每轮重算 FK/Jacobian、最多接受 20 次更新、最后一次也检查误差。
 教学关节范围均为 [-π,π] rad，候选越界则拒绝并停止；不据此判定目标不可达。

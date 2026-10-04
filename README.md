@@ -254,18 +254,18 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行默认与 0.015 m 目标实验，两者均 PASS，并解释 pose、opening、servo target 与碰撞证据边界）
 - [x] S11.2（1h）：为已知位姿的简单方块手工定义 grasp 与 pre-grasp pose，解释 offset、world/base/end-effector frame 和朝向要求；不执行抓取。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证默认/修改实验，解释合法旋转、frame 表达与 IK 证据边界）
-- [ ] S11.3（1～2h）：复用 Stage 10 的 IK 与轨迹，从 home 到 pre-grasp，并检查位置/朝向容差、关节限制和碰撞。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
-- [ ] S11.4（1～2h）：沿末端局部轴从 pre-grasp 接近并闭爪，比较 world-frame 与 end-effector-frame 位移，只以双侧接触作为本步现象。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
-- [ ] S11.5（1～2h）：小幅抬升，分别检查物体世界高度、相对滑移和接触保持；不把瞬时接触自动视为稳定抓取。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
-- [ ] S11.6a（1～2h）：持物限速转移并下降到已知放置位姿，监测掉落、位姿误差和物体—支撑面接触；尚不释放。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
-- [ ] S11.6b（1～2h）：确认支撑后释放并撤离，检查最终物体位置、支撑接触、手指接触消失和低末速度，完成一次完整 known-pose pick-and-place。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
-- [ ] S11.7（1～2h）：对物体 xy、摩擦和质量的小范围固定-seed 变化运行 20 次，统计成功率、失败阶段与最终位姿误差；不扩展为复杂 domain randomization。见 [Pick & Place 笔记](docs/14_pick_place.md)。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- [x] S11.3（1～2h）：复用 Stage 10 的 IK 与轨迹，从 home 到 pre-grasp，并检查位置/朝向容差、关节限制和碰撞。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证 3/5 s 实验，解释路径检查、时间缩放、离散碰撞与 arm-only Jacobian）
+- [x] S11.4（1～2h）：沿末端局部轴从 pre-grasp 接近并闭爪，比较 world-frame 与 end-effector-frame 位移，只以双侧接触作为本步现象。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证 0.10/0.08 m 接近实验，解释 frame、IK 容差、命名 contact pair 与固定物体证据边界）
+- [x] S11.5（1～2h）：小幅抬升，分别检查物体世界高度、相对滑移和接触保持；不把瞬时接触自动视为稳定抓取。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证 0.05/0.03 m 抬升，解释 world height、relative slip、接触保持与 headroom 证据边界）
+- [x] S11.6a（1～2h）：持物限速转移并下降到已知放置位姿，监测掉落、位姿误差和物体—支撑面接触；尚不释放。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证 3/2 s transfer，解释时间累积滑移、contact/slip 区别、支撑与释放边界及 measured offset）
+- [x] S11.6b（1～2h）：确认支撑后释放并撤离，检查最终物体位置、支撑接触、手指接触消失和低末速度，完成一次完整 known-pose pick-and-place。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证 0.08/0.12 m retreat，解释 support-before-release、command/state、pose/velocity 与 load-transfer 证据）
+- [x] S11.7（1～2h）：对物体 xy、摩擦和质量的小范围固定-seed 变化运行 20 次，统计成功率、失败阶段与最终位姿误差；不扩展为复杂 domain randomization。见 [Pick & Place 笔记](docs/14_pick_place.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成两组 fixed-seed trials，解释 reproducibility/coverage、empirical rate、known-pose 边界及 failure/error 统计口径）
 
 ## Learning Notes and Workflow
 
