@@ -17,20 +17,21 @@
 - Robot Control：关节控制、PD 与笛卡尔控制。
 - Manipulation：夹爪、Reach、Grasp、Pick and Place。
 - Robot Learning：环境接口、奖励、PPO/SAC 与 sim-to-real 基础。
+- P1：CPU geometry perception、vision manipulation、自写 motion planning，最后 ROS2 integration。
 
 ## Current Progress
 
-| 已有内容 | 工程状态 | 学习状态 |
-| --- | --- | --- |
-| 环境检查与仓库基础 | 已建立，历史验证通过；用户已确认 GUI 可见 | 交互操作与学习掌握程度待确认 |
-| 单铰链仿真 | 默认 1,000 步，本人运行到 2 秒 | 已完成模型阅读、预测与状态解释 |
-| 官方 UR5e 检查演示 | 加载、打印状态、单目标微调已验证 | 待逐项理解状态和执行器映射 |
-| 自定义关节/PD 控制及后续阶段 | 未实现 | 未开始 |
+P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
+本轮开始 **P1 — Perception, Planning & Robot Software Integration**，只完成 S12.1 工程。
 
-**Stage 1 — Task 1 simulation pipeline** 已完成，代码已实现，核心概念问答与 GUI 验证均已确认；已有代码触及 Stage 2 的目标设置，
-但不代表已经完成关节控制学习。2026-09-26 用户确认 GUI 显示问题已解决，画面可见。
-历史退出错误和显示问题仍保留作参考；具体交互与本次退出状态未单独确认。详见
-[交接文档](docs/project_handoff.md)。新最小示例 headless 已通过；本次 GUI 在最终输出后退出码为 139。
+| 内容 | Engineering | Learning |
+| --- | --- | --- |
+| P0 / UR5e known-pose manipulation | 已完成规划内代码、实验、文档；最终实现静态审查完成 | 本人确认 P0 完成 |
+| S12.1 Camera Frames / Coordinate Transform | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人完成 |
+| S12.2–Stage 15 | 仅路线与 docs skeleton | 未开始 |
+
+P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
+视觉输入与通用避障在 P1 补齐。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
 
 ## Environment and Quick Start
 
@@ -58,33 +59,33 @@ python examples/02_ur5e_basics/main.py --headless
 python examples/02_ur5e_basics/main.py --viewer --steps 150000
 ```
 
-依赖只有 `mujoco`、`numpy`、`matplotlib`、`mujoco-menagerie`。Menagerie 首次使用
+基础依赖为 `mujoco`、`numpy`、`matplotlib`、`mujoco-menagerie`；既有 Stage 8 另有
+Gymnasium、CPU PyTorch、Stable-Baselines3，见 requirements.txt。P1 本轮未新增依赖。Menagerie 首次使用
 下载 UR5e 到用户缓存，不复制整个模型仓库。不要在 base 或系统 Python 安装依赖。
 当前 passive viewer 没有暂停回调，空格不会暂停 Python 仿真循环。
 
 ## Repository Structure
 
 ```text
-examples/
-  01_basic_simulation/       # main.py + simple_model.xml：被动铰链
-  02_ur5e_basics/            # main.py：模型、状态、执行器检查
-  02_joint_control/         # 以下示例仅有 README
-  03_pd_control/
-  04_forward_kinematics/
-  05_jacobian/
-  06_inverse_kinematics/
-  07_cartesian_control/
-  08_contact_and_grasping/
-controllers/                # README + 空包 __init__.py
-environments/              # reach / pick / pick_place 文档占位
-rl/                         # gymnasium / ppo / sac 文档占位
-assets/                     # 共享资源说明，暂无模型资产
-scripts/check_env.sh         # 环境诊断，不自动激活 conda
-notebooks/                  # 说明文档，暂无 notebook
-docs/                       # 学习笔记骨架、路线、交接与历史记录
-tests/                      # 验证说明，暂无自动化测试套件
-AGENTS.md                   # 学习与开发规则
-requirements.txt            # 最小依赖
+examples/01_basic_simulation/       # 基础仿真
+examples/02_ur5e_basics/            # 官方 UR5e 与状态/API
+examples/02_joint_control/         # 关节目标实验
+examples/03_pd_control/            # 最小力矩控制
+examples/04_forward_kinematics/     # FK
+examples/05_jacobian/              # Jacobian
+examples/06_inverse_kinematics/    # 基础 IK
+examples/07_cartesian_control/    # Cartesian tracking
+examples/08_contact_and_grasping/ # 独立接触与夹爪
+examples/09_ur5e_6d_pose/          # Stage 10 pose
+examples/10_ur5e_6d_ik/            # UR5e 6D IK / DLS
+examples/11_trajectory/            # linear / cubic reference
+examples/12_pick_place/            # P0 最终 UR5e known-pose manipulation
+examples/13_perception_geometry/   # P1 当前仅 camera_frames.py
+controllers/ environments/ rl/     # 既有学习代码与占位，详见路线索引
+assets/ scripts/ notebooks/ tests/ # 资源、工具与验证说明
+docs/                             # 笔记、P1 规划、交接
+AGENTS.md                         # 仓库规则
+requirements.txt                  # 当前依赖；P1 本轮未新增
 ```
 
 两个 `02_` 目录保留；目录编号不等于 Stage 编号。阅读顺序与笔记映射见
@@ -222,10 +223,10 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
 
 - S10.1（0.5～1h）：读取并比较 UR5e `attachment_site` 的完整世界位姿。见 [6D Pose 笔记](docs/11_ur5e_6d_pose.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs
-  - Learning：[ ] Run　[ ] Modify　[ ] Explain
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-04 本人明确确认 P0 已完成；非助手运行追认）
 - S10.2（1～2h）：由相对旋转、轴角和旋转向量建立 world-frame orientation error。
   - Engineering：[x] Code　[x] Experiment　[x] Docs
-  - Learning：[ ] Run　[ ] Modify　[ ] Explain
+  - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-04 本人明确确认 P0 已完成；非助手运行追认）
 - S10.3（1～2h）：读取 UR5e 6×6 site Jacobian，用单关节有限差分同时核对位置与朝向。见 [6D IK 笔记](docs/12_ur5e_6d_ik.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs
   - Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行默认实验、完成 wrist_2 对比并确认单位修正）
@@ -266,6 +267,128 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人运行并验证 0.08/0.12 m retreat，解释 support-before-release、command/state、pose/velocity 与 load-transfer 证据）
 - [x] S11.7（1～2h）：对物体 xy、摩擦和质量的小范围固定-seed 变化运行 20 次，统计成功率、失败阶段与最终位姿误差；不扩展为复杂 domain randomization。见 [Pick & Place 笔记](docs/14_pick_place.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（本人完成两组 fixed-seed trials，解释 reproducibility/coverage、empirical rate、known-pose 边界及 failure/error 统计口径）
+
+## P1 — Perception, Planning & Robot Software Integration
+
+CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后接入。
+细化依据、复用边界与资源预算见[P1 规划](docs/p1_plan.md)。每个 Task 0.5～2h，以下仅 S12.1 已实现。
+
+### Stage 12 — Robot Perception Geometry
+
+[阶段笔记](docs/15_robot_perception_geometry.md)。
+
+- S12.1（0.5～2h）：Camera Frames / Coordinate Transform：optical/object/base/world；完整 pose 链、inverse、点与方向核验。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.2（0.5～2h）：Pinhole / intrinsic：K、像素单位、3D→2D、可见深度和轴 convention；手写投影。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.3（0.5～2h）：MuJoCo CPU RGB/depth acquisition：renderer→optical frame、图像/depth 语义、尺寸和耗时核验。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.4（0.5～2h）：Camera calibration：OpenCV 合成多视角标定板；估计 K/distortion，报告 held-out reprojection error 与尺度。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.5（0.5～2h）：PnP：已知非共面 3D↔2D 对应，估计 T_CO，比较 truth pose 与 reprojection error。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.6（0.5～2h）：RGB-D back projection：axial depth、K inverse、有效像素→camera/base point cloud。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.7a（0.5～2h）：ICP rigid alignment：已知对应的小点集，手写 NumPy centroid/SVD，纠正 reflection。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.7b（0.5～2h）：ICP nearest-neighbor loop：小点云 CPU 最邻近、门限、停止条件；测试初值与 partial overlap。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.8a（0.5～2h）：Hand-eye geometry：eye-in-hand / eye-to-hand，构造 AX=XB，多姿态可观测性。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S12.8b（0.5～2h）：Hand-eye calibration：CPU 合成多姿态求解、held-out transform residual 和噪声对比。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+
+
+### Stage 13 — Vision-Based Manipulation
+
+[阶段笔记](docs/16_vision_based_manipulation.md)。
+
+- S13.1（0.5～2h）：Perception pose→base→world：frame/quality 接口，truth 与 estimate 分离，拒绝无效估计。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S13.2（0.5～2h）：Grasp pose generation：对象尺寸/估计朝向→top-down candidates、pre-grasp，复用 IK 作可达筛选。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S13.3a（0.5～2h）：Vision-to-motion 接入：CPU 合成图像 PnP estimate 驱动 home→pre-grasp→approach 动力学，不泄漏 truth。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S13.3b（0.5～2h）：Vision-based pick-and-place：连接已有 close/lift/transfer/release，分别检查估计与执行结果。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S13.4（0.5～2h）：Perception noise：分别扰动 pose 与 extrinsic，比较误差传播及失败类型。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S13.5（0.5～2h）：Repeated-trial evaluation：fixed seeds、小范围视角/物体变化，成功率、pose error、失败阶段与耗时。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+
+
+### Stage 14 — Motion Planning
+
+[阶段笔记](docs/17_motion_planning.md)。
+
+- S14.1（0.5～2h）：Collision checking：独立 MjData、self/environment/held-object 检查；按阶段定义允许接触。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S14.2（0.5～2h）：Configuration space / edge checking：q limits、距离、步长分辨率；二维障碍最小实验。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S14.3（0.5～2h）：手写 RRT：sample/nearest/steer/edge check/parent，fixed seed 与 node/time budget。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S14.4（0.5～2h）：手写 RRT-Connect：双树 extend/connect、path reconstruction，比较成功率与扩展数。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S14.5（0.5～2h）：Path smoothing：collision-checked shortcut，比较长度并重检所有边。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S14.6（0.5～2h）：Time parameterization：复用 cubic，按每段 velocity/acceleration limit 配时；分段停点与连续性。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S14.7a（0.5～2h）：UR5e obstacle planning：IK endpoint→joint RRT-Connect→smoothed timed path，几何与tracking分别检查。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S14.7b（0.5～2h）：Collision-aware pick-and-place：带物 transform、阶段接触策略、执行过程与重复试验统计。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+
+
+### Stage 15 — ROS2 Integration
+
+[阶段笔记](docs/18_ros2_integration.md)。
+
+- S15.1（0.5～2h）：环境与 node/topic：核验 WSL2 CPU ROS2、conda/系统 Python 边界，最小消息收发。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S15.2（0.5～2h）：Service：pose/planning 短请求与显式 failure response，避免执行长动作阻塞服务。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S15.3（0.5～2h）：Action：trajectory execution goal/feedback/result/cancel，失败与取消语义。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S15.4（0.5～2h）：TF2：world/base/camera/object/tool tree、时间戳、静态外参与过期变换拒绝。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S15.5（0.5～2h）：URDF / joint states：UR5e 结构、名称/轴/单位与 MuJoCo frame 对照。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S15.6a（0.5～2h）：ROS2 adapters：perception node→planning service→execution action，算法继续独立可运行。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+- S15.6b（0.5～2h）：Final ROS2 manipulation pipeline：CPU simulation end-to-end、取消/超时/坏 pose 注入与诊断。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+
+
 
 ## Learning Notes and Workflow
 

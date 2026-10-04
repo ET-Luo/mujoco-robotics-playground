@@ -1,36 +1,26 @@
 # 学习路线与仓库评估
 
-评估日期：2026-09-26；基于代码与历史记录静态检查，本次没有运行新实验。
-任务清单和学习 checkbox 统一维护在 [README](../README.md#learning-roadmap)，避免两份进度漂移。
-从 Stage 10 起 README 分开记录 Engineering（代码/实验/docs）与 Learning
-（本人 Run/Modify/Explain）；助手验证不能替代本人学习状态。
+更新：2026-10-04。任务与 Engineering/Learning checkbox 唯一维护在
+[README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
+Stage 0–11 已由本人确认完成；本轮 P1 仅 S12.1 工程完成，Learning 待本人验证。
 
 ## 当前代码如何使用
 
-| 文件或目录 | 当前功能 | 学习用途 |
+| 入口 | 实际代码用途 | 继续学习方式 |
 | --- | --- | --- |
-| `examples/01_basic_simulation/main.py` 与 XML | 加载一个铰链、打印状态、推进仿真、可选 GUI | 首选入口，保留显式 API 和短循环 |
-| `examples/02_ur5e_basics/main.py` | 官方模型加载、名称/状态打印、home 初始化、单目标变化 | 第二个入口；先读加载与打印，再读执行器检查 |
-| `scripts/check_env.sh` | 检查 conda、解释器归属及 MuJoCo 导入 | 保留为环境工具，不作为机器人算法学习主线 |
-| `controllers/__init__.py` | 只有包说明 | 不是已实现的控制器，不必提前设计类层次 |
-| 后续 examples、environments、rl、assets、notebooks、tests | README 占位 | 不是已完成模块；tests 目前没有自动化套件 |
-| 既有 docs | 历史记录、流程、概念占位与交接 | 保留；实验答案逐步写入对应编号笔记 |
+| examples/01–08（包括两个有意保留的 02 目录） | 既有基础、控制、平面运动学、独立夹爪小实验 | 已完成阶段不重复教学；按需查阅 |
+| examples/09_ur5e_6d_pose | 官方 UR5e 完整位姿 | 复用 frame/cache 阅读经验 |
+| examples/10_ur5e_6d_ik | 6D error / Jacobian / DLS / bounded iteration | 已有求解器；不重新实现基础 IK |
+| examples/11_trajectory | linear/cubic reference 与解析导数 | 复用 cubic，Stage 14 才扩展路径时间化 |
+| examples/12_pick_place | UR5e 集成夹爪、known-pose lift/place/release/trials | 复用模型/执行判据；接口限制见 P1 审计 |
+| examples/13_perception_geometry | 仅 camera_frames.py，synthetic optical pose chain | 当前唯一新工程入口 |
+| environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
+| controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
+| scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
 
-从代码本身不能可靠判断生成来源。现有基础框架来自此前助手协作；需要警惕的是
-学习顺序，而不是简单把生成代码判为无用：
-
-- UR5e 的 `is_position_servo` 多条件检查同时引入 transmission、gain/bias、gear、
-  actuator dynamics。检查有价值，但初学状态读取时认知负担较大；先理解输出，
-  到 Stage 2 再逐项讲解。此次保留全部代码，不把检查隐藏进新框架。
-- UR5e 内置位置伺服已经产生反馈行为，但修改 ctrl 不等于自己实现了 PD。
-- argparse、GUI 计时/同步、异常检查属于支持代码；第一次阅读可先沿 headless 分支。
-- 大量未来目录和通用 TODO 只是导航，不以填满目录衡量进步。
-
-当前工程已有基础仿真、UR5e 加载与状态读取，触及一个目标命令实验；个人学习完成度
-尚未确认。用户已开始 Stage 1 Task 1；新增 `simulation_pipeline.py` 为最小阅读入口，
-旧 `main.py` 保留供后续检查执行器。当前不是已完成 Joint Control。
-GUI 画面已由用户于 2026-09-26 确认可见，显示问题不再阻塞学习；交互与本次退出
-状态未单独确认。最新证据见 [交接记录](project_handoff.md)。
+详见[P0 最终审查与 P1 规划](p1_plan.md)。本轮未重跑 P0；历史数字标注在该文。
+P1 顺序：geometry perception → vision manipulation → self-written planning → ROS2。
+CPU NumPy 优先；OpenCV 仅 calibration/PnP 时新增；NumPy ICP 与 RRT 自行实现。
 
 ## Stage 与笔记映射
 
@@ -49,95 +39,13 @@ GUI 画面已由用户于 2026-09-26 确认可见，显示问题不再阻塞学�
 | 10 Full UR5e 6D Motion | [11 UR5e 6D Pose](11_ur5e_6d_pose.md)、[12 UR5e 6D IK](12_ur5e_6d_ik.md)、[13 Trajectory](13_trajectory.md) |
 | 11 Known-Pose Pick & Place | [14 Pick & Place](14_pick_place.md) |
 
-Stage 10～11 已加入 README；所有新 checkbox 保持未完成。新笔记只建立结构和当前任务入口，
-由本人实验后填写结论，不预先生成 `What I learned` 或面试题答案。
-旧的四个 Phase 已映射为 README 的 Stage 0～9；现有示例目录名称保持不变。
+| 12 Robot Perception Geometry | [15 Perception Geometry](15_robot_perception_geometry.md) |
+| 13 Vision-Based Manipulation | [16 Vision Manipulation](16_vision_based_manipulation.md) |
+| 14 Motion Planning | [17 Motion Planning](17_motion_planning.md) |
+| 15 ROS2 Integration | [18 ROS2 Integration](18_ros2_integration.md) |
 
-## 下一项建议
+## 当前 handoff
 
-**Stage 1 Task 1 核心概念问答已通过**，本人观察与总结已写入
-[实验笔记](01_mujoco_basics.md)。2026-09-27 本人完成 500/1,000 步预测、实测与解释，S1.2 已勾选。
-S1.3 已完成：本人正确预测、读取并解释 elbow_joint 的索引和状态，见
-[UR5e 笔记](02_ur5e_model.md)。S1.4 的 body/joint/geom 问答已通过，
-attachment_site 的局部/世界位置与 actuator 基础问答也已通过；本人正确列出六组
-执行器—关节映射，S1.4 已勾选。S1.5 的预测和观察问答均通过，已勾选；
-forward_vs_step.py headless 验证通过，GUI 状态不变。
-S1.1 也已完成：本人运行被动铰链示例并正确解释 qpos 变化。至此 S1.1～S1.5
-学习练习均完成，GUI 正常退出仍独立待办。S2.1 也于 2026-09-27 完成：助手静态核对
-执行器参数，本人正确回答单位、输入范围与 gear 目标换算，见
-[Joint Control 笔记](03_joint_control.md)；未实现控制器或运行新仿真。
-S2.2 的 home 理解与 step 前预测已通过；本人已提供 2 秒单目标实验输出，
-本人已纠正“只有对应关节会运动”的判断，结果解释完成，S2.2 已勾选。
-助手未重跑；具体数据见 03 笔记。用户已选择 S2.3：正在理解采样时间、目标与角度，
-采样点数和目标曲线预测已通过；main.py 的 --plot 已实现并经助手 headless 验证，
-PNG/CSV 已生成，本人完成读图、斜率解释与角度比较练习，S2.3 已勾选。
-S2.4 目标与范围预测已通过；main.py 新增 --delta 和逐关节变化输出，两组独立 home
-实验及输入拒绝检查通过，本人结果解释已完成，S2.4 已勾选。Stage 2 学习练习均完成，
-2026-09-28 本人完成 S3.1 的误差、力矩手算与 D 项方向练习，README 已勾选；
-S3.2 的[单关节 PD](../examples/03_pd_control/README.md)三行公式已由本人填写并运行，
-助手复跑通过，末态误差约 0.000002 rad；本人已解释制动与力矩输入含义，S3.2 已勾选。
-S3.3 本人正确预测首步力矩 2/8 N·m；助手已完成 Kp=10/40、Kd=2 的逐步采样与对比。
-首次达到 0.48 rad 分别为 0.422/0.094 s，B 组超调约 0.01104 rad；本人正确解释读图和取舍，
-S3.3 已勾选。S3.4 本人完成 D 项计算与初始加速度判断，助手完成 Kp=40、Kd=0.5/2
-的 2 s 和 4 s 对比：较小 Kd 振荡明显，两组 4 s 末段误差与速度均接近零。
-本人已正确解释振荡、制动与经过目标不等于稳定，S3.4 已勾选，Stage 3 学习练习完成。
-用户已选择 S4.1：开始单杆 W/J/E 坐标系与 p_W=R_WJ*p_J+t_WJ，
-本人已完成绕 +z 转 +90° 的杆中点手算，正确得到旋转位移 (0,0.2,0) m 和
-世界位置 (0,0.2,0.5) m，S4.1 已勾选，见[FK 笔记](05_forward_kinematics.md)。
-S4.2 已开始：本人正确预测 (0°,0°)/(90°,0°) 时末端为 (0.7,0,0)/(0,0.7,0) m。
-本人也正确判断 (90°,90°) 的末端为 (-0.3,0.4,0) m，并通过截图提供正确 x/y 公式。
-本人已写出两行 NumPy FK 公式；助手集成最小函数并在 mujoco 环境运行，两个姿态
-均与手算一致（绝对容差 1e-12 m），S4.2 已勾选。未做 MuJoCo 对照或 GUI 验证。
-用户已选择 S4.3：开始 attachment_site 局部定义、世界 site_xpos/site_xmat 讲解，
-本人三项预测已通过；site_pose.py 读取 home 和 shoulder_pan qpos +0.1 rad 的世界位姿，
-助手运行退出 0，局部位置/时间不变、世界位置/朝向改变。本人正确解释 site +y/+z
-分别朝世界 -y/-z，S4.3 已勾选。用户已选择 S4.4：开始位置 Jacobian 的行列与单位，
-本人完成单列手算并纠正 x 方向；助手新增 examples/05_jacobian/main.py 并于
-2026-09-29 在 mujoco 环境运行退出 0，单列差分最大误差 2.458e-7 m/rad。
-本人正确解释真实 x/y 位移均减小及 m 与 m/rad 的区别，S4.4 已勾选。
-FK 偏导与 hinge 几何叉乘来源已补充并数值核对。用户已选择 S4.5：先用平面
-两连杆的 2×2 xy Jacobian 理解伸直与弯折的瞬时运动方向，待预测后做近奇异数值比较。
-本人位移预测已通过；助手运行 planar_singularity.py，弯折/近伸直条件数约 2.42/4833.33，
-完全伸直参考为 inf，矩阵和行列式检查通过；本人理解某个方向响应变弱，
-并正确区分接近奇异与奇异，S4.5 已勾选，Stage 4 学习练习完成。
-用户已选择 S5.1：沿用两连杆弯折姿态，讲解位置误差、步长比例和停止条件，
-本人经符号/小数纠正后正确预测半步 x=0.3985 m；助手 FK 核算残差约 1.5 mm，
-本人正确判断尚未满足 0.1 mm 成功容差，S5.1 已勾选。
-S5.2 本人已正确实现三行单次更新；助手于 2026-09-29 运行单步示例，误差从 3 mm
-降至约 1.5 mm。本人正确判断未成功，经讲解后确认完整增量也须 FK 检查，S5.2 已勾选。
-S5.3 本人已正确完成候选角与停止状态判断，并正确填写 iteration.py 三个核心表达式。
-助手运行后误差从 0.003 m 降至 0.000093753023 m，第 5 次更新成功；本人正确解释
-初态记录、容差停止及未触发分支不能视为已验证，S5.3 已勾选。
-S5.4 本人正确预测 target=(0.8,0) m 至少有 0.1 m 残差；助手运行后在第 20 次以
-约 0.165764 m 残差报告次数上限失败。本人正确区分直接终止原因与几何不可达证明，
-S5.4 已勾选，Stage 5 完成。S6.1 已开始关节目标与世界系末端目标的单位/映射辨析，
-本人正确回答参考系、输入输出和单位，S6.1 已勾选。S6.2 已开始对原始关节增量做
-公共比例限制的手算；本人经纠正后确认比例、受限增量和线性位移。助手运行单步示例，
-FK 真实误差从 3 mm 降至约 1.8 mm；本人正确解释限制和圆弧造成的线性化差异，
-S6.2 已勾选。S6.3 已开始从控制周期与最大速度推导每轮最大增量，见[IK 笔记](07_inverse_kinematics.md)和
-本人确认周期减半则每轮增量减半；助手运行重复几何更新，3 次更新后误差约
-5.90e-7 m，所有命令速度满足 0.2 rad/s 限制。本人正确解释初态记录、限幅饱和和
-几何命令速度与实际 qvel 的区别，S6.3 已勾选，Stage 6 完成。
-S7.1 本人正确完成最小球体—地面接触预测；助手运行实验，第 88 步在球心
-z≈0.049789 m 时记录 ground/ball_collision 接触，模型自由度不变。本人正确解释动态
-接触、固定模型拓扑和离散软接触穿入，S7.1 已勾选。
-S7.2 本人经纠正确认开口与目标语义；助手运行独立夹爪实验，核对执行器映射并使开口从
-0.04 m 增至 0.08 m。本人正确解释开口变化、映射及空载实验不能证明抓取，S7.2 已勾选。
-S7.3 本人手算正确；助手脚本验证内部/边界/外部三种结果，本人正确区分 Reach、
-稳定抓取和超时未成功，S7.3 已勾选。
-S7.4 本人预测双指接触位置正确；助手运行预对齐闭爪实验，第 27 步记录双侧物体接触，
-qpos 各约 0.00902 m、开口约 0.03803 m。本人正确解释接触阻挡、软接触和证据边界，
-S7.4 已勾选。S7.5 已开始物体世界高度与相对夹爪滑落的抬升判据预测。
-本人正确判断示例成败；助手在重力下迭代调试升降伺服且不放宽判据，最终物体抬升
-约 0.04062 m、相对下滑约 0.00727 m。本人正确解释稳态下垂和相对方向，S7.5 已勾选。
-S7.6 已开始受控下降、支撑、张爪、撤离的顺序与放置成功证据辨析。
-本人确认完整证据；助手运行放置释放实验，物体获得 ground 支撑后张爪撤离，最终位置、
-低速、地面接触和无手指接触均通过。本人确认各项证据，S7.6 已勾选，Stage 7 完成；
-09 笔记已整理 11 步组合任务清单。S8.1 的平面 Reach 任务接口纸面定义与检查已完成：
-本人正确给出 observation 各段单位、距离奖励、成功终止和超时截断结果；尚未实现接口。
-S8.2 已开始：Gymnasium 已加入依赖，本人正确填写 observation 拼接；reset 的预期数值、
-shape、dtype、space 包含关系与重复状态恢复检查通过。本人正确解释 observation/info
-的用途以及末端位置是 q 的 FK 派生量，S8.2 已完成；尚未实现 step 或训练算法。
-详见[Manipulation 笔记](09_manipulation.md)。
-详见 [PD 笔记](04_pd_control.md)。用户已授权自动激活 mujoco，见 AGENTS.md。
-GUI 退出异常独立记录，不把 headless 成功当作 GUI 成功，也不以能跑替代本人理解。
+阅读 [S12.1 Learning Package](15_robot_perception_geometry.md)，本人运行默认实验，
+移动相机后确认恢复出的 base/world object pose 不变，回答末尾五问。
+Stage 13–15 笔记为必要 skeleton，未实现。Engineering 完成即 STOP；不自动开始 S12.2。
