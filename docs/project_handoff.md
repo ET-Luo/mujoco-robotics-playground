@@ -1,16 +1,66 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-04（P1 开始；仅 S12.1 Engineering Complete）。
+最后整理：2026-10-04（S12.1–S12.5 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
-用户明确声明 P0 已完成，并要求规划 P1 Stage 12–15；本轮只完成 S12.1 Camera Frames /
-Coordinate Transform 的 Engineering package。**不自动开始 S12.2**。
-Codex 负责 Code + Experiment + Docs；本人负责 Run + Modify + Explain。
-S12.1 的本人三项均未确认，不能标记 Mastered。下一小任务为本人执行 S12.1 handoff；
-之后只有收到明确请求才开始 S12.2 pinhole/intrinsic/projection。
+本人已明确完成 S12.1–S12.4 Run/Modify/Explain，并明确授权 S12.5。
+S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实验与验证均完成，
+五问 Explain 覆盖核心概念，Run/Modify/Explain 全部确认，Learning Mastered。
+仅合成对应点与已知 K/d → T_CO；没有 detector、base transform 或 manipulation。
+**不自动开始 S12.6**。
+
+## S12.5 实现与现场验证（2026-10-04）
+
+新增 [pnp_pose.py](../examples/13_perception_geometry/pnp_pose.py) 与
+[完整教学包](15_5_pnp_pose.md)。12 个有身份的非共面 3D landmark，米制 object geometry；
+SOLVEPNP_ITERATIVE 返回 object→optical camera R/t，无 truth initial guess。
+复用 camera_calibration 的 projection/RMS helper，不重新执行标定；没有新增依赖。
+
+保存编辑前既有未提交工作。核验项目目录、WSL2 kernel 6.6.87.2、Ubuntu 24.04.5；
+激活 mujoco 后在执行同 shell 核验环境名与 `/home/lucas/miniconda3/envs/mujoco/bin/python`。
+现场 Python 3.12.14 / NumPy 2.5.3 / cv2 4.14.0；3.11 兼容目标未执行。
+
+```bash
+python examples/13_perception_geometry/pnp_pose.py
+python examples/13_perception_geometry/pnp_pose.py --noise-px 0.8
+python examples/13_perception_geometry/pnp_pose.py --noise-px 0
+```
+
+三命令均退出 0，无 import error。default / Modify 的 translation error=
+0.000389763 / 0.001472155 m，rotation error=0.378563 / 1.555400 degree，
+noisy reprojection RMS=0.258050 / 1.029309 pixel。零噪声 t<1e-8 m、rotation<1e-4 degree、RMS<1e-6 pixel。
+默认错误 focal+5% 的 RMS=0.264791 pixel，但 translation error=0.038792973 m；
+低 pixel residual 不等于准确 metric pose。单次 solve+checks 40.425/10.511/13.444 ms，非稳定性能 benchmark。
+
+独立核对三组 NPZ/CSV shapes、saved reprojection 与 pose error、inverse 与 positive depth；
+固定 geometry、noise ×4 通过。too-few/nonfinite/coplanar guards 拒绝，脚本内 collinear 拒绝；
+CLI nan/negative noise 退出 2。默认 PNG 已目视检查，为对应点/残差图，不是 RGB camera photograph。
+产物只在 ignored tmp/s12_5_pnp_noise*/。Markdown links 与 git diff --check 通过。
+未重跑前课/P0，未运行 GUI、真实视觉、机器人执行；PASS 仅表示本课工程检查通过。
+
+## S12.4 历史验证（2026-10-04）
+
+[Calibration package](15_4_camera_calibration.md)：24 train / 8 known-pose held-out boards，
+输入 corners/metric geometry，估计 K/d 与各 board→camera pose，k3 固定 0。
+默认/0.6 px/零噪声 training RMS=0.201785/0.807089/0.000010 pixel；
+known-pose clean held-out RMS=1.514152/6.207453/0.000043 pixel。
+尺度 ×2 使 tvec ×2 而 K/d/RMS 基本不变；不能据小 training RMS 认定 K 准确。
+原不可靠 held-out threshold 已去除，实际结果/失败分析保留该课。
+本课新增 opencv-python-headless>=4.10,<5，在 mujoco 安装 4.14.0.94；不改 NumPy。
+本人已确认实验、对比与 Explain，Learning Mastered；本轮不重跑标定。
+
+## 已完成 Stage 12 前课（历史证据，2026-10-04）
+
+- S12.1：[frame package](15_robot_perception_geometry.md)，base/world axes 核对，camera 移动后
+  p_CO 变化但恢复 p_BO 不变；本人三项确认，Mastered。
+- S12.2：[projection package](15_2_pinhole_projection.md)，focal scale 对比、depth gate、
+  ray ambiguity；本人实验、预测与 Explain 确认，Mastered。
+- S12.3：[CPU RGB/depth package](15_3_rgb_depth_acquisition.md)，EGL llvmpipe、
+  frame axes、surface axial depth 与 shapes 检查；本人实验/对比/Explain 确认，Mastered。
+  OSMesa probe 因缺库失败，EGL 软件替代成功；详见该课，不重新安装 OSMesa。
 
 ## P0 最终状态与审查
 
@@ -47,9 +97,9 @@ TF2/URDF/pipeline。每个 Task 0.5～2h，多步骤系统拆成小任务。
 无 Isaac、YOLO、SAM、大视觉模型训练、MoveIt。新依赖仅在需要的 Task 说明并安装到 mujoco。
 本轮新增[规划](p1_plan.md)、[Stage 12](15_robot_perception_geometry.md)完整首课、
 [Stage 13](16_vision_based_manipulation.md)、[Stage 14](17_motion_planning.md)、
-[Stage 15](18_ros2_integration.md)骨架；未安装 OpenCV 或 ROS2。
+[Stage 15](18_ros2_integration.md)骨架；OpenCV 在 S12.4 新增，ROS2 未安装。
 
-## 本轮验证与已知限制
+## S12.1 历史验证与已知限制（2026-10-04）
 
 编辑前 pwd 正确、git status --short 为空；无既有未提交修改。
 现场核验：WSL2 kernel 6.6.87.2-microsoft-standard-WSL2，Ubuntu 24.04.5。
@@ -80,10 +130,13 @@ reflection 拒绝、wrong order 和 mm/m 混用失败演示通过。time=0。
 
 ## 本人 handoff
 
-Run：默认 camera_frames.py 命令。
-Modify：--camera-x -0.25，先预测 camera 坐标变化再确认 base pose 不变。
-Explain：回答[首课末尾五问](15_robot_perception_geometry.md#my-verification--run--modify--explain)。
-本轮 Engineering 后 STOP，不把助手已跑 Modify 计作本人完成。
+本人已完成 [S12.5 Learning Package](15_5_pnp_pose.md) 实验、验证与 Explain；
+README 三项已按本人明确报告更新。精确补充：尺度来自已知 metric 3D geometry，
+PnP 求该尺度下的 R/t；相机标定估 K/d，而 PnP 固定它们。
+本次仅更新 README、学习包、示例说明、roadmap、P1 plan 与 handoff；
+检查相对文档链接、状态一致性及 git diff --check，未重跑实验/仿真/GUI。
+上述 runtime 证据沿用 2026-10-04 工程验证，不是本次新运行。
+下一可选任务 S12.6 RGB-D back projection 等待明确请求；STOP，不自动开始。
 
 ## 环境与历史 GUI 经验
 

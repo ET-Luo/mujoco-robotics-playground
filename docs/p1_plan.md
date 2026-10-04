@@ -61,4 +61,19 @@ ROS2 依赖/版本/WSL2 通信与 conda 隔离在 S15.1 再现场验证，不在
 | 14 | 带 obstacle、self/held-object 检查的 joint path 与执行统计 | docs skeleton |
 | 15 | frame/time 明确的 ROS2 manipulation pipeline | docs skeleton |
 
-下一步由本人完成 S12.1 Run/Modify/Explain；禁止自动进入 S12.2。
+更新（2026-10-04）：本人已完成 S12.1 Run/Modify/Explain 并明确授权 S12.2；
+S12.2 工程完成，且本人随后明确确认实验、预测与 Explain 完成，Learning Mastered，
+见 [Learning Package](15_2_pinhole_projection.md)。下一可选任务 S12.3 等待明确请求；
+不自动推进。上文首轮审计的范围描述保留为 dated observation。
+
+更新（2026-10-04）：本人明确授权 S12.3，CPU EGL/llvmpipe RGB/depth 获取工程完成，
+见 [Learning Package](15_3_rgb_depth_acquisition.md)。本人随后确认实验、对比与 Explain 完成，Learning Mastered；
+不自动推进 S12.4 camera calibration，未安装 OpenCV。
+
+更新（2026-10-04）：本人明确授权 S12.4；新增 OpenCV headless 依赖与 CPU synthetic-corner
+camera calibration 工程，见 [Learning Package](15_4_camera_calibration.md)。使用 24 train / 8
+known-pose held-out views；本人随后明确确认实验、对比与 Explain，Learning Mastered，不自动推进 S12.5。
+
+更新（2026-10-04）：本人明确授权 S12.5；新增 [PnP Engineering Package](15_5_pnp_pose.md)，
+已知非共面 metric 3D↔2D 对应与 K/d，估计 T_CO；报告像素/位姿误差，比较 noise 与 focal+5%。
+默认、0.8 px 与零噪声及输入/产物检查通过；无新增依赖；本人随后确认实验、验证与 Explain，Learning Mastered，不自动开始 S12.6。

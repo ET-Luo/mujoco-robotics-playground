@@ -3,7 +3,7 @@
 S12.1：Camera Frames / Coordinate Transform，约 1～2h。
 [状态唯一来源](../README.md#stage-12--robot-perception-geometry) ·
 [代码](../examples/13_perception_geometry/camera_frames.py) ·
-[P1 审计与路线](p1_plan.md)。后续 Task 仅规划，不预填实验或本人学习结论。
+[P1 审计与路线](p1_plan.md)。S12.1 已 Mastered；新课见 [S12.2 Pinhole Projection](15_2_pinhole_projection.md)。渲染获取课见 [S12.3 RGB/Depth](15_3_rgb_depth_acquisition.md)；标定课见 [S12.4 Camera Calibration](15_4_camera_calibration.md)；位姿课见 [S12.5 PnP](15_5_pnp_pose.md)；S12.6 起仅规划。
 
 ## Problem → Why
 
@@ -157,4 +157,9 @@ Stage 13 在这条链之后加入 `T_OG` grasp offset，并把目标送入现有
 4. 相机移动后哪些矩阵改变，哪个物理 pose 不变？
 5. 为什么本课 PASS 不能证明 PnP、标定或视觉抓取已经成功？
 
-本人结果记录：待填写。完成 Engineering 后停止；不自动开始 S12.2。
+本人结果记录（2026-10-04）：已报告完成实验。正确解释 Camera→Base 的转换方向、
+同原点不等于同 frame、inverse 的旋转转置与 translation 旋转取负、点/方向的平移区别，
+以及本课只验证坐标数学，真实系统仍受标定误差和深度噪声影响。
+补充复合顺序：T_CO 先 Object→Camera，再由 T_BC Camera→Base，因此 T_BO=T_BC@T_CO。
+本人随后明确确认移动相机 Modify 实验完成；S12.1 Run/Modify/Explain 全部完成。
+该确认未重跑 S12.1，不新增该课 runtime 证据。本人已授权推进 S12.2，见新课笔记。

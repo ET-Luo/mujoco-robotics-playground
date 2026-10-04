@@ -2,7 +2,7 @@
 
 更新：2026-10-04。任务与 Engineering/Learning checkbox 唯一维护在
 [README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
-Stage 0–11 已由本人确认完成；本轮 P1 仅 S12.1 工程完成，Learning 待本人验证。
+Stage 0–11 已由本人确认完成；S12.1–S12.5 已 Engineering Complete + Learning Mastered。
 
 ## 当前代码如何使用
 
@@ -13,14 +13,14 @@ Stage 0–11 已由本人确认完成；本轮 P1 仅 S12.1 工程完成，Learn
 | examples/10_ur5e_6d_ik | 6D error / Jacobian / DLS / bounded iteration | 已有求解器；不重新实现基础 IK |
 | examples/11_trajectory | linear/cubic reference 与解析导数 | 复用 cubic，Stage 14 才扩展路径时间化 |
 | examples/12_pick_place | UR5e 集成夹爪、known-pose lift/place/release/trials | 复用模型/执行判据；接口限制见 P1 审计 |
-| examples/13_perception_geometry | 仅 camera_frames.py，synthetic optical pose chain | 当前唯一新工程入口 |
+| examples/13_perception_geometry | camera_frames / pinhole_projection / rgb_depth_capture / camera_calibration / pnp_pose，CPU geometry、calibration 与 pose | 当前唯一新工程入口 |
 | environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
 | controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
 | scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
 
 详见[P0 最终审查与 P1 规划](p1_plan.md)。本轮未重跑 P0；历史数字标注在该文。
 P1 顺序：geometry perception → vision manipulation → self-written planning → ROS2。
-CPU NumPy 优先；OpenCV 仅 calibration/PnP 时新增；NumPy ICP 与 RRT 自行实现。
+CPU NumPy 优先；S12.4 已新增 OpenCV headless 用于 calibration/PnP；NumPy ICP 与 RRT 自行实现。
 
 ## Stage 与笔记映射
 
@@ -38,7 +38,6 @@ CPU NumPy 优先；OpenCV 仅 calibration/PnP 时新增；NumPy ICP 与 RRT 自�
 | 9 Domain Randomization / Sim-to-Real | 后续实验时在 10 中补充，必要时再拆分 |
 | 10 Full UR5e 6D Motion | [11 UR5e 6D Pose](11_ur5e_6d_pose.md)、[12 UR5e 6D IK](12_ur5e_6d_ik.md)、[13 Trajectory](13_trajectory.md) |
 | 11 Known-Pose Pick & Place | [14 Pick & Place](14_pick_place.md) |
-
 | 12 Robot Perception Geometry | [15 Perception Geometry](15_robot_perception_geometry.md) |
 | 13 Vision-Based Manipulation | [16 Vision Manipulation](16_vision_based_manipulation.md) |
 | 14 Motion Planning | [17 Motion Planning](17_motion_planning.md) |
@@ -46,6 +45,6 @@ CPU NumPy 优先；OpenCV 仅 calibration/PnP 时新增；NumPy ICP 与 RRT 自�
 
 ## 当前 handoff
 
-阅读 [S12.1 Learning Package](15_robot_perception_geometry.md)，本人运行默认实验，
-移动相机后确认恢复出的 base/world object pose 不变，回答末尾五问。
-Stage 13–15 笔记为必要 skeleton，未实现。Engineering 完成即 STOP；不自动开始 S12.2。
+本人已完成 [S12.5 Learning Package](15_5_pnp_pose.md) 的实验、验证与 Explain。
+下一可选任务是 S12.6 RGB-D back projection，等待本人明确请求。
+Stage 13–15 笔记为必要 skeleton，未实现；不自动开始 S12.6。

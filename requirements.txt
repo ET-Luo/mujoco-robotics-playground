@@ -1,6 +1,7 @@
 mujoco
 numpy
 matplotlib
+opencv-python-headless>=4.10,<5
 mujoco-menagerie
 gymnasium
 --extra-index-url https://download.pytorch.org/whl/cpu

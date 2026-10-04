@@ -1,0 +1,21 @@
+<mujoco model="s12_3_camera_geometry">
+  <statistic extent="1"/>
+  <visual>
+    <global offwidth="640" offheight="480"/>
+    <quality offsamples="1" shadowsize="512"/>
+    <map znear="0.01" zfar="3"/>
+  </visual>
+  <worldbody>
+    <light pos="-0.35 0.1 2" dir="0 0 -1" diffuse="0.8 0.8 0.8"/>
+    <!-- Identity camera rotation: +X right, +Y up, view along -Z_world. -->
+    <camera name="overhead" pos="-0.35 0.10 0.80" quat="1 0 0 0" fovy="45" ipd="0"/>
+    <geom name="floor" type="plane" size="1 1 0.01" rgba="0.55 0.55 0.55 1"/>
+    <!-- Same object center as S12.1; wider box makes pixel checks easier. -->
+    <geom name="orange_box" type="box" pos="-0.45 0.20 0.03" size="0.04 0.03 0.03"
+          rgba="0.9 0.45 0.1 1"/>
+    <geom name="red_marker" type="box" pos="-0.20 0.22 0.02" size="0.025 0.025 0.02"
+          rgba="0.9 0.05 0.05 1"/>
+    <geom name="green_marker" type="box" pos="-0.48 -0.04 0.02" size="0.025 0.025 0.02"
+          rgba="0.05 0.85 0.05 1"/>
+  </worldbody>
+</mujoco>

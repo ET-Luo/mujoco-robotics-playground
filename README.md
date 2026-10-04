@@ -22,13 +22,17 @@
 ## Current Progress
 
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
-本轮开始 **P1 — Perception, Planning & Robot Software Integration**，只完成 S12.1 工程。
+当前推进 **P1 — Perception, Planning & Robot Software Integration**；S12.1–S12.5 已 Engineering Complete + Learning Mastered。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
 | P0 / UR5e known-pose manipulation | 已完成规划内代码、实验、文档；最终实现静态审查完成 | 本人确认 P0 完成 |
-| S12.1 Camera Frames / Coordinate Transform | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人完成 |
-| S12.2–Stage 15 | 仅路线与 docs skeleton | 未开始 |
+| S12.1 Camera Frames / Coordinate Transform | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S12.2 Pinhole / Intrinsic / Projection | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S12.3 MuJoCo CPU RGB / Depth | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S12.4 Camera Calibration | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S12.5 PnP Object Pose | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S12.6–Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入与通用避障在 P1 补齐。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
@@ -60,7 +64,7 @@ python examples/02_ur5e_basics/main.py --viewer --steps 150000
 ```
 
 基础依赖为 `mujoco`、`numpy`、`matplotlib`、`mujoco-menagerie`；既有 Stage 8 另有
-Gymnasium、CPU PyTorch、Stable-Baselines3，见 requirements.txt。P1 本轮未新增依赖。Menagerie 首次使用
+Gymnasium、CPU PyTorch、Stable-Baselines3，见 requirements.txt。P1 S12.4 新增 OpenCV headless，用于 CPU calibration/PnP。Menagerie 首次使用
 下载 UR5e 到用户缓存，不复制整个模型仓库。不要在 base 或系统 Python 安装依赖。
 当前 passive viewer 没有暂停回调，空格不会暂停 Python 仿真循环。
 
@@ -80,7 +84,7 @@ examples/09_ur5e_6d_pose/          # Stage 10 pose
 examples/10_ur5e_6d_ik/            # UR5e 6D IK / DLS
 examples/11_trajectory/            # linear / cubic reference
 examples/12_pick_place/            # P0 最终 UR5e known-pose manipulation
-examples/13_perception_geometry/   # P1 当前仅 camera_frames.py
+examples/13_perception_geometry/   # P1 frames / projection / RGB-depth / calibration / PnP
 controllers/ environments/ rl/     # 既有学习代码与占位，详见路线索引
 assets/ scripts/ notebooks/ tests/ # 资源、工具与验证说明
 docs/                             # 笔记、P1 规划、交接
@@ -271,26 +275,26 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
 ## P1 — Perception, Planning & Robot Software Integration
 
 CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后接入。
-细化依据、复用边界与资源预算见[P1 规划](docs/p1_plan.md)。每个 Task 0.5～2h，以下仅 S12.1 已实现。
+细化依据、复用边界与资源预算见[P1 规划](docs/p1_plan.md)。每个 Task 0.5～2h，当前已实现 S12.1–S12.5；本轮不推进 S12.6。
 
 ### Stage 12 — Robot Perception Geometry
 
 [阶段笔记](docs/15_robot_perception_geometry.md)。
 
 - S12.1（0.5～2h）：Camera Frames / Coordinate Transform：optical/object/base/world；完整 pose 链、inverse、点与方向核验。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-04 本人明确确认移动相机实验完成；Run/Explain 已先行完成）
 
-- S12.2（0.5～2h）：Pinhole / intrinsic：K、像素单位、3D→2D、可见深度和轴 convention；手写投影。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S12.2（0.5～2h）：Pinhole / intrinsic：K、像素单位、3D→2D、可见深度和轴 convention；手写投影。见 [S12.2 Learning Package](docs/15_2_pinhole_projection.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-04 本人明确确认实验与预测完成，正确解释透视投影、光轴深度、内外参、偏移缩放、深度歧义与遮挡边界）
 
-- S12.3（0.5～2h）：MuJoCo CPU RGB/depth acquisition：renderer→optical frame、图像/depth 语义、尺寸和耗时核验。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S12.3（0.5～2h）：MuJoCo CPU RGB/depth acquisition：renderer→optical frame、图像/depth 语义、尺寸和耗时核验。见 [S12.3 Learning Package](docs/15_3_rgb_depth_acquisition.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-04 本人确认实验与对比分析完成，正确解释合法旋转、axial depth、可见表面、内参不变与渲染 API/时间边界）
 
-- S12.4（0.5～2h）：Camera calibration：OpenCV 合成多视角标定板；估计 K/distortion，报告 held-out reprojection error 与尺度。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S12.4（0.5～2h）：Camera calibration：OpenCV 合成多视角标定板角点；估计 K/distortion，报告 known-pose held-out reprojection error 与尺度。见 [S12.4 Learning Package](docs/15_4_camera_calibration.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-04 本人确认实验与对比完成，正确解释标定输入/输出、多视角约束、参数单位、固定 k3、训练误差边界、metric scale 与 board→camera 方向）
 
-- S12.5（0.5～2h）：PnP：已知非共面 3D↔2D 对应，估计 T_CO，比较 truth pose 与 reprojection error。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S12.5（0.5～2h）：PnP：已知非共面 3D↔2D 对应，估计 T_CO，比较 truth pose 与 reprojection error；含像素噪声与错误焦距对照。见 [S12.5 Learning Package](docs/15_5_pnp_pose.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-04 本人确认实验与验证均完成，正确解释已知量/未知位姿、多点几何约束、tvec 与 camera center、内参/位姿补偿及合法性检查边界；尺度来自已知 metric geometry）
 
 - S12.6（0.5～2h）：RGB-D back projection：axial depth、K inverse、有效像素→camera/base point cloud。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
