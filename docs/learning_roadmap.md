@@ -13,7 +13,8 @@ Stage 0–11 已由本人确认完成；S12.1–S12.8b 已 Engineering Complete 
 | examples/10_ur5e_6d_ik | 6D error / Jacobian / DLS / bounded iteration | 已有求解器；不重新实现基础 IK |
 | examples/11_trajectory | linear/cubic reference 与解析导数 | 复用 cubic，Stage 14 才扩展路径时间化 |
 | examples/12_pick_place | UR5e 集成夹爪、known-pose lift/place/release/trials | 复用模型/执行判据；接口限制见 P1 审计 |
-| examples/13_perception_geometry | camera_frames / pinhole_projection / rgb_depth_capture / camera_calibration / pnp_pose / rgbd_back_projection / rigid_alignment / icp_loop / hand_eye_geometry / hand_eye_calibration，CPU geometry、calibration 与 pose | 当前唯一新工程入口 |
+| examples/13_perception_geometry | camera_frames / pinhole_projection / rgb_depth_capture / camera_calibration / pnp_pose / rgbd_back_projection / rigid_alignment / icp_loop / hand_eye_geometry / hand_eye_calibration，CPU geometry、calibration 与 pose | Stage 12 已完成入口 |
+| examples/14_vision_manipulation | perception_pose：S13.1 合成 packet/frame/quality 与 actual base→world，拒绝无效结果 | 当前新工程入口 |
 | environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
 | controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
 | scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
@@ -50,5 +51,6 @@ S12.6 [RGB-D Learning Package](15_6_rgbd_back_projection.md) 本人已明确确�
 S12.7a [Rigid Alignment Package](15_7a_rigid_alignment.md) 本人已确认实验、预测与 Explain，Learning Mastered。
 S12.7b [ICP Loop Package](15_7b_icp_loop.md) 工程完成：NumPy NN/gate/SVD 左乘更新，近/远初值与 partial 对照；本人已确认实验、预测与 Explain，Learning Mastered。
 S12.8a [Hand-Eye Geometry Package](15_8a_hand_eye_geometry.md) 工程完成；两种安装的闭环/AX=XB 与退化实验，无求解器；本人已确认 Run/Modify/Explain，Learning Mastered。
-S12.8b [Hand-Eye Calibration Package](15_8b_hand_eye_calibration.md) 工程完成；两种安装 NumPy 分步估计、12/6 pose split、噪声与近轴对照；本人已确认 Run/Modify/Explain，Learning Mastered；下一可选任务 S13.1 等待明确请求。
-Stage 13–15 笔记为必要 skeleton，未实现；不自动开始 S13.1。
+S12.8b [Hand-Eye Calibration Package](15_8b_hand_eye_calibration.md) 工程完成；两种安装 NumPy 分步估计、12/6 pose split、噪声与近轴对照；本人已确认 Run/Modify/Explain，Learning Mastered。
+S13.1 [Perception Pose Package](16_vision_based_manipulation.md) 工程完成；packet/quality/time 检查、actual base chain、truth 隔离；本人已确认 Run/Modify/Explain，Learning Mastered；下一可选任务 S13.2 等待明确请求。
+S13.2–Stage 15 仍未实现；不自动开始 S13.2。

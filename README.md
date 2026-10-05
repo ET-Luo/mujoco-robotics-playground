@@ -37,7 +37,8 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S12.7b Nearest-Neighbor ICP Loop | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.8a Hand-Eye Geometry | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.8b Hand-Eye Calibration | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| Stage 13–15 | 仅路线与 docs skeleton | 未开始 |
+| S13.1 Perception Pose→Base→World | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S13.2–Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入与通用避障在 P1 补齐。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
@@ -325,8 +326,8 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 
 [阶段笔记](docs/16_vision_based_manipulation.md)。
 
-- S13.1（0.5～2h）：Perception pose→base→world：frame/quality 接口，truth 与 estimate 分离，拒绝无效估计。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S13.1（0.5～2h）：Perception pose→base→world：frame/quality 接口，truth 与 estimate 分离，拒绝无效估计。见 [S13.1 Learning Package](docs/16_vision_based_manipulation.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测完成，Explain 覆盖 frame 链、原点/朝向、接口检查边界、RMS/accuracy、truth 隔离与 object/gripper 区别）
 
 - S13.2（0.5～2h）：Grasp pose generation：对象尺寸/估计朝向→top-down candidates、pre-grasp，复用 IK 作可达筛选。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain

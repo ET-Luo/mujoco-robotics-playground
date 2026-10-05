@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-05（S12.1–S12.8b Engineering Complete + Learning Mastered）。
+最后整理：2026-10-05（Stage 12 与 S13.1 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,7 @@ S12.7a 工程完成后，本人于 2026-10-05 明确确认实验与预测均完�
 Run/Modify/Explain 全部确认，Learning Mastered。S12.7b 随后工程完成，本人明确确认实验与预测并回答五项 Explain，Learning Mastered。
 S12.8a 本人已确认实验与预测，并补充正确的两种安装 X/Y 定义与固定关系；
 Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成，本人确认实验、预测并补充完整 Explain，Learning Mastered。
-下一可选任务 S13.1 等待明确请求。
+S13.1 已实现，本人确认实验与预测并回答五项 Explain，Learning Mastered；下一可选任务 S13.2 等待明确请求。
 
 ## 多电脑依赖规则（2026-10-05）
 
@@ -29,7 +29,7 @@ Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成�
 机器标识/日期必须随环境观察记录，conda 路径从当前机器发现；范围不是 exact lock。
 本次仅修改规则/流程/README/交接；文档链接、规则一致性和 git diff --check 通过。
 未安装包、未重跑 Python 学习实验、未核验当前 cv2 或 GUI；历史缺 cv2 记录仅属当次环境。
-学习进度不变；下一可选任务仍 S13.1，等待明确请求。
+该规则更新时学习进度未变；S13.1 随后已明确授权实现，见下。
 
 ## S12.5 实现与现场验证（2026-10-04）
 
@@ -313,7 +313,39 @@ Procrustes + translation 求解检查通过；非法 pose、CLI nan/−1/5 拒�
 六份相关文档的本地 Markdown 文件链接、工程/未勾选学习与 Stage 13 未开始状态、git diff --check 通过。
 本人随后确认实验与预测完成，并正确补充齐次 ± 符号、平移分块式与
 clean-held 仍含训练 Y_mean 偏差的说明；Run/Modify/Explain 全部确认，Learning Mastered。
-学习验证记录见学习包；下一可选小任务 S13.1 perception pose→base→world，等待明确请求。
+学习验证记录见学习包；S13.1 随后已明确授权实现，见下。
 本次同步六份文档，本地链接、状态一致性与 git diff --check 通过；未重跑实验/仿真/GUI。
 runtime 沿用 2026-10-05 工程验证；学习状态按本人反馈记录。
 STOP，不自动实现 S13.1。
+
+## S13.1 现场工程验证（2026-10-05，机器 Zero）
+
+[学习包](16_vision_based_manipulation.md)、[代码](../examples/14_vision_manipulation/perception_pose.py)。
+起始 pwd 正确、git status --short 空。当前 Zero：WSL2 kernel 6.18.33.2 / Ubuntu 24.04.5；
+通过本机 conda info --base 找 shell hook，从 base 激活 mujoco，同执行 shell 核验
+环境名与 `/home/lucas/miniconda3/envs/mujoco/bin/python`。
+Python 3.12.14；required distribution versions + 实际 imports/module paths 核验：
+NumPy 2.5.3、MuJoCo **3.13.0**、Menagerie 2026.9.2、Matplotlib 3.11.2。
+这不是历史 MuJoCo 3.14 环境，3.11 兼容目标未执行；无新依赖/安装，不核验无关 cv2。
+
+```bash
+python examples/14_vision_manipulation/perception_pose.py
+python examples/14_vision_manipulation/perception_pose.py --rms-limit-px 0.3
+```
+
+两命令退出 0，无 import error。actual R_WB=diag(−1,−1,1)、p=0；16 synthetic packet cases。
+默认 accepted/rejected=2/14，nominal p_W=[−.448,.201,.027] m，t error=0.003741657 m/R=0.8°；
+biased low-RMS 仍通过，t error=0.032155870 m。0.3 px gate 全部拒绝，不提供 usable pose。
+base-as-world 错误示例 error=0.983470386 m。模型 cache only、time=0、无动力学。
+内置 clean/non-origin chain、policy/SE(3)/frame/unit/time/refusal、norm preservation 通过；
+独立 NPZ/JSON/CSV 16 rows、quoted reason、refusal/null/no output、direct T_WC T_CO、
+non-origin/rotated alternative base、input/outputs memory isolation、quality/extrinsic guards 通过；
+CLI nan/−1/3 退出 2。默认 PNG 已目视检查；ignored tmp/s13_1_pose_rms*/ 存产物。
+Synthetic producer/scorer 用 truth，consumer 无 truth 参数；精确已知静态 T_BC，不重做 hand-eye。
+无实际 image estimator/PnP、IK/可达/碰撞/抓取/GUI，未重跑前课/P0。
+六份相关文档本地 Markdown 文件链接、S13.1 工程/未勾选学习与 S13.2 未开始状态、git diff --check 通过。
+本人随后确认实验与预测完成，并回答五项 Explain，Run/Modify/Explain 全部确认，Learning Mastered。
+解释记录与矩阵链、完整 pose、米制平移检查的精度补充见学习包；下一可选小任务 S13.2，等待明确请求。
+本次仅同步六份文档，保留既有未提交代码/文档；本地链接、状态一致性与 git diff --check 通过。
+未重跑实验/仿真/GUI，runtime 证据沿用 2026-10-05 Zero 工程验证。
+STOP，不自动实现 S13.2。

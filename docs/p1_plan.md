@@ -112,3 +112,11 @@ Engineering 完成；本人于 2026-10-05 确认实验、预测与五项 Explain
 报告 X truth error、train pair/absolute 与 noisy/clean held-out residual。broad / near-axis、
 scale 1/4/0 实验通过，训练 residual 不等于外参准确。无新增依赖；当前 cv2 缺失，未安装。
 Engineering 完成；本人已确认 Run/Modify，并正确补充齐次符号、平移式与 clean-held 边界，Learning Mastered；不自动进入 Stage 13。
+
+### S13.1 进展（2026-10-05）
+
+[Perception Pose Package](16_vision_based_manipulation.md)：合成 object→optical camera packet，
+检查 frame/m/SE(3)/valid/quality/age 后映射 T_BO/T_WO，actual UR5e base cache；
+consumer 不读取 truth，rejected 不回填。16 cases 与 RMS gate 1→0.3 px 通过。
+固定 camera/精确 synthetic extrinsic，无 PnP/IK/grasp/dynamics；低质量门限不能证明准确/可达。
+Engineering Complete；本人于 2026-10-05 确认实验与预测，Explain 覆盖核心概念，Learning Mastered；不自动进入 S13.2。
