@@ -128,4 +128,4 @@ T_WG/T_WP；root→pad 35 mm、opening=20+2s mm、width+8 mm clearance。
 复用 P0 model/DLS，每个 candidate 独立 home，pre→grasp warm-start；独立 FK/limits 核对。
 40/30、120/30、120/120 mm：width/IK pass counts 4/4、2/2、0/0；far local IK 失败。
 无 PnP、path/collision/grasp/dynamics；不读 fixture object pose 规划。
-Engineering 完成，本人已确认 Run/Modify；Explain 待补 width/opening/slide 定量关系，不自动开始 S13.3a。
+Engineering 完成，本人已确认 Run/Modify/Explain，Learning Mastered，不自动开始 S13.3a。

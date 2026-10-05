@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-05（Stage 12 / S13.1 Mastered；S13.2 Engineering Complete，Run/Modify 已确认，Explain 待补开口关系）。
+最后整理：2026-10-05（Stage 12 / S13.1 / S13.2 Engineering Complete、Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -377,9 +377,9 @@ Passing endpoints最大position residual=6.212543e-5 m，rotation matrix Frobeni
 默认 PNG 已目视检查，图是输入box/opening axes投影（显示偏移不改变targets）；ignored tmp/s13_2_grasp*/。
 无真实vision/PnP、continuous path/collision/grasp/dynamics/GUI，未重跑前课/P0独立脚本。
 七份相关文档本地文件链接、S13.2工程/未勾选学习与S13.3a未开始状态、git diff --check通过。
-本人随后确认实验与预测完成，Run/Modify 已确认；Explain 第1/2/4/5项核心判断正确，
-第3项待补 width/opening/slide 定量关系与 dx120mm 对候选的筛选解释，暂不标记 Mastered。
-下一小任务仅补该项，不需重跑实验；反馈与精度说明见学习包。
+本人随后确认实验与预测完成，并补充正确的开口定量关系：width30mm 对应总开口38mm、每根slide9mm；
+dx120mm 时90°/270°夹持dy30mm，仍通过开口筛选。Run/Modify/Explain 全部确认，Learning Mastered。
+下一小任务为 S13.3a，等待本人明确请求；反馈与精度说明见学习包。
 本次仅同步六份文档，保留既有未提交工作；链接、状态一致性与 git diff --check 通过。
 未重跑实验/仿真/GUI，runtime 沿用2026-10-05 Zero工程验证。
 STOP，不自动实现S13.3a。

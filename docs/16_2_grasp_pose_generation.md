@@ -227,9 +227,10 @@ CLI size-x nan/−1/0.5 m 均退出 2。默认 PNG 已目视检查。
 - Pre retreat沿−z_G；IK两个端点要分别验证，solver原地改变私有data。
 - 格式、width、IK、路径、tracking、grasp success 分开判断。
 
-状态仅在根 README 维护。本人于 2026-10-05 确认实验与预测完成，Run/Modify 已确认。
-Explain 第 1、2、4、5 项核心判断正确；第 3 项仅说明两指各有 slide，
-尚待补 width/opening/slide 定量关系与尺寸改变后的候选筛选，暂不标记 Mastered。
+状态仅在根 README 维护。本人于 2026-10-05 确认实验与预测完成，并完成全部 Explain，
+Run/Modify/Explain 全部确认，Learning Mastered。
+width=30 mm 时，总开口为 38 mm，每根 slide 为 9 mm；
+dx=120 mm 时，90°/270° 仍夹持 dy=30 mm，因此通过开口筛选。
 
 反馈核对：物体 pose 需结合 T_OG、35 mm tool offset、pre 沿 approach 反向退后、
 IK 依赖初值以及端点成功不证明全路径安全的解释正确。
@@ -246,4 +247,4 @@ IK 依赖初值以及端点成功不证明全路径安全的解释正确。
 4. pre-grasp 沿哪个方向退后？为什么 grasp IK 从 q_pre 开始，每个新候选却重置 home？
 5. 两端点 IK 成功能证明什么？失败又为什么不能直接证明全局不可达？
 
-Engineering 后 STOP，交回 Run/Modify/Explain；不自动实现 S13.3a。
+本课 Engineering 与 Learning 均完成；不自动实现 S13.3a。

@@ -38,7 +38,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S12.8a Hand-Eye Geometry | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.8b Hand-Eye Calibration | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.1 Perception Pose→Base→World | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| S13.2 Grasp Pose Generation | Code + Experiment + Docs 完成 | Run / Modify 已完成；Explain 待补开口关系 |
+| S13.2 Grasp Pose Generation | Code + Experiment + Docs 完成 | Run / Modify / Explain 完成，Mastered |
 | S13.3a–Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
@@ -331,7 +331,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测完成，Explain 覆盖 frame 链、原点/朝向、接口检查边界、RMS/accuracy、truth 隔离与 object/gripper 区别）
 
 - S13.2（0.5～2h）：Grasp pose generation：对象尺寸/估计朝向→top-down candidates、pre-grasp，复用 IK 作可达筛选。见 [S13.2 Learning Package](docs/16_2_grasp_pose_generation.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[ ] Explain — 待补充（2026-10-05 本人确认实验与预测完成；frame/tool offset/approach/local IK 判断正确，待补 width/opening/slide 定量关系）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测完成，并正确解释 frame/tool offset/approach/local IK、开口与单根 slide 关系及不同朝向的夹持尺寸）
 
 - S13.3a（0.5～2h）：Vision-to-motion 接入：CPU 合成图像 PnP estimate 驱动 home→pre-grasp→approach 动力学，不泄漏 truth。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain

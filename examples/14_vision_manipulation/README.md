@@ -37,5 +37,5 @@ python examples/14_vision_manipulation/grasp_candidates.py --size-x-m 0.12
 先预测 dx 40→120 mm 对 width/opening/IK 调用数的影响，再比较。
 PNG/CSV/NPZ/JSON 在 ignored `tmp/s13_2_grasp_x*_y*_yaw*_d*/`，不需前课产物。
 无新依赖；模型复用已声明 MuJoCo/Menagerie，consumer 不读取 fixture object truth。
-Engineering Complete；本人已确认 Run/Modify，Explain 待补 width/opening/slide 定量关系，状态见根 README。
+Engineering Complete；本人已确认 Run/Modify/Explain，Learning Mastered，状态见根 README。
 不检查中间路径/碰撞、未执行闭爪/动力学，IK failed 只是 local failure；不自动实现 S13.3a。
