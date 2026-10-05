@@ -1,6 +1,6 @@
 # Stage 12 — Robot Perception Geometry
 
-当前实现 S12.1 Camera Frames、S12.2 Pinhole Projection 、S12.3 CPU RGB/depth acquisition 、S12.4 camera calibration 、S12.5 PnP object pose 与 S12.6 RGB-D back projection。
+当前实现 S12.1 Camera Frames、S12.2 Pinhole Projection 、S12.3 CPU RGB/depth acquisition 、S12.4 camera calibration 、S12.5 PnP object pose 、S12.6 RGB-D back projection 与 S12.7a known-correspondence rigid alignment。
 S12.1 完整教学与实验记录见
 [Learning Package](../../docs/15_robot_perception_geometry.md)；状态唯一来源为
 [根 README](../../README.md#stage-12--robot-perception-geometry)。
@@ -92,5 +92,21 @@ python examples/13_perception_geometry/rgbd_back_projection.py --camera-height 1
 ```
 
 NPZ/PNG/summary 在 ignored `tmp/s12_6_rgbd_z*/`。独立检查 floor/top geometry、实际 base frame，
-并演示将 Z 当 radial range 导致地板曲起。Engineering Complete，Learning 待本人 Run/Modify/Explain。
-STOP；不自动开始 S12.7a。
+并演示将 Z 当 radial range 导致地板曲起。Engineering Complete；本人于 2026-10-05 确认实验、预测与 Explain，Learning Mastered。
+S12.6 Learning 已确认；后续状态见根 README。
+
+## S12.7a — Known-Correspondence Rigid Alignment
+
+[完整 Learning Package](../../docs/15_7a_rigid_alignment.md)。8 个有身份的 synthetic 3D landmark，
+NumPy centroid/SVD 输出 source→target R/t，det correction 保证 SO(3)。无新增依赖。
+
+```bash
+python examples/13_perception_geometry/rigid_alignment.py
+python examples/13_perception_geometry/rigid_alignment.py --noise-m 0.004
+python examples/13_perception_geometry/rigid_alignment.py --noise-m 0
+```
+
+先预测 target per-axis noise ×4 的 residual/pose error，再对比。NPZ/CSV/PNG/summary
+在 ignored `tmp/s12_7a_rigid_noise*_seed20261005/`。包含镜像、错对应、退化 guards；
+允许 planar noncollinear geometry，不实现 nearest-neighbor/ICP loop。
+Engineering Complete；Learning 待本人 Run/Modify/Explain。STOP，不自动开始 S12.7b。

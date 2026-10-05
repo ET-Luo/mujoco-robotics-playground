@@ -82,4 +82,10 @@ known-pose held-out views；本人随后明确确认实验、对比与 Explain�
 
 [RGB-D package](15_6_rgbd_back_projection.md) Engineering Complete；复用 CPU acquisition，
 有效 axial depth→camera/base 表面点云，独立 floor/top/base 核验、invalid depth 与 range 错误对照。
-无新增依赖；Learning Run/Modify/Explain 待本人确认，不自动开始 S12.7a。
+无新增依赖；Learning Run/Modify/Explain 已由本人明确确认，Mastered，不自动开始 S12.7a。
+
+### S12.7a 进展（2026-10-05）
+
+[Rigid Alignment Package](15_7a_rigid_alignment.md) Engineering Complete；NumPy centroid/SVD、
+SO(3) correction，noise/zero-noise、mirror、wrong correspondence、planar/degenerate geometry 验证。
+只解决已知对应的一次 rigid fit，无新增依赖；Learning 待本人三项确认，STOP，不自动开始 S12.7b。

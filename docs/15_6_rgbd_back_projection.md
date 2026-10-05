@@ -142,7 +142,13 @@ ray z=1，不归一化。用已知 T_BC 转到 base，同 mask 保持 RGB 对齐
 
 ## Must Remember / My Verification
 
-状态只在根 README；Learning Run/Modify/Explain 尚待本人明确报告。
+状态只在根 README。本人于 2026-10-05 明确确认实验与预测均完成，并回答五项 Explain；
+Run/Modify/Explain 全部确认，Learning Mastered。
+本人解释覆盖 optical-axis Z 与 radial range、数学坐标与数组索引、
+T_BC=inverse(T_WB)T_WC、移动相机与固定场景，以及 roundtrip 只检验自洽。
+精确补充：radial range ρ 对应 p_C=ρ r_C/||r_C||；RGB 与点使用相同 mask/order；
+外参核验还需要独立的 base/world 几何参考。
+本次仅记录本人反馈；runtime 证据沿用 2026-10-05 工程验证，未重跑实验或 GUI。
 
 - Z 是 optical-axis depth；K inverse ray 的 z=1。
 - 有效 depth、pixel-center K、RGB 对齐、米制外参缺一不可。

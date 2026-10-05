@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-05（S12.6 Engineering Complete，Learning 待本人验证）。
+最后整理：2026-10-05（S12.1–S12.6 Mastered；S12.7a Engineering Complete，Learning 待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -10,7 +10,9 @@ README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实验与验证均完成，
 五问 Explain 覆盖核心概念，Run/Modify/Explain 全部确认，Learning Mastered。
 仅合成对应点与已知 K/d → T_CO；没有 detector、base transform 或 manipulation。
-用户本轮明确请求推进 S12.6，已完成工程；学习验证仍待本人，STOP，不自动开始 S12.7a。
+S12.6 工程完成后，本人于 2026-10-05 明确确认实验与预测均完成，并正确回答五项 Explain；
+Run/Modify/Explain 全部确认，Learning Mastered。
+本轮用户明确授权 S12.7a，工程完成，Learning 待本人；STOP，不自动开始 S12.7b。
 
 ## S12.5 实现与现场验证（2026-10-04）
 
@@ -136,7 +138,7 @@ PnP 求该尺度下的 R/t；相机标定估 K/d，而 PnP 固定它们。
 本次仅更新 README、学习包、示例说明、roadmap、P1 plan 与 handoff；
 检查相对文档链接、状态一致性及 git diff --check，未重跑实验/仿真/GUI。
 上述 runtime 证据沿用 2026-10-04 工程验证，不是本次新运行。
-本轮已按明确请求实现 S12.6；下一步为本人 Run/Modify/Explain，随后可选 S12.7a 等待明确请求。
+S12.6 已完成本人 Run/Modify/Explain；S12.7a 已按明确请求完成工程，下一步为本人三项验证。
 
 ## 环境与历史 GUI 经验
 
@@ -168,5 +170,33 @@ python examples/13_perception_geometry/rgbd_back_projection.py --camera-height 1
 内置独立手算、invalid/empty depth、surface truth、base/world 链与 RGB mask/order 检查通过。
 默认 PNG 目视检查；显示网格稀疏采样，NPZ 保存完整点云，产物仅 ignored tmp/s12_6_rgbd_z*/。
 已知外参、ideal aligned RGB-D；无 GUI、真实相机、pose/ICP、动态操作验证。
-Engineering 完成；Learning Run/Modify/Explain 未勾选。本人下一小任务：升高相机并解释
-K/depth/extrinsic/表面高度与视野变化；不自动开始 S12.7a。
+Engineering 完成；本人已确认实验、预测与五项 Explain，Learning Mastered。
+解释记录见学习包：axial Z/range、数组索引、frame 链、固定场景与 roundtrip 边界。
+本次仅同步 README、学习包、示例说明、roadmap、P1 plan 与 handoff；
+检查相对文档链接、状态一致性及 git diff --check，未重跑 Python、仿真或 GUI。
+上述 runtime 数字沿用 2026-10-05 S12.6 工程验证；本轮未重跑 S12.6。
+
+## S12.7a 现场工程验证（2026-10-05）
+
+[学习包](15_7a_rigid_alignment.md)、[代码](../examples/13_perception_geometry/rigid_alignment.py)。
+保留起始六份未提交文档更新；pwd 正确，WSL2 6.6.87.2 / Ubuntu 24.04.5。
+从 base 自动激活 mujoco，同执行 shell 核验环境与
+`/home/lucas/miniconda3/envs/mujoco/bin/python`；Python 3.12.14 / NumPy 2.5.3。
+3.11 为兼容目标未执行；无新增依赖，不导入 MuJoCo 或启动渲染。
+
+```bash
+python examples/13_perception_geometry/rigid_alignment.py
+python examples/13_perception_geometry/rigid_alignment.py --noise-m 0.004
+python examples/13_perception_geometry/rigid_alignment.py --noise-m 0
+```
+
+三条命令退出 0、无 import error。default/Modify t error=0.000699880/0.002794669 m，
+R error=0.552240/2.260010 degree，noisy RMS=0.001501730/0.006001646 m；
+zero-noise RMS=1.23e-16 m。镜像 raw det=-1、RMS≈0；corrected det=+1、RMS=0.045317910 m，
+SSE penalty=4*s3 通过；wrong correspondence RMS=0.049574911 m。
+内置 truth/90° planar triangle、inverse、SO(3)、五类 input guards 通过。
+独立 NPZ/CSV/summary 核对、reverse fit、common unit scaling、source origin shift 通过；
+CLI noise nan/negative/over-limit 退出 2。默认 PNG 已目视检查。产物仅 ignored tmp/s12_7a_rigid_noise*/。
+文档相对链接/状态与 git diff --check 检查通过。未重跑 P0/前课，无 GUI、真实点云、ICP loop 或机器人执行。
+Engineering Complete；Learning Run/Modify/Explain 未勾选。下一步本人 noise ×4 预测/实验/解释；
+下一可选小任务 S12.7b 等待明确请求。

@@ -2,8 +2,8 @@
 
 更新：2026-10-05。任务与 Engineering/Learning checkbox 唯一维护在
 [README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
-Stage 0–11 已由本人确认完成；S12.1–S12.5 已 Engineering Complete + Learning Mastered。
-S12.6 Engineering Complete，Learning 待本人 Run/Modify/Explain。
+Stage 0–11 已由本人确认完成；S12.1–S12.6 已 Engineering Complete + Learning Mastered。
+S12.7a Engineering Complete，Learning 待本人 Run/Modify/Explain。
 
 ## 当前代码如何使用
 
@@ -14,7 +14,7 @@ S12.6 Engineering Complete，Learning 待本人 Run/Modify/Explain。
 | examples/10_ur5e_6d_ik | 6D error / Jacobian / DLS / bounded iteration | 已有求解器；不重新实现基础 IK |
 | examples/11_trajectory | linear/cubic reference 与解析导数 | 复用 cubic，Stage 14 才扩展路径时间化 |
 | examples/12_pick_place | UR5e 集成夹爪、known-pose lift/place/release/trials | 复用模型/执行判据；接口限制见 P1 审计 |
-| examples/13_perception_geometry | camera_frames / pinhole_projection / rgb_depth_capture / camera_calibration / pnp_pose / rgbd_back_projection，CPU geometry、calibration 与 pose | 当前唯一新工程入口 |
+| examples/13_perception_geometry | camera_frames / pinhole_projection / rgb_depth_capture / camera_calibration / pnp_pose / rgbd_back_projection / rigid_alignment，CPU geometry、calibration 与 pose | 当前唯一新工程入口 |
 | environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
 | controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
 | scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
@@ -47,6 +47,7 @@ CPU NumPy 优先；S12.4 已新增 OpenCV headless 用于 calibration/PnP；NumP
 ## 当前 handoff
 
 本人已完成 [S12.5 Learning Package](15_5_pnp_pose.md) 的实验、验证与 Explain。
-S12.6 [RGB-D Learning Package](15_6_rgbd_back_projection.md) 工程验证完成，交给本人 Run/Modify/Explain。
-下一可选任务是 S12.7a 已知对应刚体配准，等待本人明确请求。
-Stage 13–15 笔记为必要 skeleton，未实现；不自动开始 S12.7a。
+S12.6 [RGB-D Learning Package](15_6_rgbd_back_projection.md) 本人已明确确认实验、预测与 Explain，Learning Mastered。
+S12.7a [Rigid Alignment Package](15_7a_rigid_alignment.md) 工程完成，交给本人 Run/Modify/Explain。
+下一可选任务是 S12.7b nearest-neighbor ICP loop，等待明确请求。
+Stage 13–15 笔记为必要 skeleton，未实现；不自动开始 S12.7b。
