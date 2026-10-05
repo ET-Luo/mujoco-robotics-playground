@@ -22,7 +22,7 @@
 ## Current Progress
 
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
-当前推进 **P1 — Perception, Planning & Robot Software Integration**；S12.1–S12.6 已 Engineering Complete + Learning Mastered。
+当前推进 **P1 — Perception, Planning & Robot Software Integration**；S12.1–S12.7a 已 Engineering Complete + Learning Mastered。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -33,7 +33,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S12.4 Camera Calibration | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.5 PnP Object Pose | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.6 RGB-D Back Projection | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| S12.7a Known-Correspondence Rigid Alignment | Code + Experiment + Docs 完成 | 待本人 Run / Modify / Explain |
+| S12.7a Known-Correspondence Rigid Alignment | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.7b–Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
@@ -277,7 +277,7 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
 ## P1 — Perception, Planning & Robot Software Integration
 
 CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后接入。
-细化依据、复用边界与资源预算见[P1 规划](docs/p1_plan.md)。每个 Task 0.5～2h，当前已实现 S12.1–S12.7a；S12.1–S12.6 Learning Mastered，S12.7a Engineering Complete，Learning 待本人验证。
+细化依据、复用边界与资源预算见[P1 规划](docs/p1_plan.md)。每个 Task 0.5～2h，当前已实现 S12.1–S12.7a；S12.1–S12.7a Engineering Complete + Learning Mastered。
 
 ### Stage 12 — Robot Perception Geometry
 
@@ -302,7 +302,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测均完成，正确解释 axial depth/range、索引约定、frame 链、相机移动与 roundtrip 的验证边界）
 
 - S12.7a（0.5～2h）：ICP rigid alignment：已知对应的小点集，手写 NumPy centroid/SVD，纠正 reflection。见 [S12.7a Learning Package](docs/15_7a_rigid_alignment.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（2026-10-05）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测均完成，Explain 覆盖 centroid、SVD、reflection、几何可观测性及 residual 与 pose error 的区别）
 
 - S12.7b（0.5～2h）：ICP nearest-neighbor loop：小点云 CPU 最邻近、门限、停止条件；测试初值与 partial overlap。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain

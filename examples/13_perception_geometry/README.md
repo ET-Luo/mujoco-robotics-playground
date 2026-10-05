@@ -109,4 +109,4 @@ python examples/13_perception_geometry/rigid_alignment.py --noise-m 0
 先预测 target per-axis noise ×4 的 residual/pose error，再对比。NPZ/CSV/PNG/summary
 在 ignored `tmp/s12_7a_rigid_noise*_seed20261005/`。包含镜像、错对应、退化 guards；
 允许 planar noncollinear geometry，不实现 nearest-neighbor/ICP loop。
-Engineering Complete；Learning 待本人 Run/Modify/Explain。STOP，不自动开始 S12.7b。
+Engineering Complete；本人于 2026-10-05 确认实验、预测与 Explain，Learning Mastered。STOP，不自动开始 S12.7b。

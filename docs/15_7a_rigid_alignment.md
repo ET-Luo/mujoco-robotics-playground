@@ -185,7 +185,16 @@ R=V diag(1,1,det(VU.T)) U.T，t=mean_T-R mean_S。修正 det 避免镜像，
 - Vt 是 V.T；合法旋转需 orthogonal 且 det=+1。
 - planar noncollinear 可解，collinear 不可唯一确定；fit residual 不是绝对 pose accuracy。
 
-状态仅维护在根 README；Learning Run/Modify/Explain 待本人明确报告。
+状态仅维护在根 README。本人于 2026-10-05 明确确认实验与预测均完成，并回答五项 Explain；
+Run/Modify/Explain 全部确认，Learning Mastered。
+本人解释覆盖中心化消去平移、旋转 source 质心后恢复 t、Vt.T 的使用、
+reflection 与 proper rotation 约束、平面非共线和共线的可观测性，以及配准残差与
+truth pose error 的区别；指出完整 ICP 需要不断重新寻找未知对应关系。
+
+补充：翻转第 j 个奇异方向使 trace 目标减少 2*s_j、平方误差增加 4*s_j，
+因此选择最小奇异值方向损失最小。这里估计的是一般 source→target 刚体位姿；
+只有点集 frame 确实对应相机或机器人时，才能赋予它相应的物理名称。
+本次仅同步本人反馈；runtime 证据沿用 2026-10-05 工程验证，未重跑实验或 GUI。
 
 **Explain**：
 

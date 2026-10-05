@@ -2,8 +2,7 @@
 
 更新：2026-10-05。任务与 Engineering/Learning checkbox 唯一维护在
 [README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
-Stage 0–11 已由本人确认完成；S12.1–S12.6 已 Engineering Complete + Learning Mastered。
-S12.7a Engineering Complete，Learning 待本人 Run/Modify/Explain。
+Stage 0–11 已由本人确认完成；S12.1–S12.7a 已 Engineering Complete + Learning Mastered。
 
 ## 当前代码如何使用
 
@@ -48,6 +47,6 @@ CPU NumPy 优先；S12.4 已新增 OpenCV headless 用于 calibration/PnP；NumP
 
 本人已完成 [S12.5 Learning Package](15_5_pnp_pose.md) 的实验、验证与 Explain。
 S12.6 [RGB-D Learning Package](15_6_rgbd_back_projection.md) 本人已明确确认实验、预测与 Explain，Learning Mastered。
-S12.7a [Rigid Alignment Package](15_7a_rigid_alignment.md) 工程完成，交给本人 Run/Modify/Explain。
+S12.7a [Rigid Alignment Package](15_7a_rigid_alignment.md) 本人已确认实验、预测与 Explain，Learning Mastered。
 下一可选任务是 S12.7b nearest-neighbor ICP loop，等待明确请求。
 Stage 13–15 笔记为必要 skeleton，未实现；不自动开始 S12.7b。

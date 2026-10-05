@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-05（S12.1–S12.6 Mastered；S12.7a Engineering Complete，Learning 待本人验证）。
+最后整理：2026-10-05（S12.1–S12.7a Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -12,7 +12,8 @@ S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实�
 仅合成对应点与已知 K/d → T_CO；没有 detector、base transform 或 manipulation。
 S12.6 工程完成后，本人于 2026-10-05 明确确认实验与预测均完成，并正确回答五项 Explain；
 Run/Modify/Explain 全部确认，Learning Mastered。
-本轮用户明确授权 S12.7a，工程完成，Learning 待本人；STOP，不自动开始 S12.7b。
+S12.7a 工程完成后，本人于 2026-10-05 明确确认实验与预测均完成，并回答五项 Explain；
+Run/Modify/Explain 全部确认，Learning Mastered。STOP，不自动开始 S12.7b。
 
 ## S12.5 实现与现场验证（2026-10-04）
 
@@ -138,7 +139,7 @@ PnP 求该尺度下的 R/t；相机标定估 K/d，而 PnP 固定它们。
 本次仅更新 README、学习包、示例说明、roadmap、P1 plan 与 handoff；
 检查相对文档链接、状态一致性及 git diff --check，未重跑实验/仿真/GUI。
 上述 runtime 证据沿用 2026-10-04 工程验证，不是本次新运行。
-S12.6 已完成本人 Run/Modify/Explain；S12.7a 已按明确请求完成工程，下一步为本人三项验证。
+S12.6 已完成本人 Run/Modify/Explain；S12.7a 已由本人确认三项学习验证，下一可选任务 S12.7b 等待明确请求。
 
 ## 环境与历史 GUI 经验
 
@@ -198,5 +199,9 @@ SSE penalty=4*s3 通过；wrong correspondence RMS=0.049574911 m。
 独立 NPZ/CSV/summary 核对、reverse fit、common unit scaling、source origin shift 通过；
 CLI noise nan/negative/over-limit 退出 2。默认 PNG 已目视检查。产物仅 ignored tmp/s12_7a_rigid_noise*/。
 文档相对链接/状态与 git diff --check 检查通过。未重跑 P0/前课，无 GUI、真实点云、ICP loop 或机器人执行。
-Engineering Complete；Learning Run/Modify/Explain 未勾选。下一步本人 noise ×4 预测/实验/解释；
+Engineering Complete；本人明确确认实验、预测与五项 Explain，Learning Mastered。
+解释记录见学习包：中心化、Vt、reflection、非共线几何、residual 与 pose error、ICP 对应更新。
+补充最小奇异方向修正损失与一般 source→target frame 的含义。
+本次仅更新六份文档，检查相对链接、状态一致性及 git diff --check，未重跑实验/仿真/GUI。
+上述 runtime 证据沿用 2026-10-05 工程验证；
 下一可选小任务 S12.7b 等待明确请求。

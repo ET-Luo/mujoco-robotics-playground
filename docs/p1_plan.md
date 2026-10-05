@@ -88,4 +88,4 @@ known-pose held-out views；本人随后明确确认实验、对比与 Explain�
 
 [Rigid Alignment Package](15_7a_rigid_alignment.md) Engineering Complete；NumPy centroid/SVD、
 SO(3) correction，noise/zero-noise、mirror、wrong correspondence、planar/degenerate geometry 验证。
-只解决已知对应的一次 rigid fit，无新增依赖；Learning 待本人三项确认，STOP，不自动开始 S12.7b。
+只解决已知对应的一次 rigid fit，无新增依赖；Learning 三项已由本人明确确认，Mastered，STOP，不自动开始 S12.7b。
