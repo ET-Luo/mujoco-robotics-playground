@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-04（S12.1–S12.5 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-05（S12.6 Engineering Complete，Learning 待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -10,7 +10,7 @@ README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实验与验证均完成，
 五问 Explain 覆盖核心概念，Run/Modify/Explain 全部确认，Learning Mastered。
 仅合成对应点与已知 K/d → T_CO；没有 detector、base transform 或 manipulation。
-**不自动开始 S12.6**。
+用户本轮明确请求推进 S12.6，已完成工程；学习验证仍待本人，STOP，不自动开始 S12.7a。
 
 ## S12.5 实现与现场验证（2026-10-04）
 
@@ -136,7 +136,7 @@ PnP 求该尺度下的 R/t；相机标定估 K/d，而 PnP 固定它们。
 本次仅更新 README、学习包、示例说明、roadmap、P1 plan 与 handoff；
 检查相对文档链接、状态一致性及 git diff --check，未重跑实验/仿真/GUI。
 上述 runtime 证据沿用 2026-10-04 工程验证，不是本次新运行。
-下一可选任务 S12.6 RGB-D back projection 等待明确请求；STOP，不自动开始。
+本轮已按明确请求实现 S12.6；下一步为本人 Run/Modify/Explain，随后可选 S12.7a 等待明确请求。
 
 ## 环境与历史 GUI 经验
 
@@ -149,3 +149,24 @@ PnP 求该尺度下的 R/t；相机标定估 K/d，而 PnP 固定它们。
 passive viewer 的 Python 循环没有暂停回调，空格不会暂停它。
 历史具体错误与诊断见[MuJoCo notes](mujoco_notes.md)、[基础课](01_mujoco_basics.md)、
 [UR5e 示例](../examples/02_ur5e_basics/README.md)。
+
+## S12.6 现场工程验证（2026-10-05）
+
+[学习包](15_6_rgbd_back_projection.md)、[代码](../examples/13_perception_geometry/rgbd_back_projection.py)。
+起始 pwd 正确、git status --short 为空；WSL2 6.6.87.2 / Ubuntu 24.04.5。
+base 自动切到 mujoco，同执行 shell 核验环境及 `/home/lucas/miniconda3/envs/mujoco/bin/python`。
+Python 3.12.14 / MuJoCo 3.14.0 / NumPy 2.5.3；3.11 兼容目标未执行。无新增依赖。
+
+```bash
+python examples/13_perception_geometry/rgbd_back_projection.py
+python examples/13_perception_geometry/rgbd_back_projection.py --camera-height 1.0
+```
+
+两命令退出 0、无 import error，CPU EGL llvmpipe。各 76800 有效点；max pixel error
+5.68e-14/2.84e-14 px，floor z≈0、top z≈0.06 m；实际 base 为 world xy 反向。
+错误 normalized ray × Z 使离轴 floor patch mean z=0.126922/0.158652 m。
+内置独立手算、invalid/empty depth、surface truth、base/world 链与 RGB mask/order 检查通过。
+默认 PNG 目视检查；显示网格稀疏采样，NPZ 保存完整点云，产物仅 ignored tmp/s12_6_rgbd_z*/。
+已知外参、ideal aligned RGB-D；无 GUI、真实相机、pose/ICP、动态操作验证。
+Engineering 完成；Learning Run/Modify/Explain 未勾选。本人下一小任务：升高相机并解释
+K/depth/extrinsic/表面高度与视野变化；不自动开始 S12.7a。

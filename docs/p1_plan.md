@@ -77,3 +77,9 @@ known-pose held-out views；本人随后明确确认实验、对比与 Explain�
 更新（2026-10-04）：本人明确授权 S12.5；新增 [PnP Engineering Package](15_5_pnp_pose.md)，
 已知非共面 metric 3D↔2D 对应与 K/d，估计 T_CO；报告像素/位姿误差，比较 noise 与 focal+5%。
 默认、0.8 px 与零噪声及输入/产物检查通过；无新增依赖；本人随后确认实验、验证与 Explain，Learning Mastered，不自动开始 S12.6。
+
+### S12.6 进展（2026-10-05）
+
+[RGB-D package](15_6_rgbd_back_projection.md) Engineering Complete；复用 CPU acquisition，
+有效 axial depth→camera/base 表面点云，独立 floor/top/base 核验、invalid depth 与 range 错误对照。
+无新增依赖；Learning Run/Modify/Explain 待本人确认，不自动开始 S12.7a。

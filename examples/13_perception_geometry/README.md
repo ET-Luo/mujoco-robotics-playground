@@ -1,6 +1,6 @@
 # Stage 12 — Robot Perception Geometry
 
-当前实现 S12.1 Camera Frames、S12.2 Pinhole Projection 、S12.3 CPU RGB/depth acquisition 、S12.4 camera calibration 与 S12.5 PnP object pose。
+当前实现 S12.1 Camera Frames、S12.2 Pinhole Projection 、S12.3 CPU RGB/depth acquisition 、S12.4 camera calibration 、S12.5 PnP object pose 与 S12.6 RGB-D back projection。
 S12.1 完整教学与实验记录见
 [Learning Package](../../docs/15_robot_perception_geometry.md)；状态唯一来源为
 [根 README](../../README.md#stage-12--robot-perception-geometry)。
@@ -78,4 +78,19 @@ python examples/13_perception_geometry/pnp_pose.py --noise-px 0.8
 先预测噪声增大后的变化，再比较；同时观察 focal+5% 的低 RMS / 高 pose error。
 JSON/CSV/NPZ/PNG 在 ignored `tmp/s12_5_pnp_noise*_seed20261004/`。
 输入为合成对应点，不包含 detector、base transform 或抓取。本人已确认实验、验证与 Explain；任务状态见根 README。
-Engineering 完成后 STOP；S12.6 及后续仅规划。
+S12.5 Learning Mastered；后续状态见根 README。
+
+## S12.6 — RGB-D Back Projection
+
+[完整 Learning Package](../../docs/15_6_rgbd_back_projection.md)。复用 CPU RGB/depth acquisition，
+手写 NumPy K inverse，将有效 axial depth pixels 转成 optical camera / actual UR5e base 表面点云。
+同 mask 提取 RGB；已知外参，未做外参估计。没有新增依赖。
+
+```bash
+python examples/13_perception_geometry/rgbd_back_projection.py
+python examples/13_perception_geometry/rgbd_back_projection.py --camera-height 1.0
+```
+
+NPZ/PNG/summary 在 ignored `tmp/s12_6_rgbd_z*/`。独立检查 floor/top geometry、实际 base frame，
+并演示将 Z 当 radial range 导致地板曲起。Engineering Complete，Learning 待本人 Run/Modify/Explain。
+STOP；不自动开始 S12.7a。
