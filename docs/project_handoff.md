@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-05（Stage 12 与 S13.1 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-05（Stage 12 / S13.1 Mastered；S13.2 Engineering Complete，Run/Modify 已确认，Explain 待补开口关系）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,7 @@ S12.7a 工程完成后，本人于 2026-10-05 明确确认实验与预测均完�
 Run/Modify/Explain 全部确认，Learning Mastered。S12.7b 随后工程完成，本人明确确认实验与预测并回答五项 Explain，Learning Mastered。
 S12.8a 本人已确认实验与预测，并补充正确的两种安装 X/Y 定义与固定关系；
 Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成，本人确认实验、预测并补充完整 Explain，Learning Mastered。
-S13.1 已实现，本人确认实验与预测并回答五项 Explain，Learning Mastered；下一可选任务 S13.2 等待明确请求。
+S13.1 已实现，本人确认实验与预测并回答五项 Explain，Learning Mastered；S13.2 已按后续明确请求实现，见下。
 
 ## 多电脑依赖规则（2026-10-05）
 
@@ -345,7 +345,41 @@ Synthetic producer/scorer 用 truth，consumer 无 truth 参数；精确已知�
 无实际 image estimator/PnP、IK/可达/碰撞/抓取/GUI，未重跑前课/P0。
 六份相关文档本地 Markdown 文件链接、S13.1 工程/未勾选学习与 S13.2 未开始状态、git diff --check 通过。
 本人随后确认实验与预测完成，并回答五项 Explain，Run/Modify/Explain 全部确认，Learning Mastered。
-解释记录与矩阵链、完整 pose、米制平移检查的精度补充见学习包；下一可选小任务 S13.2，等待明确请求。
+解释记录与矩阵链、完整 pose、米制平移检查的精度补充见学习包；S13.2 已按后续明确请求实现，见下。
 本次仅同步六份文档，保留既有未提交代码/文档；本地链接、状态一致性与 git diff --check 通过。
 未重跑实验/仿真/GUI，runtime 证据沿用 2026-10-05 Zero 工程验证。
 STOP，不自动实现 S13.2。
+
+## S13.2 现场工程验证（2026-10-05，机器 Zero）
+
+[学习包](16_2_grasp_pose_generation.md)、[代码](../examples/14_vision_manipulation/grasp_candidates.py)。
+起始 pwd 正确、git status --short 空；Zero WSL2 kernel 6.18.33.2 / Ubuntu 24.04.5。
+本机 conda info --base 定位 hook、base→mujoco，同执行 shell 核验环境/interpreter：
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python 3.12.14；required distribution
+versions/imports/module paths NumPy 2.5.3、MuJoCo 3.13.0、Menagerie 2026.9.2、Matplotlib 3.11.2。
+P0 helper import 通过；无新增依赖，3.11 兼容目标未执行，不核验无关 cv2。
+
+```bash
+python examples/14_vision_manipulation/grasp_candidates.py
+python examples/14_vision_manipulation/grasp_candidates.py --size-x-m 0.12
+python examples/14_vision_manipulation/grasp_candidates.py --size-x-m 0.12 --size-y-m 0.12
+```
+
+三命令退出 0，无 import error。Yaw=20°、center=[−.45,.20,.03] m，尺寸40/30/60 mm。
+四朝向开口48/38/48/38 mm，width/两端点 local IK pass=4/4；dx120→2/2，dx/dy120→0/0。
+Far [2,2,.03] m（独立合法40mm width）记录 pre IK update budget，q null。
+复用model/DLS，candidate独立data/home；不读取known_object pose，不检查 contacts/path。
+Actual compiled root/site、pad offset35mm、slide range检查；proper top-down、pad=center、
+pre局部方向、limits/residual/time=0 内置通过。独立三套JSON/NPZ/4 CSV rows、
+保存q FK、refusal无伪造q、directchain、yaw/translation equivariance、generator purity、
+invalid dims/tilt/min-gap 检查通过，CLI size-x nan/−1/0.5退出2。
+Passing endpoints最大position residual=6.212543e-5 m，rotation matrix Frobenius max=2.943951e-6。
+默认 PNG 已目视检查，图是输入box/opening axes投影（显示偏移不改变targets）；ignored tmp/s13_2_grasp*/。
+无真实vision/PnP、continuous path/collision/grasp/dynamics/GUI，未重跑前课/P0独立脚本。
+七份相关文档本地文件链接、S13.2工程/未勾选学习与S13.3a未开始状态、git diff --check通过。
+本人随后确认实验与预测完成，Run/Modify 已确认；Explain 第1/2/4/5项核心判断正确，
+第3项待补 width/opening/slide 定量关系与 dx120mm 对候选的筛选解释，暂不标记 Mastered。
+下一小任务仅补该项，不需重跑实验；反馈与精度说明见学习包。
+本次仅同步六份文档，保留既有未提交工作；链接、状态一致性与 git diff --check 通过。
+未重跑实验/仿真/GUI，runtime 沿用2026-10-05 Zero工程验证。
+STOP，不自动实现S13.3a。

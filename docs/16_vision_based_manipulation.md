@@ -4,7 +4,7 @@
 [代码](../examples/14_vision_manipulation/perception_pose.py) ·
 [示例 README](../examples/14_vision_manipulation/README.md) ·
 [状态唯一来源](../README.md#stage-13--vision-based-manipulation)。
-S13.2 起仍是路线，未实现。前置：[Frame](15_robot_perception_geometry.md)、
+S13.2 [Grasp Pose Generation](16_2_grasp_pose_generation.md) 工程完成；S13.3a 起仍是路线，未实现。前置：[Frame](15_robot_perception_geometry.md)、
 [PnP](15_5_pnp_pose.md)、[Hand-eye](15_8b_hand_eye_calibration.md)。
 
 ## Problem → Why
@@ -242,4 +242,4 @@ quality/time 是接口策略，不能独立证明 producer 的单位/frame/质�
 4. 为什么质量通过的 biased pose 仍可能不准？门限收紧为何不是精度提升？
 5. truth 在哪里使用？拒绝时为何不能回填 truth，T_WO 又为何不是 gripper target？
 
-本课学习验证完成后 STOP；下一可选任务 S13.2 grasp pose generation，等待明确请求。
+本课学习验证完成后 STOP；S13.2 已按后续明确请求实现，见[学习包](16_2_grasp_pose_generation.md)。

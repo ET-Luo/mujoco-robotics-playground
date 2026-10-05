@@ -120,3 +120,12 @@ Engineering 完成；本人已确认 Run/Modify，并正确补充齐次符号、
 consumer 不读取 truth，rejected 不回填。16 cases 与 RMS gate 1→0.3 px 通过。
 固定 camera/精确 synthetic extrinsic，无 PnP/IK/grasp/dynamics；低质量门限不能证明准确/可达。
 Engineering Complete；本人于 2026-10-05 确认实验与预测，Explain 覆盖核心概念，Learning Mastered；不自动进入 S13.2。
+
+### S13.2 进展（2026-10-05）
+
+[Grasp Pose Package](16_2_grasp_pose_generation.md)：upright box，estimate/full尺寸→四朝向 T_OG，
+T_WG/T_WP；root→pad 35 mm、opening=20+2s mm、width+8 mm clearance。
+复用 P0 model/DLS，每个 candidate 独立 home，pre→grasp warm-start；独立 FK/limits 核对。
+40/30、120/30、120/120 mm：width/IK pass counts 4/4、2/2、0/0；far local IK 失败。
+无 PnP、path/collision/grasp/dynamics；不读 fixture object pose 规划。
+Engineering 完成，本人已确认 Run/Modify；Explain 待补 width/opening/slide 定量关系，不自动开始 S13.3a。
