@@ -59,7 +59,7 @@ which python
 仅在环境为 `mujoco` 且解释器属于该环境时继续：
 
 ```bash
-# 仅首次安装或依赖确实缺失时执行：
+# 仅明确要完整初始化环境时执行（包含 Torch/RL 依赖）：
 python -m pip install -r requirements.txt
 bash scripts/check_env.sh
 python examples/01_basic_simulation/main.py
@@ -71,6 +71,9 @@ python examples/02_ur5e_basics/main.py --viewer --steps 150000
 基础依赖为 `mujoco`、`numpy`、`matplotlib`、`mujoco-menagerie`；既有 Stage 8 另有
 Gymnasium、CPU PyTorch、Stable-Baselines3，见 requirements.txt。P1 S12.4 新增 OpenCV headless，用于 CPU calibration/PnP。Menagerie 首次使用
 下载 UR5e 到用户缓存，不复制整个模型仓库。不要在 base 或系统 Python 安装依赖。
+换电脑时，Git 只同步依赖声明，不同步已安装包。Agent 应核验当前任务所需版本与 imports，
+按 [依赖规则](AGENTS.md#dependency-rules) 自动补齐已声明的必要依赖；窄任务不默认全量安装。
+预览安装影响、核验和机器/日期记录示例见[跨电脑开发流程](docs/development_workflow.md#switching-laptops)。
 当前 passive viewer 没有暂停回调，空格不会暂停 Python 仿真循环。
 
 ## Repository Structure

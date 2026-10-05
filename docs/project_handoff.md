@@ -18,6 +18,19 @@ S12.8a 本人已确认实验与预测，并补充正确的两种安装 X/Y 定�
 Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成，本人确认实验、预测并补充完整 Explain，Learning Mastered。
 下一可选任务 S13.1 等待明确请求。
 
+## 多电脑依赖规则（2026-10-05）
+
+用户说明会在不同笔记本推进，历史已安装包不必在当前机器存在。
+已更新 [AGENTS Dependency Rules](../AGENTS.md#dependency-rules) 与
+[跨电脑流程](development_workflow.md#switching-laptops)：requirements 为共享声明，
+任务执行前核验当前环境/版本/真实 imports，自动选择性补齐已声明的必要依赖；
+先预览 resolver，保留工作中的核心版本，修复后核验 imports/pip check/本课最小实验。
+窄任务不默认安装 Torch/RL 全集；可选核验缺包不迫使安装，也不能替代必需检查。
+机器标识/日期必须随环境观察记录，conda 路径从当前机器发现；范围不是 exact lock。
+本次仅修改规则/流程/README/交接；文档链接、规则一致性和 git diff --check 通过。
+未安装包、未重跑 Python 学习实验、未核验当前 cv2 或 GUI；历史缺 cv2 记录仅属当次环境。
+学习进度不变；下一可选任务仍 S13.1，等待明确请求。
+
 ## S12.5 实现与现场验证（2026-10-04）
 
 新增 [pnp_pose.py](../examples/13_perception_geometry/pnp_pose.py) 与
