@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-05（S12.1–S12.7a Engineering Complete + Learning Mastered）。
+最后整理：2026-10-05（S12.1–S12.8b Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -13,7 +13,10 @@ S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实�
 S12.6 工程完成后，本人于 2026-10-05 明确确认实验与预测均完成，并正确回答五项 Explain；
 Run/Modify/Explain 全部确认，Learning Mastered。
 S12.7a 工程完成后，本人于 2026-10-05 明确确认实验与预测均完成，并回答五项 Explain；
-Run/Modify/Explain 全部确认，Learning Mastered。STOP，不自动开始 S12.7b。
+Run/Modify/Explain 全部确认，Learning Mastered。S12.7b 随后工程完成，本人明确确认实验与预测并回答五项 Explain，Learning Mastered。
+S12.8a 本人已确认实验与预测，并补充正确的两种安装 X/Y 定义与固定关系；
+Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成，本人确认实验、预测并补充完整 Explain，Learning Mastered。
+下一可选任务 S13.1 等待明确请求。
 
 ## S12.5 实现与现场验证（2026-10-04）
 
@@ -139,7 +142,7 @@ PnP 求该尺度下的 R/t；相机标定估 K/d，而 PnP 固定它们。
 本次仅更新 README、学习包、示例说明、roadmap、P1 plan 与 handoff；
 检查相对文档链接、状态一致性及 git diff --check，未重跑实验/仿真/GUI。
 上述 runtime 证据沿用 2026-10-04 工程验证，不是本次新运行。
-S12.6 已完成本人 Run/Modify/Explain；S12.7a 已由本人确认三项学习验证，下一可选任务 S12.7b 等待明确请求。
+S12.6 已完成本人 Run/Modify/Explain；S12.7a 已由本人确认三项学习验证，S12.7b 已完成本人 Run/Modify/Explain；S12.8a 已按后续明确请求实现，见下。
 
 ## 环境与历史 GUI 经验
 
@@ -204,4 +207,100 @@ Engineering Complete；本人明确确认实验、预测与五项 Explain，Lear
 补充最小奇异方向修正损失与一般 source→target frame 的含义。
 本次仅更新六份文档，检查相对链接、状态一致性及 git diff --check，未重跑实验/仿真/GUI。
 上述 runtime 证据沿用 2026-10-05 工程验证；
-下一可选小任务 S12.7b 等待明确请求。
+S12.7b 本次已获明确授权并实现，见下。
+
+## S12.7b 现场工程验证（2026-10-05）
+
+[学习包](15_7b_icp_loop.md)、[代码](../examples/13_perception_geometry/icp_loop.py)。
+起始 pwd 正确、git status --short 空；当前 WSL2 kernel **6.18.33.2** / Ubuntu 24.04.5，
+不是历史 6.6 kernel。从 base 激活 mujoco，同执行 shell 核验环境名与
+`/home/lucas/miniconda3/envs/mujoco/bin/python`；Python 3.12.14 / NumPy 2.5.3。
+3.11 为兼容目标未执行，无新增依赖，不导入 MuJoCo 或渲染。
+
+```bash
+python examples/13_perception_geometry/icp_loop.py
+python examples/13_perception_geometry/icp_loop.py --gate-m 0.008
+python examples/13_perception_geometry/icp_loop.py --gate-m 0.000001
+```
+
+三命令退出 0，无 import error。20 mm：near full t error=0.045091 mm、R=0.047650°；
+far full 小更新停止但 R error=141.863330°；partial t error=1.664512 mm、R=1.475980°。
+8 mm：partial t error=0.093034 mm、R=0.115058°，保留 60/120；far full 仅 18/120，
+RMS=4.900273 mm 仍 R error=139.446286°。1 μm 全部零对应/refusal，RMS=null。
+内置 exact recovery/非原点组合、NN tie、SO(3)、固定 pair RMS 不增、上限、退化、input checks。
+独立三组 NPZ/CSV/summary 的 brute-force distances/counts/RMS/t error 核对通过；
+反转 rows、target frame origin shift、input preservation、非法 gate/reflection 初值检查通过。
+默认 PNG 已目视检查。产物仅 ignored tmp/s12_7b_icp_gate*/。
+六份相关文档的本地 Markdown 文件链接、README 工程/学习状态与 git diff --check 通过。
+未重跑前课/P0，无 GUI、真实 RGB-D 注册、多 seed benchmark、机器人执行。
+本人随后明确确认实验与预测均完成，并回答五项 Explain，Run/Modify/Explain 全部确认，Learning Mastered。
+解释与 frame/RMS 精度补充见学习包。此次仅同步六份文档，保留全部既有未提交代码/文档；
+本地 Markdown 文件链接、状态一致性与 git diff --check 通过，未重跑 Python 实验/仿真/GUI。
+上面 runtime 证据沿用 2026-10-05 工程验证。S12.8a 已按后续明确请求实现，见下。
+
+## S12.8a 现场工程验证（2026-10-05）
+
+[学习包](15_8a_hand_eye_geometry.md)、[代码](../examples/13_perception_geometry/hand_eye_geometry.py)。
+保留起始五份已修改文档与两份 untracked S12.7b 文件。pwd 正确；
+WSL2 kernel 6.18.33.2 / Ubuntu 24.04.5。从 base 自动激活 mujoco，
+同执行 shell 核验环境名与 `/home/lucas/miniconda3/envs/mujoco/bin/python`；
+Python 3.12.14 / NumPy 2.5.3，3.11 兼容目标未执行。无新增依赖。
+
+```bash
+python examples/13_perception_geometry/hand_eye_geometry.py
+python examples/13_perception_geometry/hand_eye_geometry.py --axis-spread-deg 1
+python examples/13_perception_geometry/hand_eye_geometry.py --axis-spread-deg 0
+```
+
+三命令退出 0，无 import error。每种安装各三组/5 poses/10 pairs，truth residual <1e-12；
+multi_axis 35/1° K rank=8、L rank=3，但 rotation s8/L s3 从 1.002729042→0.034080102；
+0° 为 rank 6/2。同轴 rank 6/2、纯平移 0/0，构造 X'=ZX 均保持零 residual。
+纯平移 K=0 不代表完整方程无旋转信息；t_A=R_X t_B 仍约束旋转，t_X 始终不可观测。
+内置绝对链、relative AX=XB、K vec_F 与平移分块式、反例、wrong-B、input guards 通过；
+独立三套 NPZ/JSON/CSV（每套 60 pair rows）、generic inverse、反转成对采样、input preservation、
+X' 对应另一恒定绝对 Y 检查通过；CLI nan/−1/61° 退出 2。默认 PNG 已目视检查。
+产物仅 ignored tmp/s12_8a_geometry_spread*/。未运行前课/P0、GUI、PnP、机器人执行或 X solver。
+安装定义/闭环核对官方 OpenCV 文档；K/L 与反例为本课直接推导，不用 hand-eye API。
+六份相关文档的本地 Markdown 文件链接、工程/未勾选学习状态与 git diff --check 通过。
+本人随后确认实验与预测均完成，并补充正确的两种安装 X/Y 方向与固定关系；
+Run/Modify/Explain 全部确认，Learning Mastered。相对运动反向推导、退化与条件性记录见学习包。
+S12.8b 已按后续明确请求实现，见下。
+本次仅同步六份文档；本地链接、状态一致性与 git diff --check 通过，未重跑实验/仿真/GUI。
+runtime 证据沿用 2026-10-05 工程验证；学习状态依据本人报告与回答，不由助手运行追认。
+STOP，不自动实现 S12.8b calibration/noise/held-out。
+
+## S12.8b 现场工程验证（2026-10-05）
+
+[学习包](15_8b_hand_eye_calibration.md)、[代码](../examples/13_perception_geometry/hand_eye_calibration.py)。
+保留起始五份 modified 文档与四份 untracked S12.7b/8a 文件；pwd 正确。
+WSL2 kernel 6.18.33.2 / Ubuntu 24.04.5；从 base 激活 mujoco，同执行 shell 核验
+`CONDA_DEFAULT_ENV=mujoco` 与 `/home/lucas/miniconda3/envs/mujoco/bin/python`。
+Python 3.12.14 / NumPy 2.5.3；3.11 兼容目标未执行，无新增依赖。
+
+```bash
+python examples/13_perception_geometry/hand_eye_calibration.py
+python examples/13_perception_geometry/hand_eye_calibration.py --noise-scale 4
+python examples/13_perception_geometry/hand_eye_calibration.py --noise-scale 0
+```
+
+三命令退出 0，无 import error。两种安装×broad/near-axis，12 train / 6 held absolute poses。
+默认 eye-in-hand broad/near X t error=0.864328/3.873388 mm，R=0.091122/1.191635°；
+train pair rotation RMS=0.215155/0.208456°，held t RMS=0.878049/5.348452 mm。
+默认 eye-to-hand broad/near X t=1.094404/4.114071 mm，R=0.108762/0.239907°。
+scale=4 本次误差约 ×4；zero-noise t/held <1e-12 m，angle residual 有约 2.4e-6° 浮点下限。
+L condition broad/near=1.342061/22.177587。只单 seed，不是稳健性 benchmark。
+内置 clean recovery、SO(3)、同轴/纯平移拒绝；独立三套 NPZ/JSON/96 CSV rows、
+held loop/general inverse、units×2、input preservation、clean reverse、另一 rotation-log-vector
+Procrustes + translation 求解检查通过；非法 pose、CLI nan/−1/5 拒绝（CLI 退出 2）。
+默认 PNG 已目视检查；产物仅 ignored tmp/s12_8b_calibration_noise*/。
+最初 zero-noise 独立检查零绝对容差在 1e-16 m 失败，改 atol=1e-12 后通过；非算法更改。
+**当前 cv2 无法导入（ModuleNotFoundError）**，与 2026-10-04 历史记录不同。
+未安装依赖/未完成 OpenCV cross-check，改用独立 NumPy 验证；本课脚本无需 cv2。
+不得据历史证据称当前 PnP/camera calibration 环境可用。未重跑前课/P0、GUI、真实图像或机器人。
+六份相关文档的本地 Markdown 文件链接、工程/未勾选学习与 Stage 13 未开始状态、git diff --check 通过。
+本人随后确认实验与预测完成，并正确补充齐次 ± 符号、平移分块式与
+clean-held 仍含训练 Y_mean 偏差的说明；Run/Modify/Explain 全部确认，Learning Mastered。
+学习验证记录见学习包；下一可选小任务 S13.1 perception pose→base→world，等待明确请求。
+本次同步六份文档，本地链接、状态一致性与 git diff --check 通过；未重跑实验/仿真/GUI。
+runtime 沿用 2026-10-05 工程验证；学习状态按本人反馈记录。
+STOP，不自动实现 S13.1。

@@ -1,6 +1,6 @@
 # Stage 12 — Robot Perception Geometry
 
-当前实现 S12.1 Camera Frames、S12.2 Pinhole Projection 、S12.3 CPU RGB/depth acquisition 、S12.4 camera calibration 、S12.5 PnP object pose 、S12.6 RGB-D back projection 与 S12.7a known-correspondence rigid alignment。
+当前实现 S12.1 Camera Frames、S12.2 Pinhole Projection 、S12.3 CPU RGB/depth acquisition 、S12.4 camera calibration 、S12.5 PnP object pose 、S12.6 RGB-D back projection 、S12.7a known-correspondence rigid alignment 、S12.7b nearest-neighbor ICP loop 、S12.8a hand-eye geometry 与 S12.8b hand-eye calibration。
 S12.1 完整教学与实验记录见
 [Learning Package](../../docs/15_robot_perception_geometry.md)；状态唯一来源为
 [根 README](../../README.md#stage-12--robot-perception-geometry)。
@@ -109,4 +109,53 @@ python examples/13_perception_geometry/rigid_alignment.py --noise-m 0
 先预测 target per-axis noise ×4 的 residual/pose error，再对比。NPZ/CSV/PNG/summary
 在 ignored `tmp/s12_7a_rigid_noise*_seed20261005/`。包含镜像、错对应、退化 guards；
 允许 planar noncollinear geometry，不实现 nearest-neighbor/ICP loop。
-Engineering Complete；本人于 2026-10-05 确认实验、预测与 Explain，Learning Mastered。STOP，不自动开始 S12.7b。
+Engineering Complete；本人于 2026-10-05 确认实验、预测与 Explain，Learning Mastered；S12.7b 实现见下。
+
+## S12.7b — Nearest-Neighbor ICP Loop
+
+[完整 Learning Package](../../docs/15_7b_icp_loop.md)。小型合成点云，用 NumPy 单向 NN、
+米制距离门限、SVD 增量与左乘组合，比较 near/far initial pose 和 50% partial target。
+无新增依赖；不把 small_update 当准确位姿认证。
+
+```bash
+python examples/13_perception_geometry/icp_loop.py
+python examples/13_perception_geometry/icp_loop.py --gate-m 0.008
+```
+
+先预测 gate 20→8 mm 的 pair fraction / RMS / pose error，再对比三种条件。
+NPZ、history CSV、JSON、PNG 在 ignored `tmp/s12_7b_icp_gate*_seed20261005/`。
+Engineering Complete；本人于 2026-10-05 确认实验、预测与五项 Explain，Learning Mastered；状态见根 README。
+S12.8a 已按本人明确请求实现，见下。
+
+## S12.8a — Hand-Eye Geometry
+
+[完整 Learning Package](../../docs/15_8a_hand_eye_geometry.md)。明确 eye-in-hand / eye-to-hand
+的 X/Y 与闭环，手写 NumPy relative AX=XB，比较多轴、同轴、纯平移与近轴退化。
+构造 alternative X 零残差反例；无新依赖，不估计 X。
+
+```bash
+python examples/13_perception_geometry/hand_eye_geometry.py
+python examples/13_perception_geometry/hand_eye_geometry.py --axis-spread-deg 1
+```
+
+Modify 先预测轴分散 35→1° 对 rank、informative singular 与 residual 的影响。
+NPZ/CSV/JSON/PNG 在 ignored `tmp/s12_8a_geometry_spread*/`。
+Engineering Complete；本人已确认 Run/Modify，并补充正确的 X/Y 定义与固定关系，Learning Mastered；状态见根 README。
+S12.8b 已按本人明确请求实现，见下。
+
+## S12.8b — Hand-Eye Calibration
+
+[完整 Learning Package](../../docs/15_8b_hand_eye_calibration.md)。NumPy K/SVD/SO(3) rotation
+与 translation lstsq，分别求两种安装的 X；12 train / 6 held-out absolute poses 先隔离，
+冻结训练 Y_mean 验证留出闭环。broad / near-axis、pose noise ×4 / zero-noise 对照。
+
+```bash
+python examples/13_perception_geometry/hand_eye_calibration.py
+python examples/13_perception_geometry/hand_eye_calibration.py --noise-scale 4
+python examples/13_perception_geometry/hand_eye_calibration.py --noise-scale 0
+```
+
+先预测 noise ×4 对 X error、train / noisy-held / clean-held RMS 的影响再比较。
+JSON/NPZ/CSV/PNG 在 ignored `tmp/s12_8b_calibration_noise*_seed20261005/`。
+无新依赖，不调用 OpenCV；当前环境 cv2 缺失，前课历史安装记录不能视为当前可用性。
+Engineering Complete；本人已确认 Run/Modify/Explain，Learning Mastered；状态见根 README。不自动开始 S13.1。

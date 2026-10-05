@@ -88,4 +88,27 @@ known-pose held-out views；本人随后明确确认实验、对比与 Explain�
 
 [Rigid Alignment Package](15_7a_rigid_alignment.md) Engineering Complete；NumPy centroid/SVD、
 SO(3) correction，noise/zero-noise、mirror、wrong correspondence、planar/degenerate geometry 验证。
-只解决已知对应的一次 rigid fit，无新增依赖；Learning 三项已由本人明确确认，Mastered，STOP，不自动开始 S12.7b。
+只解决已知对应的一次 rigid fit，无新增依赖；Learning 三项已由本人明确确认，Mastered；后续 S12.7b 已按明确请求实现。
+
+### S12.7b 进展（2026-10-05）
+
+[ICP Loop Package](15_7b_icp_loop.md)：小型 synthetic clouds，CPU NumPy 单向 NN、距离 gate、
+复用 SVD fit、Delta 左乘、四类停止原因。近初值、远初值与半边 partial target 对照，
+20/8 mm 门限与 1 μm 拒绝实验已验证；无新增依赖。
+Engineering 完成；本人于 2026-10-05 确认实验、预测与五项 Explain，Learning Mastered；S12.8a 已按后续明确请求实现。
+
+### S12.8a 进展（2026-10-05）
+
+[Hand-Eye Geometry Package](15_8a_hand_eye_geometry.md)：eye-in-hand / eye-to-hand
+两种绝对闭环，relative AX=XB，无求解器；多轴、同轴、纯平移及轴分散 35→1→0° 对照。
+验证 commuting alternative X 与 K/L spectra；区分 rotation-only 子系统和完整约束，
+纯平移可约束 R 但不能确定 t。无新增依赖；Engineering 完成，本人已确认 Run/Modify，并补充正确的两种安装 X/Y 定义与固定关系，Learning Mastered。
+不自动实现 S12.8b。
+
+### S12.8b 进展（2026-10-05）
+
+[Hand-Eye Calibration Package](15_8b_hand_eye_calibration.md)：NumPy 分步 K/SVD rotation（符号/投影）
+与 translation lstsq，eye-in-hand / eye-to-hand；先拆 12/6 absolute poses，冻结 train Y_mean，
+报告 X truth error、train pair/absolute 与 noisy/clean held-out residual。broad / near-axis、
+scale 1/4/0 实验通过，训练 residual 不等于外参准确。无新增依赖；当前 cv2 缺失，未安装。
+Engineering 完成；本人已确认 Run/Modify，并正确补充齐次符号、平移式与 clean-held 边界，Learning Mastered；不自动进入 Stage 13。

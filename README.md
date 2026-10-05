@@ -22,7 +22,7 @@
 ## Current Progress
 
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
-当前推进 **P1 — Perception, Planning & Robot Software Integration**；S12.1–S12.7a 已 Engineering Complete + Learning Mastered。
+当前推进 **P1 — Perception, Planning & Robot Software Integration**；S12.1–S12.8b 已 Engineering Complete + Learning Mastered。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -34,7 +34,10 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S12.5 PnP Object Pose | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.6 RGB-D Back Projection | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S12.7a Known-Correspondence Rigid Alignment | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| S12.7b–Stage 15 | 仅路线与 docs skeleton | 未开始 |
+| S12.7b Nearest-Neighbor ICP Loop | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S12.8a Hand-Eye Geometry | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S12.8b Hand-Eye Calibration | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| Stage 13–15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入与通用避障在 P1 补齐。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
@@ -277,7 +280,7 @@ Stage 10 起分开记录状态：Engineering 由已验证的代码/实验/docs �
 ## P1 — Perception, Planning & Robot Software Integration
 
 CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后接入。
-细化依据、复用边界与资源预算见[P1 规划](docs/p1_plan.md)。每个 Task 0.5～2h，当前已实现 S12.1–S12.7a；S12.1–S12.7a Engineering Complete + Learning Mastered。
+细化依据、复用边界与资源预算见[P1 规划](docs/p1_plan.md)。每个 Task 0.5～2h，当前已实现 S12.1–S12.8b；S12.1–S12.8b Engineering Complete + Learning Mastered。
 
 ### Stage 12 — Robot Perception Geometry
 
@@ -304,14 +307,14 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S12.7a（0.5～2h）：ICP rigid alignment：已知对应的小点集，手写 NumPy centroid/SVD，纠正 reflection。见 [S12.7a Learning Package](docs/15_7a_rigid_alignment.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测均完成，Explain 覆盖 centroid、SVD、reflection、几何可观测性及 residual 与 pose error 的区别）
 
-- S12.7b（0.5～2h）：ICP nearest-neighbor loop：小点云 CPU 最邻近、门限、停止条件；测试初值与 partial overlap。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S12.7b（0.5～2h）：ICP nearest-neighbor loop：小点云 CPU 最邻近、门限、停止条件；测试初值与 partial overlap。见 [S12.7b Learning Package](docs/15_7b_icp_loop.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测均完成，Explain 覆盖对应更新、增量组合、两种 RMS、局部停止与 gate 取舍）
 
-- S12.8a（0.5～2h）：Hand-eye geometry：eye-in-hand / eye-to-hand，构造 AX=XB，多姿态可观测性。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S12.8a（0.5～2h）：Hand-eye geometry：eye-in-hand / eye-to-hand，构造 AX=XB，多姿态可观测性。见 [S12.8a Learning Package](docs/15_8a_hand_eye_geometry.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测完成，补充正确的两种安装 X/Y 方向与固定关系；Explain 覆盖相对运动推导、退化与条件性；未求解 X）
 
-- S12.8b（0.5～2h）：Hand-eye calibration：CPU 合成多姿态求解、held-out transform residual 和噪声对比。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S12.8b（0.5～2h）：Hand-eye calibration：CPU 合成多姿态求解、held-out transform residual 和噪声对比。见 [S12.8b Learning Package](docs/15_8b_hand_eye_calibration.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测完成，并正确补充齐次符号、平移分块式与 clean-held 的 Y_mean 偏差；Explain 完成）
 
 
 
