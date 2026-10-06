@@ -37,7 +37,8 @@ def parse_args():
 
 
 def build_model(free_object=False, object_position=(-0.45, 0.20, 0.03),
-                object_mass=0.05, object_friction=2.0):
+                object_mass=0.05, object_friction=2.0,
+                obstacle_position=None, obstacle_radius=.025):
     """Compile UR5e, the attached gripper, and a known-pose box."""
     robot_path = mujoco_menagerie.get("universal_robots_ur5e").xml("ur5e")
     robot_spec = mujoco.MjSpec.from_file(str(robot_path))
@@ -86,6 +87,9 @@ def build_model(free_object=False, object_position=(-0.45, 0.20, 0.03),
         friction=[object_friction, 0.005, 0.0001],
         rgba=[0.9, 0.5, 0.2, 1.0],
     )
+    if obstacle_position is not None:
+        robot_spec.worldbody.add_geom(name="planning_obstacle", type=mujoco.mjtGeom.mjGEOM_SPHERE,
+                                      pos=obstacle_position, size=[obstacle_radius,0,0], rgba=[1,.2,.2,1])
     return robot_spec.compile()
 
 

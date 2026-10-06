@@ -71,7 +71,8 @@ def held_targets(candidate, destination):
     return lift, transfer, descend
 
 
-def run_pipeline(plan_model, model, candidate, home, approach_reference, close_target, trace, result):
+def run_pipeline(plan_model, model, candidate, home, approach_reference, close_target, trace, result,
+                 motion_planner=None, geometry_observer=None, close_ramp_seconds=0.):
     """One MjData for all dynamics. Private planning data never mutates this state."""
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model,data,model.key('home').id)
@@ -114,6 +115,8 @@ def run_pipeline(plan_model, model, candidate, home, approach_reference, close_t
                       float(np.linalg.norm(data.qvel[od+3:od+6])),
                       .02+float(np.sum(data.qpos[fq]))])
         result['simulation_time_s'] = float(data.time)
+        if geometry_observer is not None:
+            geometry_observer(phase,data,allowed)
         if not np.isclose(data.time-before,dt,atol=1e-12) or not np.isfinite(data.qpos).all() or not np.isfinite(data.qvel).all():
             raise RuntimeError('time reset or nonfinite state')
         if not within_joint_limits(model,ARM_JOINTS,data.qpos[aq]) or speed > .55:
@@ -150,6 +153,8 @@ def run_pipeline(plan_model, model, candidate, home, approach_reference, close_t
         waypoint_array = np.asarray(waypoints)
         command_times = np.linspace(0.,seconds,int(round(seconds/dt))+1)
         reference = np.column_stack([np.interp(command_times,times,waypoint_array[:,i]) for i in range(6)])
+        if motion_planner is not None:
+            reference = motion_planner(phase,data,reference,finger,allowed)
         goal = reference[-1]
         peak = float(np.max(np.abs(np.diff(reference,axis=0)/dt)))
         peak_command = max(peak_command,peak)
@@ -180,9 +185,10 @@ def run_pipeline(plan_model, model, candidate, home, approach_reference, close_t
     hold('home_hold',home,.03,1.,{GROUND})
     for i, command in enumerate(approach_reference[1:]):
         t = (i+1)*dt
-        phase = 'transit' if t <= 6. else 'pre_hold' if t <= 6.5 else 'approach'
+        transit_duration = result.get('transit_duration_s',6.)
+        phase = 'transit' if t <= transit_duration else 'pre_hold' if t <= transit_duration+.5 else 'approach'
         tick(phase,command,.03,{GROUND})
-        if i+1 == int(round(6.5/dt)):
+        if i+1 == int(round((result.get("transit_duration_s",6.)+.5)/dt)):
             p, R = site_pose(data,site)
             ep=float(np.linalg.norm(p-candidate['T_WP'][:3,3]))
             er=float(np.linalg.norm(orientation_error_world(R,candidate['T_WP'][:3,:3])))
@@ -200,6 +206,11 @@ def run_pipeline(plan_model, model, candidate, home, approach_reference, close_t
 
     # Close for a bounded duration; require sustained contact and force, not ctrl alone.
     start=len(trace)
+    if close_ramp_seconds>0:
+        # Optional smooth control target ramp; the fingers still move through dynamics.
+        for t in np.linspace(0.,close_ramp_seconds,int(round(close_ramp_seconds/dt))+1)[1:]:
+            tau=t/close_ramp_seconds;progress=3*tau**2-2*tau**3
+            tick('close',grasp_command,.03+progress*(close_target-.03),{LEFT,RIGHT,GROUND})
     hold('close',grasp_command,close_target,1.,{LEFT,RIGHT,GROUND})
     close_block=np.asarray(trace[start:])[-50:]
     held = bool(np.all(close_block[:,23:25]>0) and np.all(close_block[:,26:28]>.05))

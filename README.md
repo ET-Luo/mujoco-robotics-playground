@@ -43,7 +43,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.3b Vision Pick-and-Place | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| Stage 14 | S14.1–S14.7a collision / planning / tracking | S14.1–S14.7a Engineering Complete + Learning Mastered |
+| Stage 14 | S14.1–S14.7b collision / planning / pick-place | S14.1–S14.7a Mastered；S14.7b Engineering Complete，Learning待验证 |
 | Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
@@ -377,8 +377,8 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S14.7a（0.5～2h）：UR5e obstacle planning：IK endpoint→joint RRT-Connect→smoothed timed path，几何与tracking分别检查。见 [S14.7a Learning Package](docs/17_7a_ur5e_obstacle_planning.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖IK/reference/actual边界、frame与局部搜索、采样限制、动态执行与未验证能力）
 
-- S14.7b（0.5～2h）：Collision-aware pick-and-place：带物 transform、阶段接触策略、执行过程与重复试验统计。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S14.7b（0.5～2h）：Collision-aware pick-and-place：带物 transform、阶段接触策略、执行过程与重复试验统计。见 [S14.7b Learning Package](docs/17_7b_collision_aware_pick_place.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（known-pose、名义held几何/实际接触取放、3seed与失败对照；无硬件保证）
 
 
 

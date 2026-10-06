@@ -117,3 +117,20 @@ python examples/15_motion_planning/ur5e_obstacle_planning.py --velocity-scale 0.
 `--max-nodes 2`预期exit1/partial结果，无execution。ignored tmp/s14_7a_ur5e_*/存JSON/NPZ/图。
 裸臂compiled碰撞几何有覆盖限制；使用理想bias外力；离散检查不保证连续/硬件安全。
 Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。无gripper/持物/phase或GUI验证。
+
+## S14.7b — Collision-Aware Pick-and-Place
+
+[学习包](../../docs/17_7b_collision_aware_pick_place.md) · [代码](collision_aware_pick_place.py)。
+已知pose输入；名义held T_GO、phase/pair/depth策略，transit/transfer RRT-Connect+shortcut+cubic，实际自由物体接触取放。
+
+```bash
+python examples/15_motion_planning/collision_aware_pick_place.py
+python examples/15_motion_planning/collision_aware_pick_place.py --trials 1 --close-target 0.014
+```
+
+需已声明NumPy/MuJoCo/Matplotlib/Menagerie/OpenCV（复用module imports），无新增依赖。
+固定场景planner seeds7/8/9共3/3成功，final error .758/.930/.807mm；不代表物理随机化或普遍100%可靠。
+Modify先预测14mm slide的48mm opening与close失败。评价器exit0不代表每trial成功，检查status/失败phase。
+`--trials 1 --max-nodes 2`在transfer规划失败，保留已执行close/lift，不继续transfer。
+产物仅ignored tmp/s14_7b_pick_*/JSON/CSV/NPZ/图；包含partial失败。
+Engineering Complete；Learning待本人Run/Modify/Explain。无weld/物体truth目标修正/GUI/硬件验证。

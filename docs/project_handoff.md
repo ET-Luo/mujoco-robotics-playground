@@ -1,10 +1,13 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S14.7a Engineering Complete + Learning Mastered；前课状态见 README）。
+最后整理：2026-10-06（S14.7b Engineering Complete，Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
+
+S14.1–S14.7a 已由本人确认Run/Modify/Explain，Learning Mastered；
+S14.7b已按明确请求完成工程，Learning待本人验证，详见末节。Stage15未授权启动。
 
 本人已明确完成 S12.1–S12.4 Run/Modify/Explain，并明确授权 S12.5。
 S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实验与验证均完成，
@@ -749,3 +752,38 @@ Run/Modify/Explain全部确认，Learning Mastered；局部采样域与政策验
 本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
 本地链接和git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
 下一小任务S14.7b collision-aware pick-and-place，等待明确请求。
+
+## S14.7b 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_7b_collision_aware_pick_place.md)、[代码](../examples/15_motion_planning/collision_aware_pick_place.py)。
+起始pwd正确、git status --short空；本会话沿用已确认WSL2 Ubuntu24.04.5。
+本机conda info --base定位hook，激活mujoco，同shell核验环境名/interpreter
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python3.12.14、NumPy2.5.3、MuJoCo3.14.0、
+Matplotlib3.11.2、Menagerie2026.9.1、OpenCV distribution4.14.0.94/import4.14.0；metadata/import paths/API核验。
+无新依赖/安装，3.11未执行；cv2来自复用执行模块imports，本课不运行图像/PnP。
+
+```bash
+python examples/15_motion_planning/collision_aware_pick_place.py
+python examples/15_motion_planning/collision_aware_pick_place.py --trials 1 --close-target 0.014
+python examples/15_motion_planning/collision_aware_pick_place.py --trials 1 --max-nodes 2
+```
+
+评价CLI均exit0，无import error；需看trial status，不将exit0当全成功。
+默认已知pose/固定scene，planner seeds7/8/9：3/3 placement_passed，sim21.888/22.122/22.478s，
+final error.758213/.929616/.807125mm，min actual distance8.967720/15.624921/22.355081mm。
+transfer phase relative change11.512518/12.713926/13.794382mm均<15mm；seed7累计最大约24.61mm，非累计15mm保证。
+14mm slide对照在close失败，不执行lift；nodes2对照在transfer node_budget失败，已执行close/lift但不执行transfer。
+名义held T_GO=inverse(T_OG)，两次forward/full freejoint pose更新；actual free object无weld/姿态重置/held truth目标反馈。
+transit/transfer双树+checked shortcuts+cubic；其余Cartesian动作逐点查参考；名义held tilt≤.15rad/transfer z≥.085m。
+phase具体pair+6mmdepth，reference obstacle margin8mm/actual2mm；保持finger-ground与transfer-ground拒绝。
+初版step close穿透约6.11mm失败；保持门限，加1s cubic ctrl ramp后通过。
+较弱夹紧/raw RRT曾落地，加入高度/倾斜政策后仍有slip失败；checked shortcut缩短运输后保留phase15mm门限通过。
+旧诊断仅ignored tmp/s14_7b_diagnostics/，当前失败CLI为14mm或node2，不把旧策略说成仍可直接运行。
+默认seed7 transfer48attempts/6shortcuts，reference3.198s，lift52.910115mm；support持续/释放分离/retreat检查通过。
+独立三trial全部actual_qpos几何回放、clock/phase/force/final pose、名义held链/参考抽检、
+phase/cumulative slip重算、failure stopping/partial trace通过。旧S13.3b默认CLI回归placement_passed，ep.714212mm。
+build_model新增可选obstacle，run_pipeline新增可选planner/observer/ramp；默认None/0不改变旧行为。
+默认pipeline PNG目视检查；产物仅ignored tmp/s14_7b_pick_*/；CLI nan exit2。
+local Markdown links/状态一致性/git diff --check通过；未运行GUI/硬件/ROS2或真实视觉，非物理随机化/普遍成功率结论。
+Engineering Complete；Learning待本人Run/Modify/Explain。下一步默认Run、预测14mm opening/close失败并Modify、回答五问；
+不自动开始Stage15。
