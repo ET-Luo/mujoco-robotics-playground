@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S14.3 Engineering Complete，Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（S14.4 Engineering Complete，Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -614,5 +614,36 @@ CLI edge step nan exit2；time budget1e-12 exit1；coarse edge step.4 planner su
 复用S14.2碰撞接口，single-tree RRT/goal bias，末段连接也检查；无RRT-Connect/平滑/时间化。
 本地Markdown链接、状态一致性/git diff --check通过；未重跑前课/P0独立实验。
 无GUI、UR5e、动力学、硬件或成功率benchmark；time预算是合作式而非硬deadline。
-Engineering Complete；Learning待本人Run/Modify/Explain。下一步本人默认Run、
-预测max_nodes2失败并Modify、回答五问；不自动实现S14.4。
+Engineering Complete；本人随后明确确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部确认，Learning Mastered；精度补充见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
+本地链接和git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
+下一小任务S14.4手写RRT-Connect，等待明确请求。
+
+## S14.4 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_4_rrt_connect.md)、[代码](../examples/15_motion_planning/rrt_connect.py)。
+保留起始五份modified文档，pwd正确；沿用本会话已确认WSL2 Ubuntu24.04.5。
+本机conda info --base定位hook，激活mujoco并同shell核验环境名与
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python3.12.14、NumPy2.5.3、MuJoCo3.14.0、
+Matplotlib3.11.2，metadata/真实imports/module paths与执行API核验通过；无安装/新依赖，3.11未执行。
+
+```bash
+python examples/15_motion_planning/rrt_connect.py
+python examples/15_motion_planning/rrt_connect.py --max-attempts 20
+python examples/15_motion_planning/rrt_connect.py --max-nodes 12
+```
+
+三命令均exit0，无import error，评价所有预算失败；不等于每次搜索成功。
+每组seeds7…14×两planner；统一均匀采样（单树goal_bias=0），η=.15m/h=.02m，
+same seed不表示same sample sequence。默认RRT/Connect均8/8成功，mean扩展108.625/14.125，
+mean config queries872.375/206.875；20attempt RRT0/8、Connect8/8；12nodes各0/8。
+48次保存运行的全部树边sampled/exact、η/parent、会合相同、反转/去重与长度通过；
+同seed复现、反向root、同点/直连、非法端点/参数、node/attempt/time budget检查通过。
+CONNECT每个EXTEND都计attempt并检查预算，总node包含两个root。
+默认图目视检查；JSON/PNG仅ignored tmp/s14_4_connect_*/；原S14.3代码未改。
+CLI nan exit2，coarse h=.4两planner误成功但解析评分拒绝exit1；极小time预算正常记录失败exit0。
+local Markdown links/状态一致性/git diff --check通过；未重跑前课独立脚本或P0。
+无GUI、UR5e、平滑/时间化/动态执行或普遍成功率/性能benchmark；只支持本课固定场景观察。
+Engineering Complete；Learning待本人Run/Modify/Explain。下一步默认Run、预测20attempt比较并Modify、
+回答五问；不自动实现S14.5。

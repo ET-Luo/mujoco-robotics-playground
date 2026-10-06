@@ -52,4 +52,20 @@ python examples/15_motion_planning/rrt.py --max-nodes 2
 默认/seed19成功，49/36 nodes、长度2.181/1.861m；max_nodes=2预期exit1，node_budget，无path。
 Modify先预测预算失败，再运行第三条命令。需NumPy/MuJoCo/Matplotlib，无新增依赖。
 ignored tmp/s14_3_rrt_*/存JSON/树图。路径按采样复查，圆盘解析评分独立于搜索。
-Engineering Complete；Learning待本人Run/Modify/Explain。没有平滑、时间化、RRT-Connect、UR5e或动态执行。
+Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。没有平滑、时间化、RRT-Connect、UR5e或动态执行。
+
+## S14.4 — 手写 RRT-Connect
+
+[学习包](../../docs/17_4_rrt_connect.md) · [代码](rrt_connect.py)。
+固定start/goal树身份，EXTEND三态、CONNECT重复扩展、交换角色、反转goal链拼接。
+
+```bash
+python examples/15_motion_planning/rrt_connect.py
+python examples/15_motion_planning/rrt_connect.py --max-attempts 20
+```
+
+复用NumPy/MuJoCo/Matplotlib；无新增依赖。默认8seed两者8/8；20attempt预算下RRT0/8、Connect8/8。
+比较统一均匀采样（单树goal_bias=0），统计所有尝试；same seed不是same sample sequence。
+该命令是评价器，预算失败仍exit0；看各run的status与null path，而非只看进程退出码。
+输出ignored tmp/s14_4_connect_*/JSON与首个seed的双图。Modify先预测20attempt预算影响。
+Engineering Complete；Learning待本人Run/Modify/Explain。无平滑、时间化、UR5e或动态执行。
