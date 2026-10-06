@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S14.2 Engineering Complete，Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（S14.2 Engineering Complete + Learning Mastered；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -580,5 +580,8 @@ check_edge仅用MuJoCo配置查询，独立解析disk scorer不参与采样判�
 细步长C-space PNG目视检查，产物仅ignored tmp/s14_2_edges_step*/。
 本地Markdown文件链接、状态一致性和git diff --check通过；未重跑S14.1/前课/P0。
 无GUI、UR5e、动力学、RRT或连续通用保证。
-Engineering Complete；Learning Run/Modify/Explain待本人确认。下一步本人运行默认、
-预测并比较step=.02m、回答五问；不自动实现S14.3。
+Engineering Complete；本人随后明确确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部确认，Learning Mastered；术语精度补充见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；文档状态一致性、
+本地链接与git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
+下一小任务S14.3手写RRT，等待明确请求。

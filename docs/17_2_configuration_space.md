@@ -163,4 +163,7 @@ UR5e的joint-space线段能产生弯曲的workspace末端轨迹，关节分辨�
 4. 为什么0.4 m漏检而0.02 m捕获？有限步长是否能保证任意路径连续无碰撞？
 5. 为什么本课绕行仍不是RRT结果或可执行trajectory？joint limits通过与避障通过有何区别？
 
-**My Verification**：Engineering已验证；本人Run/Modify/Explain待确认，状态仅在根README维护。
+**My Verification**：本人于2026-10-06明确确认实验与预测完成，五项Explain覆盖配置单位/FK、半径和膨胀、n段与n+1点、零长度边、离散漏检及path/trajectory边界，Learning Mastered；状态仅在根README维护。
+
+精度补充：configuration q描述关节位置，完整动态state还包含qvel等；workspace通常讨论末端可达位置/姿态，机器人其他部件占据空间也通过FK确定。
+本课固定网格没有概率模型，更细步长通常提高检测分辨率，但因网格未必嵌套，不能无条件断言漏检概率或判定单调改善。连续保证需要额外保守误差界或连续几何检查。

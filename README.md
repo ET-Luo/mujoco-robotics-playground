@@ -43,7 +43,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.3b Vision Pick-and-Place | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| Stage 14 | S14.1 collision / S14.2 sampled edge 教学实验 | S14.1 Mastered；S14.2 Engineering Complete，Learning待验证 |
+| Stage 14 | S14.1 collision / S14.2 sampled edge 教学实验 | S14.1–S14.2 Engineering Complete + Learning Mastered |
 | Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
@@ -360,7 +360,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖状态隔离、两次forward、signed distance、持物frame链与配置/路径边界）
 
 - S14.2（0.5～2h）：Configuration space / edge checking：q limits、距离、步长分辨率；二维障碍最小实验。见 [S14.2 Learning Package](docs/17_2_configuration_space.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（粗采样漏检/细采样与解析评分；无RRT/动力学/连续通用保证）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖C-space、障碍膨胀、端点采样、分辨率边界与path/trajectory区别）
 
 - S14.3（0.5～2h）：手写 RRT：sample/nearest/steer/edge check/parent，fixed seed 与 node/time budget。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain

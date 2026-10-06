@@ -36,4 +36,4 @@ python examples/15_motion_planning/edge_checking.py --step-m 0.02
 默认direct端点合法、5点采样误通过；细步长81点拒绝，独立解析评分证明直连穿障碍。
 手动绕行三段两组都通过。JSON/PNG在ignored `tmp/s14_2_edges_step*/`。
 Modify先预测步长对样本数/判定/路径长度的影响，再对照。
-Engineering Complete，Learning待本人Run/Modify/Explain；无RRT、时间化、GUI或动态执行。
+Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered；无RRT、时间化、GUI或动态执行。
