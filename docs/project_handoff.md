@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S14.2 Engineering Complete + Learning Mastered；前课状态见 README）。
+最后整理：2026-10-06（S14.3 Engineering Complete，Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -585,3 +585,34 @@ Run/Modify/Explain全部确认，Learning Mastered；术语精度补充见学习
 本次仅同步根README、学习包、示例README、roadmap与handoff；文档状态一致性、
 本地链接与git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
 下一小任务S14.3手写RRT，等待明确请求。
+
+## S14.3 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_3_rrt.md)、[代码](../examples/15_motion_planning/rrt.py)。
+起始pwd正确、git status --short空；无既有未提交工作。
+沿用本会话已确认WSL2 Ubuntu24.04.5；本机conda info --base定位hook，激活mujoco，
+同执行shell重查环境名/interpreter `/home/lucas/miniconda3/envs/mujoco/bin/python`。
+Python3.12.14、NumPy2.5.3、MuJoCo3.14.0、Matplotlib3.11.2，metadata/真实imports/module paths核验；
+实际MuJoCo API通过脚本执行核验。无新依赖/安装，3.11兼容目标未执行。
+
+```bash
+python examples/15_motion_planning/rrt.py
+python examples/15_motion_planning/rrt.py --seed 19
+python examples/15_motion_planning/rrt.py --max-nodes 2
+```
+
+default/seed19 exit0，success；nodes49/36、attempts48/46、rejected edges2/13。
+edge calls50/48、configuration queries490/489；length2.181318/1.861461m，
+path exact clearance160.602309/36.103977mm，sampled复查+圆盘解析评分通过。
+当次search wall约.230/.208s，只含查询/搜索，非稳定benchmark。
+max_nodes2 exit1，node_budget、2nodes/1attempt，path/length/indices/recheck均null，保留部分树。
+独立同seed树/parent/path/计数复现，两组全部树边sampled/exact、长度、parent回溯、
+steer截断、start/goal非法/同点/直连、node/attempt/time预算、goal_bias1停滞、输入guards通过。
+CLI edge step nan exit2；time budget1e-12 exit1；coarse edge step.4 planner success但
+后验exact拒绝（−45mm），CLI exit1，未用scorer纠正搜索。
+默认树图目视检查；产物仅ignored tmp/s14_3_rrt_*/。
+复用S14.2碰撞接口，single-tree RRT/goal bias，末段连接也检查；无RRT-Connect/平滑/时间化。
+本地Markdown链接、状态一致性/git diff --check通过；未重跑前课/P0独立实验。
+无GUI、UR5e、动力学、硬件或成功率benchmark；time预算是合作式而非硬deadline。
+Engineering Complete；Learning待本人Run/Modify/Explain。下一步本人默认Run、
+预测max_nodes2失败并Modify、回答五问；不自动实现S14.4。

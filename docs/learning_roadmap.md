@@ -15,7 +15,7 @@ Stage 0–11 已由本人确认完成；S12.1–S12.8b 已 Engineering Complete 
 | examples/12_pick_place | UR5e 集成夹爪、known-pose lift/place/release/trials | 复用模型/执行判据；接口限制见 P1 审计 |
 | examples/13_perception_geometry | camera_frames / pinhole_projection / rgb_depth_capture / camera_calibration / pnp_pose / rgbd_back_projection / rigid_alignment / icp_loop / hand_eye_geometry / hand_eye_calibration，CPU geometry、calibration 与 pose | Stage 12 已完成入口 |
 | examples/14_vision_manipulation | perception_pose / grasp_candidates / vision_to_motion：packet/frame、candidate/IK、image/PnP→continuous motion / vision_pick_place 完整取放 / perception_noise 受控误差case / repeated_trials 分布评价 | 当前新工程入口 |
-| examples/15_motion_planning | collision_checking / edge_checking：阶段许可/持物查询、二维C-space/分辨率漏检 | S14.1–S14.2入口；UR5e整合留到S14.7 |
+| examples/15_motion_planning | collision_checking / edge_checking / rrt：阶段许可/持物查询、二维C-space/分辨率漏检/单树RRT | S14.1–S14.3入口；UR5e整合留到S14.7 |
 | environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
 | controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
 | scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
@@ -59,4 +59,4 @@ S13.3a [Vision-to-Motion Package](16_3a_vision_to_motion.md) Engineering Complet
 S13.3b [Vision Pick-and-Place Package](16_3b_vision_pick_place.md) Engineering Complete；连续home→取放/支撑事件/释放/退让，object truth只作评价，逐阶段与累计relative change分别报告；本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
 S13.4 [Error Propagation Package](16_4_perception_noise.md) Engineering Complete；单一post-fit pose/extrinsic fault、显式frame/pivot、精确传播、独立pipeline outcomes；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered。
 S13.5 [Repeated Trials Package](16_5_repeated_trials.md) Engineering Complete；seeded场景/观测、全部attempts统计、成功条件误差、失败phase、Wilson区间与wall/sim time；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered。
-S14.1 [Collision Checking Package](17_motion_planning.md) Engineering Complete：独立MjData、具体pair/phase/depth政策、持物变换与13个固定配置；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.2 [Configuration Space Package](17_2_configuration_space.md) Engineering Complete：二维障碍、含端点edge采样、粗细分辨率与独立解析评分；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.3与Stage15未开始。
+S14.1 [Collision Checking Package](17_motion_planning.md) Engineering Complete：独立MjData、具体pair/phase/depth政策、持物变换与13个固定配置；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.2 [Configuration Space Package](17_2_configuration_space.md) Engineering Complete：二维障碍、含端点edge采样、粗细分辨率与独立解析评分；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.3 [RRT Package](17_3_rrt.md) Engineering Complete：单树sample/nearest/steer/edge/parent、固定seed与三类预算，独立解析评分；Learning待本人Run/Modify/Explain。S14.4与Stage15未开始。

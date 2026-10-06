@@ -37,3 +37,19 @@ python examples/15_motion_planning/edge_checking.py --step-m 0.02
 手动绕行三段两组都通过。JSON/PNG在ignored `tmp/s14_2_edges_step*/`。
 Modify先预测步长对样本数/判定/路径长度的影响，再对照。
 Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered；无RRT、时间化、GUI或动态执行。
+
+## S14.3 — 手写 RRT
+
+[学习包](../../docs/17_3_rrt.md) · [代码](rrt.py)。复用S14.2配置/边查询，
+显式sample/nearest/steer/edge/parent，goal bias和node/attempt/time预算。
+
+```bash
+python examples/15_motion_planning/rrt.py
+python examples/15_motion_planning/rrt.py --seed 19
+python examples/15_motion_planning/rrt.py --max-nodes 2
+```
+
+默认/seed19成功，49/36 nodes、长度2.181/1.861m；max_nodes=2预期exit1，node_budget，无path。
+Modify先预测预算失败，再运行第三条命令。需NumPy/MuJoCo/Matplotlib，无新增依赖。
+ignored tmp/s14_3_rrt_*/存JSON/树图。路径按采样复查，圆盘解析评分独立于搜索。
+Engineering Complete；Learning待本人Run/Modify/Explain。没有平滑、时间化、RRT-Connect、UR5e或动态执行。
