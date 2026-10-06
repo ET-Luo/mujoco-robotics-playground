@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S14.4 Engineering Complete，Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（S14.5 Engineering Complete，Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -645,5 +645,34 @@ CONNECT每个EXTEND都计attempt并检查预算，总node包含两个root。
 CLI nan exit2，coarse h=.4两planner误成功但解析评分拒绝exit1；极小time预算正常记录失败exit0。
 local Markdown links/状态一致性/git diff --check通过；未重跑前课独立脚本或P0。
 无GUI、UR5e、平滑/时间化/动态执行或普遍成功率/性能benchmark；只支持本课固定场景观察。
-Engineering Complete；Learning待本人Run/Modify/Explain。下一步默认Run、预测20attempt比较并Modify、
-回答五问；不自动实现S14.5。
+Engineering Complete；本人随后明确确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部确认，Learning Mastered；TRAPPED和采样REACHED的精度补充见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
+本地链接和git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
+下一小任务S14.5 collision-checked path shortcut，等待明确请求。
+
+## S14.5 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_5_path_smoothing.md)、[代码](../examples/15_motion_planning/path_smoothing.py)。
+保留起始五份modified文档，pwd正确；沿用本会话WSL2 Ubuntu24.04.5验证。
+本机conda info --base定位hook，激活mujoco，同shell核验环境名/interpreter
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python3.12.14、NumPy2.5.3、MuJoCo3.14.0、
+Matplotlib3.11.2；metadata/实际imports/module paths与执行API核验通过，无新依赖/安装，3.11未执行。
+
+```bash
+python examples/15_motion_planning/path_smoothing.py
+python examples/15_motion_planning/path_smoothing.py --attempts 0
+python examples/15_motion_planning/path_smoothing.py --step-m 0.4
+```
+
+默认/0预算exit0，无import error。固定planner seed7/h=.005m新生成输入13顶点/1.774460133m。
+独立shortcut seed17，默认100尝试6接受，输出3顶点/1.612792500m，clearance28.191341mm。
+0预算保留13顶点与输入长度，clearance6.011070mm；仍执行输入/最终所有边复查。
+coarse step.4反例7尝试1接受，输出2顶点/1.6m，sampled复查通过但解析−45mm，exit1。
+独立history逐步回放、单调长度、接受新边、起终点/输入保留、同seed重现、final全部边/
+密集样本、单点/两点/重复点、输入碰撞/越界/shape/step/seed/budget拒绝通过；CLI负attempts exit2。
+默认图目视检查；产物仅ignored tmp/s14_5_shortcut_*/；前课代码未改。
+local Markdown links/状态一致性/git diff --check通过；未重跑前课独立CLI/P0。
+无GUI、UR5e、时间化/动力学；本课只简化折线，不保证曲率/速度连续、最优或更大clearance。
+Engineering Complete；Learning待本人Run/Modify/Explain。下一步默认Run、预测0预算Modify并回答五问；
+不自动实现S14.6。

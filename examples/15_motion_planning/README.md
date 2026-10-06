@@ -68,4 +68,19 @@ python examples/15_motion_planning/rrt_connect.py --max-attempts 20
 比较统一均匀采样（单树goal_bias=0），统计所有尝试；same seed不是same sample sequence。
 该命令是评价器，预算失败仍exit0；看各run的status与null path，而非只看进程退出码。
 输出ignored tmp/s14_4_connect_*/JSON与首个seed的双图。Modify先预测20attempt预算影响。
-Engineering Complete；Learning待本人Run/Modify/Explain。无平滑、时间化、UR5e或动态执行。
+Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。无平滑、时间化、UR5e或动态执行。
+
+## S14.5 — Collision-Checked Path Shortcuts
+
+[学习包](../../docs/17_5_path_smoothing.md) · [代码](path_smoothing.py)。
+新生成固定seed7 RRT-Connect路径，再用独立seed17做vertex shortcuts，保留起终点并重检所有输出边。
+
+```bash
+python examples/15_motion_planning/path_smoothing.py
+python examples/15_motion_planning/path_smoothing.py --attempts 0
+```
+
+需NumPy/MuJoCo/Matplotlib，无新依赖。默认13→3顶点、1.774460→1.612793m，接受6次；0预算保持原path。
+Modify先预测0预算对路径和检查的影响，再运行对照。产物仅ignored tmp/s14_5_shortcut_*/JSON/PNG。
+粗step=.4m会误接受碰撞直连，独立解析评分拒绝（exit1），不掩盖采样漏检。
+Engineering Complete；Learning待本人Run/Modify/Explain。仍为折线，无时间化/动力学/UR5e验证。

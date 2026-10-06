@@ -1,7 +1,7 @@
 # Stage 14 — Motion Planning
 
 S14.1 已实现：[代码](../examples/15_motion_planning/collision_checking.py)、[运行入口](../examples/15_motion_planning/README.md)。
-Engineering / Learning 唯一状态见[根 README](../README.md#stage-14--motion-planning)。S14.2已实现，见[Configuration Space / Edge Checking](17_2_configuration_space.md)；S14.3已实现，见[手写RRT](17_3_rrt.md)；S14.4已实现，见[手写RRT-Connect](17_4_rrt_connect.md)；S14.5及以后未开始。
+Engineering / Learning 唯一状态见[根 README](../README.md#stage-14--motion-planning)。S14.2已实现，见[Configuration Space / Edge Checking](17_2_configuration_space.md)；S14.3已实现，见[手写RRT](17_3_rrt.md)；S14.4已实现，见[手写RRT-Connect](17_4_rrt_connect.md)；S14.5已实现，见[Path Shortcuts](17_5_path_smoothing.md)；S14.6及以后未开始。
 
 ## Problem → Why
 

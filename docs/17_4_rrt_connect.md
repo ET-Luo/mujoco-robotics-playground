@@ -160,4 +160,6 @@ TRAPPED/ADVANCED/REACHED；CONNECT对同一target反复调用直到停止。
 4. 为什么比较EXTEND attempts和queries，比只比较outer iterations更合理？
 5. 本课8seed的成功率能支持什么结论？为什么相同seed不是相同样本序列，path也不是trajectory？
 
-**My Verification**：Engineering已完成；本人Run/Modify/Explain待确认，状态只在根README维护。
+**My Verification**：本人于2026-10-06明确确认实验与预测完成，五项Explain正确覆盖EXTEND/CONNECT与三态、每步边/预算、root身份与反转去重、真实扩展/查询工作量、小seed集合与随机输入边界，Learning Mastered；状态只在根README维护。
+
+精度补充：TRAPPED指当前一次EXTEND的候选边被拒绝，不代表整个CONNECT未曾前进；CONNECT此前插入的合法节点保留。REACHED表示按采样edge checker到达目标，不应称为任意场景的连续无碰撞证明；本课成功路径另有圆盘解析评分。

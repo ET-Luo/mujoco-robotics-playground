@@ -43,7 +43,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.3b Vision Pick-and-Place | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| Stage 14 | S14.1 collision / S14.2 edge / S14.3 RRT / S14.4 Connect | S14.1–S14.3 Mastered；S14.4 Engineering Complete，Learning待验证 |
+| Stage 14 | S14.1–S14.5 collision / planning / shortcuts | S14.1–S14.4 Mastered；S14.5 Engineering Complete，Learning待验证 |
 | Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
@@ -366,10 +366,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖搜索流程、两种步长、parent与末段检查、预算和路径边界）
 
 - S14.4（0.5～2h）：手写 RRT-Connect：双树 extend/connect、path reconstruction，比较成功率与扩展数。见 [S14.4 Learning Package](docs/17_4_rrt_connect.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（8seed双树/单树与预算对照；无最优/动态执行保证）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖EXTEND/CONNECT、逐步预算、双树方向拼接、工作量计数与seed比较边界）
 
-- S14.5（0.5～2h）：Path smoothing：collision-checked shortcut，比较长度并重检所有边。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S14.5（0.5～2h）：Path smoothing：collision-checked shortcut，比较长度并重检所有边。见 [S14.5 Learning Package](docs/17_5_path_smoothing.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（vertex shortcut、长度单调与逐边复查；仍为折线，无动态平滑保证）
 
 - S14.6（0.5～2h）：Time parameterization：复用 cubic，按每段 velocity/acceleration limit 配时；分段停点与连续性。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
