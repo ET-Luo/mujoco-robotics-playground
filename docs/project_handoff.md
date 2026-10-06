@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（Stage13 Engineering Complete + Learning Mastered；前课状态见 README）。
+最后整理：2026-10-06（S14.2 Engineering Complete，Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -19,7 +19,7 @@ Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成�
 S13.1/S13.2 已 Engineering Complete + Learning Mastered。
 S13.3a 已按 2026-10-06 明确请求实现并完成工程验证；本人已确认本课 Run/Modify/Explain。S13.3b已按后续明确请求实现，本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
 S13.4已实现，本人已确认Run/Modify/Explain，Learning Mastered。
-S13.5已实现，本人已确认Run/Modify/Explain，Learning Mastered；Stage13学习项均完成，下一小任务S14.1等待明确请求，见末节。
+S13.5已实现，本人已确认Run/Modify/Explain，Learning Mastered；Stage13学习项均完成；S14.1已实现且本人确认Run/Modify/Explain，Learning Mastered，见末节。
 
 ## 多电脑依赖规则（2026-10-05）
 
@@ -523,3 +523,62 @@ end-to-end分母、成功条件偏差、paired随机输入与wall time、小N范
 本次仅同步七份文档；本地链接/状态一致性/git diff --check通过，未重跑实验/仿真/GUI。
 runtime证据沿用2026-10-06 Zero工程验证；Stage13学习项均完成，下一小任务S14.1等待明确请求。
 STOP，不自动实现Stage14。
+
+## S14.1 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_motion_planning.md)、[示例](../examples/15_motion_planning/README.md)。
+起始pwd正确、git status --short空；WSL2 kernel6.6.87.2 / Ubuntu24.04.5。
+本机conda info --base定位hook，base→mujoco，同执行shell核验环境名与
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python3.12.14、NumPy2.5.3、MuJoCo3.14.0；
+required distribution versions、真实import/module paths与API通过。无新增/安装依赖，3.11未执行。
+
+```bash
+python examples/15_motion_planning/collision_checking.py
+python examples/15_motion_planning/collision_checking.py --allowed-depth-m 0.001
+```
+
+两命令exit0，无import error；各13配置，默认6/13接受，1mm门限1/13接受。
+Cartesian+ yaw教学模型，球形collision geometry；不使用UR5e或前课运行产物。
+独立MjData、具体pair/phase/depth政策，固定T_GO更新held freejoint并再次forward。
+self/robot-environment/object-environment拒绝；grasp/place许可；深穿透拒绝；
+positive-distance contact记录不视为触碰。held-obstacle物体穿透20mm、pads仍分离。
+初版palm尺寸使place触地，缩小教学palm后place浅接触通过；未放行robot-ground。
+两组26行JSON、球–球/球–平面解析距离、旋转持物链、非法shape/nan/phase/held guards、
+held→nonheld重复查询隔离通过；live qpos/qvel/time/xpos不变，query time=0。
+CLI nan退出2。产物仅ignored tmp/s14_1_collision_depth*/。
+本地Markdown链接、状态一致性与git diff --check通过。
+无GUI、动力学、抓持稳定、UR5e、edge/连续路径或硬件验证；模型过滤限制详见学习包。
+Engineering Complete；本人随后明确确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部确认，Learning Mastered；解释记录见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；保留既有未提交代码/文档。
+本地文档链接、状态一致性与git diff --check通过；未重跑Python/仿真/GUI，
+runtime证据沿用2026-10-06本机工程验证。下一小任务S14.2等待明确请求。
+
+## S14.2 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_2_configuration_space.md)、[代码](../examples/15_motion_planning/edge_checking.py)。
+保留起始四份modified文档与untracked S14示例目录；pwd正确。
+WSL2 kernel6.6.87.2 / Ubuntu24.04.5；本机conda info --base定位hook，激活mujoco，
+同执行shell核验环境名/interpreter `/home/lucas/miniconda3/envs/mujoco/bin/python`。
+Python3.12.14、NumPy2.5.3、MuJoCo3.14.0、Matplotlib3.11.2；required metadata/真实imports/module paths检查通过，
+实际API由脚本核验。无新增/安装依赖，3.11未执行。
+
+```bash
+python examples/15_motion_planning/edge_checking.py
+python examples/15_motion_planning/edge_checking.py --step-m 0.02
+```
+
+两命令exit0，无import error；各7条边。二维XY slide sphere fixture，C-obstacle半径45mm。
+直连1.6m，端点均合法；默认h=.4m，5点sampled_valid=True但exact_valid=False（漏检）；
+h=.02m，81点拒绝，first_invalid index45 / x=.1m，解析最小clearance=-45mm。
+手动绕行3段长度合计2.1m，两组均通过；不是自动搜索结果。
+check_edge仅用MuJoCo配置查询，独立解析disk scorer不参与采样判定。
+零长度clear/blocked、joint limits、输入/step/budget拒绝、隔离live状态内置/独立检查通过。
+两组14条JSON边的端点/间距/首次非法索引、反向样本、编译joint range、dense scorer核对通过。
+最初dense核对固定1e-5m容差过严失败：该网格最大半间距8e-5m；按距离1-Lipschitz的
+半步长误差界重查通过，不改算法。CLI step nan退出2。
+细步长C-space PNG目视检查，产物仅ignored tmp/s14_2_edges_step*/。
+本地Markdown文件链接、状态一致性和git diff --check通过；未重跑S14.1/前课/P0。
+无GUI、UR5e、动力学、RRT或连续通用保证。
+Engineering Complete；Learning Run/Modify/Explain待本人确认。下一步本人运行默认、
+预测并比较step=.02m、回答五问；不自动实现S14.3。
