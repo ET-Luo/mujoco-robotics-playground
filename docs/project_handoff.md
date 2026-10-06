@@ -1,13 +1,13 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S14.7b Engineering Complete，Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（Stage14 Engineering Complete + Learning Mastered；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
 S14.1–S14.7a 已由本人确认Run/Modify/Explain，Learning Mastered；
-S14.7b已按明确请求完成工程，Learning待本人验证，详见末节。Stage15未授权启动。
+S14.7b已完成工程且本人确认Run/Modify/Explain，Learning Mastered，详见末节。Stage15未授权启动。
 
 本人已明确完成 S12.1–S12.4 Run/Modify/Explain，并明确授权 S12.5。
 S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实验与验证均完成，
@@ -785,5 +785,8 @@ phase/cumulative slip重算、failure stopping/partial trace通过。旧S13.3b�
 build_model新增可选obstacle，run_pipeline新增可选planner/observer/ramp；默认None/0不改变旧行为。
 默认pipeline PNG目视检查；产物仅ignored tmp/s14_7b_pick_*/；CLI nan exit2。
 local Markdown links/状态一致性/git diff --check通过；未运行GUI/硬件/ROS2或真实视觉，非物理随机化/普遍成功率结论。
-Engineering Complete；Learning待本人Run/Modify/Explain。下一步默认Run、预测14mm opening/close失败并Modify、回答五问；
-不自动开始Stage15。
+Engineering Complete；本人随后明确确认实验与预测完成，并回答全部Explain，
+Run/Modify/Explain全部确认，Learning Mastered；累计relative change的精确定义见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
+本地链接与git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
+Stage14学习项均完成；下一小任务S15.1 ROS2环境与node/topic，等待明确请求。

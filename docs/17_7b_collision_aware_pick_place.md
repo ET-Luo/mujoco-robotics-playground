@@ -168,4 +168,6 @@ actual阶段检查仍可否决名义通过。支撑force持续后才release，�
 4. 为什么支撑力持续才release、分离才retreat？planner budget在transfer失败时哪些动作已执行？
 5. 3/3能说明什么？如何区分全部attempts与成功条件误差、phase slip与累计变化？
 
-**My Verification**：Engineering已完成；本人Run/Modify/Explain待确认，状态只在根README维护。
+**My Verification**：本人明确确认实验与预测完成，Explain覆盖T_GO/T_OG与两次forward、分阶段pair/深度、名义held与实际摩擦滑移、持续支撑/分离事件、失败前已执行阶段和小样本统计边界，Learning Mastered；状态只在根README维护。
+
+精度补充：累计relative change是相对close结束基准的最大位置偏离，不是各phase滑移之和或轨迹长度。名义高度约束只约束预测物体姿态；实际离地、保持与支撑仍需独立证据，不能由名义几何通过推认。

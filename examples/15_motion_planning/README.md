@@ -133,4 +133,4 @@ python examples/15_motion_planning/collision_aware_pick_place.py --trials 1 --cl
 Modify先预测14mm slide的48mm opening与close失败。评价器exit0不代表每trial成功，检查status/失败phase。
 `--trials 1 --max-nodes 2`在transfer规划失败，保留已执行close/lift，不继续transfer。
 产物仅ignored tmp/s14_7b_pick_*/JSON/CSV/NPZ/图；包含partial失败。
-Engineering Complete；Learning待本人Run/Modify/Explain。无weld/物体truth目标修正/GUI/硬件验证。
+Engineering Complete；本人确认实验、预测与Explain，Learning Mastered。无weld/物体truth目标修正/GUI/硬件验证。
