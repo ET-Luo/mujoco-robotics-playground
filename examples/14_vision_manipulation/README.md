@@ -1,6 +1,6 @@
 # Stage 13 — Vision-Based Manipulation
 
-当前实现 S13.1 frame/quality、S13.2 grasp candidates，以及 S13.3a image/PnP→连续运动与 S13.3b 完整视觉取放；S13.4分别比较pose/extrinsic误差。
+当前实现 S13.1 frame/quality、S13.2 grasp candidates，以及 S13.3a image/PnP→连续运动与 S13.3b 完整视觉取放；S13.4分别比较pose/extrinsic误差，S13.5进行seeded重复试验评价。
 [完整学习包](../../docs/16_vision_based_manipulation.md) ·
 [状态唯一来源](../../README.md#stage-13--vision-based-manipulation)。
 
@@ -111,5 +111,29 @@ scale.5的tilt通过prior但仍close失败；失败/拒绝没有final placement 
 post-fit pose fault保留original reported fit RMS，另存recomputed diagnostic RMS，不能混称拟合质量。
 root comparison CSV/PNG/JSON及各case完整/partial trace在ignored `tmp/s13_4_noise_scale*/`。
 baseline通过且7case评价完成时进程exit0；不代表所有case取放成功或统计success rate。
-依赖同S13.3b，无新包；Engineering Complete，Learning待本人Run/Modify/Explain。
+依赖同S13.3b，无新包；Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。
 无GUI/真实camera/随机robustness验证，不自动开始S13.5。
+
+## S13.5 — Repeated-Trial Evaluation
+
+[完整 Learning Package](../../docs/16_5_repeated_trials.md) · [代码](repeated_trials.py)。
+每trial独立采样object xy±5mm、camera xyz±20mm与image seed，从home执行完整pipeline。
+准确外参、固定尺寸/朝向/物理/控制参数；target来自PnP estimate，reference collision采用simulator oracle。
+
+```bash
+conda activate mujoco
+pwd
+echo $CONDA_DEFAULT_ENV
+which python
+python examples/14_vision_manipulation/repeated_trials.py
+python examples/14_vision_manipulation/repeated_trials.py --noise-px 0.8
+python examples/14_vision_manipulation/repeated_trials.py --seed 7
+```
+
+预测配对noise改变对quality/失败率/条件误差的影响再运行；前两命令manifest相同。
+默认6/8，seed7与noise.8各2/8；成功条件误差约.7mm，不代表全部trial都精准完成。
+统计失败phase、成功率与Wilson区间、成功条件误差、wall/sim time；失败不从分母删掉。
+Manifest/CSV/JSON/dashboard和紧凑sampled trace在ignored `tmp/s13_5_trials_seed*_n*_noise*/`。
+无新依赖；make_image增加可选seed，前课默认观测逐字节保持一致。
+Engineering Complete；Learning待本人Run/Modify/Explain；状态见根README。
+无GUI/真实camera/硬件验证，不自动开始Stage14。

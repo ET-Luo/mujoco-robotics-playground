@@ -152,4 +152,12 @@ Engineering Complete；本人已确认Run/Modify/Explain并补正开口计算，
 显式frame/rotation pivot、point公式与矩阵链交叉核验，复用完整pipeline分类失败并保存partial/empty trace。
 原fit RMS与post-fault diagnostic RMS分开；1° base yaw导致8.584mm origin shift，
 tilt缩半从prior拒绝变成close失败。确定性对照，不是Monte Carlo/统计success rate。
-Engineering Complete；Learning待本人Run/Modify/Explain，不自动开始S13.5。
+Engineering Complete；本人已确认Run/Modify/Explain，Learning Mastered，不自动开始S13.5。
+
+### S13.5 进展（2026-10-06）
+
+[重复试验评价](16_5_repeated_trials.md)：object xy±5mm / camera xyz±20mm / image seeds，
+完整独立trial，准确外参；所有attempts计分母、仅成功条件误差、first failure phase、Wilson区间与wall/sim time。
+默认6/8、seed7与配对noise.8各2/8；small-N/toy detector/ground-clearance限制保留，不删除失败。
+Manifest可复现且prefix稳定，tight sampled traces避免大日志；前课make_image默认行为保持一致。
+Engineering Complete；Learning待本人Run/Modify/Explain，不自动开始Stage14。

@@ -14,7 +14,7 @@ Stage 0–11 已由本人确认完成；S12.1–S12.8b 已 Engineering Complete 
 | examples/11_trajectory | linear/cubic reference 与解析导数 | 复用 cubic，Stage 14 才扩展路径时间化 |
 | examples/12_pick_place | UR5e 集成夹爪、known-pose lift/place/release/trials | 复用模型/执行判据；接口限制见 P1 审计 |
 | examples/13_perception_geometry | camera_frames / pinhole_projection / rgb_depth_capture / camera_calibration / pnp_pose / rgbd_back_projection / rigid_alignment / icp_loop / hand_eye_geometry / hand_eye_calibration，CPU geometry、calibration 与 pose | Stage 12 已完成入口 |
-| examples/14_vision_manipulation | perception_pose / grasp_candidates / vision_to_motion：packet/frame、candidate/IK、image/PnP→continuous motion / vision_pick_place 完整取放 / perception_noise 受控误差case | 当前新工程入口 |
+| examples/14_vision_manipulation | perception_pose / grasp_candidates / vision_to_motion：packet/frame、candidate/IK、image/PnP→continuous motion / vision_pick_place 完整取放 / perception_noise 受控误差case / repeated_trials 分布评价 | 当前新工程入口 |
 | environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
 | controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
 | scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
@@ -56,5 +56,6 @@ S13.1 [Perception Pose Package](16_vision_based_manipulation.md) 工程完成；
 S13.2 [Grasp Pose Package](16_2_grasp_pose_generation.md) 工程完成；四朝向/width/两端点 local IK，尺寸对照；本人已确认 Run/Modify/Explain，Learning Mastered。
 S13.3a [Vision-to-Motion Package](16_3a_vision_to_motion.md) Engineering Complete；彩色点图像检测/PnP、upright prior、连续 home/pre/approach、偏置补偿与独立误差评价；本人已于2026-10-06确认实验、预测与五项Explain，Learning Mastered。
 S13.3b [Vision Pick-and-Place Package](16_3b_vision_pick_place.md) Engineering Complete；连续home→取放/支撑事件/释放/退让，object truth只作评价，逐阶段与累计relative change分别报告；本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
-S13.4 [Error Propagation Package](16_4_perception_noise.md) Engineering Complete；单一post-fit pose/extrinsic fault、显式frame/pivot、精确传播、独立pipeline outcomes；Learning待本人Run/Modify/Explain。
-S13.5–Stage 15仍未实现；不自动开始S13.5。
+S13.4 [Error Propagation Package](16_4_perception_noise.md) Engineering Complete；单一post-fit pose/extrinsic fault、显式frame/pivot、精确传播、独立pipeline outcomes；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered。
+S13.5 [Repeated Trials Package](16_5_repeated_trials.md) Engineering Complete；seeded场景/观测、全部attempts统计、成功条件误差、失败phase、Wilson区间与wall/sim time；Learning待本人Run/Modify/Explain。
+Stage14–15仍未实现；不自动开始Stage14。

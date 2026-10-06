@@ -30,11 +30,11 @@ K = np.array([[560.,0,319.5],[0,580.,239.5],[0,0,1.]])
 DISTORTION = np.zeros(5)
 
 
-def make_image(T_CO_truth, noise_px):
-    """Producer only: metric rig -> 480x640 BGR uint8 raster; fixed pixel perturbations."""
+def make_image(T_CO_truth, noise_px, seed=20261006):
+    """Producer only: metric rig -> BGR raster; legacy default seed stays fixed."""
     rvec, _ = cv2.Rodrigues(T_CO_truth[:3,:3])
     pixels = project(POINTS, rvec, T_CO_truth[:3,3], K, DISTORTION)
-    pixels += noise_px * np.random.default_rng(20261006).standard_normal(pixels.shape)
+    pixels += noise_px * np.random.default_rng(seed).standard_normal(pixels.shape)
     image = np.zeros((480,640,3), dtype=np.uint8)
     for uv, color in zip(pixels, COLORS):
         center = tuple(np.rint(uv).astype(int))

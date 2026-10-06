@@ -252,7 +252,7 @@ Frame、左/右乘、pivot是误差定义的一部分。
 
 ## My Verification — Run / Modify / Explain
 
-Engineering见根README；Learning只由本人确认，三项保持未勾选。
+Engineering与Learning状态见根README；本人已确认Run/Modify/Explain，Learning Mastered。
 
 **Run**：执行默认命令，查看comparison.csv/png，找到两个不同失败阶段及原始/诊断RMS。
 
@@ -268,3 +268,17 @@ Engineering见根README；Learning只由本人确认，三项保持未勾选。
 5. 为什么scale减半能把upright rejection变成close failure？为何final error小也不能证明视觉精确或系统鲁棒？
 
 本课工程完成后停止，不自动实现S13.5。
+
+### 本人学习验证（2026-10-06）
+
+本人明确确认实验与预测完成，并回答五项Explain：不同frame轴的world方向、
+object-origin与base-origin旋转、rad制lever-arm传播、original fit与post-fault diagnostic RMS，
+以及几何误差缩小与离散gate/contact结果不成比例。Run/Modify/Explain全部确认。
+
+精度补充：d=2r|sin(theta/2)|中的r是点到旋转轴的垂直距离；绕base z时
+r=||p_BO[:2]||，不能一般替换为三维||p_BO||。描述的是由使用错误外参产生的估计位置变化，
+不是实验中真实物体或相机被旋转。
+几何中的平移新增shift随scale精确线性变化，旋转shift仅在小角下近似线性；
+total truth error还包含baseline偏差，接触/任务结果进一步包含非线性。
+本次仅更新文档，runtime证据沿用2026-10-06工程验证；未重跑仿真/GUI。
+Engineering与Learning均完成，下一小任务为S13.5，等待本人明确请求，不自动实现。

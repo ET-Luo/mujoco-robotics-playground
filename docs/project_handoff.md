@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S13.4 Engineering Complete、Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（S13.5 Engineering Complete、Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -18,7 +18,8 @@ S12.8a 本人已确认实验与预测，并补充正确的两种安装 X/Y 定�
 Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成，本人确认实验、预测并补充完整 Explain，Learning Mastered。
 S13.1/S13.2 已 Engineering Complete + Learning Mastered。
 S13.3a 已按 2026-10-06 明确请求实现并完成工程验证；本人已确认本课 Run/Modify/Explain。S13.3b已按后续明确请求实现，本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
-S13.4已按后续明确请求实现；当前等待本课Run/Modify/Explain，见末节。
+S13.4已实现，本人已确认Run/Modify/Explain，Learning Mastered。
+S13.5已按后续明确请求实现；当前等待本课Run/Modify/Explain，见末节。
 
 ## 多电脑依赖规则（2026-10-05）
 
@@ -482,5 +483,40 @@ zero-amplitude/输入输出隔离/非法scale CLI exit2检查通过。默认comp
 图轴限已修复以完整显示reject rows，并用verified JSON重新绘图，未为绘图重跑动力学。
 全部产物仅ignored tmp/s13_4_noise_scale*/；无GUI、真实视觉、重标定、随机robustness或硬件验证。
 本地Markdown链接/状态一致性/git diff --check通过；现有执行器与P0代码未改。
-Engineering Complete；Learning三项未勾选，下一小任务是本人本课Run/Modify/五问Explain。
+本人随后明确确认实验与预测完成，并回答五项Explain；Run/Modify/Explain全部确认，Learning Mastered。
+frame/pivot、lever-arm、quality与非线性说明见学习包；r是到旋转轴的垂直距离，
+外参case改变的是使用错误外参的估计，并非真实camera/object运动。
+本次仅同步七份文档；本地链接/状态一致性/git diff --check通过，未重跑实验/仿真/GUI。
+runtime证据沿用2026-10-06 Zero工程验证；下一小任务S13.5等待本人明确请求。
 STOP，不自动实现S13.5。
+
+## S13.5 现场工程验证（2026-10-06，机器 Zero）
+
+[学习包](16_5_repeated_trials.md)、[代码](../examples/14_vision_manipulation/repeated_trials.py)。
+保留起始七份modified文档；pwd正确，WSL2 kernel6.18.33.2/Ubuntu24.04.5。
+本机conda info --base定位hook，激活mujoco，同执行shell核验环境与
+`/home/lucas/miniconda3/envs/mujoco/bin/python`；Python3.12.14。
+required版本/import paths：NumPy2.5.3、MuJoCo3.13.0、Menagerie2026.9.2、Matplotlib3.11.2、
+OpenCV distribution4.14.0.94；实际API通过脚本执行核验。无安装/新依赖，3.11兼容目标未执行。
+
+```bash
+python examples/14_vision_manipulation/repeated_trials.py
+python examples/14_vision_manipulation/repeated_trials.py --seed 7
+python examples/14_vision_manipulation/repeated_trials.py --noise-px 0.8
+```
+
+三组各8trial全部评价完毕，exit0，无import error；默认6/8，seed7/noise.8各2/8。
+成功条件final error mean/max：.735565/.819936、.695762/.704416、.694290/.699436mm。
+默认failure grasp_hold×2；seed7 detector×5+grasp_hold×1；noise.8 mapping×2+planning×2+detector×2。
+默认Wilson95%=[.409275,.928521]；这不是普遍75%成功率或硬件鲁棒性结论。
+默认wall all/success/failure means=4.360/5.028/2.357s，仅本机当次含compile/image/perception/planning/execution观察。
+默认同seed重跑，物理status/phases/stage metrics/sim time逐项相同，wall time不同。
+make_image加可选seed，旧默认图像逐字节核对通过；manifest/prefix与paired noise场景一致。
+独立24trial图像重建/紧凑NPZ索引时间/坐标链/pose与final error/统计分母/failure counts通过；
+Wilson与score二次方程roots一致，零成功/零失败组null、非法CLI exit2通过。
+失败图像area10/11px证实marker覆盖；默认trial4/7估计z27.935/27.749mm，实际FK证实finger bottom负z，
+支持ground-contact日志，不自动抬高target/放行接触/挑除失败。Reference collision仍使用simulator oracle几何。
+默认dashboard PNG目视检查；三组紧凑产物共约1.6MB，仅ignored tmp/s13_5_trials*/。
+本地链接/状态一致性/git diff --check通过；无GUI、真实视觉/硬件、物理随机化或稳定performance benchmark。
+Engineering Complete；Learning三项未勾选，下一小任务本人Run/Modify/五问Explain。
+STOP，不自动实现Stage14。
