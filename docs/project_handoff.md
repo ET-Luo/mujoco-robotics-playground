@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S13.5 Engineering Complete、Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（Stage13 Engineering Complete + Learning Mastered；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -19,7 +19,7 @@ Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成�
 S13.1/S13.2 已 Engineering Complete + Learning Mastered。
 S13.3a 已按 2026-10-06 明确请求实现并完成工程验证；本人已确认本课 Run/Modify/Explain。S13.3b已按后续明确请求实现，本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
 S13.4已实现，本人已确认Run/Modify/Explain，Learning Mastered。
-S13.5已按后续明确请求实现；当前等待本课Run/Modify/Explain，见末节。
+S13.5已实现，本人已确认Run/Modify/Explain，Learning Mastered；Stage13学习项均完成，下一小任务S14.1等待明确请求，见末节。
 
 ## 多电脑依赖规则（2026-10-05）
 
@@ -518,5 +518,8 @@ Wilson与score二次方程roots一致，零成功/零失败组null、非法CLI e
 支持ground-contact日志，不自动抬高target/放行接触/挑除失败。Reference collision仍使用simulator oracle几何。
 默认dashboard PNG目视检查；三组紧凑产物共约1.6MB，仅ignored tmp/s13_5_trials*/。
 本地链接/状态一致性/git diff --check通过；无GUI、真实视觉/硬件、物理随机化或稳定performance benchmark。
-Engineering Complete；Learning三项未勾选，下一小任务本人Run/Modify/五问Explain。
+本人随后确认实验与预测完成，并回答五项Explain；Run/Modify/Explain全部确认，Learning Mastered。
+end-to-end分母、成功条件偏差、paired随机输入与wall time、小N范围与证据分类说明见学习包。
+本次仅同步七份文档；本地链接/状态一致性/git diff --check通过，未重跑实验/仿真/GUI。
+runtime证据沿用2026-10-06 Zero工程验证；Stage13学习项均完成，下一小任务S14.1等待明确请求。
 STOP，不自动实现Stage14。

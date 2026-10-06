@@ -160,4 +160,4 @@ Engineering Complete；本人已确认Run/Modify/Explain，Learning Mastered，�
 完整独立trial，准确外参；所有attempts计分母、仅成功条件误差、first failure phase、Wilson区间与wall/sim time。
 默认6/8、seed7与配对noise.8各2/8；small-N/toy detector/ground-clearance限制保留，不删除失败。
 Manifest可复现且prefix稳定，tight sampled traces避免大日志；前课make_image默认行为保持一致。
-Engineering Complete；Learning待本人Run/Modify/Explain，不自动开始Stage14。
+Engineering Complete；本人已确认Run/Modify/Explain，Learning Mastered，不自动开始Stage14。

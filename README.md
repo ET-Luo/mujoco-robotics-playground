@@ -42,7 +42,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.3a Vision-to-Motion | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.3b Vision Pick-and-Place | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人验证 |
+| S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | Stage 14–15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
@@ -347,7 +347,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，Explain覆盖frame方向、rotation pivot、lever arm、fit/diagnostic RMS及非线性失败阶段；无GUI/随机trials/真实视觉验证）
 
 - S13.5（0.5～2h）：Repeated-trial evaluation：fixed seeds、小范围视角/物体变化，成功率、pose error、失败阶段与耗时。见 [S13.5 Learning Package](docs/16_5_repeated_trials.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（2026-10-06 三组各8trial，默认6/8、seed7与配对高噪声各2/8；失败计入分母，无GUI/真实硬件验证）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，Explain覆盖end-to-end分母、成功条件偏差、seed/paired noise与wall time、小样本范围及失败证据分类；无GUI/真实硬件验证）
 
 
 

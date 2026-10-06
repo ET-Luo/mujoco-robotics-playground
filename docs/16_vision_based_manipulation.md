@@ -4,7 +4,7 @@
 [代码](../examples/14_vision_manipulation/perception_pose.py) ·
 [示例 README](../examples/14_vision_manipulation/README.md) ·
 [状态唯一来源](../README.md#stage-13--vision-based-manipulation)。
-S13.2 [Grasp Pose Generation](16_2_grasp_pose_generation.md) 工程完成；S13.3a [Vision-to-Motion](16_3a_vision_to_motion.md) Engineering Complete + Learning Mastered；S13.3b [完整视觉取放](16_3b_vision_pick_place.md) Engineering Complete，Learning Mastered；S13.4 [误差传播](16_4_perception_noise.md) Engineering Complete + Learning Mastered；S13.5 [重复试验评价](16_5_repeated_trials.md) Engineering Complete、Learning待本人验证；Stage14起仍是路线。前置：[Frame](15_robot_perception_geometry.md)、
+S13.2 [Grasp Pose Generation](16_2_grasp_pose_generation.md) 工程完成；S13.3a [Vision-to-Motion](16_3a_vision_to_motion.md) Engineering Complete + Learning Mastered；S13.3b [完整视觉取放](16_3b_vision_pick_place.md) Engineering Complete，Learning Mastered；S13.4 [误差传播](16_4_perception_noise.md) Engineering Complete + Learning Mastered；S13.5 [重复试验评价](16_5_repeated_trials.md) Engineering Complete + Learning Mastered；Stage14起仍是路线。前置：[Frame](15_robot_perception_geometry.md)、
 [PnP](15_5_pnp_pose.md)、[Hand-eye](15_8b_hand_eye_calibration.md)。
 
 ## Problem → Why

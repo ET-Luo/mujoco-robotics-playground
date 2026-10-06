@@ -218,7 +218,7 @@ Wilson区间展示小N的不确定性；wall包括编译/感知/执行，失败�
 
 ## My Verification — Run / Modify / Explain
 
-Engineering见根README，Learning三项由本人确认前保持未勾选。
+Engineering与Learning状态见根README；本人已确认Run/Modify/Explain，Learning Mastered。
 
 **Run**：运行默认命令，检查6/8、两个失败trial的phase，以及dashboard中的成功子集误差。
 
@@ -234,3 +234,16 @@ Engineering见根README，Learning三项由本人确认前保持未勾选。
 5. 图像标记覆盖、quality拒绝、reference contact和实际finger-ground failure分别需要什么证据？
 
 本课工程完成后停止，不自动实现Stage14。
+
+### 本人学习验证（2026-10-06）
+
+本人明确确认实验与预测完成，并回答五项Explain：end-to-end成功率包含安全拒绝，
+成功条件误差具有selection bias，固定seed与paired noise控制随机输入而非wall time，
+8trial比例不能外推为普遍成功率，以及image/metric/reference/actual contact证据必须分开。
+Run/Modify/Explain全部确认，Learning Mastered。
+
+精度补充：本课paired noise固定scene与image seed，所以底层Gaussian realization也相同，
+只改变sigma；pixel取整/覆盖以及后续gate/contact结果仍可非线性变化。
+同seed复现以本课记录的代码、依赖版本和参数为条件，不保证跨环境逐bit一致。
+Stage13学习项均完成，下一小任务为S14.1；本次仅同步文档，未重跑仿真/GUI，
+runtime证据沿用2026-10-06工程验证，不自动实现Stage14。

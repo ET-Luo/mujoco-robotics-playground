@@ -57,5 +57,5 @@ S13.2 [Grasp Pose Package](16_2_grasp_pose_generation.md) 工程完成；四朝�
 S13.3a [Vision-to-Motion Package](16_3a_vision_to_motion.md) Engineering Complete；彩色点图像检测/PnP、upright prior、连续 home/pre/approach、偏置补偿与独立误差评价；本人已于2026-10-06确认实验、预测与五项Explain，Learning Mastered。
 S13.3b [Vision Pick-and-Place Package](16_3b_vision_pick_place.md) Engineering Complete；连续home→取放/支撑事件/释放/退让，object truth只作评价，逐阶段与累计relative change分别报告；本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
 S13.4 [Error Propagation Package](16_4_perception_noise.md) Engineering Complete；单一post-fit pose/extrinsic fault、显式frame/pivot、精确传播、独立pipeline outcomes；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered。
-S13.5 [Repeated Trials Package](16_5_repeated_trials.md) Engineering Complete；seeded场景/观测、全部attempts统计、成功条件误差、失败phase、Wilson区间与wall/sim time；Learning待本人Run/Modify/Explain。
+S13.5 [Repeated Trials Package](16_5_repeated_trials.md) Engineering Complete；seeded场景/观测、全部attempts统计、成功条件误差、失败phase、Wilson区间与wall/sim time；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered。
 Stage14–15仍未实现；不自动开始Stage14。

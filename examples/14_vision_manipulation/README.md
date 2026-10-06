@@ -135,5 +135,5 @@ python examples/14_vision_manipulation/repeated_trials.py --seed 7
 统计失败phase、成功率与Wilson区间、成功条件误差、wall/sim time；失败不从分母删掉。
 Manifest/CSV/JSON/dashboard和紧凑sampled trace在ignored `tmp/s13_5_trials_seed*_n*_noise*/`。
 无新依赖；make_image增加可选seed，前课默认观测逐字节保持一致。
-Engineering Complete；Learning待本人Run/Modify/Explain；状态见根README。
+Engineering Complete；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered；状态见根README。
 无GUI/真实camera/硬件验证，不自动开始Stage14。
