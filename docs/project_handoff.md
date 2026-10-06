@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S14.5 Engineering Complete，Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（S14.7a Engineering Complete + Learning Mastered；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -674,5 +674,78 @@ coarse step.4反例7尝试1接受，输出2顶点/1.6m，sampled复查通过但�
 默认图目视检查；产物仅ignored tmp/s14_5_shortcut_*/；前课代码未改。
 local Markdown links/状态一致性/git diff --check通过；未重跑前课独立CLI/P0。
 无GUI、UR5e、时间化/动力学；本课只简化折线，不保证曲率/速度连续、最优或更大clearance。
-Engineering Complete；Learning待本人Run/Modify/Explain。下一步默认Run、预测0预算Modify并回答五问；
-不自动实现S14.6。
+Engineering Complete；本人随后明确确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部确认，Learning Mastered；实现与连续性精度补充见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
+本地链接和git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
+下一小任务S14.6 cubic时间化与速度/加速度限制，等待明确请求。
+
+## S14.6 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_6_time_parameterization.md)、[代码](../examples/15_motion_planning/time_parameterization.py)。
+保留起始五份modified文档，pwd正确；重查WSL2 kernel6.6.87.2 / Ubuntu24.04.5。
+本机conda info --base定位hook，激活mujoco，同shell核验环境名/interpreter
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python3.12.14、NumPy2.5.3、MuJoCo3.14.0、
+Matplotlib3.11.2、Menagerie2026.9.1；required metadata/真实imports/module paths与执行API通过。
+Menagerie因复用旧cubic module顶层import必需，未加载UR5e资产；无新增/安装依赖，3.11未执行。
+
+```bash
+python examples/15_motion_planning/time_parameterization.py
+python examples/15_motion_planning/time_parameterization.py --velocity-scale 0.5
+python examples/15_motion_planning/time_parameterization.py --acceleration-scale 0.1
+```
+
+三命令exit0，无import error；同一3point path，length1.612792500m/clearance28.191341mm。
+复用S10.8b comparison_trajectories cubic，T≥max_j(1.5|delta|/v,sqrt(6|delta|/a))，向上到dt=.01s。
+default durations5.77/2.24、total8.01s/802samples；v×.5→11.54/4.47、16.01s/1602；
+a×.1→10.75/6.68、17.43s/1744。解析速度/加速度限值均通过。
+默认knot5.77s、双侧velocity0、acceleration jump[.741490,.092506]m/s²，C1一般非C2。
+唯一时间拼接，NPZ knot保存左acceleration，JSON另存左右jump；普通waypoint不加dwell。
+独立三套NPZ/JSON配时ceil/连续解析peak/poly replay、clock/dt、shape/端点/零速度、
+几何path/长度不变、全部timed样本几何、零段hold、acceleration主导/input/budget guards通过。
+CLI nan scale exit2；默认图目视检查。产物仅ignored tmp/s14_6_timing_*/，前课代码未改。
+local Markdown links/状态一致性/git diff --check通过；未重跑前课独立CLI/P0。
+无GUI、mj_step、扭矩/接触/UR5e动态执行；参考限值不代表硬件能力，未限制jerk。
+Engineering Complete；本人随后明确确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部确认，Learning Mastered；归一化导数与约束主导切换精度补充见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
+本地链接和git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
+下一小任务S14.7a UR5e obstacle planning，等待明确请求。
+
+## S14.7a 现场工程验证（2026-10-06，机器 DESKTOP-781D67A）
+
+[学习包](17_7a_ur5e_obstacle_planning.md)、[代码](../examples/15_motion_planning/ur5e_obstacle_planning.py)。
+保留起始六份modified文档与两份untracked S14.6文件，pwd正确；沿用本会话WSL2 Ubuntu24.04.5验证。
+本机conda info --base定位hook，激活mujoco，同shell核验环境名/interpreter
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python3.12.14、NumPy2.5.3、MuJoCo3.14.0、
+Matplotlib3.11.2、Menagerie2026.9.1；required metadata/import/module paths/API核验通过。
+无安装/新依赖，3.11兼容目标未执行，不导入无关OpenCV/RL。
+
+```bash
+python examples/15_motion_planning/ur5e_obstacle_planning.py
+python examples/15_motion_planning/ur5e_obstacle_planning.py --velocity-scale 0.5
+python examples/15_motion_planning/ur5e_obstacle_planning.py --max-nodes 2
+```
+
+默认/Modify exit0，execution_passed。裸官方UR5e，world固定sphere [−.3344,.3975,.3638]m，
+active robot collision geoms8capsules+1cylinder，nexclude0；无base active collision/floor/gripper/held物。
+固定world target私有DLS20updates，ep9.366507e−7m/er1.850602e−7rad。
+直连margin拒绝，midpoint距离−50.000382mm确认碰撞。RRT-Connect14nodes/25attempts，9→3path/5shortcut接受。
+callback/bounds使已有Connect接入六维；time_path改任意D，二维planner/cubic输出逐元素回归通过。
+参考h=.04、shortcut.025、fine.01rad；独立.005rad与全部timed配置通过。
+reference最小距离54.487516mm，explicit mj_geomDistance capped .1m，sphere–capsule解析核对通过。
+默认reference8.488s，execution10.488s/5244steps，max tracking.039322360rad，min distance54.483984mm；
+final ep.024871mm/er3.728729e−5rad。v×.5 sim18.974s/9487steps，max tracking.019763381rad，
+min distance54.486458mm，final ep.006224mm/er9.933493e−6rad。无observed generated contacts。
+首版v=.4rad/s max tracking.077036911rad超.05门限，最终pose虽好仍失败；降默认v到.2通过，未放宽policy。
+max_nodes2 exit1/node_budget，保存partial JSON，trajectory/execution null，无执行；CLI nan scale exit2。
+默认同seed重跑确定性结果一致。两套NPZ/trace/finer edges/reference clock/command metrics、
+final actual FK、primitive capsule距离、失败null独立核对通过；默认tracking图目视检查。
+产物仅ignored tmp/s14_7a_ur5e_*/。local Markdown links/状态一致性/git diff --check通过。
+execution一次初始化，仅ctrl/mj_step；qfrc_bias理想外力feedforward，不证明硬件扭矩能力。
+采样/模型过滤与局部sampling box限制详见学习包；无continuous碰撞保证、实际加速度限值、GUI或硬件验证。
+Engineering Complete；本人随后明确确认实验与预测完成，并回答五项Explain，
+Run/Modify/Explain全部确认，Learning Mastered；局部采样域与政策验证精度补充见学习包。
+本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
+本地链接和git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
+下一小任务S14.7b collision-aware pick-and-place，等待明确请求。

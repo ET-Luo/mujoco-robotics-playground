@@ -132,4 +132,6 @@ python examples/15_motion_planning/path_smoothing.py --attempts 0
 4. 为什么最后重检所有边？同一粗oracle重检能否保证修复漏检？
 5. 为什么本课输出仍不是速度连续的轨迹，也不保证最短或更大clearance？
 
-**My Verification**：Engineering已完成；本人Run/Modify/Explain待确认，状态只在根README维护。
+**My Verification**：本人于2026-10-06明确确认实验与预测完成，五项Explain正确覆盖三角不等式与避障独立条件、完整新边检查、删除内部顶点并保留端点、最终全边复查与粗oracle限制、非最优/clearance及动态连续性边界，Learning Mastered；状态只在根README维护。
+
+精度补充：本实现数组拼接使用np.concatenate，而非NumPy数组的加号（后者是逐元素相加）。更细最终采样提高分辨率但仍不构成一般连续安全证明；保证需要具有明确保守边界的方法或连续几何检查。几何折线本身没有速度，拐角处若不停点而保持非零速度才会发生速度方向突变；时间化可选择停点政策，见后续S14.6。

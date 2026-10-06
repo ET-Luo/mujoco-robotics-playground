@@ -12,14 +12,22 @@ from edge_checking import (build_model, configuration_report, check_edge, vector
 
 
 def plan_connect(model, snapshot, start, goal, seed=7, extension_m=.15,
-                 edge_step_m=.02, max_nodes=500, max_attempts=2000, time_budget_s=5.):
-    start,goal=vector(start),vector(goal)
+                 edge_step_m=.02, max_nodes=500, max_attempts=2000, time_budget_s=5.,
+                 bounds=None, configuration_checker=None, edge_checker=None):
+    bounds = LIMITS if bounds is None else np.asarray(bounds,dtype=float)
+    if bounds.ndim!=2 or bounds.shape[1]!=2 or not np.all(np.isfinite(bounds)) or np.any(bounds[:,0]>=bounds[:,1]):
+        raise ValueError("bounds must be finite shape (D,2), lower < upper")
+    if len(bounds)!=2 and (configuration_checker is None or edge_checker is None):
+        raise ValueError("non-2D planning requires explicit configuration and edge checkers")
+    start,goal=np.asarray(start,dtype=float),np.asarray(goal,dtype=float)
+    if start.shape!=(len(bounds),) or goal.shape!=start.shape or not np.all(np.isfinite([start,goal])):
+        raise ValueError("endpoints must match bounds dimension")
     for value in (extension_m,edge_step_m,time_budget_s):
         if not np.isfinite(value) or value<=0:raise ValueError('steps/time must be positive finite')
     if not isinstance(seed,int) or seed<0:raise ValueError('seed must be nonnegative integer')
     if not isinstance(max_nodes,int) or not 2<=max_nodes<=10000:raise ValueError('max_nodes in [2,10000]')
     if not isinstance(max_attempts,int) or not 1<=max_attempts<=100000:raise ValueError('max_attempts in [1,100000]')
-    if np.linalg.norm(LIMITS[:,1]-LIMITS[:,0])/edge_step_m>10000:raise ValueError('edge query budget exceeded')
+    if np.linalg.norm(bounds[:,1]-bounds[:,0])/edge_step_m>10000:raise ValueError('edge query budget exceeded')
     # Tree identities never swap: 0 rooted at start, 1 rooted at goal.
     nodes=[[start.copy()],[goal.copy()]]; parents=[[-1],[-1]]
     attempts=edge_calls=queries=rejected=outer=0
@@ -33,7 +41,8 @@ def plan_connect(model, snapshot, start, goal, seed=7, extension_m=.15,
 
     def edge(a,b):
         nonlocal edge_calls,queries,rejected
-        r=check_edge(model,snapshot,a,b,edge_step_m)
+        r=(check_edge(model,snapshot,a,b,edge_step_m) if edge_checker is None
+           else edge_checker(a,b,edge_step_m))
         edge_calls+=1;queries+=r['sample_count']
         if not r['sampled_valid']:rejected+=1
         return r['sampled_valid']
@@ -79,7 +88,7 @@ def plan_connect(model, snapshot, start, goal, seed=7, extension_m=.15,
             if status!='ADVANCED':return status,index
 
     for name,q in [('start',start),('goal',goal)]:
-        valid=configuration_report(model,snapshot,q)['valid'];queries+=1
+        valid=(configuration_report(model,snapshot,q) if configuration_checker is None else configuration_checker(q))['valid'];queries+=1
         if perf_counter()-begun>=time_budget_s:return result('time_budget')
         if not valid:return result('invalid_'+name)
     direct=edge(start,goal)
@@ -91,7 +100,7 @@ def plan_connect(model, snapshot, start, goal, seed=7, extension_m=.15,
         stop=budget()
         if stop:return result(stop)
         outer+=1
-        target=rng.uniform(LIMITS[:,0],LIMITS[:,1])
+        target=rng.uniform(bounds[:,0],bounds[:,1])
         status,index=extend(active,target)
         if status not in ('TRAPPED','ADVANCED','REACHED'):return result(status)
         if status!='TRAPPED':

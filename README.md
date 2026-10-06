@@ -43,7 +43,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.3b Vision Pick-and-Place | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| Stage 14 | S14.1–S14.5 collision / planning / shortcuts | S14.1–S14.4 Mastered；S14.5 Engineering Complete，Learning待验证 |
+| Stage 14 | S14.1–S14.7a collision / planning / tracking | S14.1–S14.7a Engineering Complete + Learning Mastered |
 | Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
@@ -369,13 +369,13 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖EXTEND/CONNECT、逐步预算、双树方向拼接、工作量计数与seed比较边界）
 
 - S14.5（0.5～2h）：Path smoothing：collision-checked shortcut，比较长度并重检所有边。见 [S14.5 Learning Package](docs/17_5_path_smoothing.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（vertex shortcut、长度单调与逐边复查；仍为折线，无动态平滑保证）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖三角不等式与碰撞、shortcut整边检查、端点保留、最终复查及最优/clearance/连续性边界）
 
-- S14.6（0.5～2h）：Time parameterization：复用 cubic，按每段 velocity/acceleration limit 配时；分段停点与连续性。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S14.6（0.5～2h）：Time parameterization：复用 cubic，按每段 velocity/acceleration limit 配时；分段停点与连续性。见 [S14.6 Learning Package](docs/17_6_time_parameterization.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖解析双约束、共享时间律、C1/C2、峰值与舍入、参考执行边界）
 
-- S14.7a（0.5～2h）：UR5e obstacle planning：IK endpoint→joint RRT-Connect→smoothed timed path，几何与tracking分别检查。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S14.7a（0.5～2h）：UR5e obstacle planning：IK endpoint→joint RRT-Connect→smoothed timed path，几何与tracking分别检查。见 [S14.7a Learning Package](docs/17_7a_ur5e_obstacle_planning.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，五项Explain覆盖IK/reference/actual边界、frame与局部搜索、采样限制、动态执行与未验证能力）
 
 - S14.7b（0.5～2h）：Collision-aware pick-and-place：带物 transform、阶段接触策略、执行过程与重复试验统计。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain

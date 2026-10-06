@@ -83,4 +83,37 @@ python examples/15_motion_planning/path_smoothing.py --attempts 0
 需NumPy/MuJoCo/Matplotlib，无新依赖。默认13→3顶点、1.774460→1.612793m，接受6次；0预算保持原path。
 Modify先预测0预算对路径和检查的影响，再运行对照。产物仅ignored tmp/s14_5_shortcut_*/JSON/PNG。
 粗step=.4m会误接受碰撞直连，独立解析评分拒绝（exit1），不掩盖采样漏检。
-Engineering Complete；Learning待本人Run/Modify/Explain。仍为折线，无时间化/动力学/UR5e验证。
+Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。仍为折线，无时间化/动力学/UR5e验证。
+
+## S14.6 — Cubic Time Parameterization
+
+[学习包](../../docs/17_6_time_parameterization.md) · [代码](time_parameterization.py)。
+固定S14.5几何path，复用S10.8b cubic helper，按各轴速度/加速度解析峰值给各段配时，每个waypoint零端速。
+
+```bash
+python examples/15_motion_planning/time_parameterization.py
+python examples/15_motion_planning/time_parameterization.py --velocity-scale 0.5
+```
+
+需NumPy/MuJoCo/Matplotlib；旧cubic module导入mujoco-menagerie，也是已声明必要import依赖，无新安装。
+默认T=5.77/2.24s、total8.01s；限速减半total16.01s，path与静态clearance不变。
+Modify先预测时间/速度/加速度/几何变化。ignored tmp/s14_6_timing_*/保存NPZ/JSON/三行图。
+每个waypoint零速度、C1但通常非C2；JSON保存两侧加速度，NPZ连接点保留左值。
+Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered；仅参考生成，无mj_step/UR5e动态执行验证。
+
+## S14.7a — UR5e Obstacle Planning and Tracking
+
+[学习包](../../docs/17_7a_ur5e_obstacle_planning.md) · [代码](ur5e_obstacle_planning.py)。
+官方裸UR5e、固定world球障碍：私有IK→六维joint RRT-Connect→shortcut→cubic→独立实际tracking检查。
+
+```bash
+python examples/15_motion_planning/ur5e_obstacle_planning.py
+python examples/15_motion_planning/ur5e_obstacle_planning.py --velocity-scale 0.5
+```
+
+依赖NumPy/MuJoCo/Matplotlib/Menagerie，均已声明；无OpenCV/RL或新增安装。
+默认14nodes/25扩展、9→3path；参考8.488s、执行10.488s；tracking max=.039322rad、final position=.024871mm。
+限速减半tracking=.019763rad、sim18.974s；Modify先预测path/时间/tracking变化。
+`--max-nodes 2`预期exit1/partial结果，无execution。ignored tmp/s14_7a_ur5e_*/存JSON/NPZ/图。
+裸臂compiled碰撞几何有覆盖限制；使用理想bias外力；离散检查不保证连续/硬件安全。
+Engineering Complete；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。无gripper/持物/phase或GUI验证。
