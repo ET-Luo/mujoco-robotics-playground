@@ -39,10 +39,12 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S12.8b Hand-Eye Calibration | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.1 Perception Pose→Base→World | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.2 Grasp Pose Generation | Code + Experiment + Docs 完成 | Run / Modify / Explain 完成，Mastered |
-| S13.3a–Stage 15 | 仅路线与 docs skeleton | 未开始 |
+| S13.3a Vision-to-Motion | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| S13.3b Vision Pick-and-Place | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人验证 |
+| S13.4–Stage 15 | 仅路线与 docs skeleton | 未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
-视觉输入与通用避障在 P1 补齐。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
+视觉输入已由 S13.3a 在固定场景验证；通用避障仍是后续路线。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
 
 ## Environment and Quick Start
 
@@ -333,11 +335,11 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S13.2（0.5～2h）：Grasp pose generation：对象尺寸/估计朝向→top-down candidates、pre-grasp，复用 IK 作可达筛选。见 [S13.2 Learning Package](docs/16_2_grasp_pose_generation.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-05 本人确认实验与预测完成，并正确解释 frame/tool offset/approach/local IK、开口与单根 slide 关系及不同朝向的夹持尺寸）
 
-- S13.3a（0.5～2h）：Vision-to-motion 接入：CPU 合成图像 PnP estimate 驱动 home→pre-grasp→approach 动力学，不泄漏 truth。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S13.3a（0.5～2h）：Vision-to-motion 接入：CPU 合成图像 PnP estimate 驱动 home→pre-grasp→approach 动力学，不泄漏 truth。见 [S13.3a Learning Package](docs/16_3a_vision_to_motion.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-06 本人确认实验与预测完成，Explain 覆盖 truth 隔离、frame 链、upright prior、动力学/偏置补偿与 tracking/truth error；无 GUI/闭爪/抓取验证）
 
-- S13.3b（0.5～2h）：Vision-based pick-and-place：连接已有 close/lift/transfer/release，分别检查估计与执行结果。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S13.3b（0.5～2h）：Vision-based pick-and-place：连接已有 close/lift/transfer/release，分别检查估计与执行结果。见 [S13.3b Learning Package](docs/16_3b_vision_pick_place.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证（2026-10-06 完整 headless 流程与 close failure 对照；无 GUI/真实视觉/硬件验证）
 
 - S13.4（0.5～2h）：Perception noise：分别扰动 pose 与 extrinsic，比较误差传播及失败类型。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain

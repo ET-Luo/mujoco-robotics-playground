@@ -1,6 +1,6 @@
 # Stage 13 — Vision-Based Manipulation
 
-当前实现 S13.1 frame/quality 接口与 S13.2 grasp candidates / endpoint IK screening。
+当前实现 S13.1 frame/quality、S13.2 grasp candidates，以及 S13.3a image/PnP→连续运动与 S13.3b 完整视觉取放。
 [完整学习包](../../docs/16_vision_based_manipulation.md) ·
 [状态唯一来源](../../README.md#stage-13--vision-based-manipulation)。
 
@@ -39,3 +39,53 @@ PNG/CSV/NPZ/JSON 在 ignored `tmp/s13_2_grasp_x*_y*_yaw*_d*/`，不需前课产�
 无新依赖；模型复用已声明 MuJoCo/Menagerie，consumer 不读取 fixture object truth。
 Engineering Complete；本人已确认 Run/Modify/Explain，Learning Mastered，状态见根 README。
 不检查中间路径/碰撞、未执行闭爪/动力学，IK failed 只是 local failure；不自动实现 S13.3a。
+
+## S13.3a — Vision-to-Motion
+
+[完整 Learning Package](../../docs/16_3a_vision_to_motion.md) · [代码](vision_to_motion.py)。
+CPU 彩色 landmark 图像→整图颜色 ID/质心→PnP→quality/frame/upright prior→IK/reference→
+home/pre/approach 连续动力学。一次观测、固定物体，truth 仅用于图像生成与评价。
+
+```bash
+conda activate mujoco
+pwd
+echo $CONDA_DEFAULT_ENV
+which python
+python examples/14_vision_manipulation/vision_to_motion.py
+python examples/14_vision_manipulation/vision_to_motion.py --noise-px 0.8
+python examples/14_vision_manipulation/vision_to_motion.py --noise-px 0
+python examples/14_vision_manipulation/vision_to_motion.py --rms-limit-px 0.1
+```
+
+需 NumPy/MuJoCo/Menagerie/Matplotlib/OpenCV headless（已声明）；不需 renderer/GUI/Torch。
+输出 ignored `tmp/s13_3a_motion_noise*_rms*/`，默认模拟10.5 s、无 contact；
+末端 tracking≈0.073 mm，但 true-target error≈4.05 mm。
+noise=0 仍有 raster quantization。严格 RMS 对照在运动前拒绝。
+Execution 不写 arm qpos，使用位置目标与显式 qfrc_bias 前馈；不是受真实扭矩限幅的硬件验证。
+先预测 noise 0.2→0.8 对 tracking/true-target errors 的影响，再 Modify 对比。
+Engineering Complete；本人于2026-10-06确认实验与预测，并回答五项Explain，Learning Mastered；状态见根README。
+没有闭爪/lift/place/GUI，停止在 S13.3a。
+
+## S13.3b — Vision Pick-and-Place
+
+[完整 Learning Package](../../docs/16_3b_vision_pick_place.md) · [代码](vision_pick_place.py)。
+复用 image/PnP/upright/candidate 与 P0 model/IK/contact concepts；free object 从 home 连续执行
+approach/close/lift/transfer/descent/support/release/retreat，不在grasp初始化。
+目标仅使用estimate、名义T_OG与commanded destination；object state仅用于评价，contact反馈用于阶段切换。
+
+```bash
+conda activate mujoco
+pwd
+echo $CONDA_DEFAULT_ENV
+which python
+python examples/14_vision_manipulation/vision_pick_place.py
+python examples/14_vision_manipulation/vision_pick_place.py --close-target 0.014
+```
+
+预测第二条的空载开口及失败阶段后再运行；预期close failure退出1，partial trace仍保存。
+默认22.228 s、lift52.728 mm、final error.714 mm、retreat79.974 mm；
+逐阶段relative change≤15 mm，但累计23.846 mm，不代表无slip。
+支撑持续确认后停止descent并开爪；post-release持续支撑，手指与地面接触仍属unexpected。
+依赖与S13.3a相同，无新增包。PNG/CSV/NPZ/JSON在ignored `tmp/s13_3b_pick_place_close*/`。
+Engineering Complete，Learning Run/Modify/Explain待本人确认；状态见根README。
+无GUI/真实相机/硬件验证，不自动开始S13.4。

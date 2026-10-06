@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-05（Stage 12 / S13.1 / S13.2 Engineering Complete、Learning Mastered）。
+最后整理：2026-10-06（S13.3b Engineering Complete、Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,8 @@ S12.7a 工程完成后，本人于 2026-10-05 明确确认实验与预测均完�
 Run/Modify/Explain 全部确认，Learning Mastered。S12.7b 随后工程完成，本人明确确认实验与预测并回答五项 Explain，Learning Mastered。
 S12.8a 本人已确认实验与预测，并补充正确的两种安装 X/Y 定义与固定关系；
 Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成，本人确认实验、预测并补充完整 Explain，Learning Mastered。
-S13.1 已实现，本人确认实验与预测并回答五项 Explain，Learning Mastered；S13.2 已按后续明确请求实现，见下。
+S13.1/S13.2 已 Engineering Complete + Learning Mastered。
+S13.3a 已按 2026-10-06 明确请求实现并完成工程验证；本人已确认本课 Run/Modify/Explain。S13.3b已按后续明确请求实现，当前等待本课Run/Modify/Explain，见末节。
 
 ## 多电脑依赖规则（2026-10-05）
 
@@ -383,3 +384,69 @@ dx120mm 时90°/270°夹持dy30mm，仍通过开口筛选。Run/Modify/Explain �
 本次仅同步六份文档，保留既有未提交工作；链接、状态一致性与 git diff --check 通过。
 未重跑实验/仿真/GUI，runtime 沿用2026-10-05 Zero工程验证。
 STOP，不自动实现S13.3a。
+
+## S13.3a 现场工程验证（2026-10-06，机器 Zero）
+
+[学习包](16_3a_vision_to_motion.md)、[代码](../examples/14_vision_manipulation/vision_to_motion.py)。
+起始 pwd 正确、git status --short 空；WSL2 kernel 6.18.33.2 / Ubuntu 24.04.5。
+本机 conda info --base 定位 hook，base→mujoco，同执行 shell 核验环境与
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python 3.12.14；required versions / imports /
+module paths：NumPy 2.5.3、MuJoCo 3.13.0、Menagerie 2026.9.2、Matplotlib 3.11.2。
+本机缺已声明的 OpenCV headless；dry-run 仅安装该包，不改核心包，随后执行
+`python -m pip install 'opencv-python-headless>=4.10,<5'`，安装4.14.0.94；cv2 path/API 与
+`python -m pip check` 通过。3.11 兼容目标未执行；requirements 未更改。
+
+```bash
+python examples/14_vision_manipulation/vision_to_motion.py
+python examples/14_vision_manipulation/vision_to_motion.py --noise-px 0.8
+python examples/14_vision_manipulation/vision_to_motion.py --noise-px 0
+python examples/14_vision_manipulation/vision_to_motion.py --rms-limit-px 0.1
+```
+
+四命令退出0，无 import error。前三组motion_passed：5250 steps / 10.5 s、无 observed contacts；
+default/0.8/0 px PnP t error=3.977845/5.257767/2.457555 mm；
+final tracking=0.072987/0.073148/0.072836 mm，true-target=4.047543/5.329357/2.525082 mm。
+严格 RMS gate 在 perception 拒绝，time=0，无新 motion result。
+最初无 bias compensation 的 final error=8.600956 mm/0.021219 rad，未通过门限；
+增加显式 qfrc_bias arm feedforward 后通过，未放宽门限；理想外力接口不代表硬件扭矩能力。
+整图 color-ID detector 无 truth/ROI 输入；PnP 完整pose 经显式 tilt gate+upright prior，保留估计xyz/yaw。
+noise=0 仍含 raster quantization；marker rig 是抽象合成点图，不是 opaque-box RGB camera image。
+独立PNG centroid/CSV/NPZ/shape/time/frame chain/pre-final residual/reference concatenation核对通过；
+missing ID/tilt/far IK 拒绝通过。默认两PNG目视检查，产物只在ignored tmp/s13_3a_motion*/。
+未重跑前课/P0；无GUI、真实视觉、闭爪/lift/place验证，sampled collision不是通用规划保证。
+CLI noise nan/−1 与 RMS 3 拒绝（exit 2）；本地 Markdown 文件链接、状态一致性、
+新文件 whitespace 与 git diff --check 通过。
+本人随后明确确认实验与预测完成，并回答五项Explain；Run/Modify/Explain全部确认，Learning Mastered。
+解释与精度补充见学习包：本课非共面rig，零扰动已知主因是像素取整，不归因于planar geometry sensitivity。
+本次仅同步七份文档，保留全部既有未提交代码/文档；本地文件链接、状态一致性与git diff --check通过。
+未重跑Python学习实验/仿真/GUI；runtime证据沿用2026-10-06 Zero工程验证。
+下一小任务S13.3b等待本人明确请求。
+STOP，不自动实现S13.3b。
+
+## S13.3b 现场工程验证（2026-10-06，机器 Zero）
+
+[学习包](16_3b_vision_pick_place.md)、[代码](../examples/14_vision_manipulation/vision_pick_place.py)。
+保留起始六份modified文档与S13.3a两份untracked文件；pwd正确。WSL2 kernel6.18.33.2/Ubuntu24.04.5。
+本机conda info --base定位hook，激活mujoco，同执行shell核验环境/interpreter；
+Python3.12.14、NumPy2.5.3、MuJoCo3.13.0、Menagerie2026.9.2、Matplotlib3.11.2、
+OpenCV distribution4.14.0.94；required versions/import paths/API检查通过。无安装/新依赖，3.11未执行。
+
+```bash
+python examples/14_vision_manipulation/vision_pick_place.py
+python examples/14_vision_manipulation/vision_pick_place.py --close-target 0.014
+python examples/14_vision_manipulation/vision_pick_place.py --close-target 0.002
+```
+
+默认/.002 exit0、placement_passed，11114/11116步、time22.228/22.232s；lift52.728417/52.757120mm，
+final position error.714212/.738792mm、rotation.008264/.013018°（相对estimated-yaw command）。
+.014在close预期失败(exit1)，5750步/time11.5s，不执行lift；保存partial trace，不伪造final结果。
+默认phase relative变化lift/transfer/descent=4.958479/10.667653/4.656103mm；累计23.846433mm。
+逐阶段15mm规则与P0一致，不把它当累计保证。初版累计gate失败、固定朝向与更强夹紧未消除位移；
+初版下降到底还触发finger-ground接触。最终持续support事件停止descent，未放行finger-ground。
+no object-truth target correction / held-offset feedback / execution qpos-reset / weld。
+独立CSV/NPZ/PNG centroid、2ms clock/phase sequence、phase与累计metrics、support/release窗口、
+nominal目标重算、最终ground force=.4905N、私有IK隔离、CLI nan/−1/.05 exit2检查通过。
+默认pipeline PNG目视检查，所有产物仅ignored tmp/s13_3b_pick_place*/；没有重跑前课/P0独立脚本。
+文档链接/状态一致性/git diff --check通过；无GUI、真实camera、hardware或robustness benchmark。
+Engineering Complete；Learning三项保持未勾选，下一小任务是本人Run/Modify/五问Explain。
+STOP，不自动实现S13.4。

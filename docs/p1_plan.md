@@ -129,3 +129,19 @@ T_WG/T_WP；root→pad 35 mm、opening=20+2s mm、width+8 mm clearance。
 40/30、120/30、120/120 mm：width/IK pass counts 4/4、2/2、0/0；far local IK 失败。
 无 PnP、path/collision/grasp/dynamics；不读 fixture object pose 规划。
 Engineering 完成，本人已确认 Run/Modify/Explain，Learning Mastered，不自动开始 S13.3a。
+
+### S13.3a 进展（2026-10-06）
+
+[Vision-to-Motion](16_3a_vision_to_motion.md)：CPU colored landmark image 的整图检测→PnP，
+经 quality/frame/upright prior 接入 candidate/IK；home→pre→approach 连续 position-servo dynamics，
+显式 bias-force feedforward。默认/0.8/0 px 通过；严格 RMS 门限在 motion 前拒绝。
+分别记录 perception、pre/final tracking 与 true-target error；无真实 detector/GUI/闭爪验证。
+Engineering Complete；本人于2026-10-06确认实验与预测并回答五项Explain，Learning Mastered；不自动开始S13.3b。
+
+### S13.3b 进展（2026-10-06）
+
+[完整视觉取放](16_3b_vision_pick_place.md)：image/PnP estimate驱动从home开始的完整连续动力学。
+用nominal T_OG/destination构造target，不使用实际held offset；私有IK不重置execution state。
+双侧force/contact、lift、逐阶段relative motion、持续support/release、final pose/speed分别判定。
+默认/更强夹紧通过，过大开口在close失败且保存partial trace；累计位移约23.8mm，非rigid grasp保证。
+Engineering Complete；Learning待本人Run/Modify/Explain，不自动开始S13.4。
