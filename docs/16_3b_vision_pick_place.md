@@ -240,7 +240,7 @@ Descent用持续ground支持信号停下，release确认两侧分离后retreat�
 
 ## My Verification — Run / Modify / Explain
 
-Engineering与Learning状态唯一在根README。本人三项未确认前保持Learning空框。
+Engineering与Learning状态唯一在根README。本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
 
 **Run**：执行默认命令，查看summary与pipeline.png，找到lift、support、release的证据。
 
@@ -256,3 +256,22 @@ Engineering与Learning状态唯一在根README。本人三项未确认前保持L
 5. 为什么必须先确认support再release？为什么最终放置误差小于PnP误差也不证明视觉精确？
 
 本课工程完成后停止，不自动实现S13.4。
+
+### 本人学习验证进展（2026-10-06）
+
+本人确认实验与预测完成，Run/Modify已确认。回答覆盖连续执行、truth隔离、接触与抬升证据、
+相对位移和支撑/释放，以及pipeline误差不同于perception误差；随后正确补正第3项开口计算，Explain完成。
+
+本课slide是从安装位置向外的位移，并非每根手指到中心的距离。
+夹爪最小内侧间隙为20 mm，故5 mm/14 mm目标的空载总开口为30 mm/48 mm。
+前者小于40 mm box夹持宽度，可建立夹紧；后者更大，无法建立双侧接触。
+
+第2项矩阵乘法正确，但T_OG= {}^O T_G映射G坐标到O，表示gripper在object中的pose；
+object坐标到gripper坐标的映射是其逆T_GO。
+第1项可重置的是应用层phase elapsed timer，不能重置MuJoCo data.time或执行状态。
+累计relative change是相对close_end基线的最大偏离，不是每步位移模长之和。
+这些补充不改变本课runtime结果；本次仅更新文档，未重跑仿真或GUI。
+
+本人随后明确解释20 mm基准间隙、5/14 mm slide对应30/48 mm空载开口，
+以及物体阻挡、双侧接触/夹紧、后续lift证据和close失败不继续执行的关系。
+Run/Modify/Explain全部确认，Learning Mastered；不自动实现S13.4。

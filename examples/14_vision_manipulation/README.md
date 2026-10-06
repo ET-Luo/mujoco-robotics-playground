@@ -1,6 +1,6 @@
 # Stage 13 — Vision-Based Manipulation
 
-当前实现 S13.1 frame/quality、S13.2 grasp candidates，以及 S13.3a image/PnP→连续运动与 S13.3b 完整视觉取放。
+当前实现 S13.1 frame/quality、S13.2 grasp candidates，以及 S13.3a image/PnP→连续运动与 S13.3b 完整视觉取放；S13.4分别比较pose/extrinsic误差。
 [完整学习包](../../docs/16_vision_based_manipulation.md) ·
 [状态唯一来源](../../README.md#stage-13--vision-based-manipulation)。
 
@@ -87,5 +87,29 @@ python examples/14_vision_manipulation/vision_pick_place.py --close-target 0.014
 逐阶段relative change≤15 mm，但累计23.846 mm，不代表无slip。
 支撑持续确认后停止descent并开爪；post-release持续支撑，手指与地面接触仍属unexpected。
 依赖与S13.3a相同，无新增包。PNG/CSV/NPZ/JSON在ignored `tmp/s13_3b_pick_place_close*/`。
-Engineering Complete，Learning Run/Modify/Explain待本人确认；状态见根README。
+Engineering Complete，本人已确认Run/Modify/Explain，并补正开口计算，Learning Mastered；状态见根README。
 无GUI/真实相机/硬件验证，不自动开始S13.4。
+
+## S13.4 — Perception Noise
+
+[完整 Learning Package](../../docs/16_4_perception_noise.md) · [代码](perception_noise.py)。
+固定同一image/PnP/scene/controller，7个确定性case分别改变pose或extrinsic的translation/rotation。
+显式声明frame与rotation pivot；每case从home独立执行完整pipeline，不用object truth修正target。
+
+```bash
+conda activate mujoco
+pwd
+echo $CONDA_DEFAULT_ENV
+which python
+python examples/14_vision_manipulation/perception_noise.py
+python examples/14_vision_manipulation/perception_noise.py --scale 0.5
+```
+
+先预测两个translation shifts的方向/长度、yaw lever shift与tilt gate，再比较task outcome。
+默认1° base-origin yaw产生8.584mm origin shift；大pose偏移在close失败，6°外参tilt被prior拒绝。
+scale.5的tilt通过prior但仍close失败；失败/拒绝没有final placement error，不能记作0。
+post-fit pose fault保留original reported fit RMS，另存recomputed diagnostic RMS，不能混称拟合质量。
+root comparison CSV/PNG/JSON及各case完整/partial trace在ignored `tmp/s13_4_noise_scale*/`。
+baseline通过且7case评价完成时进程exit0；不代表所有case取放成功或统计success rate。
+依赖同S13.3b，无新包；Engineering Complete，Learning待本人Run/Modify/Explain。
+无GUI/真实camera/随机robustness验证，不自动开始S13.5。

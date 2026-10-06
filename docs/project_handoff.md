@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（S13.3b Engineering Complete、Learning待本人验证；前课状态见 README）。
+最后整理：2026-10-06（S13.4 Engineering Complete、Learning待本人验证；前课状态见 README）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -17,7 +17,8 @@ Run/Modify/Explain 全部确认，Learning Mastered。S12.7b 随后工程完成�
 S12.8a 本人已确认实验与预测，并补充正确的两种安装 X/Y 定义与固定关系；
 Run/Modify/Explain 全部确认，Learning Mastered。S12.8b 随后工程完成，本人确认实验、预测并补充完整 Explain，Learning Mastered。
 S13.1/S13.2 已 Engineering Complete + Learning Mastered。
-S13.3a 已按 2026-10-06 明确请求实现并完成工程验证；本人已确认本课 Run/Modify/Explain。S13.3b已按后续明确请求实现，当前等待本课Run/Modify/Explain，见末节。
+S13.3a 已按 2026-10-06 明确请求实现并完成工程验证；本人已确认本课 Run/Modify/Explain。S13.3b已按后续明确请求实现，本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered。
+S13.4已按后续明确请求实现；当前等待本课Run/Modify/Explain，见末节。
 
 ## 多电脑依赖规则（2026-10-05）
 
@@ -448,5 +449,38 @@ no object-truth target correction / held-offset feedback / execution qpos-reset 
 nominal目标重算、最终ground force=.4905N、私有IK隔离、CLI nan/−1/.05 exit2检查通过。
 默认pipeline PNG目视检查，所有产物仅ignored tmp/s13_3b_pick_place*/；没有重跑前课/P0独立脚本。
 文档链接/状态一致性/git diff --check通过；无GUI、真实camera、hardware或robustness benchmark。
-Engineering Complete；Learning三项保持未勾选，下一小任务是本人Run/Modify/五问Explain。
+Engineering Complete；本人随后确认实验与预测完成，Run/Modify已勾选。
+本人随后正确补正20mm基准间隙、5/14mm slide对应30/48mm opening、接触/lift证据与close失败停止判据；Explain完成，Learning Mastered。
+第2项乘法正确，补充T_OG为G→O映射；phase timer可重置，但data.time不能重置。
+累计relative change为相对close_end最大偏离，并非路径长度；详见学习包。
+本次同步七份文档；本地链接/状态一致性/git diff --check通过，未重跑实验/仿真/GUI。
+runtime证据沿用2026-10-06 Zero工程验证；下一小任务为S13.4，等待本人明确请求。
 STOP，不自动实现S13.4。
+
+## S13.4 现场工程验证（2026-10-06，机器 Zero）
+
+[学习包](16_4_perception_noise.md)、[代码](../examples/14_vision_manipulation/perception_noise.py)。
+保留起始七份modified文档；pwd正确。WSL2 kernel6.18.33.2/Ubuntu24.04.5；本机conda info --base定位hook，
+激活mujoco，同执行shell核验环境与`/home/lucas/miniconda3/envs/mujoco/bin/python`。
+Python3.12.14；required distributions/import paths/API核验：NumPy2.5.3、MuJoCo3.13.0、Menagerie2026.9.2、
+Matplotlib3.11.2、OpenCV distribution4.14.0.94。无安装/新依赖；3.11兼容目标未执行。
+
+```bash
+python examples/14_vision_manipulation/perception_noise.py
+python examples/14_vision_manipulation/perception_noise.py --scale 0.5
+```
+
+两命令exit0，无import error；固定图像/scene/control的7case分别评价，不是统计trials。
+默认±4mm world x映射正确；base-origin yaw1°新增shift8.583909mm、raw error9.900mm、final5.000mm。
+40mm camera y pose shift在close失败(time11.5s/5750steps，无final结果)。
+6° camera-origin外参tilt新增shift80.860065mm/tilt6.422181°，prior拒绝(time0/empty trace)。
+scale.5：20mm pose y case通过(final6.227mm)，tilt3.429361°通过prior但在close失败。
+baseline final.714212mm，与S13.3b一致；所有原reported fit RMS=.353150px，post-fit pose diagnostic单独重算。
+默认pose translation/yaw/large-y diagnostic=2.951576/2.458744/30.352346px；外参fault camera RMS不变。
+独立14case CSV/NPZ、PNG/pixels、clock/frame chain/projection/final scoring、sin/cos yaw与lever-arm几何、
+zero-amplitude/输入输出隔离/非法scale CLI exit2检查通过。默认comparison PNG目视检查；
+图轴限已修复以完整显示reject rows，并用verified JSON重新绘图，未为绘图重跑动力学。
+全部产物仅ignored tmp/s13_4_noise_scale*/；无GUI、真实视觉、重标定、随机robustness或硬件验证。
+本地Markdown链接/状态一致性/git diff --check通过；现有执行器与P0代码未改。
+Engineering Complete；Learning三项未勾选，下一小任务是本人本课Run/Modify/五问Explain。
+STOP，不自动实现S13.5。

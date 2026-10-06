@@ -144,4 +144,12 @@ Engineering Complete；本人于2026-10-06确认实验与预测并回答五项Ex
 用nominal T_OG/destination构造target，不使用实际held offset；私有IK不重置execution state。
 双侧force/contact、lift、逐阶段relative motion、持续support/release、final pose/speed分别判定。
 默认/更强夹紧通过，过大开口在close失败且保存partial trace；累计位移约23.8mm，非rigid grasp保证。
-Engineering Complete；Learning待本人Run/Modify/Explain，不自动开始S13.4。
+Engineering Complete；本人已确认Run/Modify/Explain并补正开口计算，Learning Mastered，不自动开始S13.4。
+
+### S13.4 进展（2026-10-06）
+
+[误差传播](16_4_perception_noise.md)：固定image/scene/control，7种单一pose/extrinsic fault × scale1/.5。
+显式frame/rotation pivot、point公式与矩阵链交叉核验，复用完整pipeline分类失败并保存partial/empty trace。
+原fit RMS与post-fault diagnostic RMS分开；1° base yaw导致8.584mm origin shift，
+tilt缩半从prior拒绝变成close失败。确定性对照，不是Monte Carlo/统计success rate。
+Engineering Complete；Learning待本人Run/Modify/Explain，不自动开始S13.5。
