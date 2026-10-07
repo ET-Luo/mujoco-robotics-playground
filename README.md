@@ -18,11 +18,13 @@
 - Manipulation：夹爪、Reach、Grasp、Pick and Place。
 - Robot Learning：环境接口、奖励、PPO/SAC 与 sim-to-real 基础。
 - P1：CPU geometry perception、vision manipulation、自写 motion planning，最后 ROS2 integration。
+- P2：Force & Dynamics → compliant/contact-rich control → teleoperation/dexterous foundations；CPU-first。
 
 ## Current Progress
 
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
-当前推进 **P1 — Perception, Planning & Robot Software Integration**；S12.1–S12.8b 已 Engineering Complete + Learning Mastered。
+P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2审查](docs/p2_plan.md)。
+当前推进 **P2 — Contact-Rich Manipulation & Dexterous Robotics**；本轮只完成S16.1 Engineering，Learning待本人验证。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -45,9 +47,12 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | Stage 14 | S14.1–S14.7b collision / planning / pick-place | Engineering Complete + Learning Mastered（全阶段） |
 | Stage 15 | S15.1–S15.6b Engineering Complete | S15.1–S15.6b Learning Mastered |
+| P2 / S16.1 Actuator Semantics | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人确认 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
-视觉输入已由 S13.3a 在固定场景验证；通用避障仍是后续路线。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
+视觉输入已由 S13.3a/b 在固定场景验证；S14.7b已完成固定场景持物避障。
+S15.6b最终ROS视觉抓放复用S13.3b，未接S14.7b障碍RRT；不是通用避障/接触控制系统。
+历史 runtime 与静态审查边界见[P1 审计](docs/p1_plan.md)及[P2规划](docs/p2_plan.md)。
 
 ## Environment and Quick Start
 
@@ -100,9 +105,13 @@ examples/10_ur5e_6d_ik/            # UR5e 6D IK / DLS
 examples/11_trajectory/            # linear / cubic reference
 examples/12_pick_place/            # P0 最终 UR5e known-pose manipulation
 examples/13_perception_geometry/   # P1 frames / projection / RGB-depth / calibration / PnP
+examples/14_vision_manipulation/    # P1 vision-based pick-and-place
+examples/15_motion_planning/        # P1 collision / RRT / timed tracking
+examples/16_ros2_integration/       # P1 final ROS2 manipulation pipeline
+examples/17_force_dynamics/         # P2 Stage 16，当前只有S16.1
 controllers/ environments/ rl/     # 既有学习代码与占位，详见路线索引
 assets/ scripts/ notebooks/ tests/ # 资源、工具与验证说明
-docs/                             # 笔记、P1 规划、交接
+docs/                             # 笔记、P1/P2 规划、交接
 AGENTS.md                         # 仓库规则
 requirements.txt                  # 当前依赖；P1 本轮未新增
 ```
@@ -406,6 +415,113 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 
 - S15.6b（0.5～2h）：Final ROS2 manipulation pipeline：CPU simulation end-to-end、取消/超时/坏 pose 注入与诊断。见 [S15.6b Learning Package](docs/18_6b_ros2_manipulation.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-07 本人确认实验与预测完成并补正Explain：service仅准备初始grasp/approach，后续阶段在action中计算）
+
+## P2 — Contact-Rich Manipulation & Dexterous Robotics
+
+核心问题：**How does a robot physically interact with the environment?**
+[P0/P1审查、去重与P2规划](docs/p2_plan.md)。CPU MuJoCo + NumPy优先；不推进RL/ACT/Diffusion Policy/VLA，
+不引入Isaac、大型触觉视觉网络、真实haptic device或完整humanoid。
+高频inner loop留在MuJoCo/controller worker；ROS2只处理command/state/action/feedback/monitoring。
+以下每项0.5～2小时，Integration已拆小；本轮只授权实现S16.1，其余仅规划。
+
+### Stage 16 — Force & Dynamics Foundations
+
+[阶段学习包 / skeleton](docs/19_force_dynamics.md)。
+
+- S16.1（0.5～2h）：Position vs torque control：servo/motor gear与限幅，同外力矩脉冲反馈/open loop对照。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
+
+- S16.2（0.5～2h）：Manipulator dynamics equation：inertia / bias / passive / actuator / external / constraint分项。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S16.3（0.5～2h）：Gravity Compensation Integration：UR5e motor映射、gravity feedforward与hold反馈，真实torque cap。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S16.4（0.5～2h）：Force / torque / 6D wrench：方向、frame、参考点、换轴/换点。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S16.5（0.5～2h）：MuJoCo contact force：完整contact wrench、作用方向、world合成与支撑平衡。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S16.6（0.5～2h）：Jacobian transpose：tau=JᵀF，6D wrench与虚功/功率；复用已有Jacobian。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S16.7（0.5～2h）：Force Mapping Integration：gravity、tool load/contact、motor torque与有界hold；不实现impedance。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+### Stage 17 — Compliant & Contact-Rich Control
+
+[阶段学习包 / skeleton](docs/20_compliant_contact_control.md)。
+
+- S17.1（0.5～2h）：Cartesian virtual spring：低DOF、固定orientation，位移→恢复力→Jᵀ torque。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.2（0.5～2h）：Cartesian impedance：加入速度反馈阻尼，local torque loop自由空间恢复。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.3（0.5～2h）：Stiffness/damping sweep：有限K/D组合，dt/限幅、峰值与振荡对照。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.4（0.5～2h）：Contact Transition Integration：approach→touch→compliant hold，冲击与接触保持。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.5（0.5～2h）：Admittance：测力→虚拟mass运动reference，位移/速度界。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.6（0.5～2h）：Normal force control：反力方向、contact gate、稳态与峰值力误差。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.7（0.5～2h）：Hybrid position-force：surface frame切向position/法向force，selector分轴。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.8a（0.5～2h）：Surface Following Integration / fixture：平面短扫描与normal load保持。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.8b（0.5～2h）：Surface Following Integration / UR5e：移植已验证controller，actual force/trajectory评价。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S17.9（0.5～2h）：Worker / ROS Monitoring Integration：独立inner loop，ROS command/state/action/feedback/monitoring；延迟/停发/cancel。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+### Stage 18 — Teleoperation & Dexterous Foundations
+
+[阶段学习包 / skeleton](docs/21_teleoperation_dexterous.md)。
+
+- S18.1（0.5～2h）：Cartesian incremental teleoperation：synthetic master→有界translation reference。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.2（0.5～2h）：Motion scaling / clutch / recenter：reference连续、master锚点与workspace。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.3（0.5～2h）：Teleoperation + impedance：低频master与独立local torque loop。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.4（0.5～2h）：Force feedback concept：力的frame/sign/scale、synthetic反馈/图形，无真实haptic device。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.5（0.5～2h）：Teleoperation Integration：approach/touch/slide/clutch/retreat，过期reference处理；keyboard可选。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.6（0.5～2h）：Lightweight multi-finger hand：固定palm、3finger×2hinge，hand-only模型/actuator mapping。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.7（0.5～2h）：Fingertip FK / Jacobian：复用既有方法，核验新hand site/dof/frame与数值差分。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.8（0.5～2h）：Simple touch/contact sensing：named触点/force、touch区域与测量边界。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.9（0.5～2h）：Multi-Contact Grasp Integration：多指close/hold、force分布、滑移与漂移。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.10a（0.5～2h）：Friction cone intuition：normal load/切向扰动/friction扫描。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.10b（0.5～2h）：Force closure intuition：简化平面点接触，grasp matrix与wrench方向可行性，不宣称一般3D证明。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+
+- S18.11（0.5～2h）：Disturbance / Grasp Stability Integration：受控wrench脉冲、friction对照、全trials统计。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
 
 ## Learning Notes and Workflow
 

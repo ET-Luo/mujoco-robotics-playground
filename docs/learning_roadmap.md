@@ -2,7 +2,7 @@
 
 更新：2026-10-07。任务与 Engineering/Learning checkbox 唯一维护在
 [README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
-Stage 0–11 已由本人确认完成；S12.1–S12.8b 已 Engineering Complete + Learning Mastered。
+P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；当前P2仅S16.1 Engineering完成，Learning待确认。
 
 ## 当前代码如何使用
 
@@ -17,6 +17,7 @@ Stage 0–11 已由本人确认完成；S12.1–S12.8b 已 Engineering Complete 
 | examples/14_vision_manipulation | perception_pose / grasp_candidates / vision_to_motion：packet/frame、candidate/IK、image/PnP→continuous motion / vision_pick_place 完整取放 / perception_noise 受控误差case / repeated_trials 分布评价 | 当前新工程入口 |
 | examples/15_motion_planning | collision_checking / edge_checking / rrt / rrt_connect / path_smoothing / time_parameterization / ur5e_obstacle_planning / collision_aware_pick_place：阶段许可/持物查询、二维C-space/分辨率漏检/单树与双树RRT/checked shortcuts/cubic配时/六维UR5e/held取放与tracking | S14.1–S14.7b入口；学习均完成 |
 | examples/16_ros2_integration | node_topic / pose_service / trajectory_action / tf2_frames / urdf_reference / joint_states_tf / manipulation_worker / manipulation_ros：完整CPU视觉抓放及状态/终态诊断；Int32发布订阅、Trigger缓存位置短请求/显式拒绝与双超时 | S15.1–S15.6b Engineering Complete；S15.1–S15.6b Learning Mastered |
+| examples/17_force_dynamics | actuator_semantics：position servo / geared motor / open-loop外力矩实验 | P2 S16.1；动力学/接触/顺应后续逐Task授权 |
 | environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
 | controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
 | scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
@@ -45,8 +46,18 @@ CPU NumPy 优先；S12.4 已新增 OpenCV headless 用于 calibration/PnP；NumP
 | 13 Vision-Based Manipulation | [16 Vision Manipulation](16_vision_based_manipulation.md) |
 | 14 Motion Planning | [17 Motion Planning](17_motion_planning.md) |
 | 15 ROS2 Integration | [18 ROS2 Integration](18_ros2_integration.md) |
+| 16 Force & Dynamics Foundations | [19 Force & Dynamics / S16.1](19_force_dynamics.md) |
+| 17 Compliant & Contact-Rich Control | [20 Compliant Control skeleton](20_compliant_contact_control.md) |
+| 18 Teleoperation & Dexterous Foundations | [21 Teleoperation / Dexterous skeleton](21_teleoperation_dexterous.md) |
 
-## 当前 handoff
+## P2 当前边界
+
+[P2审查与规划](p2_plan.md)明确已有内容复用、force/frame/unit/sign/stability合同和Integration节奏。
+S16.1新内容是actuator语义/gear/饱和/扰动等价验证，不重复PD教程；本轮不实现S16.2或后续controller。
+P1 worker由ROS/IPC tick预算推动仿真；P2 S17.9计划改为worker独立loop，ROS低频送reference/monitor。
+本课Run/Modify/Explain见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
+
+## P1 历史 handoff
 
 本人已完成 [S12.5 Learning Package](15_5_pnp_pose.md) 的实验、验证与 Explain。
 S12.6 [RGB-D Learning Package](15_6_rgbd_back_projection.md) 本人已明确确认实验、预测与 Explain，Learning Mastered。

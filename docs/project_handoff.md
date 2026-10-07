@@ -1,13 +1,47 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.6b Engineering Complete + Learning Mastered）。
+最后整理：2026-10-07（P0/P1完成；P2规划与S16.1 Engineering完成，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
-S14.1–S14.7a 已由本人确认Run/Modify/Explain，Learning Mastered；
-S14.7b已完成工程且本人确认Run/Modify/Explain，Learning Mastered，详见对应末节。S15.1 已于 2026-10-07 明确授权推进；当前边界见末节。
+本人明确确认P0/P1完成，授权P2规划与仅S16.1实现。
+已读取规则、README、交接、roadmap、P0最终trials/release与P1视觉/碰撞/ROS integration代码；
+复用UR5e FK/J/IK/DLS、trajectory、gripper、camera/PnP/RGB-D/ICP/hand-eye、RRT、ROS2/TF2/URDF。
+[P2审查与规划](p2_plan.md)记录去重与边界；Stage16–18逐Task0.5～2h，安排多处Integration。
+仅S16.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain保持未确认；
+具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
+**本轮STOP，不自动实现S16.2或推进后续P2。**
+
+## P2 S16.1 现场工程验证（2026-10-07，DESKTOP-781D67A）
+
+保留起始modified project_handoff（上一任务环境修复记录），未改P0/P1源码或历史学习状态。
+本机WSL2 Ubuntu24.04.5 / kernel6.6.87.2；conda hook由当前conda info --base发现。
+同执行shell核验pwd、mujoco、`/home/lucas/miniconda3/envs/mujoco/bin/python`。
+Python3.12.14、MuJoCo3.14.0、NumPy2.5.3、Matplotlib3.11.2 metadata/真实module paths/API通过；
+只需这三包，无local helper、新安装或requirements改动；3.11兼容目标未用3.11运行。
+
+新增[actuator_semantics.py](../examples/17_force_dynamics/actuator_semantics.py)：
+同1hinge/惯量/passive damping，无gravity/contact，position servo gear1 vs motor feedback gear2
+与motor open loop0；common joint torque cap±1.5Nm，external generalized torque±.8Nm在1–2s。
+`python examples/17_force_dynamics/actuator_semantics.py`、`--kp 40`、`--external-torque -0.8`
+均exit0/no import error，默认/Kp40/反向loaded offset .0400000455/.0199999990/−.0400000455rad；
+servo/motor max state difference≤2.55e−15，tail error≤3.32e−11rad；
+open loop final q8.280090/−7.680090rad且末窗口仍有速度，不误称4s已静止。
+同状态probe未饱和−.2Nm与requested3Nm→actual1.5Nm，gear乘scalar output核验；
+动态pulse无饱和，限幅证据仅probe。compiled trnid/gain/bias/gear与time0核验通过。
+独立读取3组CSV：4001×8、dt/pulse1000step、force mapping/限幅/finite核验；
+open loop以I=.04/passive damping=.1的独立Euler recurrence逐点对照通过。
+Kp对照offset ratio2.00000237、open loop CSV完全不变；CLI nan Kp/inf load各exit2。
+默认PNG已目视检查；产物只ignored tmp/s16_1_*，无GUI/UR5e/contact稳定性验证。
+
+README新增P2状态/roadmap，learning_roadmap添加导航；新增P2 plan与Stage16/17/18 skeleton。
+docs/19含完整Sprint package，future stages未填Actual或PASS；本地Markdown链接与git diff --check通过。
+P1 S15.6b ROS/IPC tick预算推动physics，P2 S17.9计划独立worker loop、ROS低频reference/monitor；
+后续cancel/timeout计划本地hold继续physics，与pause区分，本轮未修改worker。
+
+## P0/P1 历史学习边界
 
 本人已明确完成 S12.1–S12.4 Run/Modify/Explain，并明确授权 S12.5。
 S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实验与验证均完成，
@@ -36,6 +70,55 @@ S13.5已实现，本人已确认Run/Modify/Explain，Learning Mastered；Stage13
 本次仅修改规则/流程/README/交接；文档链接、规则一致性和 git diff --check 通过。
 未安装包、未重跑 Python 学习实验、未核验当前 cv2 或 GUI；历史缺 cv2 记录仅属当次环境。
 该规则更新时学习进度未变；S13.1 随后已明确授权实现，见下。
+
+## Stage 14–15 换机检查（2026-10-07，DESKTOP-781D67A）
+
+用户请求检查并补齐本机依赖；起始 pwd 正确、git status 空。
+本机 WSL2 kernel 6.6.87.2 / Ubuntu 24.04.5；起始 base，按当前 conda info --base
+发现并激活已有 mujoco，同执行 shell 核验环境名与
+`/home/lucas/miniconda3/envs/mujoco/bin/python`。Python 3.12.14；metadata/真实 imports
+与 module paths：MuJoCo 3.14.0、NumPy 2.5.3、Matplotlib 3.11.2、Menagerie 2026.9.1、
+opencv-python-headless 4.14.0.94，均来自该环境；OpenCV 满足 >=4.10,<5。
+MuJoCo MjModel/MjData/mj_forward/mj_step/mj_jacSite 与 cv2.solvePnP 可用；
+`python -m pip check` 通过，无数值依赖需要安装，未升级核心包。
+`python examples/15_motion_planning/collision_aware_pick_place.py --trials 1`
+退出 0，placement_passed，1/1，final error 0.0007582125208920518 m；
+产物只在 ignored tmp。未重跑所有 Stage14 示例、GUI 或学习验证。
+
+本机 `/opt/ros` 不存在，无 ros-jazzy 包/ROS apt 源，cmake/make/g++ 缺失；
+Ubuntu universe 已启用，C.UTF-8 locale 可用，dpkg --audit 空。
+`sudo -n true` 返回需要密码，系统安装尚未执行；这不是 pip 缺包。
+从官方 ros-infrastructure/ros-apt-source GitHub latest API 核验 release 1.3.0，
+下载 noble deb 并通过 dpkg-deb -I 核对 ros2-apt-source 1.3.0~noble/all。
+安装包和可执行命令脚本仅保存 ignored tmp：
+`bash tmp/ros2_install_stage15.sh`（bash -n 通过）。脚本退出 conda，配置官方 apt 源，
+apt update 后预览并安装示例 README 声明的 ROS Jazzy/runtime/build 依赖，
+再验证系统 Python imports、构建 0.0.2 接口/type support、运行 adapters/manipulation 默认链。
+apt resolver 计划必须在配置源/update 后才能生成，目前未验证；脚本后续检查均未执行。
+下一步用户在自己的终端输入 sudo 密码运行脚本，再由助手检查 apt 版本、真实 imports、
+接口构建与消息/集成运行结果。未改 requirements 或学习状态，不自动推进新课程。
+
+### 安装后核验（2026-10-07，DESKTOP-781D67A）
+
+用户确认在自己的终端输入 sudo 密码并完成 `bash tmp/ros2_install_stage15.sh`。
+助手复核空 CONDA_DEFAULT_ENV/CONDA_PREFIX、`/usr/bin/python3` 3.12.3、ROS_DISTRO=jazzy。
+README 声明的 13 个 ROS 模块真实 imports/module paths 均来自 `/opt/ros/jazzy`；
+PlanPose/PlanManipulation/ExecuteManipulation 三接口 type support 通过，installed package.xml=0.0.2。
+apt 版本记录在 ignored `tmp/ros2_stage15_apt_versions.txt`：ros2-apt-source 1.3.0~noble、
+ros-base 0.11.0、rclpy 7.1.12、control-msgs 5.10.0、tf2-ros-py/tf2-py 0.36.23、
+robot-state-publisher 3.3.4、ament-cmake 2.5.6、rosidl-default-generators/runtime 1.6.1；
+cmake 3.28.3-1build7、make 4.3-4.1build2、g++ 4:13.2.0-7ubuntu1，dpkg --audit 空。
+
+本轮核查用户脚本的实际运行产物，未重复运行已成功的完整链：
+`tmp/s15_6a/run_qjw27L` 的 adapters 默认 SUCCEEDED/code0、360 feedback、sim7.2s、
+final position error 0.116171mm；`tmp/s15_6b/run_YWvffe` 的 manipulation 默认
+GoalStatus4/SUCCEEDED、placement_passed、1112 feedback、16phase、落点误差0.714212mm，
+支撑/双指分离通过；live TF position error1.665e-16m、rotation matrix error8.882e-16。
+两组 final_state before==after、runningFalse；无相关 Python/RSP 子进程残留。
+两组 perception.log 在结束清理时出现 rclpy ExternalShutdownException traceback；
+client/server/worker 无错误、任务结果成功，该退出日志问题未修复，不描述为完全无异常。
+当前 Stage14–15 所需依赖已补齐；未重新验证全部失败/取消分支或 GUI，未改学习状态。
+仅更新本文，git diff --check 通过。下一步可在本机复跑现有课程；不自动新增课程。
 
 ## S12.5 实现与现场验证（2026-10-04）
 
