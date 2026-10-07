@@ -143,7 +143,7 @@ publisher每组仍存活约20s；不能将其总耗时当作发送耗时。
 CLI endpoint history depth 显示 UNKNOWN，不能据此声称 CLI 已验证 depth10；
 代码 QoSProfile 明确设置 depth10。
 工程日志/summary仅放 ignored tmp/s15_1_node_topic/，没有 GUI、MuJoCo、跨机器或硬件验证。
-Engineering Complete；Learning Run/Modify/Explain 均未确认。
+Engineering Complete；本人随后明确确认实验与预测完成，并回答全部五问，Learning Mastered。
 
 ## Explanation → Failure Cases → Robotics Context
 
@@ -172,7 +172,7 @@ Must Remember：topic 不存共享变量；timer 需要 executor；reliable 不�
 
 ## My Verification — Run / Modify / Explain
 
-状态仅在根 README 更新；本人未报告前不勾选。
+状态仅在根 README 更新。2026-10-07 本人确认实验与预测完成，五项 Explain 覆盖核心概念，Run/Modify/Explain 全部完成。
 Run：按上面两个终端命令，保存 subscriber 序列与节点/topic 观察结果。
 Modify：两端保持 count=10，将 publisher 改为 `--period 0.1`；预测 2Hz→10Hz，
 观察收完消息更快，publisher 总存活时间仍由 timeout 决定。
@@ -184,4 +184,10 @@ Explain：
 4. reliable 与 volatile 分别决定什么？
 5. 为什么 apt ROS2 不能直接混进 mujoco conda 环境？
 
-下一小步是本人完成本课 Run/Modify/Explain；不自动推进 S15.2。
+解释精度补充：VOLATILE 表示不向后来加入的订阅者提供加入前消息的历史重放；
+它不等于没有任何缓存，KEEP_LAST/depth 仍管理运行时历史队列。
+RELIABLE 提供通信层的可靠送达机制，不证明应用 callback 已处理成功，亦不保证硬实时。
+系统 Python 是本项目对 apt Jazzy 的选择；兼容其构建解释器的 venv 也可使用，
+不是所有 ROS2 安装方式都必须使用 /usr/bin/python3。
+
+S15.2 已按本人后续请求完成工程包，见 [Service学习包](18_2_ros2_service.md)；该课学习验证待本人完成。

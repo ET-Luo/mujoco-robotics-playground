@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1 Engineering Complete；本人 Run/Modify/Explain 待完成）。
+最后整理：2026-10-07（S15.1–S15.2 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -839,5 +839,36 @@ ros2 node list --no-daemon、topic list -t --no-daemon、topic info /s15_1/seque
 无对端各 --timeout 1均exit1，sub空序列/pub0条；nan period/zero timeout/zero count均exit2。
 日志与summary仅ignored tmp/s15_1_node_topic/；未运行echo、GUI、MuJoCo或跨机/硬件实验。
 文档链接与git diff --check通过；保留起始所有未提交修改。
-README已更新Code/Experiment/Docs全完成，Learning三项仍空；助手实验不算本人Run/Modify。
-下一小步：本人Run、publisher周期改.1s的Modify、学习包五问Explain；不自动推进S15.2。
+本人随后明确确认实验与预测完成，并回答全部五问Explain；README三项Learning已勾选，
+S15.1 Learning Mastered。解释精度补充：volatile不向晚加入者重放旧消息，不表示无运行时缓存；
+reliable不是应用处理ACK，apt解释器兼容要求不等于所有ROS2安装必须用系统Python。
+本次仅同步README、学习包、示例README、roadmap、handoff；链接/状态与git diff --check通过。
+未重跑Python示例、ROS2通信或GUI；runtime沿用2026-10-07本机工程验证。
+下一小任务S15.2 Service，等待本人明确请求；不自动实施。
+
+## S15.2 现场工程验证（2026-10-07，机器 Zero）
+
+按本人请求新增[pose_service.py](../examples/16_ros2_integration/pose_service.py)、
+[学习包](18_2_ros2_service.md)。保留起始五份modified文档；pwd正确。
+本机WSL2 kernel6.18.33.2/Ubuntu24.04.5；退出conda、source Jazzy，同执行shell核验
+空环境名、/usr/bin/python3、ROS_DISTRO=jazzy；Python3.12.3。
+rclpy/std_srvs真实imports/Trigger/API/module paths核验，来自/opt/ros/jazzy；
+apt rclpy7.1.12-1noble.20260912.162354、std-srvs5.3.8-1noble.20260911.100759；dpkg --audit空。
+requirements已读，不导入local helper/MuJoCo，无安装、新pip依赖或colcon需要。
+
+两进程命令：/usr/bin/python3 examples/16_ros2_integration/pose_service.py server + client；
+DOMAIN52/LOCALHOST。默认position[.3,0,.1]m client exit0/successTrue；server
+--position .3 0 .01、--unavailable、--position nan 0 .1均client exit1/明确不同业务reason。
+无server client --wait-timeout .5 exit3；server --delay 1 + client --response-timeout .1
+exit4，随后server仍response_ready，证明client停止等待不是remote cancel。
+CLI delay nan/response timeout0/wait timeout-1 exit2；闭区间边界/.600001m越界核对通过。
+ros2 service type/call成功；普通daemon list exit0但空，不算发现通过；
+service list -t --no-daemon --spin-time 2显式发现Trigger通过。缓存/发现时序仅假设，未定位。
+所有日志仅ignored tmp/s15_2_service/；transport_error防御分支未注入。
+Trigger空request只检查缓存XYZ范围，非完整pose或真实planner；无IK、碰撞、动作/GUI/硬件验证。
+本地Markdown链接、状态与git diff --check通过。README Code/Experiment/Docs完成；
+本人随后确认实验与预测完成，并回答全部五问Explain；README Learning三项完成，Mastered。
+解释精度补充：本地请求提交不证明远端执行；真实观测pose需要时间戳/过期检查。
+本次仅同步根README、学习包、示例README、roadmap、handoff；links/状态/git diff --check通过。
+未重跑ROS2、Python示例或GUI；runtime沿用2026-10-07本机工程验证。
+下一小任务S15.3 Action，等待本人明确请求，不自动实施。

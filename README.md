@@ -44,7 +44,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | Stage 14 | S14.1–S14.7b collision / planning / pick-place | Engineering Complete + Learning Mastered（全阶段） |
-| Stage 15 | S15.1 Engineering Complete；其余小课未开始 | S15.1 Run / Modify / Explain 待本人完成 |
+| Stage 15 | S15.1–S15.2 Engineering Complete；其余小课未开始 | S15.1–S15.2 Learning Mastered；其余小课未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a 在固定场景验证；通用避障仍是后续路线。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
@@ -387,10 +387,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 [阶段笔记](docs/18_ros2_integration.md)。
 
 - S15.1（0.5～2h）：环境与 node/topic：核验 WSL2 CPU ROS2、conda/系统 Python 边界，最小消息收发。见 [S15.1 Learning Package](docs/18_ros2_integration.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain（2026-10-07 系统 Python/Jazzy 真实导入、默认与0.1s双进程收发、graph CLI、无对端超时/非法参数检查通过；Engineering Complete，学习待本人验证）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-07 本人确认实验与预测完成，五项Explain覆盖node/process/topic、executor、发布与接收判据、QoS及解释器隔离；工程验证见学习包）
 
-- S15.2（0.5～2h）：Service：pose/planning 短请求与显式 failure response，避免执行长动作阻塞服务。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S15.2（0.5～2h）：Service：pose/planning 短请求与显式 failure response，避免执行长动作阻塞服务。见 [S15.2 Learning Package](docs/18_2_ros2_service.md)（Trigger检查缓存位置；无真实planner）。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-07 本人确认实验与预测完成，五项Explain覆盖请求响应、Future/executor、三类失败、超时非取消及长任务/接口字段边界）
 
 - S15.3（0.5～2h）：Action：trajectory execution goal/feedback/result/cancel，失败与取消语义。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
