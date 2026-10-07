@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.2 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-07（S15.1–S15.2 Mastered；S15.3 Engineering Complete、学习待验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -872,3 +872,41 @@ Trigger空request只检查缓存XYZ范围，非完整pose或真实planner；无I
 本次仅同步根README、学习包、示例README、roadmap、handoff；links/状态/git diff --check通过。
 未重跑ROS2、Python示例或GUI；runtime沿用2026-10-07本机工程验证。
 下一小任务S15.3 Action，等待本人明确请求，不自动实施。
+
+## S15.3 准备与环境核验（2026-10-07，机器 Zero）
+
+本人明确请求；起始pwd正确、git status空。读取交接、示例README/source、requirements与roadmap。
+退出conda/source Jazzy，同shell空环境、/usr/bin/python3、jazzy；Python3.12.3，
+WSL2 kernel6.18.33.2/Ubuntu24.04.5；rclpy/action_msgs/trajectory_msgs已存在，control_msgs缺失。
+apt-get -s install ros-jazzy-control-msgs：只新增5.10.0-1noble.20260911.141005，无升级/删除；
+sudo -n true需要密码，已请本人执行sudo apt install ros-jazzy-control-msgs。
+新增[trajectory_action.py](../examples/16_ros2_integration/trajectory_action.py)、
+[学习包](18_3_ros2_action.md)，示例README声明apt依赖；requirements不改。
+标准FollowJointTrajectory两点/单软件joint、feedback/result/cancel；reentrant+两executor线程，
+单active goal/busy lock，取消观察后停止更新，非MuJoCo/实际tracking/物理停止。
+包含非法goal、abort注入、取消、超时后主动cancel与未知状态语义。
+conda mujoco内ast.parse通过；尚未真实import control_msgs/action收发，Experiment未完成。
+待本人安装后核验包/真实imports，默认/取消/abort/reject/busy/timeout/CLI检查，
+再更新工程结果与Run/Modify/Explain；不推进S15.4。
+
+## S15.3 现场工程验证（2026-10-07，机器 Zero）
+
+本人安装control_msgs后，退出conda/source Jazzy，同执行shell核验pwd、空环境名、
+/usr/bin/python3 3.12.3、ROS_DISTRO=jazzy；四包真实imports/module paths来自/opt/ros/jazzy。
+apt control-msgs5.10.0-1noble.20260911.141005、rclpy7.1.12-1noble.20260912.162354、
+trajectory-msgs5.3.8-1noble.20260911.111503、action-msgs2.0.4-1noble.20260911.052334；dpkg --audit空。
+保留起始所有未提交修改；无助手安装、requirements改动或MuJoCo执行。
+DOMAIN53/LOCALHOST；/usr/bin/python3 examples/16_ros2_integration/trajectory_action.py server + client。
+默认SUCCEEDED/code0/95feedback/q=.5rad/exit0；client --cancel-after .5→CANCELED/
+25feedback/heldq=.128135/exit0，cancel确认且terminal之后无reference更新，额外.1s观察。
+server --fail-after .5→ABORTED/code−4/24feedback/heldq=.121639/exit1。
+client --target2→REJECTED/exit2/无feedback或reference更新。
+client --result-timeout .1→主动cancel确认+CANCELED/heldq=.026044/exit4；不将超时报成功。
+首goal duration3s时并发第二goal busy拒绝exit2，首goal仍成功；无server exit3；
+非法nan duration/timeout0/cancel-after−2 exit2；独立名称/nonfinite/unsupported字段guards通过。
+CLI action list/info exit0但空/0server；重启domain53 daemon复核仍失败，原因未定位。
+直接rclpy graph2s发现正确action/type/server，通过；CLI不能报告PASS。本轮启动daemon已停止。
+日志/summary仅ignored tmp/s15_3_action/；未注入goal响应超时、cancel拒绝/竞态/未知终态或异常分支。
+无GUI、实际tracking、MuJoCo或硬件停止验证。README工程完成，Learning三项未确认；
+本地链接、状态/git diff --check通过。下一小步本人默认Run、.5s取消Modify与五问Explain；
+不自动推进S15.4。
