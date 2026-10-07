@@ -46,3 +46,18 @@ robot-state-publisher/ament-index-python（ros-jazzy前缀），真实imports已
 URDF只作运动学，无惯性/碰撞/controller，velocity/effort为占位；tool对应attachment_site。
 2026-10-07 / Zero：3配置全frame MuJoCo/URDF/RSP比对、成对重排、错配拒绝、delta .4通过。
 Engineering Complete；本人确认Run/Modify并补齐Explain固定变换具体值，Learning Mastered；无实时MuJoCo bridge或硬件验证。
+
+## S15.6a — ROS2 adapters
+
+[学习包](../../docs/18_6a_ros2_adapters.md)；[算法worker](adapter_worker.py)、[ROS adapters](ros_adapters.py)、
+[PlanPose接口](s15_interfaces/srv/PlanPose.srv)、[build](build_interfaces.sh)、[launcher](run_adapters.sh)。
+conda：mujoco/numpy/mujoco-menagerie/matplotlib（复用module顶层import），均requirements已声明。
+ROS apt：rclpy/geometry-msgs/trajectory-msgs/control-msgs/action-msgs（ros-jazzy前缀）；
+构建：cmake/make/g++、ros-jazzy-ament-cmake、ros-jazzy-rosidl-default-generators/runtime，
+及ROS依赖自带系统Python构建包。CMake生成服务只放ignored tmp，固定system Python。
+准备阶段缺g++；本人完成sudo安装后接口build/真实imports/type support通过。
+2026-10-07 / Zero：standalone真实MuJoCo执行通过；IPC observe/plan/tick/stop、
+停后sim clock/qpos不变、plan消费/非法workspace拒绝通过；syntax/bash -n/links通过。
+完整ROS链实测SUCCEEDED，bad-frame/stale service拒绝且sim time0，cancel终态后state稳定。
+Engineering Complete，Learning待本人Run/Modify/Explain；启动命令见学习包。
+本课无collision planner/gripper/真实视觉；取消暂停仿真，不保证物理制动。

@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.5 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-07（S15.1–S15.5 Mastered；S15.6a Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -972,3 +972,50 @@ Explain完成，README三项Learning全部完成，Mastered。
 学习包补充RSP不自动识别合法名称错配、矩阵组合与列向量求值次序区别。
 本次仅同步README、学习包、示例README、roadmap、handoff；links/状态/git diff --check通过。
 未重跑Python/ROS2/GUI，runtime沿用2026-10-07工程验证；下一小任务S15.6a ROS2 adapters，等待明确请求，不自动实施。
+
+## S15.6a 准备与独立验证（2026-10-07，机器 Zero）
+
+本人明确请求；pwd正确、起始git status空。读取规则/交接/示例README/source/roadmap/requirements。
+新增[教学包](18_6a_ros2_adapters.md)、adapter_worker/ros_adapters、typed PlanPose接口package、build与launcher。
+本课固定synthetic perception map_estimate→world pose→短DLS IK/cubic→裸UR5e实际mj_step；
+ROS/system与conda worker用Unix socket，未混import。无gripper/真实视觉/RRT或碰撞保证/完整抓放。
+conda同shell核验mujoco环境/所属python；Python3.12.14、MuJoCo3.13.0、NumPy2.5.3、
+Menagerie2026.9.2、Matplotlib3.11.2 metadata/真实imports/module paths通过。
+python examples/16_ros2_integration/adapter_worker.py --standalone exit0：reference6.58s/sim7.2s，
+max tracking.037672993rad、final ep.116171mm/er7.419434e−6rad；理想bias外力，不证明硬件扭矩。
+独立Unix IPC observe/plan/begin/10tick/stop通过，停后sim time/qpos不变；tick与旧plan replay拒绝、
+非法workspace拒绝；Code ast.parse与shell bash -n通过。日志仅ignored tmp/s15_6a/ipc_checks/。
+取消语义仅simulation暂停，保留速度，非物理停机；单issued plan匹配/消费是教学约定。
+
+ROS同shell核验空conda、/usr/bin/python3 3.12.3、jazzy；rclpy/geometry_msgs/trajectory_msgs/
+control_msgs/action_msgs真实imports来自/opt/ros/jazzy，版本见教学包；WSL2 kernel6.18.33.2。
+cmake/make/ament/rosidl存在，自定义接口build失败No CMAKE_CXX_COMPILER：缺g++，非pip问题。
+apt-get -s install g++仅新增g++/g++13及libstdc++dev共5项，无升级/删除；sudo需密码，
+已请求本人执行sudo apt install g++，未获安装确认前不进行依赖后的构建/ROS集成。
+requirements未改，无助手安装。接口生成物仅ignored tmp/s15_6a_interfaces/，非提交源。
+links/状态与git diff --check通过；README Code/Docs准备、Experiment未完成，Learning均空。
+下一步本人安装g++后build，核验generated PlanPose版本/import/API，再验证default、bad-frame/stale拒绝
+及cancel停止推进；不启动S15.6b。
+
+## S15.6a 完整链现场验证（2026-10-07，机器 Zero）
+
+本人完成g++安装，助手source Jazzy、空conda/system Python3.12.3同shell核验后build_interfaces exit0。
+g++ apt4:13.2.0-7ubuntu1、ament-cmake2.5.6-2noble.20260225.222913、
+rosidl-default-generators1.6.1-1noble.20260911.052510，dpkg --audit空。
+s15_interfaces0.0.1生成模块来自ignored install，PlanPose Request/Response/type support通过。
+首次source install根local_setup错误导致import失败；单包CMake只有share/s15_interfaces/local_setup，
+修正launcher与学习命令后通过，未计失败为PASS。
+
+bash examples/16_ros2_integration/run_adapters.sh：typed plan330点/6.58sim秒，
+实际360tick/feedback、SUCCEEDED/code0/exit0；sim7.2s，max tracking.037672993rad，
+final ep.116171mm/er7.419434e−6rad，与standalone一致。
+--bad-frame/--stale各exit1，service显式不同reason，无execution goal且worker simtime0。
+--cancel-after .2 exit0，ACK+CANCELED，35feedback/sim.7s；暂停保留非零qvel，非物理停机。
+新增launcher末尾两次state观察，间隔.1wall秒；四case均runningFalse，time/qpos不变。
+独立actual-q MuJoCo FK/pose error/360×.02clock核对通过；failed new plan使旧plan不可begin通过。
+子进程清理检查无仍运行worker/ROS adapter；日志/summary/final_state只ignored tmp/s15_6a/。
+当前generated接口与五种ROS模块真实imports重核验；标准包版本见学习包，无追加安装或requirements改动。
+保留起始全部未提交工作；源码syntax、shell bash -n、links/状态/git diff --check通过。
+无GUI、真实视觉、gripper/抓放、RRT/碰撞保证、硬件制动/时钟同步验证；不把取消后恢复运行标为已测。
+README Code/Experiment/Docs全完成；Learning三项仍空。下一小步本人standalone+default Run、
+--bad-frame Modify及五问Explain；不自动推进S15.6b。

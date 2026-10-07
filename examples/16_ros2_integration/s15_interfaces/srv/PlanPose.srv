@@ -1,0 +1,6 @@
+geometry_msgs/PoseStamped object_pose
+---
+bool success
+string reason
+string plan_id
+trajectory_msgs/JointTrajectory trajectory
