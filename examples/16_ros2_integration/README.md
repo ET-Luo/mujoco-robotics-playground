@@ -59,5 +59,16 @@ ROS apt：rclpy/geometry-msgs/trajectory-msgs/control-msgs/action-msgs（ros-jaz
 2026-10-07 / Zero：standalone真实MuJoCo执行通过；IPC observe/plan/tick/stop、
 停后sim clock/qpos不变、plan消费/非法workspace拒绝通过；syntax/bash -n/links通过。
 完整ROS链实测SUCCEEDED，bad-frame/stale service拒绝且sim time0，cancel终态后state稳定。
-Engineering Complete，Learning待本人Run/Modify/Explain；启动命令见学习包。
+Engineering Complete；本人确认实验与预测并回答五问Explain，Learning Mastered；启动命令见学习包。
 本课无collision planner/gripper/真实视觉；取消暂停仿真，不保证物理制动。
+
+## S15.6b — 完整 manipulation pipeline
+
+[学习包](../../docs/18_6b_ros2_manipulation.md)、[worker](manipulation_worker.py)、
+[ROS节点](manipulation_ros.py)、[launcher](run_manipulation.sh)。
+新增typed PlanManipulation service与ExecuteManipulation action；接口包0.0.2保留PlanPose，需重新build。
+conda复用S13.3b合成landmark/PnP与自由物体接触抓放，依赖前述数值包及requirements中的opencv-python-headless。
+ROS apt另需rosgraph-msgs/sensor-msgs/tf2-ros-py/robot-state-publisher/ament-index-python（ros-jazzy前缀）。
+2026-10-07 / Zero：默认16phase SUCCEEDED、四类输入拒绝、transfer取消、wall超时、close失败、
+actual JointState/clock/终态TF与独立FK、旧S13.3b/S15.6a回归通过。Engineering Complete；本人确认Run/Modify，Explain待补正service规划范围。
+取消仅暂停仿真并保留状态；固定场景，无障碍RRT、GUI、真实相机或硬件验证。

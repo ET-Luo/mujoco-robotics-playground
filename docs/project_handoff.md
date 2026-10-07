@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.5 Mastered；S15.6a Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-07（S15.1–S15.6a Learning Mastered；S15.6b Engineering Complete，Run/Modify完成，Explain待补正）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -1017,5 +1017,36 @@ final ep.116171mm/er7.419434e−6rad，与standalone一致。
 当前generated接口与五种ROS模块真实imports重核验；标准包版本见学习包，无追加安装或requirements改动。
 保留起始全部未提交工作；源码syntax、shell bash -n、links/状态/git diff --check通过。
 无GUI、真实视觉、gripper/抓放、RRT/碰撞保证、硬件制动/时钟同步验证；不把取消后恢复运行标为已测。
-README Code/Experiment/Docs全完成；Learning三项仍空。下一小步本人standalone+default Run、
---bad-frame Modify及五问Explain；不自动推进S15.6b。
+本人随后确认实验与预测完成并回答五问Explain；README Run/Modify/Explain全部完成，Mastered。
+学习包注明实际typed字段/单位/clock、标准action无plan_id/generation协议、取消暂停并保留qvel。
+本次仅同步README、学习包、示例README、roadmap、handoff；links/状态/git diff --check通过。
+未重跑Python/ROS2/GUI；runtime沿用2026-10-07本机工程验证。
+下一小任务S15.6b Final ROS2 manipulation pipeline，等待本人明确请求，不自动实施。
+
+## S15.6b 完整 manipulation 现场验证（2026-10-07，机器 Zero）
+
+本人明确请求，保留起始五份未提交状态文档。新增[学习包](18_6b_ros2_manipulation.md)、
+manipulation_worker/manipulation_ros/run_manipulation与typed service/action；s15_interfaces升级0.0.2保留旧接口。
+既有S13.3b run_pipeline只增默认None的pre-step execution_guard；完整接触抓放算法复用。
+两环境各同shell核验：conda mujoco/所属Python3.12.14与ROS空conda/systemPython3.12.3/Jazzy。
+MuJoCo3.13.0/NumPy2.5.3/Menagerie2026.9.2/Matplotlib3.11.2/OpenCV4.14.0.94 metadata、
+真实imports/module paths通过；ROS apt/module paths/新旧接口type support通过，dpkg --audit空；无安装。
+
+build_interfaces.sh exit0；run_manipulation.sh默认exit0/SUCCEEDED，16phase、11114step、
+1112feedback、sim22.228s；落点误差.714212mm、相对估计目标朝向误差.008263959°，支撑/分离通过。
+live TF位置2.776e−16m/旋转矩阵8.882e−16；actual state恢复mj_forward与trace独立核对通过。
+--bad-frame/--stale/--bad-pose/--nonfinite均exit1，明确service reason，无goal/steps0。
+--cancel-phase transfer exit0/CANCELED，sim13.52s，无后续下降/释放/退让；保留非零qvel。
+--execution-timeout .3 exit4，主动cancel后CANCELED，最终复测sim.26s（调度相关）。
+S15_CLOSE_TARGET=.014默认launcher exit1/ABORTED，close双指接触/force不足，sim11.5s，无lift。
+停止后两次state间隔.15wall秒相同、runningFalse。产物/详细日志只ignored tmp/s15_6b/；
+独立validation_summary.json记录trace、FK、落点、取消/失败phase检查。默认pipeline.png已查看。
+旧vision_pick_place.py默认与run_adapters.sh默认回归exit0；无子进程遗留。
+
+仅固定S13.3b合成视觉/CPU自由物体场景；未接S14.7b障碍RRT，无GUI、真实视觉/硬件安全验证。
+取消是暂停mj_step而非物理制动；任务失败不自动继续/恢复；cancel-completion竞态有代码保护但未专门注入。
+本人随后确认实验与预测完成并提交五问Explain；README Run/Modify已勾选，Explain待补正service仅准备初始grasp/approach的范围。下一小任务：补正第1项；不自动启动新阶段。
+最终诊断字段/图像保存检查补充后，.3wall秒timeout smoke再次exit4；close_target/destination诊断、
+landmarks.png与停止后state稳定核验通过。Python syntax、bash -n、本地Markdown链接、git diff --check通过。
+本次仅同步根README、学习包、示例README、roadmap与handoff；未重跑Python/ROS2/GUI，
+runtime沿用2026-10-07工程验证。解释补充：放置需支撑/分离/退让/settling，Action失败终态ABORTED。

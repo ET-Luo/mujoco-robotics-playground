@@ -72,7 +72,7 @@ def held_targets(candidate, destination):
 
 
 def run_pipeline(plan_model, model, candidate, home, approach_reference, close_target, trace, result,
-                 motion_planner=None, geometry_observer=None, close_ramp_seconds=0.):
+                 motion_planner=None, geometry_observer=None, close_ramp_seconds=0., execution_guard=None):
     """One MjData for all dynamics. Private planning data never mutates this state."""
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model,data,model.key('home').id)
@@ -98,6 +98,9 @@ def run_pipeline(plan_model, model, candidate, home, approach_reference, close_t
     def tick(phase, command, finger, allowed):
         """Write controls/arm bias force then integrate; append scorer evidence every step."""
         result['phase'] = phase
+        # Optional lifecycle guard runs before any control write or physics step.
+        if execution_guard is not None:
+            execution_guard(phase,data)
         data.ctrl[aa] = command
         data.ctrl[fa] = finger
         data.qfrc_applied[ad] = data.qfrc_bias[ad]  # Arm only; never cancel free-object gravity.

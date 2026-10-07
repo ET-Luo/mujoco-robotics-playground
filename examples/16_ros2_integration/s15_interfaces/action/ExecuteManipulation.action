@@ -1,0 +1,9 @@
+string plan_id
+---
+bool success
+string reason
+string diagnostics_json
+---
+string phase
+float64 simulation_time_s
+float64[] actual_joint_positions

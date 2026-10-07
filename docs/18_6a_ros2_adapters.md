@@ -167,7 +167,7 @@ dpkg --audit空。自定义s15_interfaces0.0.1真实import/type support通过，
 独立MuJoCo从最终actual q重算FK/姿态误差与360×.02sim clock通过；
 新规划尝试失败后旧plan失效通过。所有launcher子进程已清理，无仍运行的本课worker/node。
 validation_summary、final_state与logs只在ignored tmp/s15_6a/。
-Engineering Complete；Learning Run/Modify/Explain均待本人明确确认。
+Engineering Complete；本人随后确认实验与预测完成并回答五问Explain，Learning Mastered。
 
 ## Failure Cases → Robotics Context
 
@@ -203,4 +203,10 @@ Explain：
 4. 为什么只接受当前issued plan，取消后要使它失效？
 5. 本课CANCELED到底停止了什么，没有证明什么？ROS时间与sim time有什么区别？
 
-本人验证前不勾选；不自动启动S15.6b。
+2026-10-07 本人确认实验与预测完成，并回答五问Explain，README Run/Modify/Explain全部完成。
+精度记录：本课topic=world PoseStamped（m/xyzw/ROS stamp），service=PlanPose返回JointTrajectory（rad/relative time），
+action=FollowJointTrajectory；worker sim time与ROS timestamp不同，未验证统一时钟。
+plan_id是worker事务标识；标准action不传plan_id，本课通过与当前issued trajectory完全相同来绑定，
+尚无一般generation/revision协议。取消暂停mj_step，保留qpos/qvel且使plan失效，无rollback/reset或物理制动保证。
+
+下一小任务S15.6b Final ROS2 manipulation pipeline，等待本人明确请求，不自动实施。
