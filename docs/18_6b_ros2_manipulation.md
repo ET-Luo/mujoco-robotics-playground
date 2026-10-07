@@ -143,7 +143,7 @@ launcher正常路径检查worker状态两次间隔.15wall秒，随后只清理�
 | execution-timeout .3s | 自动cancel并等终态，client exit4 | 否 |
 | close-target .014m | close失败、ABORTED/exit1，不lift | 否 |
 
-2026-10-07 / Zero（WSL2 Ubuntu24.04）：Engineering Complete；Learning待本人验收。
+2026-10-07 / Zero（WSL2 Ubuntu24.04）：Engineering Complete；本人随后完成Run/Modify/Explain，Learning Mastered。
 conda Python3.12.14、MuJoCo3.13.0、NumPy2.5.3、Menagerie2026.9.2、Matplotlib3.11.2、
 opencv-python-headless4.14.0.94；系统Python3.12.3/Jazzy真实imports和apt版本核验，无新增安装。
 rclpy7.1.12、sensor-msgs5.3.8、rosgraph-msgs2.0.4、RSP3.3.4、tf2-ros-py0.36.23。
@@ -204,7 +204,7 @@ Explain：
 4. capture stamp、/clock、JointState stamp、wall timeout怎样区分，为什么sim暂停后timeout仍有效？
 5. bad pose、业务失败、取消、timeout分别在哪一层处理，如何从partial trace确认没有执行后续阶段？
 
-2026-10-07 本人确认实验与预测完成：Run/Modify已确认；Explain待补正第1项。
+2026-10-07 本人确认实验与预测完成，并补正初始planning与后续Action的范围；Run/Modify/Explain全部确认，Learning Mastered。
 本课service仅准备初始grasp/approach并返回plan_id；不预先生成完整多阶段轨迹，
 后续lift/transfer/descend/retreat的IK仍在action中计算。plan ready不证明整次任务可执行。
 放置验收还包含物体支撑、与夹爪分离、退让及settling；ROS2 Action执行失败终态是ABORTED，

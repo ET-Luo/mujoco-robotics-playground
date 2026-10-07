@@ -44,7 +44,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | Stage 14 | S14.1–S14.7b collision / planning / pick-place | Engineering Complete + Learning Mastered（全阶段） |
-| Stage 15 | S15.1–S15.6b Engineering Complete | S15.1–S15.6a Learning Mastered；S15.6b Run/Modify完成，Explain待补正 |
+| Stage 15 | S15.1–S15.6b Engineering Complete | S15.1–S15.6b Learning Mastered |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a 在固定场景验证；通用避障仍是后续路线。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
@@ -405,7 +405,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-07 本人确认实验与预测完成，五项Explain覆盖worker/adapter职责、接口语义、规划/执行边界、plan失效与取消非物理停机）
 
 - S15.6b（0.5～2h）：Final ROS2 manipulation pipeline：CPU simulation end-to-end、取消/超时/坏 pose 注入与诊断。见 [S15.6b Learning Package](docs/18_6b_ros2_manipulation.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[ ] Explain — Engineering Complete（2026-10-07 本人确认实验与预测完成；Explain待补正：service仅准备初始grasp/approach，后续阶段在action中计算）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-07 本人确认实验与预测完成并补正Explain：service仅准备初始grasp/approach，后续阶段在action中计算）
 
 ## Learning Notes and Workflow
 

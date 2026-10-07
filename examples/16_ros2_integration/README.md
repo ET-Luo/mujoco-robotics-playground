@@ -70,5 +70,5 @@ Engineering Complete；本人确认实验与预测并回答五问Explain，Learn
 conda复用S13.3b合成landmark/PnP与自由物体接触抓放，依赖前述数值包及requirements中的opencv-python-headless。
 ROS apt另需rosgraph-msgs/sensor-msgs/tf2-ros-py/robot-state-publisher/ament-index-python（ros-jazzy前缀）。
 2026-10-07 / Zero：默认16phase SUCCEEDED、四类输入拒绝、transfer取消、wall超时、close失败、
-actual JointState/clock/终态TF与独立FK、旧S13.3b/S15.6a回归通过。Engineering Complete；本人确认Run/Modify，Explain待补正service规划范围。
+actual JointState/clock/终态TF与独立FK、旧S13.3b/S15.6a回归通过。Engineering Complete；本人确认Run/Modify并补正Explain的service规划范围，Learning Mastered。
 取消仅暂停仿真并保留状态；固定场景，无障碍RRT、GUI、真实相机或硬件验证。

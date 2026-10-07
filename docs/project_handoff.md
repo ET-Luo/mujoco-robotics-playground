@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.6a Learning Mastered；S15.6b Engineering Complete，Run/Modify完成，Explain待补正）。
+最后整理：2026-10-07（S15.1–S15.6b Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -1045,7 +1045,7 @@ S15_CLOSE_TARGET=.014默认launcher exit1/ABORTED，close双指接触/force不�
 
 仅固定S13.3b合成视觉/CPU自由物体场景；未接S14.7b障碍RRT，无GUI、真实视觉/硬件安全验证。
 取消是暂停mj_step而非物理制动；任务失败不自动继续/恢复；cancel-completion竞态有代码保护但未专门注入。
-本人随后确认实验与预测完成并提交五问Explain；README Run/Modify已勾选，Explain待补正service仅准备初始grasp/approach的范围。下一小任务：补正第1项；不自动启动新阶段。
+本人随后确认实验与预测完成并提交五问Explain，补正service仅准备初始grasp/approach、后续IK在Action中计算的范围；README Run/Modify/Explain全部完成，Learning Mastered。Stage15学习项全部完成；下一步等待本人选择复盘或新任务，不自动启动新阶段。
 最终诊断字段/图像保存检查补充后，.3wall秒timeout smoke再次exit4；close_target/destination诊断、
 landmarks.png与停止后state稳定核验通过。Python syntax、bash -n、本地Markdown链接、git diff --check通过。
 本次仅同步根README、学习包、示例README、roadmap与handoff；未重跑Python/ROS2/GUI，
