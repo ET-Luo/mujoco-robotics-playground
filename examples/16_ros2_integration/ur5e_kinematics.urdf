@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- Teaching kinematic projection of Menagerie UR5e, not vendor URDF or dynamics model.
+     No meshes/inertias/collision/controller/transmissions. Effort/velocity limits are placeholders. -->
+<robot name="menagerie_ur5e_kinematics">
+  <link name="world"/><link name="base"/><link name="shoulder_link"/>
+  <link name="upper_arm_link"/><link name="forearm_link"/><link name="wrist_1_link"/>
+  <link name="wrist_2_link"/><link name="wrist_3_link"/><link name="tool"/>
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/><child link="base"/><origin xyz="0 0 0" rpy="0 0 3.141592653589793"/>
+  </joint>
+  <joint name="shoulder_pan_joint" type="revolute">
+    <parent link="base"/><child link="shoulder_link"/><origin xyz="0 0 0.163" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/><limit lower="-6.28319" upper="6.28319" effort="100" velocity="2"/>
+  </joint>
+  <joint name="shoulder_lift_joint" type="revolute">
+    <parent link="shoulder_link"/><child link="upper_arm_link"/><origin xyz="0 0.138 0" rpy="0 1.5707963267948966 0"/>
+    <axis xyz="0 1 0"/><limit lower="-6.28319" upper="6.28319" effort="100" velocity="2"/>
+  </joint>
+  <joint name="elbow_joint" type="revolute">
+    <parent link="upper_arm_link"/><child link="forearm_link"/><origin xyz="0 -0.131 0.425" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/><limit lower="-3.1415" upper="3.1415" effort="100" velocity="2"/>
+  </joint>
+  <joint name="wrist_1_joint" type="revolute">
+    <parent link="forearm_link"/><child link="wrist_1_link"/><origin xyz="0 0 0.392" rpy="0 1.5707963267948966 0"/>
+    <axis xyz="0 1 0"/><limit lower="-6.28319" upper="6.28319" effort="100" velocity="2"/>
+  </joint>
+  <joint name="wrist_2_joint" type="revolute">
+    <parent link="wrist_1_link"/><child link="wrist_2_link"/><origin xyz="0 0.127 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/><limit lower="-6.28319" upper="6.28319" effort="100" velocity="2"/>
+  </joint>
+  <joint name="wrist_3_joint" type="revolute">
+    <parent link="wrist_2_link"/><child link="wrist_3_link"/><origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/><limit lower="-6.28319" upper="6.28319" effort="100" velocity="2"/>
+  </joint>
+  <joint name="wrist_to_tool" type="fixed">
+    <parent link="wrist_3_link"/><child link="tool"/><origin xyz="0 0.1 0" rpy="-1.5707963267948966 0 0"/>
+  </joint>
+</robot>

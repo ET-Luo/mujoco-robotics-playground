@@ -44,7 +44,7 @@ P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–1
 | S13.4 Pose / Extrinsic Error Propagation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | Stage 14 | S14.1–S14.7b collision / planning / pick-place | Engineering Complete + Learning Mastered（全阶段） |
-| Stage 15 | S15.1–S15.4 Engineering Complete；其余小课未开始 | S15.1–S15.3 Learning Mastered；其余小课未开始 |
+| Stage 15 | S15.1–S15.5 Engineering Complete；其余小课未开始 | S15.1–S15.4 Learning Mastered；其余小课未开始 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a 在固定场景验证；通用避障仍是后续路线。历史 runtime 与本轮静态审查边界见[P1 审计](docs/p1_plan.md)。
@@ -396,10 +396,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-07 本人确认实验与预测完成，五项Explain覆盖goal/feedback/result、三类终止、取消确认与terminal、executor并发及软件/物理停止边界；CLI daemon查询已知限制保留）
 
 - S15.4（0.5～2h）：TF2：world/base/camera/object/tool tree、时间戳、静态外参与过期变换拒绝。见 [S15.4 Learning Package](docs/18_4_ros2_tf2.md)（合成frame数据，无UR5e实时TF）。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain（2026-10-07 静态/动态双进程TF、frame链、历史插值/逆/越界、移动相机、stale与停发early/late listener对照通过；Engineering Complete）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-07 本人确认实验与预测完成，五项Explain覆盖变换方向、静态/动态广播、观测时间、缓存/新鲜度与相机移动链一致性）
 
-- S15.5（0.5～2h）：URDF / joint states：UR5e 结构、名称/轴/单位与 MuJoCo frame 对照。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain
+- S15.5（0.5～2h）：URDF / joint states：UR5e 结构、名称/轴/单位与 MuJoCo frame 对照。见 [S15.5 Learning Package](docs/18_5_urdf_joint_states.md)（教学运动学URDF、离线FK快照，无实时adapter）。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain（2026-10-07 conda MuJoCo/URDF全frame FK与ROS RSP TF比对、成对重排、错误映射拒绝及delta对照通过；Engineering Complete）
 
 - S15.6a（0.5～2h）：ROS2 adapters：perception node→planning service→execution action，算法继续独立可运行。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain

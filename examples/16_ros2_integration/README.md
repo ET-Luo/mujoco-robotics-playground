@@ -35,4 +35,14 @@ control_msgs 提供标准 FollowJointTrajectory goal/feedback/result；无需ROS
 apt依赖rclpy、tf2-ros-py、tf2-py、geometry-msgs、tf2-msgs（均ros-jazzy前缀）；无新安装或pip包。
 合成world/base/camera_optical/object/tool树，静态外参、动态观测、时间/年龄政策；非实时UR5e数据。
 2026-10-07 / Zero：默认/移动camera、late listener静态获取、历史插值/逆/越界、
-滞后stamp、停发early缓存stale与late缺失、guards通过；Engineering Complete，Learning待本人确认。
+滞后stamp、停发early缓存stale与late缺失、guards通过；Engineering Complete；本人已确认实验与预测并回答五问Explain，Learning Mastered。
+
+## S15.5 — URDF / JointState
+
+[学习包](../../docs/18_5_urdf_joint_states.md)、[教学URDF](ur5e_kinematics.urdf)。
+[urdf_reference.py](urdf_reference.py)：conda mujoco侧，需要mujoco/numpy/mujoco-menagerie，生成ignored FK JSON。
+[joint_states_tf.py](joint_states_tf.py)：系统ROS侧，需要apt rclpy/sensor-msgs/tf2-ros-py/
+robot-state-publisher/ament-index-python（ros-jazzy前缀），真实imports已核验，无新安装。
+URDF只作运动学，无惯性/碰撞/controller，velocity/effort为占位；tool对应attachment_site。
+2026-10-07 / Zero：3配置全frame MuJoCo/URDF/RSP比对、成对重排、错配拒绝、delta .4通过。
+Engineering Complete；Learning待本人Run/Modify/Explain。无实时MuJoCo bridge或硬件验证。

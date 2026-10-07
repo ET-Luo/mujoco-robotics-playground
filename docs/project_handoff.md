@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.3 Mastered；S15.4 Engineering Complete、学习待验证）。
+最后整理：2026-10-07（S15.1–S15.4 Mastered；S15.5 Engineering Complete、学习待验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -935,5 +935,36 @@ late listener静态获取/任意time静态边、正逆链、history t10/x0+t12/x
 CLI nan lag/max-age0/timeout-1/observe-1 exit2；独立nonfinite/非单位quat/future_stamp拒绝通过。
 默认/移动动态age.111481/.159058s，非benchmark。日志仅ignored tmp/s15_4_tf2/。
 本例树/工具运动为合成，不是当前UR5e实时TF；未做GUI、MuJoCo、旋转插值、全网重复parent检测或硬件验证。
-links/状态与git diff --check通过；README Code/Experiment/Docs完成，Learning三项未确认。
-下一小步本人默认Run、--stamp-lag1的Modify及五问Explain；不推进S15.5。
+本人随后确认实验与预测完成，并回答五问Explain；README Run/Modify/Explain全部完成，Mastered。
+学习包补充latest common time、静态publisher存活/late listener缓存、相机移动对照重启外参的边界。
+本次仅同步README、学习包、示例README、roadmap、handoff；links/状态/git diff --check通过。
+未重跑ROS2、Python示例或GUI；runtime沿用2026-10-07本机工程验证。
+下一小任务S15.5 URDF/joint states，等待本人明确请求，不自动实施。
+
+## S15.5 现场工程验证（2026-10-07，机器 Zero）
+
+本人明确请求；保留起始五份modified文档，pwd正确；读取交接/示例source/requirements/roadmap。
+新增[学习包](18_5_urdf_joint_states.md)、[URDF](../examples/16_ros2_integration/ur5e_kinematics.urdf)、
+[conda核验器](../examples/16_ros2_integration/urdf_reference.py)、
+[ROS核验器](../examples/16_ros2_integration/joint_states_tf.py)。
+同执行shell分别核验conda mujoco/所属python，及ROS侧空conda/system python/jazzy；不混import。
+WSL2 kernel6.18.33.2/Ubuntu24.04.5。conda Python3.12.14/MuJoCo3.13.0/NumPy2.5.3/Menagerie2026.9.2
+metadata与真实imports/module paths核验，非历史MuJoCo3.14版本。系统Python3.12.3，
+rclpy/sensor_msgs/tf2_ros/ament_index_python真实imports来自/opt/ros/jazzy。
+apt rclpy7.1.12-1noble.20260912.162354、sensor-msgs5.3.8-1noble.20260911.140426、
+tf2-ros-py0.36.23-1noble.20260915.174232、RSP3.3.4-1noble.20260915.184559、
+ament-index-python1.8.4-1noble.20260519.010916；dpkg --audit空。RSP已安装，apt预览无新增/升级；无安装/requirements改动。
+
+python examples/16_ros2_integration/urdf_reference.py；再--delta .4 --output tmp/s15_5_urdf/reference_delta04.json。
+各zero/home/pan_modified×9frame，URDF/MuJoCo max_matrix_error8.882e−16，mj_forward/time0；
+compiled joint轴/range/pivot对照通过，按name→id→qposadr映射。
+DOMAIN55/LOCALHOST；/usr/bin/python3 examples/16_ros2_integration/joint_states_tf.py：
+默认、--reverse-order、.4快照各3配置全frame RSP TF对照exit0，max1.110e−15。
+--wrong-order zero仍通过，home拒绝exit1，max矩阵元素误差2（不是2m位置误差）。
+独立zero/home快照不变、pan_modified tool改变通过；delta nan exit2。
+初版ros2 run wrapper实验超过25s未通过；改ament index直接管理RSP可执行进程后全部通过，
+未确定超时唯一原因，不把初版计PASS。参考JSON/log/summary只ignored tmp/s15_5_urdf/。
+教学URDF无mesh/collision/inertia/控制，velocity/effort限值占位；tool对应attachment_site。
+仅离线三配置FK与JointState/TF，不是实时adapter或UR厂商官方描述；无GUI/动力学/硬件验证。
+本地links/状态与git diff --check通过；README工程完成，Learning三项未确认。
+下一小步本人Run、delta .4 Modify与五问Explain；不自动推进S15.6a。
