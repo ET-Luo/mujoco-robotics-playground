@@ -11,12 +11,14 @@
 
 ## Environment Rules
 - This repository MUST be developed inside WSL2 Ubuntu 24.04.
-- The required conda environment is `mujoco`.
+- The required conda environment for MuJoCo and numerical learning examples is `mujoco`.
 - Before running Python, tests, scripts, or installing dependencies, check `echo $CONDA_DEFAULT_ENV` and `which python`. The environment must be `mujoco`, and Python must belong to that environment.
 - If the current environment is not `mujoco` (including `base` or no active environment), the agent may activate the existing `mujoco` environment automatically with `conda activate mujoco`, initializing the conda shell hook if needed. No additional user confirmation is required.
 - Locate conda and its shell hook on the current computer (for example, via `conda info --base`); do not assume an interpreter or hook path copied from another laptop's handoff exists here. If the `mujoco` environment itself is absent, report that separately from missing packages; creating/replacing the whole environment is not selective dependency repair.
 - After activation, recheck `echo $CONDA_DEFAULT_ENV` and `which python` in the same shell used for execution. Continue only if the environment is `mujoco` and Python belongs to it. If activation or verification fails, stop and report the issue; never fall back to base or system Python.
-- Never install into `base`, use system Python, or use `sudo pip`.
+- Never install into `base` or use `sudo pip`. System Python is prohibited for MuJoCo/numerical examples; the ROS2-only exception below applies.
+- ROS2-only exception (explicitly authorized 2026-10-07): official Ubuntu ROS2 Jazzy apt packages and ROS2-only nodes/CLI use `/usr/bin/python3` in a separate terminal with conda deactivated. Before execution verify `pwd`, empty `CONDA_DEFAULT_ENV`/`CONDA_PREFIX`, `which python3`, and `ROS_DISTRO=jazzy` after sourcing `/opt/ros/jazzy/setup.bash`. The preceding conda-only checks apply to MuJoCo/numerical work, not this ROS2-only terminal. Do not import MuJoCo here or add ROS2 paths to conda.
+- ROS2 runtime dependencies are declared in the relevant example README and installed through apt, not pip requirements.txt or system pip. Check apt versions, actual imports/module paths and message exchange; pip check is not the apt consistency check. Privileged apt setup may require the user to enter their sudo password in their own terminal.
 - Prefer `python -m pip install ...` over bare `pip`.
 
 ## Python Rules

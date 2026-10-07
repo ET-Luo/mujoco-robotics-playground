@@ -1,13 +1,13 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-06（Stage14 Engineering Complete + Learning Mastered；前课状态见 README）。
+最后整理：2026-10-07（S15.1 Engineering Complete；本人 Run/Modify/Explain 待完成）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
 S14.1–S14.7a 已由本人确认Run/Modify/Explain，Learning Mastered；
-S14.7b已完成工程且本人确认Run/Modify/Explain，Learning Mastered，详见末节。Stage15未授权启动。
+S14.7b已完成工程且本人确认Run/Modify/Explain，Learning Mastered，详见对应末节。S15.1 已于 2026-10-07 明确授权推进；当前边界见末节。
 
 本人已明确完成 S12.1–S12.4 Run/Modify/Explain，并明确授权 S12.5。
 S12.5 PnP 的 Code + Experiment + Docs 已完成；本人随后明确确认实验与验证均完成，
@@ -790,3 +790,54 @@ Run/Modify/Explain全部确认，Learning Mastered；累计relative change的精
 本次仅同步根README、学习包、示例README、roadmap与handoff；状态一致性、
 本地链接与git diff --check通过。未重跑Python/仿真/GUI，runtime沿用2026-10-06本机工程验证。
 Stage14学习项均完成；下一小任务S15.1 ROS2环境与node/topic，等待明确请求。
+
+## S15.1 环境核验与教学准备（2026-10-07，机器 Zero）
+
+新增 [node_topic.py](../examples/16_ros2_integration/node_topic.py)、
+[示例 README](../examples/16_ros2_integration/README.md)，扩充[学习包](18_ros2_integration.md)。
+起始 pwd 正确、git status --short 空；WSL2 kernel6.18.33.2 / Ubuntu24.04.5。
+conda info --base 定位 hook，激活现有 mujoco，同 shell 核验环境名与
+/home/lucas/miniconda3/envs/mujoco/bin/python；Python3.12.14。
+requirements 已读；本课需 apt ROS2 rclpy/std_msgs，不导入前课 helper，无 pip 安装或 requirements 改动。
+/opt/ros 不存在、ros2 不在 PATH、未发现 ros-jazzy 包；mujoco 内 find_spec 两包为 None。
+sudo -n true 失败：需要密码；未安装系统包或修改 apt 源。
+官方 Jazzy 源文档确认 Ubuntu24.04 支持和预编译扩展的解释器匹配要求；
+官方 docs 页面访问被 Anubis 拒绝，改读 ros2/ros2_documentation jazzy 原始文档。
+本人随后明确授权 ROS2 使用系统 Python，已将专用例外写入 AGENTS.md。
+
+代码：同 topic Int32 / reliable+volatile depth10；publisher 等发现后发送有限序列，
+subscriber 验证完整0…N−1；monotonic timeout，发布计数不视作接收 ACK。
+通过 conda mujoco Python ast.parse 语法检查、本地 Markdown 文件链接与 git diff --check。
+未执行示例、未核验 ROS2 真实 imports/apt versions/API/DDS/GUI；Code/Docs准备完成，
+Experiment未完成，非 Engineering Complete；本人 Run/Modify/Explain 均未确认。
+下一小步：本人终端完成需 sudo 密码的 Jazzy ros-base 安装，
+再核验解释器/真实 imports/版本与双进程默认及0.1s Modify收发；不推进 S15.2。
+
+后续授权核验（同日/Zero）：退出 conda，同 shell 环境名为空、which python3=/usr/bin/python3，
+系统 Python3.12.3，rclpy/std_msgs find_spec=None。sudo -n true 仍需要密码。
+UTF-8 locale / Ubuntu universe、updates、backports 已存在。
+官方 ros-apt-source release API 返回1.3.0；下载 Noble deb 到
+/tmp/s15_1_ros2-apt-source_1.3.0.noble_all.deb，dpkg-deb metadata核验。
+安装命令已补进学习包，未运行 sudo dpkg/apt、未安装 ROS2；通信验证仍待完成。
+保留起始所有未提交教学包修改；本轮规则/文档 links 与 git diff --check 通过。
+
+## S15.1 现场工程验证（2026-10-07，机器 Zero）
+
+本人报告 apt 安装完成；助手退出 conda并source /opt/ros/jazzy/setup.bash，
+同shell核验pwd正确、环境名为空、which python3=/usr/bin/python3、ROS_DISTRO=jazzy。
+Python3.12.3；真实rclpy/std_msgs module paths均在/opt/ros/jazzy/lib/python3.12/site-packages/，
+Int32、Node、QoSProfile imports/API通过；apt rclpy7.1.12-1noble.20260912.162354、
+std-msgs5.3.8-1noble.20260911.094424、ros-base0.11.0-1noble.20261006.035407。
+dpkg --audit空；无助手追加安装，不运行pip check替代apt检查。
+
+ROS_DOMAIN_ID=51 / ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST。
+/usr/bin/python3 examples/16_ros2_integration/node_topic.py subscriber + publisher：
+默认period.5与publisher --period .1均完整收到0…9/sequence_passed=True，两进程exit0。
+启动至subscriber退出5.491785/1.428506s，含发现开销；日志9interval跨度约4.494/.892s。
+ros2 node list --no-daemon、topic list -t --no-daemon、topic info /s15_1/sequence --verbose
+均exit0；两node、Int32、1pub/1sub、reliable/volatile；depth输出UNKNOWN不作CLI确认。
+无对端各 --timeout 1均exit1，sub空序列/pub0条；nan period/zero timeout/zero count均exit2。
+日志与summary仅ignored tmp/s15_1_node_topic/；未运行echo、GUI、MuJoCo或跨机/硬件实验。
+文档链接与git diff --check通过；保留起始所有未提交修改。
+README已更新Code/Experiment/Docs全完成，Learning三项仍空；助手实验不算本人Run/Modify。
+下一小步：本人Run、publisher周期改.1s的Modify、学习包五问Explain；不自动推进S15.2。
