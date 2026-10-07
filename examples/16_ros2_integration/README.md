@@ -45,4 +45,4 @@ apt依赖rclpy、tf2-ros-py、tf2-py、geometry-msgs、tf2-msgs（均ros-jazzy�
 robot-state-publisher/ament-index-python（ros-jazzy前缀），真实imports已核验，无新安装。
 URDF只作运动学，无惯性/碰撞/controller，velocity/effort为占位；tool对应attachment_site。
 2026-10-07 / Zero：3配置全frame MuJoCo/URDF/RSP比对、成对重排、错配拒绝、delta .4通过。
-Engineering Complete；Learning待本人Run/Modify/Explain。无实时MuJoCo bridge或硬件验证。
+Engineering Complete；本人确认Run/Modify并补齐Explain固定变换具体值，Learning Mastered；无实时MuJoCo bridge或硬件验证。

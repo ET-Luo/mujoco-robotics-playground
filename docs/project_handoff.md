@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.4 Mastered；S15.5 Engineering Complete、学习待验证）。
+最后整理：2026-10-07（S15.1–S15.5 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -966,5 +966,9 @@ DOMAIN55/LOCALHOST；/usr/bin/python3 examples/16_ros2_integration/joint_states_
 未确定超时唯一原因，不把初版计PASS。参考JSON/log/summary只ignored tmp/s15_5_urdf/。
 教学URDF无mesh/collision/inertia/控制，velocity/effort限值占位；tool对应attachment_site。
 仅离线三配置FK与JointState/TF，不是实时adapter或UR厂商官方描述；无GUI/动力学/硬件验证。
-本地links/状态与git diff --check通过；README工程完成，Learning三项未确认。
-下一小步本人Run、delta .4 Modify与五问Explain；不自动推进S15.6a。
+本人随后明确确认实验与预测完成；README Run/Modify已勾选。
+本人随后补齐world/base的Rzπ、wrist/tool的xyz[0,.1,0]/Rx−π/2及attachment_site映射；
+Explain完成，README三项Learning全部完成，Mastered。
+学习包补充RSP不自动识别合法名称错配、矩阵组合与列向量求值次序区别。
+本次仅同步README、学习包、示例README、roadmap、handoff；links/状态/git diff --check通过。
+未重跑Python/ROS2/GUI，runtime沿用2026-10-07工程验证；下一小任务S15.6a ROS2 adapters，等待明确请求，不自动实施。

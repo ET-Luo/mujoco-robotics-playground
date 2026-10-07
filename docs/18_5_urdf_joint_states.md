@@ -137,7 +137,7 @@ ament-index-python1.8.4-1noble.20260519.010916；dpkg --audit空。
 初版经ros2 run wrapper启动的完整实验超过25s外部预算，未计PASS，也未确定wrapper为唯一原因。
 改用ament index定位RSP二进制并直接管理进程后，默认/重排/错误/Modify全部完成，子进程正常清理。
 所有参考JSON/log/summary仅ignored tmp/s15_5_urdf/；无GUI、实时状态流或动力学验证。
-Engineering Complete，Learning Run/Modify/Explain待本人确认。
+Engineering Complete；本人确认Run/Modify并补齐Explain具体变换，Learning Mastered。
 
 ## Failure Cases → Robotics Context
 
@@ -179,4 +179,12 @@ Explain：
 4. world/base、wrist_3_link/tool各有哪些固定变换，tool为什么对应attachment_site？
 5. 运动学比对通过为何不能说明动力学、碰撞或控制能力一致？
 
-状态待本人明确Run/Modify/Explain；不自动推进S15.6a。
+本人于2026-10-07确认实验与预测完成，并补齐第4问：world_to_base的xyz=0、yaw=π，
+base的xy轴与world相反；wrist_to_tool的xyz=[0,.1,0]m、roll=−π/2，
+tool的xyz轴分别对应wrist的+x/−z/+y；tool对应attachment_site。
+五问Explain完整，README Run/Modify/Explain全部完成，Learning Mastered。
+精度补充：只重排name通常仍是合法JointState，RSP会按收到的映射计算；
+本课是独立FK核验器识别错配，不是RSP自动拒绝。
+origin描述joint零位frame相对parent的pose；T_origin R_axis(q)映射child坐标到parent，
+对列向量求值时右侧旋转先作用，不能把矩阵连乘顺序与点运算顺序混淆。
+下一小任务S15.6a ROS2 adapters，等待本人明确请求，不自动实施。
