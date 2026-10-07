@@ -27,4 +27,12 @@ control_msgs 提供标准 FollowJointTrajectory goal/feedback/result；无需ROS
 
 2026-10-07 / Zero：成功、取消、abort、非法goal、并发busy、超时主动cancel、无server/guards
 实测通过，取消terminal后无reference更新；直接graph通过。CLI daemon list/info空结果
-未解决，不报告CLI查询通过；Engineering Complete，Learning待本人Run/Modify/Explain。
+未解决，不报告CLI查询通过；Engineering Complete；本人确认实验与预测完成并回答五问Explain，Learning Mastered。
+
+## S15.4 — TF2
+
+[学习包](../../docs/18_4_ros2_tf2.md)、[tf2_frames.py](tf2_frames.py)。
+apt依赖rclpy、tf2-ros-py、tf2-py、geometry-msgs、tf2-msgs（均ros-jazzy前缀）；无新安装或pip包。
+合成world/base/camera_optical/object/tool树，静态外参、动态观测、时间/年龄政策；非实时UR5e数据。
+2026-10-07 / Zero：默认/移动camera、late listener静态获取、历史插值/逆/越界、
+滞后stamp、停发early缓存stale与late缺失、guards通过；Engineering Complete，Learning待本人确认。

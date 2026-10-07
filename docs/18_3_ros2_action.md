@@ -171,7 +171,7 @@ server取消terminal之后无reference_update，额外等待.1s复核；不是�
 异常原因未定位，不能确定是缓存、发现配置或daemon实现。为复核启动的daemon已停止。
 核心真实action交互与直接graph通过，Engineering Complete；CLI限制保留为已知问题。
 未注入goal响应超时、cancel拒绝/竞态、未知终态超时或异常防御分支；
-未验证MuJoCo、实际tracking、物理停止、GUI/硬件；Learning三项仍待本人完成。
+未验证MuJoCo、实际tracking、物理停止、GUI/硬件；本人随后完成本课Run/Modify/Explain，Learning Mastered。
 
 ## Failure Cases → Robotics Context
 
@@ -210,4 +210,11 @@ Explain：
 4. 为什么cancel callback需要可并行的executor/callback group？
 5. 超时、停止reference更新和物理停住为什么是三件不同的事？
 
-README学习项待本人明确报告；不自动推进S15.4。
+2026-10-07 本人确认实验与预测完成，并回答五问Explain；README三项Learning全部完成。
+补充精度：feedback是server发送的中间报告，可能延迟，不能证明接收瞬间任务仍在运行。
+拒绝goal是接收响应accepted=False，不是GoalStatus中的REJECTED终态；
+ABORTED可发生在接受后的初始化阶段，CANCELED也可能发生在实际运动开始前。
+本课阻塞执行循环需要可并行调度取消；非阻塞/合作式执行设计也可让单线程及时处理cancel。
+CLI daemon已知限制保留，不因学习完成改报PASS。
+
+下一小任务S15.4 TF2，等待本人明确请求，不自动启动。

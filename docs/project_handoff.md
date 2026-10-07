@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（S15.1–S15.2 Mastered；S15.3 Engineering Complete、学习待验证）。
+最后整理：2026-10-07（S15.1–S15.3 Mastered；S15.4 Engineering Complete、学习待验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -907,6 +907,33 @@ client --result-timeout .1→主动cancel确认+CANCELED/heldq=.026044/exit4；�
 CLI action list/info exit0但空/0server；重启domain53 daemon复核仍失败，原因未定位。
 直接rclpy graph2s发现正确action/type/server，通过；CLI不能报告PASS。本轮启动daemon已停止。
 日志/summary仅ignored tmp/s15_3_action/；未注入goal响应超时、cancel拒绝/竞态/未知终态或异常分支。
-无GUI、实际tracking、MuJoCo或硬件停止验证。README工程完成，Learning三项未确认；
-本地链接、状态/git diff --check通过。下一小步本人默认Run、.5s取消Modify与五问Explain；
-不自动推进S15.4。
+无GUI、实际tracking、MuJoCo或硬件停止验证；本人随后确认实验与预测完成，
+并回答全部五问Explain，Run/Modify/Explain全部完成，Learning Mastered。
+学习包补充feedback延迟、goal拒绝非GoalStatus终态、取消可早于实际运动、
+本课并发与非阻塞单线程替代设计的边界。CLI daemon限制保留。
+本次仅同步README、学习包、示例README、roadmap、handoff；本地链接/状态/git diff --check通过。
+未重跑ROS2/Python示例/GUI；runtime沿用2026-10-07本机工程验证。
+下一小任务S15.4 TF2，等待本人明确请求，不自动实施。
+
+## S15.4 现场工程验证（2026-10-07，机器 Zero）
+
+本人明确请求；保留起始五份modified文档，pwd正确。读取规则/交接/示例与S12.1 source/requirements/roadmap。
+新增[tf2_frames.py](../examples/16_ros2_integration/tf2_frames.py)、[学习包](18_4_ros2_tf2.md)。
+退出conda/source Jazzy，同执行shell空环境、/usr/bin/python3 3.12.3、ROS_DISTRO=jazzy；
+现场rclpy/tf2_ros/tf2_py/geometry_msgs/tf2_msgs imports/module paths/API通过，来自/opt/ros/jazzy。
+apt rclpy7.1.12-1noble.20260912.162354、tf2-ros-py0.36.23-1noble.20260915.174232、
+tf2-py0.36.23-1noble.20260915.173947、geometry-msgs5.3.8-1noble.20260911.102920、
+tf2-msgs0.36.23-1noble.20260915.172312；dpkg --audit空。无新安装/pip依赖/MuJoCo helper导入。
+
+DOMAIN54/LOCALHOST；/usr/bin/python3 examples/16_ros2_integration/tf2_frames.py broadcaster + probe。
+默认与两端 --camera-x -.25均exit0；WO原点[-.45,.2,.03]m、非原点p_B[.43,-.21,.06]m一致。
+late listener静态获取/任意time静态边、正逆链、history t10/x0+t12/x2→t11/x1、t9/t13拒绝/unknown frame通过。
+--stamp-lag1→latest成功但age1.144746s stale拒绝exit1；
+--stop-after2 + early probe --observe-for3→latest旧缓存age1.365788s拒绝exit1。
+--stop-after1 + 停发后新listener→transform_unavailable/exit3；无发布者timeout.5同exit3。
+初版将late listener误预期为缓存stale，实际缺失；澄清动态无历史重放，新增observe-for并分别验证。
+CLI nan lag/max-age0/timeout-1/observe-1 exit2；独立nonfinite/非单位quat/future_stamp拒绝通过。
+默认/移动动态age.111481/.159058s，非benchmark。日志仅ignored tmp/s15_4_tf2/。
+本例树/工具运动为合成，不是当前UR5e实时TF；未做GUI、MuJoCo、旋转插值、全网重复parent检测或硬件验证。
+links/状态与git diff --check通过；README Code/Experiment/Docs完成，Learning三项未确认。
+下一小步本人默认Run、--stamp-lag1的Modify及五问Explain；不推进S15.5。
