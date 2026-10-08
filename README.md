@@ -422,7 +422,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 [P0/P1审查、去重与P2规划](docs/p2_plan.md)。CPU MuJoCo + NumPy优先；不推进RL/ACT/Diffusion Policy/VLA，
 不引入Isaac、大型触觉视觉网络、真实haptic device或完整humanoid。
 高频inner loop留在MuJoCo/controller worker；ROS2只处理command/state/action/feedback/monitoring。
-以下每项0.5～2小时，Integration已拆小；当前已授权并实现S16.1–S16.6，其余仅规划。
+以下每项0.5～2小时，Integration已拆小；当前已授权并实现S16.1–S16.7，其余仅规划。
 
 ### Stage 16 — Force & Dynamics Foundations
 
@@ -444,10 +444,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
 - S16.6（0.5～2h）：[Jacobian transpose](docs/19_6_jacobian_transpose.md)：tau=JᵀF，6D wrench与虚功/功率；复用已有Jacobian。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-08）；Learning待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
-- S16.7（0.5～2h）：Force Mapping Integration：gravity、tool load/contact、motor torque与有界hold；不实现impedance。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S16.7（0.5～2h）：[Force Mapping Integration](docs/19_7_force_mapping_integration.md)：gravity、tool load/contact、motor torque与有界hold；不实现impedance。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并补齐World-fixed载荷解释）
 
 ### Stage 17 — Compliant & Contact-Rich Control
 

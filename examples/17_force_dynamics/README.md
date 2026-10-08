@@ -22,7 +22,7 @@ Modify：先预测负载下偏移和恢复过程，再只把 Kp 从20改成40，
 CSV/JSON/PNG仅写 ignored tmp/s16_1_*。ctrl 的单位随执行器变化；比较的是物理joint torque。
 headless Euler dt=1ms 的结果不证明高刚度/接触/UR5e/硬件稳定性；不需要GUI。
 2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S16.1 Learning Mastered。
-S16.7 只规划，尚无实现。
+S16.1–S16.7工程已实现，学习状态见根README；不自动推进Stage17。
 
 ## S16.2 — Dynamics budget
 
@@ -94,4 +94,20 @@ python examples/17_force_dynamics/jacobian_transpose.py --offset .2
 
 按上文先核验环境。Modify只翻倍tool施力点偏置，三组site原点case不变。
 产物仅ignored tmp/s16_6_*；time0，无motor执行/contact/GUI/硬件验证。
-2026-10-08 Engineering Complete；Learning待本人Run/Modify/Explain。
+2026-10-08 Engineering Complete + Learning Mastered；本人确认实验、预测并完成五项Explain。
+
+## S16.7 — Force mapping integration
+
+[学习包](../../docs/19_7_force_mapping_integration.md)：UR5e偏置点已知world外载荷，
+gravity/PD/正确与错误load feedforward、有界motor与完整动力学预算。
+复用gravity_compensation.py，依赖mujoco/numpy/matplotlib/mujoco-menagerie，无新依赖。
+
+```bash
+python examples/17_force_dynamics/force_mapping_integration.py
+python examples/17_force_dynamics/force_mapping_integration.py --cap-scale .1
+```
+
+按上文先核验环境。Modify只减小motor cap；外载荷/PD/gear不变。
+产物仅ignored tmp/s16_7_*，无真实contact/GUI/传感器或硬件验证。
+2026-10-08 Engineering Complete + Learning Mastered；本人确认实验/预测并补齐载荷坐标约定。
+Stage16学习项全部完成；S17.1等待明确请求。

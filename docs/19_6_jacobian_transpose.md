@@ -166,7 +166,11 @@ J/w必须同轴、同点、同顺序。环境负载的映射不是抵抗负载�
 
 力映射用J转置；同点同轴同顺序；纯力偏置产生矩；外负载和抵抗力矩不同号；
 API累加不等于施加到actual；映射正确不代表执行可行。
-Engineering见根README；Learning三项待本人明确报告。
+Engineering与Learning状态见根README。2026-10-08 本人确认实验与预测完成，
+五项Explain准确覆盖功率推导/无需逆、shape与轴/点/单位、偏置附加项、
+外载荷与motor抵抗方向、applyFT累加及三种核验的边界；Run/Modify/Explain全部完成，Learning Mastered。
+数学列向量wrench/tau为(6,1)/(nv,1)，本代码NumPy存储为(6,)/(nv,)，语义一致。
+本次仅同步文档，runtime沿用2026-10-08 Zero工程验证，未重跑数值实验或GUI。
 
 **Run：** 默认命令，对照JSON四类joint torque、两侧power和virtual-work误差；查看图。
 

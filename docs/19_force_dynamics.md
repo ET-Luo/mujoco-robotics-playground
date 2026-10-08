@@ -7,7 +7,7 @@ P2核心问题：**How does a robot physically interact with the environment?**
 
 ## 阶段任务 skeleton
 
-每项0.5～2小时；S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认），S16.2 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.3 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.4 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.5 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.6 Engineering Complete、Learning待验证；S16.7未实现、未验证。
+每项0.5～2小时；S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认），S16.2 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.3 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.4 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.5 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.6 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.7 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；Stage16学习项全部完成，S17.1等待明确请求。
 
 | Task | 主要概念 / 最小实验计划 | 验收设计与Integration |
 | --- | --- | --- |
@@ -17,9 +17,9 @@ P2核心问题：**How does a robot physically interact with the environment?**
 | [S16.4 Force / torque / 6D wrench](19_4_wrench_frames.md) | 已知world point force与moment，换轴/换参考点 | `[F; moment]` shape6，N/N·m；`moment_new=moment_old+(p_old-p_new)×F`，方向/点明确 |
 | [S16.5 MuJoCo Contact Wrench](19_5_contact_wrench.md) | box-plane与一个finger contact fixture | mj_contactForce全6分量、contact frame、geom作用方向、world合成；静态support≈mg与action/reaction |
 | [S16.6 Jacobian Transpose](19_6_jacobian_transpose.md) | 复用UR5e site J，已知工具wrench | `tau=J_p.T F+J_r.T moment`，虚功/功率与点force交叉核验；不是J逆/IK |
-| S16.7 Force Mapping Integration | UR5e静态tool小外力/简单接触 | gravity+motor+tool load/contact→joint balance与有界hold；测力/施力分离，不实现Cartesian impedance |
+| [S16.7 Force Mapping Integration](19_7_force_mapping_integration.md) | UR5e静态tool小外力/简单接触 | gravity+motor+tool load/contact→joint balance与有界hold；测力/施力分离，不实现Cartesian impedance |
 
-S16.7再按下方Sprint格式展开API/实验/Actual/失败分析，不预填数值或PASS。
+S16.2–S16.7的完整学习包见表中链接；S16.7实际采用工具已知外载荷分支，未集成UR5e contact。
 
 # S16.1 — Position Command vs Torque Command: same physics, different interfaces
 

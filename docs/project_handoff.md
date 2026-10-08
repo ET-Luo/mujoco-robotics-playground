@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（S16.1–S16.5 Mastered；S16.6 Engineering Complete，Learning待验证）。
+最后整理：2026-10-08（S16.1–S16.6 Mastered；S16.7 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
-本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1–S16.6实现。
+本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1–S16.7实现。
 已读取规则、README、交接、roadmap、P0最终trials/release与P1视觉/碰撞/ROS integration代码；
 复用UR5e FK/J/IK/DLS、trajectory、gripper、camera/PnP/RGB-D/ICP/hand-eye、RRT、ROS2/TF2/URDF。
 [P2审查与规划](p2_plan.md)记录去重与边界；Stage16–18逐Task0.5～2h，安排多处Integration。
@@ -16,7 +16,32 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**S16.6 Engineering Complete；等待本人Run/Modify/Explain，不自动推进S16.7。**
+**S16.7 Learning Mastered，Stage16学习项全部完成；下一小任务S17.1 Cartesian virtual spring，等待本人明确请求。**
+
+## S16.7 现场工程验证（2026-10-08，Zero）
+
+保留起始全部未提交文档修改；WSL2 Ubuntu24.04.5/kernel6.18.33.2；当前conda hook
+激活mujoco，同shell核验pwd/环境/所属python；Python3.12.14、MuJoCo3.13.0、NumPy2.5.3、
+Matplotlib3.11.2、Menagerie2026.9.2 metadata/import/module paths/APIs通过，无安装/requirements变更。
+新增[force_mapping_integration.py](../examples/17_force_dynamics/force_mapping_integration.py)与
+[学习包](19_7_force_mapping_integration.md)，复用S16.3 build/gravity/参数，依赖链已读。
+UR5e偏置点已知world force/couple，外扰applyFT→qfrc_applied，motor只ctrl；
+contact/limits关闭，oracle load feedforward，未接UR5e contact或实际测力。
+`python examples/17_force_dynamics/force_mapping_integration.py`与`--cap-scale .1`各exit0：
+默认gravity_pd/correct/wrong sign loaded最大误差.037185621/3.434e−18/.074422293rad，
+撤load后均恢复，tail误差≤8.73e−5rad/speed≤.001398rad/s，无饱和。
+correct loaded shoulder-lift g−15.857087、load+4.450989、actual−20.308076Nm。
+低cap correct饱和8262joint-samples，tail误差3.048211rad/speed2.994673rad/s，未恢复。
+每步mapping误差≤2.67e−15Nm、power差≤1.25e−14W、动态残差≤6.40e−14Nm。
+CSV/JSON/PNG仅ignored tmp/s16_7_*，默认PNG已目视核验；未用Python3.11执行。
+无GUI/contact/硬件/未知外力/力闭环或通用稳定性验证；低cap PASS是失败检出。
+本人随后确认实验与预测完成，README Run/Modify已勾选；Explain第1/3/4/5项准确，
+本人随后补齐第2项：载荷World-fixed，P tool-fixed随姿态移动，力臂/J随q改变；
+Explain完成，README三项Learning全部完成，Mastered。Stage16学习项全部完成。
+本次保留起始全部工作，仅同步根/示例README、学习包、阶段笔记、roadmap、P2 plan与本文；
+链接/状态/git diff --check通过，未重跑仿真或GUI，runtime沿用2026-10-08工程验证。
+本地链接、CSV维度/clock/载荷包络、独立控制律重算/gear/clamp核验通过；
+CLI cap nan/inf/0各exit2，git diff --check通过。
 
 ## S16.6 现场工程验证（2026-10-08，Zero）
 
@@ -32,7 +57,11 @@ Matplotlib3.11.2、Menagerie2026.9.2 metadata/import/module paths/API通过，�
 偏置翻倍只让offset−site_force项翻倍。漏力臂矩/混轴错误被检出。
 time0、actual qvel/外力数组0；无mj_step、motor执行/限幅、contact/GUI/硬件验证。
 CSV/JSON/PNG仅ignored tmp/s16_6_*；默认PNG已目视检查；未用Python3.11执行。
-README Engineering完成，Learning三项未勾选；Run/Modify/Explain见学习包。
+本人随后确认实验与预测完成，五项Explain准确，README三项Learning完成，Mastered。
+涵盖虚功/功率推导、同点同轴单位、偏置附加项、motor抵抗符号、applyFT累加与验证边界。
+补充数学列向量与NumPy一维array形状区别；详见学习包。此次保留起始未提交工作，
+只同步根/示例README、学习包、阶段笔记、roadmap、P2 plan与本文；
+本地链接/状态/git diff --check通过，未重跑数值实验或GUI，runtime沿用2026-10-08工程验证。
 本地链接、CSV维度/独立逐列力矩重算、offset附加项翻倍与三site case不变核验通过；
 CLI offset nan/inf/0各exit2，git diff --check通过。
 
