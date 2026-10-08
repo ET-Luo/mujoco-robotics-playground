@@ -22,4 +22,32 @@ Modify：先预测负载下偏移和恢复过程，再只把 Kp 从20改成40，
 CSV/JSON/PNG仅写 ignored tmp/s16_1_*。ctrl 的单位随执行器变化；比较的是物理joint torque。
 headless Euler dt=1ms 的结果不证明高刚度/接触/UR5e/硬件稳定性；不需要GUI。
 2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S16.1 Learning Mastered。
-后续 S16.2–S16.7 只规划，尚无实现。本课验证记录见学习包；下一任务等待明确请求。
+S16.4–S16.7 只规划，尚无实现。
+
+## S16.2 — Dynamics budget
+
+[完整学习包](../../docs/19_2_manipulator_dynamics.md)：world+y单hinge悬摆，核对惯量、bias、
+passive、actuator、external、constraint；无接触，约束项为0。依赖同上，无local helper。
+
+```bash
+python examples/17_force_dynamics/manipulator_dynamics.py
+python examples/17_force_dynamics/manipulator_dynamics.py --inertia-scale 2
+```
+
+先按上文核验conda与解释器。Modify只改变质心惯量，mass/COM/gravity保持固定；
+预测关节惯量与加速度比。产物仅ignored tmp/s16_2_*，headless，无GUI需要。
+2026-10-08 Engineering Complete + Learning Mastered；本人确认实验、预测并完成五项Explain。
+
+## S16.3 — UR5e gravity compensation
+
+[完整学习包](../../docs/19_3_gravity_compensation.md)：motor真实限幅、独立probe求gravity，
+zero/gravity-only/gravity+PD同外力矩对照。另需requirements已声明的mujoco-menagerie，无local helper。
+
+```bash
+python examples/17_force_dynamics/gravity_compensation.py
+python examples/17_force_dynamics/gravity_compensation.py --cap-scale 0.1
+```
+
+先按上文核验环境。Modify只减小cap；产物仅ignored tmp/s16_3_*。
+关闭contact/joint limits的裸UR5e自由空间教学模型，无GUI/硬件保证。
+2026-10-08 Engineering Complete；Learning待本人Run/Modify/Explain。

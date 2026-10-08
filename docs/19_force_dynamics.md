@@ -7,13 +7,13 @@ P2核心问题：**How does a robot physically interact with the environment?**
 
 ## 阶段任务 skeleton
 
-每项0.5～2小时；S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认），余项未实现、未验证。
+每项0.5～2小时；S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认），S16.2 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.3 Engineering Complete、Learning待本人验证；S16.4起未实现、未验证。
 
 | Task | 主要概念 / 最小实验计划 | 验收设计与Integration |
 | --- | --- | --- |
 | S16.1 Position vs torque control | 同mechanics同load，servo/显式motor feedback/open torque | ctrl→scalar actuator output→joint torque，gear/限幅/恢复；完整包见下 |
-| S16.2 Manipulator dynamics | 先单hinge，`M(q) qdd + b(q,qdot) = tau_act + tau_passive + tau_ext + tau_constraint` | M/inertia、bias、passive分项/单位；质量或重力单变量对照，静态平衡与加速度 |
-| S16.3 Gravity Compensation Integration | UR5e motor替换/映射，zero torque vs gravity feedforward vs hold反馈 | `qfrc_bias(q,0)=g(q)`；运行态bias还含速度项；按motor gear与限幅施加，不用无限qfrc_applied掩盖能力 |
+| [S16.2 Manipulator dynamics](19_2_manipulator_dynamics.md) | 先单hinge，`M(q) qdd + b(q,qdot) = tau_act + tau_passive + tau_ext + tau_constraint` | M/inertia、bias、passive分项/单位；质量或重力单变量对照，静态平衡与加速度 |
+| [S16.3 Gravity Compensation Integration](19_3_gravity_compensation.md) | UR5e motor替换/映射，zero torque vs gravity feedforward vs hold反馈 | `qfrc_bias(q,0)=g(q)`；运行态bias还含速度项；按motor gear与限幅施加，不用无限qfrc_applied掩盖能力 |
 | S16.4 Force / torque / 6D wrench | 已知world point force与moment，换轴/换参考点 | `[F; moment]` shape6，N/N·m；`moment_new=moment_old+(p_old-p_new)×F`，方向/点明确 |
 | S16.5 MuJoCo Contact Wrench | box-plane与一个finger contact fixture | mj_contactForce全6分量、contact frame、geom作用方向、world合成；静态support≈mg与action/reaction |
 | S16.6 Jacobian Transpose | 复用UR5e site J，已知工具wrench | `tau=J_p.T F+J_r.T moment`，虚功/功率与点force交叉核验；不是J逆/IK |

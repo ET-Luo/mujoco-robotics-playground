@@ -422,7 +422,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 [P0/P1审查、去重与P2规划](docs/p2_plan.md)。CPU MuJoCo + NumPy优先；不推进RL/ACT/Diffusion Policy/VLA，
 不引入Isaac、大型触觉视觉网络、真实haptic device或完整humanoid。
 高频inner loop留在MuJoCo/controller worker；ROS2只处理command/state/action/feedback/monitoring。
-以下每项0.5～2小时，Integration已拆小；本轮只授权实现S16.1，其余仅规划。
+以下每项0.5～2小时，Integration已拆小；当前已授权并实现S16.1–S16.3，其余仅规划。
 
 ### Stage 16 — Force & Dynamics Foundations
 
@@ -431,11 +431,11 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S16.1（0.5～2h）：Position vs torque control：servo/motor gear与限幅，同外力矩脉冲反馈/open loop对照。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
-- S16.2（0.5～2h）：Manipulator dynamics equation：inertia / bias / passive / actuator / external / constraint分项。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S16.2（0.5～2h）：[Manipulator dynamics equation](docs/19_2_manipulator_dynamics.md)：inertia / bias / passive / actuator / external / constraint分项。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
-- S16.3（0.5～2h）：Gravity Compensation Integration：UR5e motor映射、gravity feedforward与hold反馈，真实torque cap。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S16.3（0.5～2h）：[Gravity Compensation Integration](docs/19_3_gravity_compensation.md)：UR5e motor映射、gravity feedforward与hold反馈，真实torque cap。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-08）；Learning待本人验证
 
 - S16.4（0.5～2h）：Force / torque / 6D wrench：方向、frame、参考点、换轴/换点。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

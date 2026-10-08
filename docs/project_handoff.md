@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（P0/P1完成；P2 S16.1 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-08（S16.1/S16.2 Mastered；S16.3 Engineering Complete，Learning待验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
-本人明确确认P0/P1完成，授权P2规划与仅S16.1实现。
+本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1、S16.2与S16.3实现。
 已读取规则、README、交接、roadmap、P0最终trials/release与P1视觉/碰撞/ROS integration代码；
 复用UR5e FK/J/IK/DLS、trajectory、gripper、camera/PnP/RGB-D/ICP/hand-eye、RRT、ROS2/TF2/URDF。
 [P2审查与规划](p2_plan.md)记录去重与边界；Stage16–18逐Task0.5～2h，安排多处Integration。
@@ -16,7 +16,45 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**下一小任务S16.2 Manipulator dynamics equation，等待本人明确请求，不自动推进。**
+**S16.3 Engineering Complete；等待本人Run/Modify/Explain，不自动推进S16.4。**
+
+## S16.3 现场工程验证（2026-10-08，Zero）
+
+保留起始全部未提交修改。WSL2 Ubuntu24.04.5/kernel6.18.33.2，同shell核验pwd/
+conda mujoco/所属python；Python3.12.14，MuJoCo3.13.0、NumPy2.5.3、Matplotlib3.11.2、
+Menagerie2026.9.2 metadata/import/module paths通过，无安装/requirements变更。
+新增[gravity_compensation.py](../examples/17_force_dynamics/gravity_compensation.py)与
+[学习包](19_3_gravity_compensation.md)；私有UR5e servo改motor，name/address映射，
+shoulder-lift gear2、模型joint cap150/28Nm；关闭contact/joint limits，无body_gravcomp。
+`python examples/17_force_dynamics/gravity_compensation.py`、`--no-pulse`、`--cap-scale 0.1`
+各exit0；独立probe g(q)、势能梯度误差9.349e−9Nm，每步mapping/clamp/force balance通过，
+最大平衡残差≤1.43e−13Nm。默认5Nm/.5–.7s pulse，hold peak .023475859rad、
+末.5s误差4.668e−8rad/speed1.880e−7rad/s；gravity-only最终偏移3.191614rad。
+no-pulse gravity-only/hold保持home；低cap hold饱和6584joint-samples、final偏移1.799907rad，
+未恢复且末窗口仍运动；PASS是饱和失败检出，不是hold成功。产物仅ignored tmp/s16_3_*。
+无GUI、contact、硬件、payload或通用稳定性验证；代码3.11兼容目标未用3.11执行。
+README Engineering完成，Learning三项未勾选；Run/Modify/Explain见学习包。
+本地链接、全部CSV shape/clock/mapping/clamp/200step pulse核验通过；CLI cap nan/0/inf各exit2。
+默认PNG已目视检查，git diff --check通过。
+
+## S16.2 现场工程验证（2026-10-08，Zero）
+
+起始git status空；WSL2 Ubuntu24.04.5/kernel6.18.33.2。当前conda info --base发现hook，
+激活mujoco并同shell核验pwd/环境/所属python；Python3.12.14，MuJoCo3.13.0、
+NumPy2.5.3、Matplotlib3.11.2 metadata/真实module paths/API通过，无安装或新依赖。
+新增[manipulator_dynamics.py](../examples/17_force_dynamics/manipulator_dynamics.py)与
+[学习包](19_2_manipulator_dynamics.md)，world+y悬摆、无接触/约束，COM惯量单变量。
+`python examples/17_force_dynamics/manipulator_dynamics.py`、`--inertia-scale 2`、
+`--gravity 0`均exit0；解析M/bias/passive/a、每步力矩残差、static balance与Euler首步通过。
+M .11/.13kg·m²，释放a −12.826812365/−10.853456616rad/s²，最大残差≤3.34e−16N·m；
+gravity0释放保持静止。每组2001×11 CSV/JSON/PNG仅ignored tmp/s16_2_*。
+无GUI、UR5e、Coriolis耦合、contact/非零constraint或驱动饱和验证；静态probe非恢复稳定证明。
+本机mj_fullM真实签名(model,data,dst)，代码按现场API写；未在Python3.11执行。
+Run/Modify/五问见学习包；本人随后明确确认实验与预测完成，五项Explain准确，
+README Learning三项全部完成，Mastered。解释补充：d单位N·m·s/rad，
+constraint=0仅验证无约束分支。此次保留全部起始未提交修改，只同步根README、
+学习包、阶段/示例README、roadmap、P2 plan与本文；本地链接/状态与git diff --check通过。
+未重跑仿真、GUI或运行时依赖核验；runtime沿用2026-10-08 Zero工程验证。
 
 ## P2 S16.1 现场工程验证（2026-10-07，DESKTOP-781D67A）
 
@@ -1137,3 +1175,4 @@ S15_CLOSE_TARGET=.014默认launcher exit1/ABORTED，close双指接触/force不�
 landmarks.png与停止后state稳定核验通过。Python syntax、bash -n、本地Markdown链接、git diff --check通过。
 本次仅同步根README、学习包、示例README、roadmap与handoff；未重跑Python/ROS2/GUI，
 runtime沿用2026-10-07工程验证。解释补充：放置需支撑/分离/退让/settling，Action失败终态ABORTED。
+本地Markdown链接、CSV shape/clock/独立重算force balance与git diff --check通过；默认PNG已目视检查。
