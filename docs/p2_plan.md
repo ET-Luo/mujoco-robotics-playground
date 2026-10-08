@@ -3,7 +3,8 @@
 2026-10-07：本轮 P0/P1 最终代码静态审查与 P2 规划。
 核心问题：**How does a robot physically interact with the environment?**
 任务状态只维护在[根 README](../README.md#p2--contact-rich-manipulation--dexterous-robotics)。
-本轮仅实现 S16.1；之后等待本人 Run / Modify / Explain 与明确下一任务请求。
+首轮仅实现 S16.1；本人于2026-10-08确认Run/Modify/Explain完成，Learning Mastered。
+下一小任务S16.2等待本人明确请求，不自动推进。
 
 ## P1 最终状态审查与去重
 

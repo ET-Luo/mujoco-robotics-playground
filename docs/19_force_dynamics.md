@@ -7,7 +7,7 @@ P2核心问题：**How does a robot physically interact with the environment?**
 
 ## 阶段任务 skeleton
 
-每项0.5～2小时；本轮只有S16.1 Engineering完成，余项未实现、未验证。
+每项0.5～2小时；S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认），余项未实现、未验证。
 
 | Task | 主要概念 / 最小实验计划 | 验收设计与Integration |
 | --- | --- | --- |
@@ -200,7 +200,10 @@ motor接口也可以闭环；有限刚度允许偏移；初始化之外不要用
 
 ## My Verification / Run / Modify / Explain
 
-Engineering结果见上；Learning状态仅根README，本轮Run/Modify/Explain都保持未确认。
+Engineering结果见上；Learning状态仅根README。2026-10-08 本人明确确认实验与预测完成，
+并正确回答全部五项Explain：ctrl语义/gear/限幅、负载平衡方向、饱和输出、
+open loop与被动阻尼、单DOF自由空间验证的适用边界。Run/Modify/Explain完成，Learning Mastered。
+本次仅更新文档；runtime沿用2026-10-07工程验证，未重跑实验或GUI。
 
 **Run：** 运行默认命令，查看results.json和三行图，找出1秒开始施力、2秒撤力的行为。
 

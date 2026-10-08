@@ -2,7 +2,7 @@
 
 更新：2026-10-07。任务与 Engineering/Learning checkbox 唯一维护在
 [README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
-P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；当前P2仅S16.1 Engineering完成，Learning待确认。
+P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；P2 S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认）。
 
 ## 当前代码如何使用
 

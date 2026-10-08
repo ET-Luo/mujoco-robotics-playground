@@ -21,4 +21,5 @@ python examples/17_force_dynamics/actuator_semantics.py --kp 40
 Modify：先预测负载下偏移和恢复过程，再只把 Kp 从20改成40，Kd仍为1。
 CSV/JSON/PNG仅写 ignored tmp/s16_1_*。ctrl 的单位随执行器变化；比较的是物理joint torque。
 headless Euler dt=1ms 的结果不证明高刚度/接触/UR5e/硬件稳定性；不需要GUI。
-后续 S16.2–S16.7 只规划，尚无实现。本课验证记录见学习包。
+2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S16.1 Learning Mastered。
+后续 S16.2–S16.7 只规划，尚无实现。本课验证记录见学习包；下一任务等待明确请求。

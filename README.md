@@ -24,7 +24,7 @@
 
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
 P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2审查](docs/p2_plan.md)。
-当前推进 **P2 — Contact-Rich Manipulation & Dexterous Robotics**；本轮只完成S16.1 Engineering，Learning待本人验证。
+当前推进 **P2 — Contact-Rich Manipulation & Dexterous Robotics**；S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认）。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -47,7 +47,7 @@ P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | Stage 14 | S14.1–S14.7b collision / planning / pick-place | Engineering Complete + Learning Mastered（全阶段） |
 | Stage 15 | S15.1–S15.6b Engineering Complete | S15.1–S15.6b Learning Mastered |
-| P2 / S16.1 Actuator Semantics | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人确认 |
+| P2 / S16.1 Actuator Semantics | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a/b 在固定场景验证；S14.7b已完成固定场景持物避障。
@@ -429,7 +429,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 [阶段学习包 / skeleton](docs/19_force_dynamics.md)。
 
 - S16.1（0.5～2h）：Position vs torque control：servo/motor gear与限幅，同外力矩脉冲反馈/open loop对照。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
 - S16.2（0.5～2h）：Manipulator dynamics equation：inertia / bias / passive / actuator / external / constraint分项。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

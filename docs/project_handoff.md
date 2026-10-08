@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-07（P0/P1完成；P2规划与S16.1 Engineering完成，Learning待本人验证）。
+最后整理：2026-10-08（P0/P1完成；P2 S16.1 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -10,9 +10,13 @@ README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 已读取规则、README、交接、roadmap、P0最终trials/release与P1视觉/碰撞/ROS integration代码；
 复用UR5e FK/J/IK/DLS、trajectory、gripper、camera/PnP/RGB-D/ICP/hand-eye、RRT、ROS2/TF2/URDF。
 [P2审查与规划](p2_plan.md)记录去重与边界；Stage16–18逐Task0.5～2h，安排多处Integration。
-仅S16.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain保持未确认；
+S16.1 Code/Experiment/Docs完成；本人于2026-10-08明确确认实验与预测完成，
+五项Explain准确覆盖ctrl/gear/限幅、负载力矩平衡、open loop/被动阻尼与验证边界，
+Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
-**本轮STOP，不自动实现S16.2或推进后续P2。**
+本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
+未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
+**下一小任务S16.2 Manipulator dynamics equation，等待本人明确请求，不自动推进。**
 
 ## P2 S16.1 现场工程验证（2026-10-07，DESKTOP-781D67A）
 
