@@ -147,7 +147,11 @@ Actual（2026-10-08，DESKTOP-781D67A，两命令exit0）：
 ## Must Remember / My Verification — Run / Modify / Explain
 
 K/D与dt/质量/限幅必须一起记录；请求力不是实际力；连续临界阻尼不保证任意dt稳定。
-Engineering已完成；Learning三项尚未由本人报告，保持未勾选，见根README。
+Engineering已完成；2026-10-08 本人确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部完成，Learning Mastered；状态见根README。
+解释精度补充：本课settling要求从候选时刻一直保持到4s记录末尾，而非只保持任意短窗口；
+粗dt的谱半径对应未饱和局部线性递推，不能直接预测整段受限轨迹，
+自由空间恢复不证明接触稳定。
 
 Run：运行默认命令，查看tmp/s17_3_cap2/sweep.png与results.json，找到粗dt失败对照。
 Modify：先预测只将limited的cap从2N提高到5N会怎样改变初始请求/实际力、饱和样本与settling，

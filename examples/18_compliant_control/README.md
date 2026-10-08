@@ -51,4 +51,42 @@ python examples/18_compliant_control/impedance_sweep.py --cap 5
 先核验上文conda/interpreter。Modify仅把limited组cap2N改5N，预测requested/actual、饱和与settling。
 2026-10-08 DESKTOP-781D67A：两命令exit0、递推/动力学/限幅通过；六组恢复，粗dt80ms未settle。
 PNG/CSV/JSON只ignored tmp/s17_3_cap2与cap5；无新依赖、contact/GUI/硬件验证。
-Learning Run/Modify/Explain待本人完成；下一小任务S17.4等待明确请求。
+2026-10-08 本人确认实验、预测并完成五项Explain；S17.3 Learning Mastered。
+S17.4见下文。
+
+## S17.4 — Contact Transition Integration
+
+[完整学习包](../../docs/20_4_contact_transition.md) / [代码](contact_transition.py)。
+同XY装置加入+Y平面/球法向contact；approach→touch→compliant hold。
+复用cartesian_spring常量/XML与三包依赖，无新依赖。
+
+```bash
+python examples/18_compliant_control/contact_transition.py
+python examples/18_compliant_control/contact_transition.py --slow-speed .06
+```
+
+先核验上文conda/interpreter。Modify只将slow接近速度.03→.06m/s，fast=.3不变。
+2026-10-08 DESKTOP-781D67A：两命令exit0，contact/动力学/递推通过；
+slow.03冲击6.359N通过，slow.06/fast冲击12.512/69.989N超10N教学预算；三组末1s均保持约1.998N。
+工程PASS包含预期失败对照，各case task_passed单独记录；无自动超力停止。
+产物只ignored tmp/s17_4_v*；无GUI/UR5e/硬件/通用稳定性验证。
+2026-10-08 本人确认实验、预测并完成五项Explain；S17.4 Learning Mastered。
+S17.5见下文。
+
+## S17.5 — Admittance
+
+[完整学习包](../../docs/20_5_admittance.md) / [代码](admittance.py)。
+合成world +Y测力→虚拟M/D/K→可选有界reference→同XY fixture的实际motor跟踪。
+合成测力不同时作为物理外力施加；三包依赖与cartesian_spring helper，无新依赖。
+
+```bash
+python examples/18_compliant_control/admittance.py
+python examples/18_compliant_control/admittance.py --virtual-mass 2
+```
+
+先核验上文conda/interpreter。Modify只将软件M_v1→2kg，保持物理mass、D/K和输入不变。
+2026-10-08 DESKTOP-781D67A：两个命令各六case exit0；正负镜像、解析reference与actual动力学通过。
+有K bias末reference10mm；无K漂移487.55/475.05mm；bounded ref≤40mm/50mm/s。
+strong bounded实际速度峰约56.8mm/s，reference界不等于实际安全保证。
+产物只ignored tmp/s17_5_m1与m2；无GUI/contact/真实外力/硬件稳定性验证。
+Learning Run/Modify/Explain待本人完成；下一小任务S17.6等待明确请求。

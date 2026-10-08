@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（Stage16/S17.1/S17.2 Mastered；S17.3 Engineering Complete、Learning待本人验证）。
+最后整理：2026-10-08（Stage16/S17.1–S17.4 Mastered；S17.5 Engineering Complete、Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,55 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S17.4，等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S17.6，等待明确请求。**
+
+## S17.5 现场工程验证（2026-10-08，DESKTOP-781D67A）
+
+本人明确请求；pwd正确，保留起始全部modified/untracked S17.3/S17.4工作。
+读取规则/交接/示例README/source/requirements/roadmap；WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda hook激活mujoco，同执行shell核验环境/所属python；Python3.12.14/MuJoCo3.14.0/
+NumPy2.5.3/Matplotlib3.11.2 metadata/真实imports/module paths通过；无安装/requirements改动，未在3.11运行。
+新增[admittance.py](../examples/18_compliant_control/admittance.py)与[学习包](20_5_admittance.md)。
+合成world +Y测力仅驱动软件Mv/Dv/Kv；未施加物理外力；同XY装置真实motor inner loop跟踪生成reference。
+`python examples/18_compliant_control/admittance.py`与`--virtual-mass 2`各6case/exit0，无import error。
+Mv1/2kg，Dv4Ns/m，Kv20或0N/m；dt1ms，参考bounds40mm/50mm/s，innerK400/真实mass不变。
+正负.4N脉冲逐点镜像；Mv1/2正reference峰24.1494/27.0143mm，峰速度51.449/41.721mm/s。
+有K的.2N恒定bias末reference10mm；无K/无限制漂移487.55/475.05mm，末速度50mm/s。
+有界bias到40mm停住；4N强脉冲触发速度/位置projection，reference≤40mm/50mm/s，撤力后释放趋回。
+strong bounded实际速度峰56.794/56.737mm/s，tracking error峰.922834/.922793mm；界只保证reference。
+各组motor无饱和，峰≤2.010896N；实际qpos/qvel始终由mj_step推进，未重设。
+每步J/Jr、motor cap/qacc/零bias/passive/contact/external通过；time/shape/finite与实际半隐式递推通过。
+四无界case独立连续阶跃/脉冲解max error≤.050mm；独立CSV虚拟递推/inner control/
+动力学/能量/limit flags通过；±边界outward拒绝/inward释放静态probe通过。
+CLI mass0/nan各exit2；默认PNG已目视检查；本地Markdown链接/git diff --check通过。
+产物只ignored tmp/s17_5_m1/m2，临时日志/tmp；无GUI/实际测力或外力/contact/UR5e/ROS/硬件闭环验证。
+根README Engineering完成，Learning三项未勾选；下一步本人Run/Modify/五项Explain，S17.6等待明确请求。
+
+## S17.4 现场工程验证（2026-10-08，DESKTOP-781D67A）
+
+本人明确请求；pwd正确，保留起始七份S17.3未提交状态文档。读取规则/交接/示例README与source/requirements/roadmap。
+WSL2 Ubuntu24.04.5/kernel6.6.87.2；当前conda hook激活mujoco，同执行shell核验环境与所属python。
+Python3.12.14/MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/真实import/module paths/API通过；
+无安装/requirements变更，未在Python3.11运行。新增[contact_transition.py](../examples/18_compliant_control/contact_transition.py)
+与[学习包](20_4_contact_transition.md)，复用S17.1 XML副本/常量，加+Y平面/球condim1 pair。
+K400/D[56.568542,40]、dt1ms、joint cap20N；solref.01/1、solimp.95/.95/.001；
+approach→active pair+反力>.2N触发touch→.2s reference过渡→固定reference .015m hold。
+`python examples/18_compliant_control/contact_transition.py`与`--slow-speed .06`各exit0。
+slow.03/slow.06/fast.3触碰1.334/.667/.142s，积分反力峰5.189744/10.173776/58.295955N，
+检测解峰6.358974/12.512237/69.989116N；冲击评分取两者最大，10N自选教学预算仅slow.03通过。
+三组触碰后采样contact100%/无gap、末1s速度<1.3e−15m/s/反力1.998002N，hold均合格；
+最大penetration.102131/.189185/1.137022mm、motor未饱和；fast实际触碰速度.330842m/s。
+每步J/姿态/M、motor cap、contact符号与Jᵀ映射、动力学/零bias与passive/external通过；
+半隐式q/v递推/clock/shape/finite通过；独立CSV控制/动力学/depth/phase/peak、
+恢复初始/触碰/峰值/末尾状态直接contactForce核验通过；fast两命令CSV逐元素相同。
+CLI speed0/nan各exit2；默认PNG已目视检查，本地Markdown文件链接/git diff --check通过。
+产物仅ignored tmp/s17_4_v0.03与v0.06，临时日志/tmp。
+触碰时yd连续但vd跳变；事件用上次ctrl的fresh forward反力，积分记录用当前ctrl重求解。
+失败对照离线评分并继续观察hold，无超力急停/接触丢失注入与恢复/GUI/UR5e/硬件验证。
+本人随后确认实验与预测完成，并正确回答五项Explain；根README Learning三项完成，Mastered。
+学习包补充touch检测/transition顺序、稳态K偏差与检测解/积分解峰值区别。
+本次保留起始全部修改，仅同步七份文档；本地文件链接/git diff --check通过。
+未重跑Python示例/仿真/GUI，runtime沿用2026-10-08工程验证；S17.5等待明确请求。
 
 ## S17.3 现场工程验证（2026-10-08，DESKTOP-781D67A）
 
@@ -34,8 +82,11 @@ K400/ζ1 cap2/5N settling.640/.574s，饱和joint-samples246/95；动态限幅�
 每步J/actual cap/qacc/零bias与passive/contact通过；独立clipped半隐式递推逐点核验q/v/force/time。
 两命令未改七组CSV逐元素相同；cap0/nan CLI各exit2；默认PNG目视通过。
 产物仅ignored tmp/s17_3_cap2与cap5，临时日志/tmp；本地Markdown链接/git diff --check通过。
-无GUI/contact/UR5e/ROS/硬件验证；README Engineering完成，Learning三项未勾选。
-下一步本人完成学习包Run/Modify/五项Explain；不自动实现S17.4。
+无GUI/contact/UR5e/ROS/硬件验证；本人随后确认实验与预测完成并正确回答五项Explain，
+README Learning Run/Modify/Explain全部完成，Mastered。学习包补充settling持续到记录末尾、
+谱半径的未饱和局部适用范围及自由空间不证明接触稳定。
+本次起始git status空，仅同步七份文档；本地文件链接与git diff --check通过。
+未重跑Python示例/仿真/GUI，runtime沿用2026-10-08工程验证。下一小任务S17.4等待明确请求。
 
 ## S17.2 现场工程验证（2026-10-08，Zero）
 
