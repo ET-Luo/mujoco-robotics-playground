@@ -83,4 +83,4 @@ age/timeout用monotonic wall time，state用simulation stamp，两种clock不能
 Minimal Experiment → Expected/Actual Result → Explanation → Failure Cases → Robotics Context →
 30秒/2分钟Interview Capsule → Must Remember → My Verification → Run/Modify/Explain。
 未来Stage skeleton只给问题、验收设计与未实现边界；执行后再写API/命令/actual结果。
-Learning必须由本人明确报告，助手运行不代替学习。S16.2已Mastered；S16.3 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.4已明确授权并完成[工程学习包](19_4_wrench_frames.md)，Learning待本人验证；不推进S16.5。
+Learning必须由本人明确报告，助手运行不代替学习。S16.2已Mastered；S16.3 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.4已明确授权并完成[工程学习包](19_4_wrench_frames.md)，Learning Mastered（2026-10-08 本人确认）；S16.5随后明确授权并完成[工程学习包](19_5_contact_wrench.md)，Learning Mastered（2026-10-08 本人确认）；S16.6等待明确请求。

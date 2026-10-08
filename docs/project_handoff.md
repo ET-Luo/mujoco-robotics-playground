@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（S16.1–S16.3 Mastered；S16.4 Engineering Complete，Learning待验证）。
+最后整理：2026-10-08（S16.1–S16.4 Mastered；S16.5 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
-本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1–S16.4实现。
+本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1–S16.5实现。
 已读取规则、README、交接、roadmap、P0最终trials/release与P1视觉/碰撞/ROS integration代码；
 复用UR5e FK/J/IK/DLS、trajectory、gripper、camera/PnP/RGB-D/ICP/hand-eye、RRT、ROS2/TF2/URDF。
 [P2审查与规划](p2_plan.md)记录去重与边界；Stage16–18逐Task0.5～2h，安排多处Integration。
@@ -16,7 +16,32 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**S16.4 Engineering Complete；等待本人Run/Modify/Explain，不自动推进S16.5。**
+**S16.5 Learning Mastered；下一小任务S16.6 Jacobian transpose，等待本人明确请求。**
+
+## S16.5 现场工程验证（2026-10-08，Zero）
+
+保留起始全部未提交文档修改；WSL2 Ubuntu24.04.5/kernel6.18.33.2，当前conda hook激活
+mujoco，同shell核验pwd/环境/所属python；Python3.12.14、MuJoCo3.13.0、NumPy2.5.3、
+Matplotlib3.11.2 metadata/import/module paths/API通过，无安装/requirements变更。
+新增[contact_wrench.py](../examples/17_force_dynamics/contact_wrench.py)与
+[学习包](19_5_contact_wrench.md)，box-plane/斜墙球形指端，无local helper。
+`python examples/17_force_dynamics/contact_wrench.py`与`--mass 2`最终均exit0；
+box4contact/condim3，Fz9.810000000002/19.620000000005N，末速度≤1.74e−15m/s；
+每步Newton最大残差≤5.99e−12N，初始无contact/撞击/尾段支撑均覆盖。
+finger1contact/condim6/raw六分量非零，world F[1.882050808,.740192379,−.1]N，
+COM M[−.001232051,−.001866025,−.001]Nm，末load预算误差≤4.81e−13Nm；
+末线速度分量.002197249m/s、角速度分量.060501533rad/s，不误称静止。
+初版静止验收失败后区分force balance与soft摩擦持续运动，只有box验收静止；
+斜墙避免轴对齐误用frame转置漏检；final frame/sign±/common-point reaction/
+漏COM力臂矩检查通过。CSV/JSON/PNG仅ignored tmp/s16_5_*；默认PNG已目视检查。
+没有GUI、真实触觉/硬件、UR5e/force control、通用摩擦稳定性验证；未用Python3.11执行。
+本人随后确认实验与预测完成，五项Explain准确说明API/轴/符号、力臂矩、
+动态支撑、独立质量对照及平衡不等于静止；README三项Learning完成，Mastered。
+术语补充旧geom1/geom2对应当前geom[0]/geom[1]。此次保留起始未提交工作，
+只同步根/示例README、学习包、阶段笔记、roadmap、P2 plan与本文；
+本地链接/状态/git diff --check通过，未重跑仿真或GUI，runtime沿用2026-10-08工程验证。
+本地链接、CSV维度/clock/独立逐轴wrench重算、mass尾段比例与finger完全相同通过；
+CLI mass nan/inf/0各exit2，git diff --check通过。
 
 ## S16.4 现场工程验证（2026-10-08，Zero）
 
@@ -32,7 +57,10 @@ Matplotlib3.11.2 metadata/import/module paths/APIs通过，无安装/requirement
 同刚体功率一致性atol1e−12通过。漏换点/反位移符号分别误差1.118034/2.236068Nm被检出。
 产物仅ignored tmp/s16_4_*，JSON/41×4CSV/PNG；默认图已目视核验。
 没有动力学、接触测力、UR5e、GUI/硬件验证；3.11兼容目标未用3.11运行。
-README Engineering完成，Learning三项未勾选；下一步本人Run/Modify/Explain见学习包。
+本人随后确认实验与预测完成，五项Explain准确覆盖契约/换点/旋转/力偶与reaction/功率，
+README Run/Modify/Explain全部完成，Learning Mastered。此次保留起始未提交工作，
+仅同步根/示例README、学习包、阶段笔记、roadmap、P2 plan与本文；
+链接/状态/git diff --check通过，未重跑数值实验或GUI，runtime沿用2026-10-08工程验证。
 本地Markdown链接、CSV独立分量公式与CLI lever nan/inf/−.2拒绝(exit2)通过；git diff --check通过。
 
 ## S16.3 现场工程验证（2026-10-08，Zero）

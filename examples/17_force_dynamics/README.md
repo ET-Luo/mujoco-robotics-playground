@@ -22,7 +22,7 @@ Modify：先预测负载下偏移和恢复过程，再只把 Kp 从20改成40，
 CSV/JSON/PNG仅写 ignored tmp/s16_1_*。ctrl 的单位随执行器变化；比较的是物理joint torque。
 headless Euler dt=1ms 的结果不证明高刚度/接触/UR5e/硬件稳定性；不需要GUI。
 2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S16.1 Learning Mastered。
-S16.5–S16.7 只规划，尚无实现。
+S16.6–S16.7 只规划，尚无实现。
 
 ## S16.2 — Dynamics budget
 
@@ -64,4 +64,19 @@ python examples/17_force_dynamics/wrench_frames.py --lever 0.4
 
 按上文先核验环境。Modify只移动负载作用点P，参考点Q/force/couple保持固定。
 产物仅ignored tmp/s16_4_*；这是合成几何实验，无contact/GUI/硬件验证。
-2026-10-08 Engineering Complete；Learning待本人Run/Modify/Explain。
+2026-10-08 Engineering Complete + Learning Mastered；本人确认实验、预测并完成五项Explain。
+
+## S16.5 — Contact wrench measurement
+
+[学习包](../../docs/19_5_contact_wrench.md)：box-plane支撑与斜墙球形指端condim6，
+读取完整contact wrench、geom符号、world转换、COM合成和Newton预算。
+依赖mujoco/numpy/matplotlib，无local helper或新依赖。
+
+```bash
+python examples/17_force_dynamics/contact_wrench.py
+python examples/17_force_dynamics/contact_wrench.py --mass 2
+```
+
+按上文先核验环境。Modify只改箱体质量；指端case不变，load balance不代表已静止。
+产物仅ignored tmp/s16_5_*，headless，无GUI/真实触觉/力控制验证。
+2026-10-08 Engineering Complete + Learning Mastered；本人确认实验、预测并完成五项Explain。

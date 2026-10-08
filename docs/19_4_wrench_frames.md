@@ -151,7 +151,10 @@ NumPy2.5.3、Matplotlib3.11.2 metadata/import/module paths/API核验，无安装
 
 wrench必须有方向、轴、点、顺序、单位；同轴才能叉乘；新→旧位移；
 纯力偶矩不随点变；同点moment旋转只换分量；同载荷换表示不改变一致计算的功率。
-Engineering见根README；Learning Run/Modify/Explain尚待本人报告。
+Engineering与Learning状态见根README。2026-10-08 本人确认实验与预测完成，
+并准确解释wrench物理契约、换点叉积与数值、逆旋转、纯力偶/reaction及功率一致性；
+Run/Modify/Explain全部完成，Learning Mastered。
+本次仅同步文档，runtime沿用2026-10-08 Zero工程验证，未重跑数值实验/GUI。
 
 **Run：** 默认命令，找出JSON关于O/W、Q/W、Q/T三种wrench，并手算Q/W的Mx和My。
 
