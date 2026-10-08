@@ -188,7 +188,14 @@ WSL2 Ubuntu24.04.5/kernel6.6.87.2，Python3.12.14/MuJoCo3.14.0/NumPy2.5.3/Matplo
 
 力目标不是峰值上限；有测量不等于闭环，必须让误差影响控制。
 力反馈需要contact gate；参考积分需范围投影；stopped hold不等于立即物理停止。
-Engineering Complete；Learning Run/Modify/Explain待本人验证，状态只见根README。
+Engineering Complete；2026-10-08 本人确认实验与预测完成，并提交五项Explain，
+反馈逻辑/固定reference对照/积分与动态停止的核心解释正确，Run/Modify/Explain完成，Learning Mastered。
+状态只见根README。精度补充：本人用假设的X法向说明符号，实际本fixture是world Y，
+墙对工具为+Y、欠力时reference向−Y；本课零gravity，静态motor Y力平衡接触反力，
+一般机器人还可能需要重力/bias补偿，hinge才对应torque单位。
+本gate具体为active pair且反力>.05N；search timeout与reference bounds是独立保护逻辑。
+reference积分数学上也累积力误差，但用途/状态与另加PI补偿不同；边界直接回写reference，
+本课未验证动态motor饱和或PI抗饱和恢复。
 
 Run：运行默认命令，看tmp/s17_6_f2/force_control.png与JSON，找到loss/absent的退出事件。
 Modify：先预测只将target2→4N对closed最终reference/反力、fixed反力与误差、loss后使能的影响，

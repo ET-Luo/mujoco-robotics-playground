@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（Stage16/S17.1–S17.5 Mastered；S17.6 Engineering Complete、Learning待本人验证）。
+最后整理：2026-10-08（Stage16/S17.1–S17.6 Mastered；S17.7 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,34 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S17.7，等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；下一小任务S17.8a，等待明确请求。**
+
+## S17.7 现场工程验证（2026-10-08，DESKTOP-781D67A）
+
+本人明确请求；pwd正确，保留起始七份S17.6未提交状态文档；读取规则/交接/示例README/source/requirements/roadmap。
+WSL2 Ubuntu24.04.5/kernel6.6.87.2，当前conda hook激活mujoco，同shell核验环境/所属python。
+Python3.12.14/MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/真实imports/module paths/API通过，
+无安装/requirements改动，未在Python3.11执行。新增[hybrid_control.py](../examples/18_compliant_control/hybrid_control.py)
+与[学习包](20_7_hybrid_position_force.md)；复用normal_force/模型/measure/helper三包链。
+同无摩擦XY装置，surface t/n/b=world X/Y/Z，显式R变换与Sp diag100/Sf diag010；normal target2N。
+reference层hybrid：tangent quintic reference+normal force-generated reference互斥投影后交inner motor，非直接wrench叠加。
+`python examples/18_compliant_control/hybrid_control.py`与`--distance .06`各2case exit0。
+5…7s单次30/60mm位移，不实施连续扫描；0…12s/12001×23CSV。
+hybrid运动切向max error.204596/.409191mm，normal max error.035781N，contact100%；tail位置差<1e−9mm。
+normal tail均值1.999964N/max error.000057872N；actual tangent peak28.6304/57.2607mm/s，
+Xmotor峰.090772/.181543N，Ymotor1.999980N，无饱和；current反力峰4.663290N/input6.358974N。
+normal_only保持力但位置goal误差30/60mm，task False；hybrid两任务合格。
+frame正交/normal几何对应/selector对称幂等互斥、wrong normal/overlap/left-hand静态拒绝、反馈sign probe通过。
+每步J/Jr/M/power/motor cap/contact Jᵀ/动力学/零bias与passive/external及actual半隐式递推通过。
+独立CSV quintic/outer+inner控制/projection与动力学、恢复初始/峰值/中点/末尾contact核验通过。
+两mode及两distance的normal相关字段≤1e−10相同；static selector无关轴排除/非恒等旋转功率核验通过。
+CLI distance0/nan各exit2；默认PNG目视与本地Markdown links/git diff --check通过。
+产物仅ignored tmp/s17_7_d0.03/d0.06、临时日志/tmp；无GUI/UR5e/ROS/动态斜平面/硬件或通用解耦保证。
+正常case未触发contact-loss；失联策略runtime沿用2026-10-08 S17.6，未称本轮重测通过。
+本人随后确认实验与预测完成并正确回答五项Explain；根README Learning三项完成，Mastered。
+学习包补充reference严格缩放与本fixture实际误差缩放的条件，不把selector当通用动力学解耦。
+本次保留起始全部modified/untracked工作，仅同步七份文档；本地文件链接/git diff --check通过。
+未重跑Python示例/仿真/GUI，runtime沿用2026-10-08工程验证；S17.8a等待明确请求。
 
 ## S17.6 现场工程验证（2026-10-08，DESKTOP-781D67A）
 
@@ -40,7 +67,11 @@ absent无可达墙、force loop0、3s search_timeout；末contact force0，均tr
 静态反馈sign/超大误差speed cap、CLI target0/nan exit2通过，4N PNG已目视检查。
 本地Markdown链接/git diff --check通过；产物仅ignored tmp/s17_6_f2/f4、日志/tmp。
 动态motor/reference未饱和；无GUI/UR5e/ROS/硬件安全停止、noise/delay或通用稳定性验证。
-根README Engineering完成，Learning三项未勾选；下一步本人Run/Modify/五项Explain，S17.7等待明确请求。
+本人随后确认实验与预测完成并提交五项Explain，核心逻辑正确；README Learning三项完成，Mastered。
+学习包记录精度补充：本人假设X法向的符号逻辑应映射到实际world Y，本fixture零gravity，
+gate为active pair+反力门限，timeout/bounds为独立保护；未把通用PI抗饱和建议称为已验证。
+本次起始git status空，仅同步七份文档；本地文件链接/git diff --check通过。
+未重跑Python示例/仿真/GUI，runtime沿用2026-10-08工程验证；S17.7等待明确请求。
 
 ## S17.5 现场工程验证（2026-10-08，DESKTOP-781D67A）
 

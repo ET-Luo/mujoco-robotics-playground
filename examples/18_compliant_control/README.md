@@ -108,4 +108,23 @@ python examples/18_compliant_control/normal_force.py --target-force 4
 fixed始终约1.998N；loss3s接触丢失退出，absent3s搜索超时，退出后继续physics/local hold。
 初版4N在5…6s误差.070953N未通过，最终延长到8s，门限不变；无通用收敛保证。
 产物只ignored tmp/s17_6_f2/f4；无GUI/UR5e/硬件停止或动态饱和恢复验证。
-Learning Run/Modify/Explain待本人完成；下一小任务S17.7等待明确请求。
+2026-10-08 本人确认实验、预测并完成五项Explain；坐标/gate精度补充见学习包，S17.6 Learning Mastered。
+S17.7见下文。
+
+## S17.7 — Hybrid position-force
+
+[完整学习包](../../docs/20_7_hybrid_position_force.md) / [代码](hybrid_control.py)。
+复用normal_force/helper依赖链，surface切向位置与法向力生成reference经互斥selector合成。
+仅一次已知平面点到点移动，不实施下一课连续扫描；无新依赖。
+
+```bash
+python examples/18_compliant_control/hybrid_control.py
+python examples/18_compliant_control/hybrid_control.py --distance .06
+```
+
+先核验上文conda/interpreter。Modify仅将切向距离30→60mm，时长2s与目标2N不变。
+2026-10-08 DESKTOP-781D67A：两命令exit0；运动切向误差.204596/.409191mm，法向误差.035781N/contact100%。
+normal_only力合格但切向失败；错误frame/selector静态拒绝、动力学/功率与normal不变核验通过。
+产物只ignored tmp/s17_7_d0.03/d0.06；无GUI/斜平面动态/UR5e/硬件或通用解耦保证。
+2026-10-08 本人确认实验、预测并完成五项Explain；S17.7 Learning Mastered。
+下一小任务S17.8a等待明确请求。
