@@ -457,7 +457,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
 - S17.2（0.5～2h）：[Cartesian impedance](docs/20_2_cartesian_impedance.md)：加入速度反馈阻尼，local torque loop自由空间恢复。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-08）；Learning待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
 - S17.3（0.5～2h）：Stiffness/damping sweep：有限K/D组合，dt/限幅、峰值与振荡对照。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

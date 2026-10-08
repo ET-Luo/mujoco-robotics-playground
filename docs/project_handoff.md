@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（Stage16/S17.1 Mastered；S17.2 Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-08（Stage16/S17.1 Mastered；S17.2 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,7 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2已按明确请求完成工程，Learning待本人验证；下一小任务S17.3，等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；下一小任务S17.3，等待明确请求。**
 
 ## S17.2 现场工程验证（2026-10-08，Zero）
 
@@ -37,7 +37,10 @@ impedance峰值速度.110550/.164106m/s、actual joint force峰4N、无饱和；
 错误阻尼符号静态功率检出，CLI nan/inf/0/−1各exit2。
 产物仅ignored tmp/s17_2_*；无contact/GUI/UR5e/硬件/动态饱和恢复或通用稳定性验证。
 默认PNG已目视核验；本地Markdown文件链接与git diff --check通过。
-README Engineering完成，Learning三项空；下一步本人Run、半D Modify与五问Explain；不自动实现S17.3。
+本人随后确认实验与预测完成，并正确回答五项Explain；README三项Learning完成，Mastered。
+学习包补充e=x−xd与e=xd−x两种符号约定及任务空间有效质量的适用范围。
+本次起始git status空，仅同步七份文档；本地文件链接与git diff --check通过。
+未重跑Python、仿真或GUI；runtime沿用2026-10-08工程验证。下一小任务S17.3等待明确请求。
 
 ## S17.1 现场工程验证（2026-10-08，Zero）
 

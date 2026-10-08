@@ -35,4 +35,5 @@ python examples/18_compliant_control/cartesian_impedance.py --damping-scale .5
 先按上文核验conda/interpreter。Modify仅把D减半，预测ζ、越过目标幅度和settling。
 2026-10-08 Zero：默认ζ=1与半Dζ=.5两命令exit0；settling .976/1.381s，半D越过目标约16.2%。
 CSV/JSON/PNG仅ignored tmp/s17_2_*；无contact/GUI/UR5e/硬件或动态饱和恢复验证。
-工程已完成，Learning Run/Modify/Explain待本人报告；不自动推进S17.3。
+2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S17.2 Learning Mastered。
+下一小任务S17.3，等待明确请求。

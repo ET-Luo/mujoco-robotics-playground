@@ -153,7 +153,11 @@ CLI damping-scale nan/inf/0/−1各exit2；默认PNG已目视核验，文件链�
 ## Must Remember / My Verification — Run / Modify / Explain
 
 弹簧针对位移，阻尼针对速度；阻尼力不总朝目标。v=Jp qvel；Jᵀ映射广义力。
-连续模型耗能并不等于任意离散实现稳定。README工程完成，Learning三项等待本人报告。
+连续模型耗能并不等于任意离散实现稳定。2026-10-08 本人明确确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部完成，Learning Mastered；状态见根README。
+解释精度补充：若定义e=x−x_d，则M vdot=−Ke−Dv、edot=v；
+若定义e=x_d−x，则M vdot=Ke−Dv、edot=−v。两者均得E_dot=−vᵀDv。
+能量式中的M在这里是XY任务空间有效质量diag(2,1)kg，一般不能直接套用joint mass matrix。
 
 Run：运行默认命令，查看tmp/s17_2_d1/response.png，对照spring与impedance。
 Modify：先预测再仅把D减半（--damping-scale .5），比较越过目标幅度、速度、settling和能量。
@@ -167,4 +171,4 @@ Explain：
 
 现场环境：WSL2 Ubuntu24.04.5，Python3.12.14/MuJoCo3.13.0/NumPy2.5.3/Matplotlib3.11.2，
 同shell核验mujoco环境/所属interpreter、metadata与真实module paths。无安装；未在3.11运行。
-不自动实现S17.3，等本人完成本课学习并明确请求。
+本课学习已完成；下一小任务S17.3等待明确请求。

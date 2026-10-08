@@ -1,6 +1,6 @@
 # Stage 17 — Compliant & Contact-Rich Control
 
-**S17.1 Engineering Complete + Learning Mastered；S17.2 Engineering Complete；其余Task仍为规划 skeleton。** 状态见[根README](../README.md#stage-17--compliant--contact-rich-control)。
+**S17.1 Engineering Complete + Learning Mastered；S17.2 Engineering Complete + Learning Mastered；其余Task仍为规划 skeleton。** 状态见[根README](../README.md#stage-17--compliant--contact-rich-control)。
 先完成[Stage16](19_force_dynamics.md)；不用IK误差迭代代替动力学控制。
 
 ## Problem / Why / Intuition
@@ -56,6 +56,6 @@ Expected为上表验收设计；S17.1 Actual见独立学习包：两组纯弹簧
 
 ## My Verification / Run / Modify / Explain
 
-状态仅根README；未来Task的Learning空框，S17.1已由本人确认完成。后续Task各指定一个Modify和3–5问Explain。
+状态仅根README；未来Task的Learning空框，S17.1与S17.2已由本人确认完成。后续Task各指定一个Modify和3–5问Explain。
 阶段候选问题：为何仅提高K会增加接触冲击？两种顺应控制输入/输出何异？
 hybrid为何需共同surface frame？ROS停发后worker应怎样处理仍存在的重力/接触？
