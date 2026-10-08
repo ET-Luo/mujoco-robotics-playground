@@ -89,4 +89,23 @@ python examples/18_compliant_control/admittance.py --virtual-mass 2
 有K bias末reference10mm；无K漂移487.55/475.05mm；bounded ref≤40mm/50mm/s。
 strong bounded实际速度峰约56.8mm/s，reference界不等于实际安全保证。
 产物只ignored tmp/s17_5_m1与m2；无GUI/contact/真实外力/硬件稳定性验证。
-Learning Run/Modify/Explain待本人完成；下一小任务S17.6等待明确请求。
+2026-10-08 本人确认实验、预测并完成五项Explain；S17.5 Learning Mastered。
+S17.6见下文。
+
+## S17.6 — Normal force control
+
+[完整学习包](../../docs/20_6_normal_force.md) / [代码](normal_force.py)。
+复用contact_transition模型/measure及cartesian_spring常量/三包依赖，无新依赖。
+真实MuJoCo接触反力→P力误差reference速度→有界reference积分→motor跟踪。
+
+```bash
+python examples/18_compliant_control/normal_force.py
+python examples/18_compliant_control/normal_force.py --target-force 4
+```
+
+先核验上文conda/interpreter。Modify仅把target2N改4N，比较closed与fixed的反力/reference。
+2026-10-08 DESKTOP-781D67A：最终两命令exit0；7…8s closed最大力误差.004202/.008332N。
+fixed始终约1.998N；loss3s接触丢失退出，absent3s搜索超时，退出后继续physics/local hold。
+初版4N在5…6s误差.070953N未通过，最终延长到8s，门限不变；无通用收敛保证。
+产物只ignored tmp/s17_6_f2/f4；无GUI/UR5e/硬件停止或动态饱和恢复验证。
+Learning Run/Modify/Explain待本人完成；下一小任务S17.7等待明确请求。

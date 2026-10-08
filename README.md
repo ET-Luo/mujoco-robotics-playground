@@ -466,10 +466,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
 - S17.5（0.5～2h）：[Admittance](docs/20_5_admittance.md)：测力→虚拟mass运动reference，位移/速度界。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-08）；Learning待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
-- S17.6（0.5～2h）：Normal force control：反力方向、contact gate、稳态与峰值力误差。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S17.6（0.5～2h）：[Normal force control](docs/20_6_normal_force.md)：反力方向、contact gate、稳态与峰值力误差。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-08）；Learning待本人验证
 
 - S17.7（0.5～2h）：Hybrid position-force：surface frame切向position/法向force，selector分轴。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

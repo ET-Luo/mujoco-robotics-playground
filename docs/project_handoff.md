@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（Stage16/S17.1–S17.4 Mastered；S17.5 Engineering Complete、Learning待本人验证）。
+最后整理：2026-10-08（Stage16/S17.1–S17.5 Mastered；S17.6 Engineering Complete、Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,31 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S17.6，等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S17.7，等待明确请求。**
+
+## S17.6 现场工程验证（2026-10-08，DESKTOP-781D67A）
+
+本人明确请求；pwd正确，保留起始七份S17.5未提交文档；读取规则/交接/示例source与README/requirements/roadmap。
+WSL2 Ubuntu24.04.5/kernel6.6.87.2；当前conda hook激活mujoco，同shell核验环境/所属python。
+Python3.12.14/MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/真实import路径通过；
+无安装/requirements改动，未在3.11执行。新增[normal_force.py](../examples/18_compliant_control/normal_force.py)
+与[学习包](20_6_normal_force.md)，复用S17.4模型/measure/helper三包依赖。
+active pair且反力>.05N gate；P力误差→reference速度（gain.003m/(Ns)、cap20mm/s）→5…60mm投影
+→原K400/D[56.568542,40]motor；reference积分存在，无额外PI I-state；dt1ms/joint cap20N。
+`python examples/18_compliant_control/normal_force.py`与`--target-force 4`最终各4case exit0。
+closed7…8s平均反力1.997421/3.994886N、max error.004202/.008332N；接触100%、速度<2.3e−8m/s。
+current peak4.663290/4.899475N、input检测peak6.358974N；reference末14.999035/9.998001mm。
+fixed两命令动力学/控制/测力相同，始终1.998002N，4N目标误差2.001998N，未称闭环通过。
+loss3s几何撤墙并当步contact_lost，1666loop采样后禁用/reference锁存/local hold继续mj_step；
+absent无可达墙、force loop0、3s search_timeout；末contact force0，均tracking qualified False。
+初版6s/4N尾窗口error.070953N未通过，contact正常；最终统一8s并将reference下界由10改5mm，
+保留.05N门限，使4N平衡reference位于范围内部；不把初次失败算PASS。
+每步J/Jr/M/actual cap/contact Jᵀ映射/动力学/零bias/passive/external、clock/shape/finite与q/v递推通过。
+独立CSV outer/inner控制与projection、gate、force balance/depth、恢复四种状态contact核对通过；
+静态反馈sign/超大误差speed cap、CLI target0/nan exit2通过，4N PNG已目视检查。
+本地Markdown链接/git diff --check通过；产物仅ignored tmp/s17_6_f2/f4、日志/tmp。
+动态motor/reference未饱和；无GUI/UR5e/ROS/硬件安全停止、noise/delay或通用稳定性验证。
+根README Engineering完成，Learning三项未勾选；下一步本人Run/Modify/五项Explain，S17.7等待明确请求。
 
 ## S17.5 现场工程验证（2026-10-08，DESKTOP-781D67A）
 
@@ -38,7 +62,10 @@ strong bounded实际速度峰56.794/56.737mm/s，tracking error峰.922834/.92279
 动力学/能量/limit flags通过；±边界outward拒绝/inward释放静态probe通过。
 CLI mass0/nan各exit2；默认PNG已目视检查；本地Markdown链接/git diff --check通过。
 产物只ignored tmp/s17_5_m1/m2，临时日志/tmp；无GUI/实际测力或外力/contact/UR5e/ROS/硬件闭环验证。
-根README Engineering完成，Learning三项未勾选；下一步本人Run/Modify/五项Explain，S17.6等待明确请求。
+本人随后确认实验与预测完成并正确回答五项Explain；根README Learning三项完成，Mastered。
+学习包补充ω_n/ζ的相对缩放、投影后速度以实际reference增量回写及一般状态的净力方向。
+本次起始git status空，仅同步七份文档；本地文件链接与git diff --check通过。
+未重跑Python示例/仿真/GUI，runtime沿用2026-10-08工程验证；S17.6等待明确请求。
 
 ## S17.4 现场工程验证（2026-10-08，DESKTOP-781D67A）
 

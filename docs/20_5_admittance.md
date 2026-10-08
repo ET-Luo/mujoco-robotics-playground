@@ -192,7 +192,12 @@ K_v>0的测力bias变成稳态offset；K_v=0的bias变成长期漂移。限位�
 
 测力→运动reference是admittance；位移/速度误差→力是impedance。
 虚拟质量不是物理质量；有阻尼不等于位置有界；reference界不是actual安全保证。
-Engineering Complete；Learning Run/Modify/Explain等待本人完成，状态只见根README。
+Engineering Complete；2026-10-08 本人确认实验与预测完成，并正确回答五项Explain，
+Run/Modify/Explain全部完成，Learning Mastered；状态只见根README。
+解释精度补充：M_v翻倍后ω_n与ζ均变为原值的1/√2，而非变为无单位的1/√2。
+边界回写采用u_next=(z_next−z)/dt：首次到界可能仍有小段正向速度，
+后续位置不再移动时速度为0；并非每次裁剪位置都立即把整步速度清零。
+正测力在零状态给正加速度，一般状态仍需结合−D_vu−K_vz判断净加速度。
 
 Run：运行默认命令，查看tmp/s17_5_m1/admittance.png与results.json，定位offset、drift和boundary三种行为。
 Modify：预测只把virtual mass1→2kg如何改变脉冲初始加速度、ζ、峰值位移/速度、bias稳态偏移，
