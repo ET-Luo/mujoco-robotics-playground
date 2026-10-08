@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（Stage16/S17.1 Mastered；S17.2 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-08（Stage16/S17.1/S17.2 Mastered；S17.3 Engineering Complete、Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,26 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；下一小任务S17.3，等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S17.4，等待明确请求。**
+
+## S17.3 现场工程验证（2026-10-08，DESKTOP-781D67A）
+
+本人明确请求；起始pwd正确/git status空。读取规则、交接、示例README/source、requirements与roadmap。
+当前机器WSL2 kernel6.6.87.2/Ubuntu24.04.5；conda info --base定位hook并激活mujoco，
+同执行shell核验环境/所属python；Python3.12.14、MuJoCo3.14.0、NumPy2.5.3、Matplotlib3.11.2
+metadata/真实imports/module paths/API通过，版本区别于Zero历史记录；无安装/requirements改动，未在3.11执行。
+新增[impedance_sweep.py](../examples/18_compliant_control/impedance_sweep.py)与[学习包](20_3_impedance_sweep.md)。
+复用S17.1固定XY fixture，6组K100/400×ζ.5/1/2，dt1ms/cap20N；另只改cap2N或dt80ms。
+`python examples/18_compliant_control/impedance_sweep.py`和`--cap 5`各exit0。
+六组settling1.381/.976/1.988/.723/.547/1.164s，无饱和；K提高对应peak actual4→16N。
+K400/ζ1 cap2/5N settling.640/.574s，饱和joint-samples246/95；动态限幅核验通过。
+粗dt80ms未settle，线性未饱和谱半径X/Y2.134/4.275，actual peak20N、requested77.509888N，
+末.5s最大位置误差65.4503mm；限幅不能保证恢复，不声称已证明极限环或无限发散。
+每步J/actual cap/qacc/零bias与passive/contact通过；独立clipped半隐式递推逐点核验q/v/force/time。
+两命令未改七组CSV逐元素相同；cap0/nan CLI各exit2；默认PNG目视通过。
+产物仅ignored tmp/s17_3_cap2与cap5，临时日志/tmp；本地Markdown链接/git diff --check通过。
+无GUI/contact/UR5e/ROS/硬件验证；README Engineering完成，Learning三项未勾选。
+下一步本人完成学习包Run/Modify/五项Explain；不自动实现S17.4。
 
 ## S17.2 现场工程验证（2026-10-08，Zero）
 

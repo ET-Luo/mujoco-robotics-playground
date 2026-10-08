@@ -36,4 +36,19 @@ python examples/18_compliant_control/cartesian_impedance.py --damping-scale .5
 2026-10-08 Zero：默认ζ=1与半Dζ=.5两命令exit0；settling .976/1.381s，半D越过目标约16.2%。
 CSV/JSON/PNG仅ignored tmp/s17_2_*；无contact/GUI/UR5e/硬件或动态饱和恢复验证。
 2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S17.2 Learning Mastered。
-下一小任务S17.3，等待明确请求。
+S17.3见下文。
+
+## S17.3 — Stiffness / damping sweep
+
+[完整学习包](../../docs/20_3_impedance_sweep.md) / [代码](impedance_sweep.py)。
+复用cartesian_spring XML/initial/gear与三包依赖；6组K/ζ、单独cap与dt对照，共8case。
+
+```bash
+python examples/18_compliant_control/impedance_sweep.py
+python examples/18_compliant_control/impedance_sweep.py --cap 5
+```
+
+先核验上文conda/interpreter。Modify仅把limited组cap2N改5N，预测requested/actual、饱和与settling。
+2026-10-08 DESKTOP-781D67A：两命令exit0、递推/动力学/限幅通过；六组恢复，粗dt80ms未settle。
+PNG/CSV/JSON只ignored tmp/s17_3_cap2与cap5；无新依赖、contact/GUI/硬件验证。
+Learning Run/Modify/Explain待本人完成；下一小任务S17.4等待明确请求。

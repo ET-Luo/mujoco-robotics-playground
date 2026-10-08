@@ -1,6 +1,6 @@
 # Stage 17 — Compliant & Contact-Rich Control
 
-**S17.1 Engineering Complete + Learning Mastered；S17.2 Engineering Complete + Learning Mastered；其余Task仍为规划 skeleton。** 状态见[根README](../README.md#stage-17--compliant--contact-rich-control)。
+**S17.1 Engineering Complete + Learning Mastered；S17.2 Engineering Complete + Learning Mastered；S17.3 Engineering Complete、Learning待本人验证；其余Task仍为规划 skeleton。** 状态见[根README](../README.md#stage-17--compliant--contact-rich-control)。
 先完成[Stage16](19_force_dynamics.md)；不用IK误差迭代代替动力学控制。
 
 ## Problem / Why / Intuition
@@ -22,7 +22,7 @@ Hybrid在同一surface frame中分开normal force与tangent position，selector�
 
 ## Tasks / Minimal Experiments / Expected evidence
 
-每项0.5～2h；[S17.1学习包](20_1_cartesian_spring.md)含Run、Actual与Run/Modify/Explain；[S17.2学习包](20_2_cartesian_impedance.md)包含阻尼恢复对照；其余Task具体结果只在授权实现后填写。
+每项0.5～2h；[S17.1学习包](20_1_cartesian_spring.md)含Run、Actual与Run/Modify/Explain；[S17.2学习包](20_2_cartesian_impedance.md)包含阻尼恢复对照；[S17.3学习包](20_3_impedance_sweep.md)包含增益、限幅与粗dt对照；其余Task具体结果只在授权实现后填写。
 
 | Task | 一个主要问题 / 最小实验 | 验收设计 |
 | --- | --- | --- |
@@ -39,7 +39,7 @@ Hybrid在同一surface frame中分开normal force与tangent position，selector�
 
 ## Expected / Actual / Explanation
 
-Expected为上表验收设计；S17.1 Actual见独立学习包：两组纯弹簧持续振荡，恢复力/能量梯度/motor核验通过；S17.2默认/半D均恢复，settling .976/1.381s，见独立学习包；其余Task未执行。
+Expected为上表验收设计；S17.1 Actual见独立学习包：两组纯弹簧持续振荡，恢复力/能量梯度/motor核验通过；S17.2默认/半D均恢复，settling .976/1.381s，见独立学习包；S17.3六组增益恢复、粗dt失败对照见[学习包](20_3_impedance_sweep.md)；其余Task未执行。
 输出以小CSV/JSON/PNG为主；保持接触力序列与失败phase，不只输出终点。
 
 ## Failure Cases / Stability / Robotics Context
