@@ -22,7 +22,7 @@ Modify：先预测负载下偏移和恢复过程，再只把 Kp 从20改成40，
 CSV/JSON/PNG仅写 ignored tmp/s16_1_*。ctrl 的单位随执行器变化；比较的是物理joint torque。
 headless Euler dt=1ms 的结果不证明高刚度/接触/UR5e/硬件稳定性；不需要GUI。
 2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S16.1 Learning Mastered。
-S16.4–S16.7 只规划，尚无实现。
+S16.5–S16.7 只规划，尚无实现。
 
 ## S16.2 — Dynamics budget
 
@@ -50,4 +50,18 @@ python examples/17_force_dynamics/gravity_compensation.py --cap-scale 0.1
 
 先按上文核验环境。Modify只减小cap；产物仅ignored tmp/s16_3_*。
 关闭contact/joint limits的裸UR5e自由空间教学模型，无GUI/硬件保证。
+2026-10-08 Engineering Complete + Learning Mastered；本人确认实验/预测并补齐force限幅解释。
+
+## S16.4 — Wrench axes and reference points
+
+[学习包](../../docs/19_4_wrench_frames.md)：force-first wrench，换轴/换力矩参考点、
+纯力偶、reaction和功率交叉核对。仅NumPy/Matplotlib，无local helper或MuJoCo运行依赖。
+
+```bash
+python examples/17_force_dynamics/wrench_frames.py
+python examples/17_force_dynamics/wrench_frames.py --lever 0.4
+```
+
+按上文先核验环境。Modify只移动负载作用点P，参考点Q/force/couple保持固定。
+产物仅ignored tmp/s16_4_*；这是合成几何实验，无contact/GUI/硬件验证。
 2026-10-08 Engineering Complete；Learning待本人Run/Modify/Explain。

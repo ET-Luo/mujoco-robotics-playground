@@ -4,7 +4,7 @@
 核心问题：**How does a robot physically interact with the environment?**
 任务状态只维护在[根 README](../README.md#p2--contact-rich-manipulation--dexterous-robotics)。
 首轮仅实现 S16.1；本人于2026-10-08确认Run/Modify/Explain完成，Learning Mastered。
-2026-10-08 本人授权S16.2；[学习包](19_2_manipulator_dynamics.md) Engineering Complete + Learning Mastered（本人确认实验、预测与五项Explain）；S16.3随后明确授权并Engineering Complete，见[学习包](19_3_gravity_compensation.md)；不自动推进S16.4。
+2026-10-08 本人授权S16.2；[学习包](19_2_manipulator_dynamics.md) Engineering Complete + Learning Mastered（本人确认实验、预测与五项Explain）；S16.3随后明确授权并Engineering Complete，见[学习包](19_3_gravity_compensation.md)；S16.4随后明确授权，仅推进当前Task。
 
 ## P1 最终状态审查与去重
 
@@ -83,4 +83,4 @@ age/timeout用monotonic wall time，state用simulation stamp，两种clock不能
 Minimal Experiment → Expected/Actual Result → Explanation → Failure Cases → Robotics Context →
 30秒/2分钟Interview Capsule → Must Remember → My Verification → Run/Modify/Explain。
 未来Stage skeleton只给问题、验收设计与未实现边界；执行后再写API/命令/actual结果。
-Learning必须由本人明确报告，助手运行不代替学习。S16.2已Mastered；S16.3 Engineering Complete，等待本人Run/Modify/Explain。
+Learning必须由本人明确报告，助手运行不代替学习。S16.2已Mastered；S16.3 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.4已明确授权并完成[工程学习包](19_4_wrench_frames.md)，Learning待本人验证；不推进S16.5。

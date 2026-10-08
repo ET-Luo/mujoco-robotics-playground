@@ -17,7 +17,7 @@ P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；P2 S16.1/S1
 | examples/14_vision_manipulation | perception_pose / grasp_candidates / vision_to_motion：packet/frame、candidate/IK、image/PnP→continuous motion / vision_pick_place 完整取放 / perception_noise 受控误差case / repeated_trials 分布评价 | 当前新工程入口 |
 | examples/15_motion_planning | collision_checking / edge_checking / rrt / rrt_connect / path_smoothing / time_parameterization / ur5e_obstacle_planning / collision_aware_pick_place：阶段许可/持物查询、二维C-space/分辨率漏检/单树与双树RRT/checked shortcuts/cubic配时/六维UR5e/held取放与tracking | S14.1–S14.7b入口；学习均完成 |
 | examples/16_ros2_integration | node_topic / pose_service / trajectory_action / tf2_frames / urdf_reference / joint_states_tf / manipulation_worker / manipulation_ros：完整CPU视觉抓放及状态/终态诊断；Int32发布订阅、Trigger缓存位置短请求/显式拒绝与双超时 | S15.1–S15.6b Engineering Complete；S15.1–S15.6b Learning Mastered |
-| examples/17_force_dynamics | actuator_semantics / manipulator_dynamics / gravity_compensation：actuator语义、单hinge动力学、UR5e有界gravity hold | P2 S16.1；动力学/接触/顺应后续逐Task授权 |
+| examples/17_force_dynamics | actuator_semantics / manipulator_dynamics / gravity_compensation / wrench_frames：actuator语义、动力学、UR5e gravity hold与wrench几何 | P2 S16.1；动力学/接触/顺应后续逐Task授权 |
 | environments / rl | 既有 planar Reach / CPU PPO 学习代码与部分占位 | P1 不推进 RL |
 | controllers / assets / notebooks / tests | 支持说明与部分占位 | 不为未来需求填满框架 |
 | scripts/check_env.sh | 环境诊断 | 执行前核验环境，不能代替算法验证 |
@@ -53,7 +53,7 @@ CPU NumPy 优先；S12.4 已新增 OpenCV headless 用于 calibration/PnP；NumP
 ## P2 当前边界
 
 [P2审查与规划](p2_plan.md)明确已有内容复用、force/frame/unit/sign/stability合同和Integration节奏。
-S16.1新内容是actuator语义/gear/饱和/扰动等价验证，不重复PD教程；S16.2已实现并核验单hinge解析动力学，见[学习包](19_2_manipulator_dynamics.md)；2026-10-08 本人确认实验、预测与五项Explain，Learning Mastered；S16.3已授权并完成[工程学习包](19_3_gravity_compensation.md)，Learning待本人验证；不推进S16.4。
+S16.1新内容是actuator语义/gear/饱和/扰动等价验证，不重复PD教程；S16.2已实现并核验单hinge解析动力学，见[学习包](19_2_manipulator_dynamics.md)；2026-10-08 本人确认实验、预测与五项Explain，Learning Mastered；S16.3已授权并完成[工程学习包](19_3_gravity_compensation.md)，2026-10-08 本人完成Run/Modify/Explain，Learning Mastered；S16.4已明确授权并完成[工程学习包](19_4_wrench_frames.md)，Learning待本人Run/Modify/Explain；不推进S16.5。
 P1 worker由ROS/IPC tick预算推动仿真；P2 S17.9计划改为worker独立loop，ROS低频送reference/monitor。
 本课Run/Modify/Explain见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 

@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（S16.1/S16.2 Mastered；S16.3 Engineering Complete，Learning待验证）。
+最后整理：2026-10-08（S16.1–S16.3 Mastered；S16.4 Engineering Complete，Learning待验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
-本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1、S16.2与S16.3实现。
+本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1–S16.4实现。
 已读取规则、README、交接、roadmap、P0最终trials/release与P1视觉/碰撞/ROS integration代码；
 复用UR5e FK/J/IK/DLS、trajectory、gripper、camera/PnP/RGB-D/ICP/hand-eye、RRT、ROS2/TF2/URDF。
 [P2审查与规划](p2_plan.md)记录去重与边界；Stage16–18逐Task0.5～2h，安排多处Integration。
@@ -16,7 +16,24 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**S16.3 Engineering Complete；等待本人Run/Modify/Explain，不自动推进S16.4。**
+**S16.4 Engineering Complete；等待本人Run/Modify/Explain，不自动推进S16.5。**
+
+## S16.4 现场工程验证（2026-10-08，Zero）
+
+保留起始全部未提交文档修改；WSL2 Ubuntu24.04.5/kernel6.18.33.2，当前conda hook
+激活mujoco，同shell核验pwd/环境/所属python。Python3.12.14、NumPy2.5.3、
+Matplotlib3.11.2 metadata/import/module paths/APIs通过，无安装/requirements改变。
+新增[wrench_frames.py](../examples/17_force_dynamics/wrench_frames.py)与
+[学习包](19_4_wrench_frames.md)，纯NumPy合成载荷，无local helper/MuJoCo runtime。
+`python examples/17_force_dynamics/wrench_frames.py`与`--lever 0.4`均exit0：
+默认M_O_W[.1,2.2,.3]、M_Q_W[1.1,1.7,.3]、M_Q_T[1.7,−1.1,.3]Nm；
+修改P_x后分别[.1,4.2,.3]/[1.1,3.7,.3]/[3.7,−1.1,.3]Nm。
+独立解析分量、换点/换轴双路径、roundtrip、norm、纯力偶、沿F换点、reaction、
+同刚体功率一致性atol1e−12通过。漏换点/反位移符号分别误差1.118034/2.236068Nm被检出。
+产物仅ignored tmp/s16_4_*，JSON/41×4CSV/PNG；默认图已目视核验。
+没有动力学、接触测力、UR5e、GUI/硬件验证；3.11兼容目标未用3.11运行。
+README Engineering完成，Learning三项未勾选；下一步本人Run/Modify/Explain见学习包。
+本地Markdown链接、CSV独立分量公式与CLI lever nan/inf/−.2拒绝(exit2)通过；git diff --check通过。
 
 ## S16.3 现场工程验证（2026-10-08，Zero）
 
@@ -33,7 +50,12 @@ shoulder-lift gear2、模型joint cap150/28Nm；关闭contact/joint limits，无
 no-pulse gravity-only/hold保持home；低cap hold饱和6584joint-samples、final偏移1.799907rad，
 未恢复且末窗口仍运动；PASS是饱和失败检出，不是hold成功。产物仅ignored tmp/s16_3_*。
 无GUI、contact、硬件、payload或通用稳定性验证；代码3.11兼容目标未用3.11执行。
-README Engineering完成，Learning三项未勾选；Run/Modify/Explain见学习包。
+README Engineering完成；本人随后确认实验与预测完成，Run/Modify已勾选，
+本人随后补正第2项，Explain完成，Learning Mastered：ctrl不限幅，
+低cap shoulder-lift scalar force下限−7.5，
+gear2→actual joint torque−15N·m，而非假设ctrlrange导致−2N·m。
+第5项补充动态完整force budget，详见学习包。本次仅同步根README、学习包、示例README、阶段笔记、roadmap、P2 plan与本文；
+本地链接/状态/git diff --check通过，未重跑仿真/GUI，runtime沿用2026-10-08工程验证。
 本地链接、全部CSV shape/clock/mapping/clamp/200step pulse核验通过；CLI cap nan/0/inf各exit2。
 默认PNG已目视检查，git diff --check通过。
 

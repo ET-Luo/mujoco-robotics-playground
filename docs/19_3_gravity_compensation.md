@@ -150,7 +150,15 @@ zero torque掉落/连续旋转只作无约束教学对照，无碰撞、硬件�
 
 g(q)=bias(q,0)；probe不改actual；joint torque=gear*scalar force；
 重力补偿不提供位置恢复；反馈也受总输出限幅；小仿真误差不代表硬件精度。
-Engineering见根README，Learning三项待本人明确报告。
+Engineering见根README。2026-10-08 本人确认实验与预测完成，Run/Modify完成；
+本人随后补正第2项，准确说明ctrl不夹断、scalar force夹为−7.5、
+gear2映射实际−15N·m与约.857N·m缺口；五项Explain完成，Learning Mastered。
+第5项已补充动态完整力矩预算。
+本课ctrllimited=False；低cap shoulder-lift joint cap为±15N·m、gear2，
+scalar forcerange为±7.5。requested=−15.857N·m时ctrl=−7.9285不被ctrl clamp，
+actuator_force夹为−7.5，实际joint torque为−15N·m；没有ctrlrange±1的配置。
+动态force balance包含M qacc、完整bias、passive、actuator、external及constraint，
+不是仅比较motor与gravity。此次只更新文档，未重跑仿真，runtime沿用2026-10-08工程验证。
 
 **Run：** 运行默认命令，查看JSON和图，比较外力撤去后三模式是否回home。
 
