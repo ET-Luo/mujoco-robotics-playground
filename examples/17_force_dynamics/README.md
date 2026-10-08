@@ -22,7 +22,7 @@ Modify：先预测负载下偏移和恢复过程，再只把 Kp 从20改成40，
 CSV/JSON/PNG仅写 ignored tmp/s16_1_*。ctrl 的单位随执行器变化；比较的是物理joint torque。
 headless Euler dt=1ms 的结果不证明高刚度/接触/UR5e/硬件稳定性；不需要GUI。
 2026-10-08 本人确认实验与预测完成，并正确回答五项Explain；S16.1 Learning Mastered。
-S16.6–S16.7 只规划，尚无实现。
+S16.7 只规划，尚无实现。
 
 ## S16.2 — Dynamics budget
 
@@ -80,3 +80,18 @@ python examples/17_force_dynamics/contact_wrench.py --mass 2
 按上文先核验环境。Modify只改箱体质量；指端case不变，load balance不代表已静止。
 产物仅ignored tmp/s16_5_*，headless，无GUI/真实触觉/力控制验证。
 2026-10-08 Engineering Complete + Learning Mastered；本人确认实验、预测并完成五项Explain。
+
+## S16.6 — Jacobian transpose
+
+[学习包](../../docs/19_6_jacobian_transpose.md)：复用UR5e site geometric J，将环境wrench
+映射成外部joint torque；applyFT/FK虚功/功率与轴/点变换核对。
+依赖mujoco/numpy/matplotlib/mujoco-menagerie，无local helper或新依赖。
+
+```bash
+python examples/17_force_dynamics/jacobian_transpose.py
+python examples/17_force_dynamics/jacobian_transpose.py --offset .2
+```
+
+按上文先核验环境。Modify只翻倍tool施力点偏置，三组site原点case不变。
+产物仅ignored tmp/s16_6_*；time0，无motor执行/contact/GUI/硬件验证。
+2026-10-08 Engineering Complete；Learning待本人Run/Modify/Explain。

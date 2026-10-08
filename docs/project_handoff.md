@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（S16.1–S16.4 Mastered；S16.5 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-08（S16.1–S16.5 Mastered；S16.6 Engineering Complete，Learning待验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## 当前边界与下一步
 
-本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1–S16.5实现。
+本人明确确认P0/P1完成，授权P2规划，已分别明确请求S16.1–S16.6实现。
 已读取规则、README、交接、roadmap、P0最终trials/release与P1视觉/碰撞/ROS integration代码；
 复用UR5e FK/J/IK/DLS、trajectory、gripper、camera/PnP/RGB-D/ICP/hand-eye、RRT、ROS2/TF2/URDF。
 [P2审查与规划](p2_plan.md)记录去重与边界；Stage16–18逐Task0.5～2h，安排多处Integration。
@@ -16,7 +16,25 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**S16.5 Learning Mastered；下一小任务S16.6 Jacobian transpose，等待本人明确请求。**
+**S16.6 Engineering Complete；等待本人Run/Modify/Explain，不自动推进S16.7。**
+
+## S16.6 现场工程验证（2026-10-08，Zero）
+
+起始git status空；WSL2 Ubuntu24.04.5/kernel6.18.33.2；当前conda hook激活mujoco，
+同shell核验pwd/环境/所属python；Python3.12.14、MuJoCo3.13.0、NumPy2.5.3、
+Matplotlib3.11.2、Menagerie2026.9.2 metadata/import/module paths/API通过，无安装/requirements变更。
+新增[jacobian_transpose.py](../examples/17_force_dynamics/jacobian_transpose.py)与
+[学习包](19_6_jacobian_transpose.md)，UR5e home/attachment_site，复用J写法而不导入local helper。
+`python examples/17_force_dynamics/jacobian_transpose.py`与`--offset .2`各exit0：
+纯力/力偶/组合wrench/偏置点力四case，applyFT/累加/同点换轴/直接P点J核对atol1e−12；
+独立六列FK虚功误差≤1.78e−9Nm，虚拟motion两侧功率一致。
+默认offset tau[−1.910008,4.650990,3.375990,.240000,.48,−.46]Nm；
+偏置翻倍只让offset−site_force项翻倍。漏力臂矩/混轴错误被检出。
+time0、actual qvel/外力数组0；无mj_step、motor执行/限幅、contact/GUI/硬件验证。
+CSV/JSON/PNG仅ignored tmp/s16_6_*；默认PNG已目视检查；未用Python3.11执行。
+README Engineering完成，Learning三项未勾选；Run/Modify/Explain见学习包。
+本地链接、CSV维度/独立逐列力矩重算、offset附加项翻倍与三site case不变核验通过；
+CLI offset nan/inf/0各exit2，git diff --check通过。
 
 ## S16.5 现场工程验证（2026-10-08，Zero）
 
