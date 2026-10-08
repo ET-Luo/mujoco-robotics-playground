@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（S16.1–S16.6 Mastered；S16.7 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-08（Stage16/S17.1 Mastered；S17.2 Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,52 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**S16.7 Learning Mastered，Stage16学习项全部完成；下一小任务S17.1 Cartesian virtual spring，等待本人明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2已按明确请求完成工程，Learning待本人验证；下一小任务S17.3，等待明确请求。**
+
+## S17.2 现场工程验证（2026-10-08，Zero）
+
+保留起始全部modified/untracked S17.1工作，pwd正确；沿用本会话核验的WSL2 Ubuntu24.04.5。
+同shell重新激活mujoco/核验所属python；Python3.12.14、MuJoCo3.13.0、NumPy2.5.3、
+Matplotlib3.11.2 metadata/真实import/module paths通过，无安装/requirements改动，未在3.11执行。
+新增[cartesian_impedance.py](../examples/18_compliant_control/cartesian_impedance.py)与
+[学习包](20_2_cartesian_impedance.md)，复用cartesian_spring常量/XML及依赖链。
+同XY slide，固定orientation、M=diag(2,1)kg，K100N/m，gravity/contact/passive damping零；
+显式world v=Jp qvel，F=K(xd−x)−Dv→Jᵀ→gear motor，每1ms更新，cap±20N。
+`python examples/18_compliant_control/cartesian_impedance.py`与`--damping-scale .5`各exit0。
+默认D[28.284271,20]、ζ1，settling.976s/无越过目标；半Dζ.5，settling1.381s/越过目标约16.2%。
+settling为|位置|<1mm且|速度|<2mm/s并持续到4s末；不作无限未来保证。
+impedance峰值速度.110550/.164106m/s、actual joint force峰4N、无饱和；spring未settle。
+连续解最大误差spring .154911mm、默认 .093510mm、半D .122545mm；动力学残差0N。
+每步J/姿态/惯量/功率/gear/cap/零bias与passive/非正阻尼功率通过。
+独立CSV recurrence/control/clock/shape/能量预算与settling重算、baseline不变核验通过；
+错误阻尼符号静态功率检出，CLI nan/inf/0/−1各exit2。
+产物仅ignored tmp/s17_2_*；无contact/GUI/UR5e/硬件/动态饱和恢复或通用稳定性验证。
+默认PNG已目视核验；本地Markdown文件链接与git diff --check通过。
+README Engineering完成，Learning三项空；下一步本人Run、半D Modify与五问Explain；不自动实现S17.3。
+
+## S17.1 现场工程验证（2026-10-08，Zero）
+
+起始git status空，pwd正确；WSL2 Ubuntu24.04.5/kernel6.18.33.2。
+当前conda info --base发现hook，base→mujoco，同shell核验环境与所属python；
+Python3.12.14/MuJoCo3.13.0/NumPy2.5.3/Matplotlib3.11.2 metadata、真实import/module paths/API通过。
+无新依赖、安装或requirements改动；不需要Menagerie/local helper；未在Python3.11执行。
+新增[cartesian_spring.py](../examples/18_compliant_control/cartesian_spring.py)、
+[学习包](20_1_cartesian_spring.md)与示例README；根README为状态唯一来源。
+二维slide、结构固定orientation、M=diag(2,1)kg，gravity/contact/passive damping零。
+纯F=k(xd−x)→Jᵀ广义力→gear=[2,1]motor，joint cap±20N，无速度反馈/IK。
+`python examples/18_compliant_control/cartesian_spring.py`及`--stiffness 200`各exit0，
+默认/翻倍初始F[−4,+3]/[−8,+6]N，理论周期X/Y .888577/.628319与.628319/.444288s；
+连续解最大位置差.152162/.218812mm，能量相对偏差.398242/.575907%，未settle。
+势能梯度误差≤2.19e−11N；J/功率/固定姿态/惯量/gear/force cap通过；
+独立cap probe请求[40,−40]→actual[20,−20]N，动态无饱和；zero始终保持initial offset。
+CSV/JSON/PNG仅ignored tmp/s17_1_*；wrong-sign只做静态方向检出，未运行发散动力学。
+独立CSV shape/clock/control与解析质量半隐式recurrence逐点核对通过；
+CLI stiffness nan/inf/0各exit2；默认PNG已目视检查，本地Markdown文件链接与git diff --check通过。
+无GUI/UR5e/contact/硬件或通用稳定性验证。
+本人随后明确确认实验与预测完成，五项Explain正确覆盖恢复方向/势能、广义力单位、
+等效质量与周期/耗能、gear及指令/驱动/接触力区别；README三项Learning完成，Mastered。
+本次保留全部起始修改，仅同步七份状态文档；文件链接与git diff --check通过。
+未重跑Python、仿真或GUI；runtime沿用2026-10-08工程验证。下一小任务S17.2，等待明确请求。
 
 ## S16.7 现场工程验证（2026-10-08，Zero）
 
