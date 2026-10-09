@@ -167,4 +167,26 @@ python examples/18_compliant_control/ur5e_surface_following.py --leg-duration 1
 T1参考走完且末尾恢复2N，不等于中途扫描合格；loss两组均6s锁存actual位置/姿态并退出，physics继续至12s。
 actual速度与caps、独立FK/J/contact/step replay、数值Jacobian验证见学习包；产物只ignored tmp/s17_8b_*。
 仅probe-plane碰撞开启，不提供arm避碰；无GUI/ROS/真实force sensor/硬件验证。
-Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S17.9等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9见下文。
+
+
+## S17.9 — Independent worker / ROS monitoring
+
+[完整学习包](../../docs/20_9_worker_ros_monitoring.md) / [worker](control_worker.py) / [ROS](worker_ros.py)。
+同S17.8b裸UR5e；conda helper需要mujoco/numpy/matplotlib/mujoco-menagerie，requirements不变。
+ROS-only apt：ros-jazzy-rclpy、std-srvs、action-msgs、ament-cmake、rosidl-default-generators/runtime；
+cmake/make/g++与apt python3-numpy（生成固定数组需要）。不安装系统pip、不混合ROS/MuJoCo imports。
+launcher从当前conda hook激活worker环境，隔离构建/ROS环境，核验两解释器并清理自有进程。
+新s17_interfaces0.0.1只将生成物放ignored tmp/s17_9_interfaces，不改变P1。
+
+```bash
+bash examples/18_compliant_control/run_worker_ros.sh
+bash examples/18_compliant_control/run_worker_ros.sh --stop-after 6
+```
+
+一次运行一个launcher，DOMAIN79/LOCALHOST。Modify只在task elapsed6s停止新reference，lease.5wall秒不变。
+2026-10-09 Zero：default/delay.2成功，delay.7/stop6预期ABORTED，cancel6及pause/resume通过，六条launcher exit0。
+默认切向max.352200mm、normal max.048350N；成功后2N hold继续，cancel/timeout退出2N目标，仍继续physics。
+独立IPC、actual trace/FK/J/motor/contact/step replay与guard检查见学习包；无GUI/硬件/跨机/硬实时验证。
+每次打印ignored tmp/s17_9/run_*，含client_result/worker_result/worker.csv与日志；分析PNG是本轮独立validation产物。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；不自动启动Stage18。

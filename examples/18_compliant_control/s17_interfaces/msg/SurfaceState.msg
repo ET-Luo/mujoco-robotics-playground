@@ -14,4 +14,4 @@ float64[6] q_rad
 float64[6] qvel_rad_s
 float64[3] actual_surface_m
 float64[3] reference_surface_m
-float64 normal_force_N
+float64 normal_force_n

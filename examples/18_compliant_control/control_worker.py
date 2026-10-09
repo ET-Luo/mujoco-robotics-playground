@@ -5,6 +5,7 @@ import math
 import os
 from pathlib import Path
 import queue
+import signal
 import socket
 import sys
 import threading
@@ -93,7 +94,7 @@ class Controller:
             age = time.monotonic()-issued
             if not math.isfinite(issued) or not 0 <= age <= self.timeout:
                 raise ValueError('expired_or_future_reference')
-            values = [float(packet[k]) for k in ('distance_m', 'leg_duration_s', 'normal_target_N')]
+            values = [float(packet[k]) for k in ('distance_m', 'leg_duration_s', 'normal_target_n')]
             if not all(math.isfinite(v) for v in values) or values != [self.distance, self.duration, TARGET]:
                 raise ValueError('reference_descriptor_mismatch')
             self.sequence, self.issued, self.deadline = seq, issued, issued+self.timeout
@@ -109,7 +110,7 @@ class Controller:
                     accepted_references=self.accepted, rejected_references=self.rejected, last_reference_rejection=self.last_rejection,
                     q_rad=self.data.qpos[self.qa].tolist(), qvel_rad_s=self.data.qvel[self.va].tolist(),
                     actual_surface_m=(R_WS.T @ (self.data.site_xpos[self.site]-ORIGIN)).tolist(),
-                    reference_surface_m=self.reference.tolist(), normal_force_N=self.force,
+                    reference_surface_m=self.reference.tolist(), normal_force_n=self.force,
                     metrics=self.metrics.copy())
 
     def step(self):
@@ -205,6 +206,7 @@ class Controller:
                                self.force, d.qpos[self.qa], d.qvel[self.va], torque, actual, d.qacc[self.va]])
         mujoco.mj_step(m, d)  # SOLE physics advancement; ROS never grants a tick.
         mujoco.mj_forward(m, d)  # Snapshot pose corresponds to updated qpos, not previous step.
+        self.force = float((R_WS.T @ measure(m, d)[0])[1])
 
 
 class Mailboxes:
@@ -264,6 +266,9 @@ def main():
     parser.add_argument('--socket', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
+    signal.signal(signal.SIGINT, signal.default_int_handler)
+    def terminate(_signum, _frame): raise KeyboardInterrupt
+    signal.signal(signal.SIGTERM, terminate)
     if os.environ.get('CONDA_DEFAULT_ENV') != 'mujoco' or Path(sys.prefix).name != 'mujoco':
         raise RuntimeError('require conda mujoco, no system/base Python fallback')
     if args.socket.exists(): raise RuntimeError('socket exists; do not replace another worker')
@@ -291,6 +296,7 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
+        signal.signal(signal.SIGINT, signal.SIG_IGN); signal.signal(signal.SIGTERM, signal.SIG_IGN)
         mail.exit.set(); listener.join(timeout=.5); args.socket.unlink(missing_ok=True)
         np.savetxt(args.output/'worker.csv', np.asarray(controller.rows), delimiter=',', comments='',
                    header='time_s,task_elapsed_s,wall_monotonic_s,command_age_s,phase,ref_t,ref_n,ref_b,ref_vt,ref_vn,ref_vb,t,n,b,vt,vn,vb,normal_N,'+

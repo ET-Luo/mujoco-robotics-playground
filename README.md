@@ -480,8 +480,8 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S17.8b（0.5～2h）：[Surface Following Integration / UR5e](docs/20_8b_surface_following_ur5e.md)：probe Jacobian/motor移植、实际往返扫描与接触评价。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
-- S17.9（0.5～2h）：Worker / ROS Monitoring Integration：独立inner loop，ROS command/state/action/feedback/monitoring；延迟/停发/cancel。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S17.9（0.5～2h）：[Worker / ROS Monitoring Integration](docs/20_9_worker_ros_monitoring.md)：独立inner loop，typed reference/state/Action与延迟/停发/cancel/pause。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
 ### Stage 18 — Teleoperation & Dexterous Foundations
 

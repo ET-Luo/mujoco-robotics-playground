@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16/S17.1–S17.8a Mastered；S17.8b Engineering Complete + Learning Mastered）。
+最后整理：2026-10-09（Stage16与Stage17学习项全部Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,32 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S17.9等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；不自动启动Stage18。**
+
+## S17.9 现场工程验证（2026-10-09，Zero）
+
+本人明确继续请求；保留起始七份S17.8b staged文档，后续会话内Git已有eb8e9f8 worker/interfaces提交，未撤回其工作。
+pwd正确，WSL2 Ubuntu24.04.5/kernel6.18.33.2；当前hook激活mujoco/所属Python3.12.14与ROS空conda/systemPython3.12.3/Jazzy同shell分别核验。
+MuJoCo3.13.0/NumPy2.5.3/Matplotlib3.11.2/Menagerie2026.9.2 metadata/真实imports/module paths通过；
+ROS apt rclpy7.1.12/std-srvs5.3.8/action-msgs2.0.4/ament-cmake2.5.6/rosidl1.6.1，cmake/make/g++/apt NumPy已有，dpkg --audit空。
+无安装/requirements改动。新增[学习包](20_9_worker_ros_monitoring.md)、control_worker/worker_ros/run_worker_ros与s17_interfaces0.0.1/build。
+接口build/type support/实际imports通过，生成物只ignored tmp/s17_9_interfaces；ROS字段大小写和固定数组JSON准备失败已修复，未计PASS。
+同S17.8b UR5e控制/模型，独立owner每1ms ctrl+mj_step；名义10ms wall batch非实时，不接收tick RPC；启动idle也推进physics。
+reference单槽与最多8条生命周期queue；同机monotonic lease、generation/sequence/固定描述校验，Action begin不重设actual q/time；single goal perworker。
+六launcher default、--command-delay .2/.7、--stop-after6、--cancel-at6及--cancel-at6 --pause-check均验证预期exit0。
+default/.2 SUCCEEDED，terminal snapshot elapsed12.040/12.050s，扫描切向max.352200mm/force max.048350N，全contact/无饱和。
+.7 ABORTED command_timeout/elapsed.500s/accepted0；stop6 ABORTED/6.560s；cancel两组CANCELED/6.080s，均ACK/applied。
+所有终态后.25wall秒快照sim增加.24… .25s；成功仍约1.999954N力hold，stop/cancel检查时力0N。
+pause qpos/qvel/time逐值相同，resume继续physics，不恢复旧任务；state11…249条/feedback11…241条真实ROS收发。
+独立audit_worker.py无ROS/无tick physics、partial socket隔离、重复序号/future/stale/generation/descriptor拒绝、active pause拒绝、cancel/旧包不可重启/one-shot拒绝通过。
+numerical.py六48列CSV完整q/v递推和每case24…146actual快照FK/J/bias+motor/contact/qacc/单步replay通过；max动力学残差≤1.688e−14Nm。
+CLI delay nan/period0/cancel−2/stop20各exit2，无server exit3；两源码3.11语法、bash -n、分析PNG目视/本地links/git diff --check通过。
+产物只ignored tmp/s17_9*及/tmp日志，正常清理无worker/bridge遗留；未在Python3.11运行。
+未专门注入成功/取消竞态、worker crash/IPC应用超时或高负载；无GUI/硬件/跨机/长期稳定性或硬实时保证。
+本人随后明确确认实验与预测完成并提交五项Explain，核心解释准确；README Learning三项完成，Mastered。
+学习包补充owner主线程、成功后2N hold与cancel/timeout锁存actual pose并退出力外环、arrival单槽与序号应用校验边界。
+Stage17学习项全部完成；本次仅同步七份状态文档，本地Markdown links与git diff --check通过。
+未重跑Python、ROS通信、仿真或GUI，runtime沿用2026-10-09工程验证；不自动启动Stage18。
 
 ## S17.8b 现场工程验证（2026-10-09，Zero）
 

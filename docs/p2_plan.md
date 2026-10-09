@@ -66,16 +66,16 @@ hand优先固定palm、3finger×2hinge、简单capsule collision教学MJCF；只
 不引入Isaac、RL训练、ACT/Diffusion Policy/VLA、大型tactile视觉网络或真实haptic device。
 teleoperation默认synthetic master可重复，keyboard仅可选UI，不用UI帧率驱动物理积分。
 
-## Controller worker / ROS2 contract（计划，未实现）
+## Controller worker / ROS2 contract（S17.9已实现，指定教学场景）
 
 MuJoCo worker按固定simulation dt读取最新有界reference、算控制、施加torque、mj_step；
 闭环在worker内完成，ROS callback不授权每个physics step，也不等待高频测力再算控制。
 可选wall pacing不是硬实时保证；记录simulation rate与wall调度。
 ROS2负责command/state/action/feedback/monitoring，经有界mailbox传reference；
 age/timeout用monotonic wall time，state用simulation stamp，两种clock不能混用。
-命令过期或cancel切换worker本地安全hold/damping模式，仍继续physics以验证负载行为；
-仿真pause另作明确操作，不能作为“硬件停止”的替代。此生命周期改进留S17.9，
-本轮不修改P1 worker或其历史结果。
+命令过期或cancel切换worker本地pose hold/damping教学策略（不代表硬件安全保证），仍继续physics以验证负载行为；
+仿真pause另作明确操作，不能作为“硬件停止”的替代。生命周期实现与边界见[S17.9](20_9_worker_ros_monitoring.md)，
+P1 worker及其历史结果保留；同机lease参考描述与单goal worker，不声明通用硬实时控制。
 
 ## Sprint Learning skeleton
 
@@ -83,4 +83,4 @@ age/timeout用monotonic wall time，state用simulation stamp，两种clock不能
 Minimal Experiment → Expected/Actual Result → Explanation → Failure Cases → Robotics Context →
 30秒/2分钟Interview Capsule → Must Remember → My Verification → Run/Modify/Explain。
 未来Stage skeleton只给问题、验收设计与未实现边界；执行后再写API/命令/actual结果。
-Learning必须由本人明确报告，助手运行不代替学习。S16.2已Mastered；S16.3 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.4已明确授权并完成[工程学习包](19_4_wrench_frames.md)，Learning Mastered（2026-10-08 本人确认）；S16.5随后明确授权并完成[工程学习包](19_5_contact_wrench.md)，Learning Mastered（2026-10-08 本人确认）；S16.6已明确授权并完成[工程学习包](19_6_jacobian_transpose.md)，Learning Mastered（2026-10-08 本人确认）；S16.7已明确授权并完成[工程学习包](19_7_force_mapping_integration.md)，Learning Mastered（2026-10-08 本人确认）；Stage16学习项全部完成，S17.1已按明确请求完成[虚拟弹簧学习包](20_1_cartesian_spring.md)，Engineering Complete（2026-10-08），Learning Run/Modify/Explain全部完成，Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.2已按明确请求完成[阻抗学习包](20_2_cartesian_impedance.md)，Engineering Complete（2026-10-08），Learning Run/Modify/Explain全部完成，Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.3已按明确请求完成[增益扫描学习包](20_3_impedance_sweep.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.4已按明确请求完成[接触过渡学习包](20_4_contact_transition.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.5已按明确请求完成[Admittance学习包](20_5_admittance.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.6已按明确请求完成[法向力控制学习包](20_6_normal_force.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain；坐标与gate精度见学习包）；S17.7已按明确请求完成[Hybrid学习包](20_7_hybrid_position_force.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.8a已按明确请求完成[fixture扫描学习包](20_8a_surface_following_fixture.md)，Engineering Complete（2026-10-09），Learning Run/Modify/Explain全部完成，Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b已按明确请求完成[UR5e扫描学习包](20_8b_surface_following_ur5e.md)，Engineering Complete（2026-10-09），Learning Run/Modify/Explain全部完成，Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S17.9等待明确请求。
+Learning必须由本人明确报告，助手运行不代替学习。S16.2已Mastered；S16.3 Engineering Complete + Learning Mastered（2026-10-08 本人确认）；S16.4已明确授权并完成[工程学习包](19_4_wrench_frames.md)，Learning Mastered（2026-10-08 本人确认）；S16.5随后明确授权并完成[工程学习包](19_5_contact_wrench.md)，Learning Mastered（2026-10-08 本人确认）；S16.6已明确授权并完成[工程学习包](19_6_jacobian_transpose.md)，Learning Mastered（2026-10-08 本人确认）；S16.7已明确授权并完成[工程学习包](19_7_force_mapping_integration.md)，Learning Mastered（2026-10-08 本人确认）；Stage16学习项全部完成，S17.1已按明确请求完成[虚拟弹簧学习包](20_1_cartesian_spring.md)，Engineering Complete（2026-10-08），Learning Run/Modify/Explain全部完成，Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.2已按明确请求完成[阻抗学习包](20_2_cartesian_impedance.md)，Engineering Complete（2026-10-08），Learning Run/Modify/Explain全部完成，Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.3已按明确请求完成[增益扫描学习包](20_3_impedance_sweep.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.4已按明确请求完成[接触过渡学习包](20_4_contact_transition.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.5已按明确请求完成[Admittance学习包](20_5_admittance.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.6已按明确请求完成[法向力控制学习包](20_6_normal_force.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain；坐标与gate精度见学习包）；S17.7已按明确请求完成[Hybrid学习包](20_7_hybrid_position_force.md)，Engineering Complete + Learning Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）；S17.8a已按明确请求完成[fixture扫描学习包](20_8a_surface_following_fixture.md)，Engineering Complete（2026-10-09），Learning Run/Modify/Explain全部完成，Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b已按明确请求完成[UR5e扫描学习包](20_8b_surface_following_ur5e.md)，Engineering Complete（2026-10-09），Learning Run/Modify/Explain全部完成，Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9已按明确请求完成[独立worker/ROS学习包](20_9_worker_ros_monitoring.md)，Engineering Complete（2026-10-09），Learning Run/Modify/Explain全部完成，Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；不自动启动Stage18。
