@@ -1,0 +1,9 @@
+float64 distance_m
+float64 leg_duration_s
+float64 command_timeout_s
+---
+bool success
+string reason
+s17_interfaces/SurfaceState final_state
+---
+s17_interfaces/SurfaceState state

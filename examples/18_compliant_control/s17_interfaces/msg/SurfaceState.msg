@@ -1,0 +1,17 @@
+string generation
+string status
+string reason
+uint8 phase
+bool paused
+float64 sim_time_s
+float64 task_elapsed_s
+float64 snapshot_monotonic_s
+float64 command_age_s
+uint64 accepted_references
+uint64 rejected_references
+string last_reference_rejection
+float64[6] q_rad
+float64[6] qvel_rad_s
+float64[3] actual_surface_m
+float64[3] reference_surface_m
+float64 normal_force_N
