@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16/17、S18.1/18.2 Mastered；S18.3 Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-09（Stage16/17、S18.1–S18.3 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,7 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.4等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.4等待明确请求。**
 
 ## S18.3 现场工程验证（2026-10-09，DESKTOP-781D67A）
 
@@ -34,7 +34,10 @@ packet-feedback对照计算500/100次：50Hz恢复；10Hz末error136.728mm/speed
 无接触未饱和线性谱半径h1/20/100ms=.982635/.746053/4.259467，解释10Hz反馈失败但非全局稳定性证明。
 CLI周期0/nan/.03均exit2、schedule guards、3.11语法与两PNG目视、本地links/git diff --check通过；产物仅ignored tmp/s18_3_*及/tmp日志。
 Python3.11未实际执行；无GUI/UR5e/设备/网络延迟/lease/硬件安全验证；motor cap不约束碰撞反力。
-README Code/Experiment/Docs完成；Learning三项未确认。下一步默认Run、Modify master100ms、学习包五问；不自动推进S18.4。
+本人随后确认实验、预测并提交五项Explain；README Run/Modify/Explain全部完成，Learning Mastered。
+学习包补充2N弹簧静态平衡、contact诊断非显式力反馈、vd0设计选择与499→99初始化计数。
+本次仅同步七份文档，本地links/状态/git diff --check通过；未重跑数值/GUI，runtime沿用2026-10-09工程验证。
+下一小任务S18.4等待明确请求，不自动实施。
 
 ## S18.2 现场工程验证（2026-10-09，DESKTOP-781D67A）
 
