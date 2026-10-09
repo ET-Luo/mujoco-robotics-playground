@@ -21,4 +21,4 @@ Modify改变合成master运动幅度1→2，mapper scale/20mm/s界/workspace/采
 首次workspace裁剪3.02/2.02s，4.02s反向第一帧立即释放；unbounded baseline预期超速/越界。
 常量offset/静态guards/独立CSV解析milestones验证见学习包；两PNG目视、links/git diff --check通过。
 产物只ignored tmp/s18_1_a1/a2；不称actual robot速度/接触/安全验证。
-Engineering Complete，Learning Run/Modify/Explain待本人报告；下一小任务S18.2等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.2等待明确请求。

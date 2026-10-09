@@ -148,7 +148,8 @@ workspace box只是参考约束，不证明机器人可达、避碰、actual速�
 
 ## Must Remember / My Verification
 
-状态只见根README；Engineering完成后，Learning Run/Modify/Explain等待本人报告。
+状态只见根README；2026-10-09 本人确认实验与预测完成，并准确回答五项Explain；Run/Modify/Explain全部完成，Learning Mastered。
+本人解释正确区分master绝对位置与增量、world锚点与frame旋转、norm限幅与workspace投影、拒绝增量丢弃及离散reference与actual安全边界。
 必须记住：先差分后转frame；norm限幅与workspace投影不同；不保存被拒绝运动欠账；reference不是actual机器人状态。
 Run：运行默认命令，查看JSON与PNG，确认bounded合格、unbounded超速/越界，以及4.02s反向释放。
 Modify：仅把master-amplitude1→2；先预测原始/参考峰速度、第一次workspace裁剪时刻、4/6/11s参考位置，再对照第二条命令。

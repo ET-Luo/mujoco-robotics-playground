@@ -1,6 +1,6 @@
 # Stage 18 — Teleoperation & Dexterous Foundations
 
-**S18.1 Engineering Complete，Learning待本人验证；其余Task为规划 skeleton。** 状态见[根README](../README.md#stage-18--teleoperation--dexterous-foundations)。
+**S18.1 Engineering Complete + Learning Mastered；其余Task为规划 skeleton。** 状态见[根README](../README.md#stage-18--teleoperation--dexterous-foundations)。
 基础复用[Stage17](20_compliant_contact_control.md)，两个分支最终分别做Integration。
 
 ## Problem / Why / Intuition

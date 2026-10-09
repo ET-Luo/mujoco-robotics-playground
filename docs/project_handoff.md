@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16/17 Mastered；S18.1 Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-09（Stage16/17 Mastered；S18.1 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,7 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete，Learning Run/Modify/Explain待本人验证；下一小任务S18.2等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.2等待明确请求。**
 
 ## S18.1 现场工程验证（2026-10-09，Zero）
 
@@ -34,7 +34,10 @@ requested峰80/160mm/s，applied reference峰20mm/s（浮点容差1e−12）；s
 `python tmp/s18_1_validation/check.py`独立轴公式/norm/box投影/累加/解析milestones、绝对锚定裁剪粘界对照及3.11语法通过。
 CLI amplitude0/nan各exit2，两PNG目视、本地Markdown links/git diff --check通过；产物仅ignored tmp/s18_1_*及/tmp日志。
 只证明离散样本reference约束；无连续导数/加速度界、实际可达/避碰/速度/contact/GUI/device/安全验证。
-S18.2可调scale/clutch/recenter与S18.3实际控制未实施；README Engineering三项完成，Learning三项空，Run/Modify/五问见学习包。
+本人随后明确确认实验与预测完成，并准确回答五项Explain；README Learning三项完成，Mastered。
+学习包记录frame/锚点、norm与workspace投影、拒绝增量丢弃及离散reference验证边界。
+本次仅同步七份状态文档；本地Markdown文件链接与git diff --check通过，未重跑Python示例或图形生成。
+Runtime沿用2026-10-09工程验证；S18.2可调scale/clutch/recenter与S18.3实际控制未实施，下一小任务S18.2等待明确请求。
 
 ## S17.9 现场工程验证（2026-10-09，Zero）
 
