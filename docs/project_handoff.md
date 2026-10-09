@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-08（Stage16/S17.1–S17.6 Mastered；S17.7 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-09（Stage16/S17.1–S17.7 Mastered；S17.8a Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,32 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；下一小任务S17.8a，等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete，Learning Run/Modify/Explain待本人验证；下一小任务S17.8b等待明确请求。**
+
+## S17.8a 现场工程验证（2026-10-09，Zero）
+
+本人明确请求；起始pwd正确/git status空，WSL2 Ubuntu24.04.5/kernel6.18.33.2。
+conda info --base定位hook并激活mujoco，同执行shell核验环境/所属python；
+Python3.12.14/MuJoCo3.13.0/NumPy2.5.3/Matplotlib3.11.2 metadata、实际imports/module paths/API通过。
+无安装/requirements变更，未在Python3.11运行。新增[surface_following.py](../examples/18_compliant_control/surface_following.py)
+与[学习包](20_8a_surface_following_fixture.md)，复用S17.7/normal_force/helper三包链。
+同无摩擦XY装置，approach→load→两段quintic30mm往返→hold；失联/超力/requested超cap锁存actual reference。
+`python examples/18_compliant_control/surface_following.py`与`--leg-duration 1`最终各四case/exit0。
+正常扫描5…9/5…7s，切向max error.204596/.740687mm，normal max error.035781N/contact100%，
+末1s平均力1.999964N，实际切向峰速度28.6304/59.3115mm/s，无饱和。
+6s合成移除plane与2mm plane step分别触发contact_lost/force_budget_exceeded；
+超力input/current峰22.500547/20.563787N，末尾反力.801186N，不称退出即清零。
+6s切向cap降.01N，T2在6.048s、T1在6s触发motor_saturation，均无scan_complete。
+初版误要求注入与饱和退出同刻而assert失败，修正时序假设后通过，正常门限不变。
+失败后锁存reference/速度零，physics继续至12s；T2饱和5953sample、actual末位置97.63mm，
+T1饱和1655sample，证明reference停止不保证actual就地停止。
+每步J/M/power/motor/contact/动力学与完整q/v半隐式递推通过；
+`python tmp/s17_8a_validation/check.py`独立八CSV control/cap/dynamics/递推/quintic/normal反馈、
+失败reason/reference与六类landmark actual状态恢复后的direct contact核验通过；两正常normal列≤1e−10相同。
+CLI duration0/nan各exit2，默认PNG目视/本地Markdown links/git diff --check通过。
+产物仅ignored tmp/s17_8a_*和/tmp日志。未注入search timeout/load-not-ready；
+无GUI/UR5e/ROS/摩擦/未知曲面/硬件或通用稳定性验证。
+README Engineering三项完成，Learning三项空；Run/Modify/五问见学习包，不自动实施S17.8b。
 
 ## S17.7 现场工程验证（2026-10-08，DESKTOP-781D67A）
 

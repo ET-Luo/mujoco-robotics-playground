@@ -474,8 +474,8 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S17.7（0.5～2h）：[Hybrid position-force](docs/20_7_hybrid_position_force.md)：surface frame切向position/法向force，selector分轴。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-08 本人确认实验、预测并完成五项Explain）
 
-- S17.8a（0.5～2h）：Surface Following Integration / fixture：平面短扫描与normal load保持。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S17.8a（0.5～2h）：[Surface Following Integration / fixture](docs/20_8a_surface_following_fixture.md)：平面往返扫描、normal load保持与partial失败退出。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-09）；待本人验证
 
 - S17.8b（0.5～2h）：Surface Following Integration / UR5e：移植已验证controller，actual force/trajectory评价。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

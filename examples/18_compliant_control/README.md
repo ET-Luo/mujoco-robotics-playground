@@ -127,4 +127,23 @@ python examples/18_compliant_control/hybrid_control.py --distance .06
 normal_only力合格但切向失败；错误frame/selector静态拒绝、动力学/功率与normal不变核验通过。
 产物只ignored tmp/s17_7_d0.03/d0.06；无GUI/斜平面动态/UR5e/硬件或通用解耦保证。
 2026-10-08 本人确认实验、预测并完成五项Explain；S17.7 Learning Mastered。
-下一小任务S17.8a等待明确请求。
+S17.8a见下文。
+
+
+## S17.8a — Surface following / fixture
+
+[完整学习包](../../docs/20_8a_surface_following_fixture.md) / [代码](surface_following.py)。
+同fixture串接approach/load/往返scan/hold，失败锁存actual reference，继续physics。
+复用hybrid_control/normal_force/helper与mujoco/numpy/matplotlib，无新依赖。
+
+```bash
+python examples/18_compliant_control/surface_following.py
+python examples/18_compliant_control/surface_following.py --leg-duration 1
+```
+
+先核验上文conda/interpreter。Modify只把每段2s减为1s，距离30mm/目标2N不变。
+2026-10-09 Zero：两命令各四case exit0；正常扫描切向最大误差.204596/.740687mm，
+法向最大误差.035781N/contact100%/无饱和；loss/overforce/saturation均预期退出。
+低cap2s组退出后实际漂移至97.63mm，reference锁存不是立即停机保证。
+独立CSV/controller/dynamics/contact landmarks与PNG验证见学习包；产物只ignored tmp/s17_8a_T2/T1。
+无GUI/UR5e/ROS/硬件验证，Learning三项待本人报告；下一小任务S17.8b等待明确请求。
