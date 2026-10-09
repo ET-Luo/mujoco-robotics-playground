@@ -12,23 +12,25 @@ from incremental_reference import (DT, R_WM, ROBOT_START, MASTER_START,
                                    LOWER, UPPER, SPEED_CAP, update_reference)
 
 
-def map_sample(reference, previous_master, current_master, scale, engaged=True, rebase=False):
+def map_sample(reference, previous_master, current_master, scale, engaged=True, rebase=False,
+               *, lower=LOWER, upper=UPPER):
     """Return reference, next master anchor, diagnostics; inputs remain unchanged.
 
     Clutch disengagement and rebase consume the current sample without moving
     reference. Scale changes apply only to the next incremental displacement.
+    Optional bounds let S18.5 reuse the same mapping on the Stage17 fixture.
     """
     if not np.isfinite(scale) or scale <= 0:
         raise ValueError('scale must be finite and positive')
     # Validate even inactive samples before accepting a new anchor.
     update_reference(reference, previous_master, current_master, DT, R_WM,
-                     SPEED_CAP, LOWER, UPPER)
+                     SPEED_CAP, lower, upper)
     delta = current_master-previous_master
     requested = scale*(R_WM @ delta)
     active = engaged and not rebase
     # A scaled virtual master increment lets us reuse S18.1 norm/box policy.
     mapped, info = update_reference(reference, np.zeros(3), scale*delta if active else np.zeros(3),
-                                    DT, R_WM, SPEED_CAP, LOWER, UPPER)
+                                    DT, R_WM, SPEED_CAP, lower, upper)
     info['requested_delta'] = requested if active else np.zeros(3)
     return mapped, current_master.copy(), info
 

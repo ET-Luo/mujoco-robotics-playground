@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16/17、S18.1–S18.3 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-09（Stage16/17、S18.1–S18.5 Mastered；S18.6 Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,66 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.4等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6 Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.7等待明确请求。**
+
+## S18.6 现场工程验证（2026-10-09，DESKTOP-781D67A）
+
+本人明确继续请求；pwd正确，保留起始八份modified及S18.4/5四份untracked工作。
+WSL2 Ubuntu24.04.5/kernel6.6.87.2；当前hook激活mujoco，同shell所属Python3.12.14核验。
+MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/import/API通过；无安装/requirements改变，无local helper。
+新增[hand.xml](../examples/19_teleoperation_dexterous/hand.xml)、[hand_fixture.py](../examples/19_teleoperation_dexterous/hand_fixture.py)、[学习包](21_6_hand_fixture.md)。
+固定palm、三radial指各2hinge/40+30mm capsule；nq/nv/nu6；gear1 position kp.25/kv.02/torque cap.08Nm，actuator ids[1,4,5,2,3,0]。
+`python examples/19_teleoperation_dexterous/hand_fixture.py`及`--close-scale 2`最终各exit0、4case×4001×48CSV。
+默认cycle无contact/close error4.901e−7rad；三single case其余两指全程不动，selected prox2s .249999877rad。
+scale2 raw1.1/1.3→clip.9/1.2rad，actual2s .765464/1.200241rad；active contact1660sample/max3，三对different finger distal geom。
+clipped7548joint sample/max depth.254095mm/max soft range violation.001939rad；无actuator饱和；尾.5s open error.000164/.000327rad，两组重新张开。
+首版mount overlap三对−4mm初始contact导致隔离失败；显式排除palm/prox mounting pair修复，不关指间collision。
+默认joint limit下scale2越界.0165633rad超预设.005rad容差；调整专用solreflimit.005/solimplimit.99后通过。
+第一次误用geom solref属性导致XML schema拒绝；核对官方XML文档改joint属性名后通过；上述失败不计PASS，最终重跑两完整实验。
+static正确/naive ctrl0→f2_dist/实际cap探针、固定palm、完整动力学残差≤6.73e−16Nm、独立compiled mapping/servo/CSV验证八case通过。
+CLI scale0/nan/−1 exit2、3.11语法、四PNG目视、本地links/git diff --check通过；产物只ignored tmp/s18_6_*与/tmp日志。
+3.11未实际执行；几何图仅中心线非GUI；hand-only无object/touch sensor/Jacobian/抓取/硬件安全验证。
+README Code/Experiment/Docs完成；Learning三项未确认；下一步默认Run、Modify scale2、学习包五问；不自动推进S18.7。
+
+## S18.5 现场工程验证（2026-10-09，DESKTOP-781D67A）
+
+本人明确继续请求；pwd正确，保留起始六份modified文档和S18.4两份untracked文件。
+WSL2 Ubuntu24.04.5/kernel6.6.87.2；当前hook激活mujoco，同shell所属Python3.12.14核验。
+MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/import/API/helper路径通过；无安装/requirements改动。
+新增[teleoperation_integration.py](../examples/19_teleoperation_dexterous/teleoperation_integration.py)、[学习包](21_5_teleoperation_integration.md)。
+S18.2 map_sample仅增加可选lower/upper，旧默认/.5回归exit0；复用S18.1/3/4与Stage17 fixture/contact。
+`python examples/19_teleoperation_dexterous/teleoperation_integration.py`及`--dropout-duration 1.2`各exit0、三case13000×32CSV。
+50Hz master/1kHz local与physics；approach/contact/slide/clutch/recenter/retreat，simulation lease.1s；无新包即时保持旧ref，stale后首包rebase。
+nominal末X25mm/box裁剪24sample；gap.6/1.2正确末X23.8/17.8mm，accepted619/589、stale519/1119sample。
+最后issued6.38s，6.481s过期，7/7.6s恢复首帧ref delta0；6.6expired/6.62duplicate包均拒绝且不刷新lease。
+错误对照恢复+.4mm，末X24.2/18.2mm；限速/末tracking通过但恢复no-motion契约False，未持续补旧运动。
+所有case contact4–8s连续、平均1.998002N/峰3.158396N、无motor饱和；末1s tracking<1µm/speed<.001mm/s并分离。
+stale期间actual X仍变约.629/.630mm，hold不是冻结qpos或卸力。
+独立CSV controller/cap/动力学/Euler/ref/lease/rebase/virtual/contact/recovery检查六case通过；CLI0/nan/−1 exit2、packet guards、3.11语法/两PNG/links/git diff --check通过。
+产物仅ignored tmp/s18_5_*与/tmp日志；3.11未实际执行，无GUI/keyboard/ROS/网络/设备/超力保护/硬件安全或双边稳定性验证。
+本人随后确认实验、预测并提交五项Explain；README Run/Modify/Explain全部完成，Learning Mastered。
+学习包补充：错误恢复只应用限幅后.4mm额外位移，其余丢弃；rebase重建master差分锚点，保留ref而不重设actual state。
+本次仅同步七份状态文档，links/状态/git diff --check通过；未重跑数值/GUI，runtime沿用2026-10-09工程验证。
+下一小任务S18.6等待明确请求，不自动实施。
+
+## S18.4 现场工程验证（2026-10-09，DESKTOP-781D67A）
+
+本人明确继续请求；pwd正确，保留起始七份modified状态文档。WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前hook激活mujoco，同shell所属Python3.12.14；MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/import/API/helper路径通过。
+无安装/requirements改动；新增[force_feedback.py](../examples/19_teleoperation_dexterous/force_feedback.py)、[学习包](21_4_force_feedback.md)。
+复用S18.3 contact/local/.02run；current-command solve environment-on-robot world force→gain R_WMᵀ→norm cap1.5N虚拟device-on-hand显示。
+`python examples/19_teleoperation_dexterous/force_feedback.py`与`--feedback-gain 2`各exit0；robot10000×20/feedback10000×23CSV、JSON/两PNG。
+反力current solve峰3.154064N（S18.3双solve诊断峰3.158396N）；hold1.998002N；raw峰1.577032/6.308128N。
+显示峰均1.5N、hold .999001/1.5N、饱和1/2438sample；两gain机器人全CSV逐sample相同。
+正确+MX力抵抗−MX接近、反号助推，接近假想功率−.009988/−.022468W、反号正；80ms延迟离开后残留80sample。
+known axes/oblique norm方向/zero/cap/input不变/invalid guards、独立CSV frame/cap/delay/power/physics、ideal duality通过。
+独立校验初次用累计time<3误含3s浮点边界静止帧；改用记录master velocity<0选择接近区间后通过，算法/physics未改。
+CLI gain0/nan/−1 exit2；3.11语法、四PNG目视、本地links/git diff --check通过。产物只ignored tmp/s18_4_*及/tmp日志。
+Python3.11未实际执行；离线显示不写任何device/robot力，无GUI、人手/master动力学、网络、双边passivity/stability验证。
+本人随后明确确认实验、预测并提交五项Explain；README Run/Modify/Explain全部完成，Learning Mastered。
+学习包补充：弹性储能释放可解释真实退回正功，但本课假想功率不证明设备储能或向人手真实传能。
+本次仅同步七份状态文档；links/状态/git diff --check通过，未重跑数值实验或GUI，runtime沿用2026-10-09工程验证。
+下一小任务S18.5等待明确请求，不自动实施。
 
 ## S18.3 现场工程验证（2026-10-09，DESKTOP-781D67A）
 

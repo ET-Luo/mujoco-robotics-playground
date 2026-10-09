@@ -125,3 +125,5 @@ Explain：
 解释精度补充：本课每帧更新差分锚点，scale切换无需额外rebase；若采用绝对锚定映射，则须重建配对锚点以保留当前reference。
 遗漏rebase产生错误增量，限速只能限制其大小；本课消费该样本并丢弃拒绝部分，不持续追赶完整错误目标。
 本次仅文档同步，未重跑数值实验或GUI；runtime沿用2026-10-09工程验证。
+
+S18.5复用扩展：`map_sample`可选keyword lower/upper让同一mapper用于Stage17 XY fixture；省略时仍使用本课原bounds。2026-10-09默认及Modify .5回归exit0，原milestones/guards通过；本课学习状态不变。

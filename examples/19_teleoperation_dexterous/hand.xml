@@ -1,0 +1,58 @@
+<mujoco model="three_finger_learning_hand">
+  <compiler angle="radian"/>
+  <option timestep=".001" gravity="0 0 0" integrator="implicitfast" iterations="100" tolerance="1e-12"/>
+  <default>
+    <joint type="hinge" axis="0 1 0" limited="true" damping=".002" armature=".00002"
+           solreflimit=".005 1" solimplimit=".99 .99 .001"/>
+    <geom type="capsule" size=".004" friction=".7 .005 .0001" solref=".01 1" solimp=".95 .95 .001"/>
+    <position kp=".25" kv=".02" gear="1" ctrllimited="true" forcelimited="true" forcerange="-.08 .08"/>
+  </default>
+  <worldbody>
+    <!-- No joint/freejoint: palm is fixed to world. No object or floor. -->
+    <body name="palm" pos="0 0 .04">
+      <geom name="palm_geom" type="cylinder" size=".067 .006" rgba=".3 .3 .35 1"/>
+      <body name="f0_proximal" pos=".06 0 .006" quat="0 0 0 1">
+        <joint name="f0_prox" range="0 .9"/>
+        <geom name="f0_prox_geom" fromto="0 0 0 0 0 .04" mass=".03" rgba=".2 .5 .9 1"/>
+        <body name="f0_distal" pos="0 0 .04">
+          <joint name="f0_dist" range="0 1.2"/>
+          <geom name="f0_dist_geom" fromto="0 0 0 0 0 .03" mass=".02" rgba=".2 .5 .9 1"/>
+          <site name="f0_tip" pos="0 0 .03" size=".003" rgba="1 .8 .1 1"/>
+        </body>
+      </body>
+      <body name="f1_proximal" pos="-.03 .05196152422706632 .006" quat=".8660254037844386 0 0 -.5">
+        <joint name="f1_prox" range="0 .9"/>
+        <geom name="f1_prox_geom" fromto="0 0 0 0 0 .04" mass=".03" rgba=".2 .8 .4 1"/>
+        <body name="f1_distal" pos="0 0 .04">
+          <joint name="f1_dist" range="0 1.2"/>
+          <geom name="f1_dist_geom" fromto="0 0 0 0 0 .03" mass=".02" rgba=".2 .8 .4 1"/>
+          <site name="f1_tip" pos="0 0 .03" size=".003" rgba="1 .8 .1 1"/>
+        </body>
+      </body>
+      <body name="f2_proximal" pos="-.03 -.05196152422706632 .006" quat=".8660254037844386 0 0 .5">
+        <joint name="f2_prox" range="0 .9"/>
+        <geom name="f2_prox_geom" fromto="0 0 0 0 0 .04" mass=".03" rgba=".9 .4 .3 1"/>
+        <body name="f2_distal" pos="0 0 .04">
+          <joint name="f2_dist" range="0 1.2"/>
+          <geom name="f2_dist_geom" fromto="0 0 0 0 0 .03" mass=".02" rgba=".9 .4 .3 1"/>
+          <site name="f2_tip" pos="0 0 .03" size=".003" rgba="1 .8 .1 1"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <contact>
+    <!-- Capsule ends overlap their mounting joints; do not treat this as collision. -->
+    <exclude body1="palm" body2="f0_proximal"/>
+    <exclude body1="palm" body2="f1_proximal"/>
+    <exclude body1="palm" body2="f2_proximal"/>
+  </contact>
+  <actuator>
+    <!-- Deliberate order mismatch: actuator id is not joint/qpos/dof index. -->
+    <position name="f2_dist_servo" joint="f2_dist" ctrlrange="0 1.2"/>
+    <position name="f0_prox_servo" joint="f0_prox" ctrlrange="0 .9"/>
+    <position name="f1_dist_servo" joint="f1_dist" ctrlrange="0 1.2"/>
+    <position name="f2_prox_servo" joint="f2_prox" ctrlrange="0 .9"/>
+    <position name="f0_dist_servo" joint="f0_dist" ctrlrange="0 1.2"/>
+    <position name="f1_prox_servo" joint="f1_prox" ctrlrange="0 .9"/>
+  </actuator>
+</mujoco>

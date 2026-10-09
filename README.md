@@ -496,14 +496,14 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S18.3（0.5～2h）：[Teleoperation + impedance](docs/21_3_teleoperation_impedance.md)：低频master与独立local torque loop。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
-- S18.4（0.5～2h）：Force feedback concept：力的frame/sign/scale、synthetic反馈/图形，无真实haptic device。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.4（0.5～2h）：[Force feedback concept](docs/21_4_force_feedback.md)：力的frame/sign/scale、synthetic反馈/图形，无真实haptic device。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
-- S18.5（0.5～2h）：Teleoperation Integration：approach/touch/slide/clutch/retreat，过期reference处理；keyboard可选。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.5（0.5～2h）：[Teleoperation Integration](docs/21_5_teleoperation_integration.md)：approach/touch/slide/clutch/retreat，过期reference处理；keyboard可选。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
-- S18.6（0.5～2h）：Lightweight multi-finger hand：固定palm、3finger×2hinge，hand-only模型/actuator mapping。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.6（0.5～2h）：[Lightweight multi-finger hand](docs/21_6_hand_fixture.md)：固定palm、3finger×2hinge，hand-only模型/actuator mapping。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
 
 - S18.7（0.5～2h）：Fingertip FK / Jacobian：复用既有方法，核验新hand site/dof/frame与数值差分。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
