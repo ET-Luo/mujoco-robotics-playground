@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16/S17.1–S17.8a Mastered；S17.8b Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-09（Stage16/S17.1–S17.8a Mastered；S17.8b Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,7 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete，Learning Run/Modify/Explain待本人验证；下一小任务S17.9等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S17.9等待明确请求。**
 
 ## S17.8b 现场工程验证（2026-10-09，Zero）
 
@@ -42,7 +42,10 @@ loss均6s合成plane下移.1m→contact_lost，锁存actual位置/姿态/零ref�
 contact-point applyFT及actual单步replay通过；jacobian_checks.py全q/v递推、数值Jp/Jr/40mm偏置/masks/mass/radius/ranges/静态motor饱和通过。
 CLI duration0/nan各exit2，两PNG目视/本地Markdown links/git diff --check通过；产物只ignored tmp/s17_8b_*及/tmp日志。
 无GUI/ROS/摩擦/未知曲面/真实force sensor/硬件或通用稳定性验证，未动态注入超速/关节越界/饱和恢复/搜索超时。
-README Engineering三项完成，Learning三项空；Run/Modify/五问见学习包，S17.9等待明确请求。
+本人随后明确确认实验与预测完成，并准确回答五项Explain；README Learning三项完成，Mastered。
+学习包补充gear=2的±75属于actuator force限制、ctrl限幅关闭，以及刚体偏置改变Jp而不改变Jr。
+本次仅同步七份状态文档；本地Markdown links与git diff --check通过。
+未重跑Python示例、仿真或GUI，runtime沿用2026-10-09工程验证；S17.9等待明确请求。
 
 ## S17.8a 现场工程验证（2026-10-09，Zero）
 

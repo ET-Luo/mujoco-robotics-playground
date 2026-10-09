@@ -174,7 +174,10 @@ CLI duration0/nan各exit2；两PNG目视与本地Markdown links/git diff --check
 
 ## My Verification / Run / Modify / Explain
 
-Learning Run/Modify/Explain等待本人明确报告，助手实验只算Engineering。
+2026-10-09 本人明确确认实验与预测完成，并准确回答五项Explain；Run/Modify/Explain完成，Learning Mastered，状态见根README。
+解释精度：gear=2、固定gain=1且零bias时，ctrl=τ_req/2；150N·m joint cap对应actuator force的forcerange±75。
+本课actuator_ctrllimited=False，限制施加在actuator输出，不能把forcerange称为ctrlrange。
+Jp随所选点改变；同一刚性body上的Jr相同，球心偏置40mm的额外贡献由Jp体现。
 Run：执行默认命令，查看tmp/s17_8b_T2/results.json、ur5e_surface.png及nominal/loss事件与指标。
 Modify：只将每段2s减成1s；先预测参考峰速度×2、加速度×4，再观察实际轨迹/法向力/姿态和力矩是否符合预算。
 Explain：

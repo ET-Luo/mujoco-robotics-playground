@@ -1,6 +1,6 @@
 # Stage 17 — Compliant & Contact-Rich Control
 
-**S17.1 Engineering Complete + Learning Mastered；S17.2 Engineering Complete + Learning Mastered；S17.3 Engineering Complete + Learning Mastered；S17.4 Engineering Complete + Learning Mastered；S17.5 Engineering Complete + Learning Mastered；S17.6 Engineering Complete + Learning Mastered；S17.7 Engineering Complete + Learning Mastered；S17.8a Engineering Complete + Learning Mastered；S17.8b Engineering Complete、Learning待本人验证；其余Task仍为规划 skeleton。** 状态见[根README](../README.md#stage-17--compliant--contact-rich-control)。
+**S17.1 Engineering Complete + Learning Mastered；S17.2 Engineering Complete + Learning Mastered；S17.3 Engineering Complete + Learning Mastered；S17.4 Engineering Complete + Learning Mastered；S17.5 Engineering Complete + Learning Mastered；S17.6 Engineering Complete + Learning Mastered；S17.7 Engineering Complete + Learning Mastered；S17.8a Engineering Complete + Learning Mastered；S17.8b Engineering Complete + Learning Mastered；其余Task仍为规划 skeleton。** 状态见[根README](../README.md#stage-17--compliant--contact-rich-control)。
 先完成[Stage16](19_force_dynamics.md)；不用IK误差迭代代替动力学控制。
 
 ## Problem / Why / Intuition

@@ -167,4 +167,4 @@ python examples/18_compliant_control/ur5e_surface_following.py --leg-duration 1
 T1参考走完且末尾恢复2N，不等于中途扫描合格；loss两组均6s锁存actual位置/姿态并退出，physics继续至12s。
 actual速度与caps、独立FK/J/contact/step replay、数值Jacobian验证见学习包；产物只ignored tmp/s17_8b_*。
 仅probe-plane碰撞开启，不提供arm避碰；无GUI/ROS/真实force sensor/硬件验证。
-Engineering Complete，Learning三项待本人报告；下一小任务S17.9等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S17.9等待明确请求。
