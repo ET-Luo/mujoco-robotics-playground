@@ -21,7 +21,7 @@ Modify改变合成master运动幅度1→2，mapper scale/20mm/s界/workspace/采
 首次workspace裁剪3.02/2.02s，4.02s反向第一帧立即释放；unbounded baseline预期超速/越界。
 常量offset/静态guards/独立CSV解析milestones验证见学习包；两PNG目视、links/git diff --check通过。
 产物只ignored tmp/s18_1_a1/a2；不称actual robot速度/接触/安全验证。
-Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2已按请求完成[学习包](../../docs/21_2_scaling_clutch.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3已按请求完成[学习包](../../docs/21_3_teleoperation_impedance.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4已按请求完成[学习包](../../docs/21_4_force_feedback.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.7等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2已按请求完成[学习包](../../docs/21_2_scaling_clutch.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3已按请求完成[学习包](../../docs/21_3_teleoperation_impedance.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4已按请求完成[学习包](../../docs/21_4_force_feedback.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.7等待明确请求。
 
 ## S18.2 — scaling / clutch / recenter
 
@@ -36,7 +36,7 @@ python examples/19_teleoperation_dexterous/scaling_clutch.py --fine-scale .5
 先按上文核验mujoco环境。2026-10-09 DESKTOP-781D67A两命令exit0：
 clutch/recenter保持、scale切换无历史跳变、恢复首帧.04/.10mm、norm峰20mm/s、box裁剪10/25sample。
 产物ignored tmp/s18_2_scale0.2与scale0.5；没有实际机器人或GUI验证。
-Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）。S18.3已按请求完成[学习包](../../docs/21_3_teleoperation_impedance.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4已按请求完成[学习包](../../docs/21_4_force_feedback.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.7等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）。S18.3已按请求完成[学习包](../../docs/21_3_teleoperation_impedance.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4已按请求完成[学习包](../../docs/21_4_force_feedback.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.7等待明确请求。
 
 ## S18.3 — teleoperation + impedance
 
@@ -56,7 +56,7 @@ Modify把master50Hz改10Hz，local反馈保持1kHz。目标ZOH、vd=0；不是�
 接触峰3.158/3.713N、hold约1.998N；10Hz packet-feedback末tracking失败，峰445.824N、饱和4900joint samples。
 工程PASS包含这个明确失败对照；motor20N cap不等于contact反力界。
 独立CSV/物理/调度检查、局部线性谱半径分析、CLI拒绝、3.11语法及两PNG通过；无GUI/硬件验证。
-Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4已按请求完成[学习包](../../docs/21_4_force_feedback.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.7等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4已按请求完成[学习包](../../docs/21_4_force_feedback.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.7等待明确请求。
 
 ## S18.4 — virtual force feedback
 
@@ -74,7 +74,7 @@ Modify只改gain .5→2，norm cap1.5N固定；反号/80ms延迟显示对照。�
 稳态反力1.998N→显示.999/1.5N；raw峰1.577/6.308N、饱和1/2438sample；robot两运行全trace相同。
 正确/反号接近假想功率负/正，离开contact后旧显示残留80sample；独立CSV/轴/norm/physics/guards/CLI/语法通过，四PNG已目视。
 只验证显示信号，非真实haptic force或双边passivity/stability；Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）。
-S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.7等待明确请求。
+S18.5已按请求完成[学习包](../../docs/21_5_teleoperation_integration.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.7等待明确请求。
 
 ## S18.5 — teleoperation integration
 
@@ -93,7 +93,7 @@ python examples/19_teleoperation_dexterous/teleoperation_integration.py --dropou
 nominal末X25mm；正确两gap末X23.8/17.8mm；expired/duplicate两包拒绝不刷新lease。
 S18.2 map_sample只扩展可选bounds，旧默认/Modify回归通过；独立CSV/CLI/3.11语法/两PNG/links通过。
 没有GUI/keyboard/ROS/网络/设备或硬件安全验证；simulation hold不是物理急停。
-Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.7等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6已按请求完成[学习包](../../docs/21_6_hand_fixture.md)，Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.7等待明确请求。
 
 ## S18.6 — lightweight three-finger hand
 
@@ -112,4 +112,4 @@ python examples/19_teleoperation_dexterous/hand_fixture.py --close-scale 2
 scale2裁剪7548joint sample、active contact1660sample，软限位最大越界.001939rad；两组均重新张开。
 static wrong ctrl0→f2_dist、实际torque cap、固定palm、逐指隔离/servo/动力学/独立CSV/CLI/语法检查通过；四PNG目视。
 mount exclusion仅排除palm/prox安装接触，指间collision保持。没有object抓取/GUI/真实手或硬件安全验证。
-Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.7等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.7等待明确请求。

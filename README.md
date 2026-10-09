@@ -503,7 +503,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
 - S18.6（0.5～2h）：[Lightweight multi-finger hand](docs/21_6_hand_fixture.md)：固定palm、3finger×2hinge，hand-only模型/actuator mapping。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
 - S18.7（0.5～2h）：Fingertip FK / Jacobian：复用既有方法，核验新hand site/dof/frame与数值差分。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

@@ -163,3 +163,7 @@ Explain：
 3. position servo的ctrl是什么单位？kp/kv/gear与actual torque是什么关系？
 4. target clip、forcerange和joint range各限制什么？为什么actual仍可能小幅越界或达不到target？
 5. 单指prox动作时dist可暂时移动，为什么不必是映射错误？self-contact成功检测为何不能证明抓住物体？
+
+2026-10-09 本人确认实验、预测均完成，并提交五项Explain；根README Run/Modify/Explain全部完成，Learning Mastered。
+解释精度：本模型gear1 position servo显式含kv，requested torque=.25(q_target−q)−.02qvel，再clip到±.08N·m；joint passive damping=.002的力矩单独计入动力学，不属于actuator输出。
+本次仅文档同步，未重跑数值/GUI；runtime沿用2026-10-09工程验证。
