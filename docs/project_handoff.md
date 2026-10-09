@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16/S17.1–S17.7 Mastered；S17.8a Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-09（Stage16/S17.1–S17.8a Mastered；S17.8b Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,33 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete，Learning Run/Modify/Explain待本人验证；下一小任务S17.8b等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete，Learning Run/Modify/Explain待本人验证；下一小任务S17.9等待明确请求。**
+
+## S17.8b 现场工程验证（2026-10-09，Zero）
+
+本人明确请求；保留起始七份S17.8a未提交状态文档，pwd正确；WSL2 Ubuntu24.04.5/kernel6.18.33.2。
+当前conda hook激活mujoco，同shell核验环境/所属Python3.12.14；MuJoCo3.13.0/NumPy2.5.3/
+Matplotlib3.11.2/Menagerie2026.9.2 metadata、实际imports/module paths/API通过，无安装/requirements改动，未在3.11运行。
+新增[ur5e_surface_following.py](../examples/18_compliant_control/ur5e_surface_following.py)与[学习包](20_8b_surface_following_ur5e.md)。
+裸UR5e+50g/r20mm sphere probe，attachment local+Z偏置40mm；只sphere-plane碰撞开启，无arm/self避碰保证。
+surface t/n/b=world+X/+Z/−Y，origin[-.45,.20,.22]m；private DLS IK20updates到球心[-.45,.20,.25]m，
+ep.164044μm/er4.605e−8rad/time0；不验证home→initial动态运动。执行仅motor+actual mj_step。
+Cartesian K[1000,400,1000]/D[80,40,80]、orientation K60/D12，经新site Jp/Jr转joint torque，加full simulated bias，不取消contact。
+approach10mm/s、force gain.006/参考速度cap20mm/s、dt1ms/implicitfast，关节caps150前三/28后三Nm、gear[1,2,1,1,1,1]。
+`python examples/18_compliant_control/ur5e_surface_following.py`与`--leg-duration 1`最终各nominal/loss两case、exit0。
+T2 nominal taskTrue，T1预期taskFalse：切向max error.352200/1.462038mm，normal max error.048350/.281013N，
+contact100%、binormal.116618/.501542mm、orientation.656481/2.336228mrad、无饱和。
+actual site norm速度峰28.9359/63.2352mm/s、joint最大分量峰.068096/.152785rad/s，nominal motor峰≤18.095460Nm；
+末mean力1.999749/1.999989N，初始touch1.005s/input峰6.400016N/current峰5.235051N。
+loss均6s合成plane下移.1m→contact_lost，锁存actual位置/姿态/零ref速度，无scan_complete；physics至12s，末力0。
+初版30mm/s输入峰约19.6N退出；大initial gap在5s load_not_ready；原gain.003 T2 force error.069206N不合格。
+最终减gap到10mm并慢接近、gain调.006，未放宽验收/退出门限；T1完整记录后的离线task失败不同于online critical guard退出。
+每步motor/gear/contact Jᵀ/power/完整动力学通过，max residual≤3.161e−12Nm。
+`python tmp/s17_8b_validation/check.py`四CSV control/ref/limit/failed锁存与每case246actual快照FK/J/bias/input/current测力/qacc、
+contact-point applyFT及actual单步replay通过；jacobian_checks.py全q/v递推、数值Jp/Jr/40mm偏置/masks/mass/radius/ranges/静态motor饱和通过。
+CLI duration0/nan各exit2，两PNG目视/本地Markdown links/git diff --check通过；产物只ignored tmp/s17_8b_*及/tmp日志。
+无GUI/ROS/摩擦/未知曲面/真实force sensor/硬件或通用稳定性验证，未动态注入超速/关节越界/饱和恢复/搜索超时。
+README Engineering三项完成，Learning三项空；Run/Modify/五问见学习包，S17.9等待明确请求。
 
 ## S17.8a 现场工程验证（2026-10-09，Zero）
 
@@ -41,7 +67,11 @@ T1饱和1655sample，证明reference停止不保证actual就地停止。
 CLI duration0/nan各exit2，默认PNG目视/本地Markdown links/git diff --check通过。
 产物仅ignored tmp/s17_8a_*和/tmp日志。未注入search timeout/load-not-ready；
 无GUI/UR5e/ROS/摩擦/未知曲面/硬件或通用稳定性验证。
-README Engineering三项完成，Learning三项空；Run/Modify/五问见学习包，不自动实施S17.8b。
+本人随后明确确认实验与预测完成，并准确回答五项Explain；README Learning三项完成，Mastered。
+学习包补充P力误差到reference速度的admittance式外环与完整虚拟动力学的区别；
+phase4退出2N反馈并锁存actual位置，不把局部控制称为已验证的硬件安全停止。
+本次仅同步七份状态文档；本地Markdown文件链接与git diff --check通过。
+未重跑Python示例、仿真或GUI，runtime沿用2026-10-09工程验证；下一小任务S17.8b等待明确请求。
 
 ## S17.7 现场工程验证（2026-10-08，DESKTOP-781D67A）
 

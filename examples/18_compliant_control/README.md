@@ -146,4 +146,25 @@ python examples/18_compliant_control/surface_following.py --leg-duration 1
 法向最大误差.035781N/contact100%/无饱和；loss/overforce/saturation均预期退出。
 低cap2s组退出后实际漂移至97.63mm，reference锁存不是立即停机保证。
 独立CSV/controller/dynamics/contact landmarks与PNG验证见学习包；产物只ignored tmp/s17_8a_T2/T1。
-无GUI/UR5e/ROS/硬件验证，Learning三项待本人报告；下一小任务S17.8b等待明确请求。
+无GUI/UR5e/ROS/硬件验证，Learning三项完成，Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b见下文。
+
+
+## S17.8b — Surface following / UR5e
+
+[完整学习包](../../docs/20_8b_surface_following_ur5e.md) / [代码](ur5e_surface_following.py)。
+裸UR5e固定sphere probe、水平无摩擦plane；初始DLS IK与actual torque执行分开。
+复用surface_following/normal_force/pregrasp_motion/gravity_compensation的依赖链，
+需requirements已声明mujoco/numpy/matplotlib/mujoco-menagerie，无新依赖。
+
+```bash
+python examples/18_compliant_control/ur5e_surface_following.py
+python examples/18_compliant_control/ur5e_surface_following.py --leg-duration 1
+```
+
+先按上文核验conda/interpreter。Modify只改每段2→1s，30mm路径/2N目标不变。
+2026-10-09 Zero：两命令各nominal/loss两case exit0；T2 nominal task True，T1预期task False：
+切向max error.352200/1.462038mm，normal max error.048350/.281013N，contact100%/无饱和。
+T1参考走完且末尾恢复2N，不等于中途扫描合格；loss两组均6s锁存actual位置/姿态并退出，physics继续至12s。
+actual速度与caps、独立FK/J/contact/step replay、数值Jacobian验证见学习包；产物只ignored tmp/s17_8b_*。
+仅probe-plane碰撞开启，不提供arm避碰；无GUI/ROS/真实force sensor/硬件验证。
+Engineering Complete，Learning三项待本人报告；下一小任务S17.9等待明确请求。

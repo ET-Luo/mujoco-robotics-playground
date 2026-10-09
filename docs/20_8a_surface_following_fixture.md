@@ -146,7 +146,8 @@ UR5e移植留S17.8b，本轮不实施。
 
 ## My Verification / Run / Modify / Explain
 
-Engineering见根README；Learning Run/Modify/Explain均等待本人明确报告。
+Engineering见根README；2026-10-09 本人确认实验与预测完成，并准确回答五项Explain；Run/Modify/Explain完成，Learning Mastered。
+解释精度：本课是P力误差生成reference速度并有界积分的admittance式外环，不是新增完整虚拟M/D/K模型。phase4退出2N反馈任务，改为锁存actual位置的inner控制；不把它称为已验证的硬件安全停止。
 Run：运行默认命令，读results.json和surface_following.png，确认nominal True、三个故障False以及事件顺序。
 Modify：仅将leg-duration从2s减为1s；先预测参考峰速度/加速度和往返完成时刻，再比较实际误差、力与饱和。
 Explain：
