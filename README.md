@@ -487,8 +487,8 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 
 [阶段学习包 / skeleton](docs/21_teleoperation_dexterous.md)。
 
-- S18.1（0.5～2h）：Cartesian incremental teleoperation：synthetic master→有界translation reference。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.1（0.5～2h）：[Cartesian incremental teleoperation](docs/21_1_incremental_teleoperation.md)：synthetic master增量→world参考，norm限速与workspace裁剪。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-09）；待本人验证
 
 - S18.2（0.5～2h）：Motion scaling / clutch / recenter：reference连续、master锚点与workspace。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

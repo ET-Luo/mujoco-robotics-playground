@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16与Stage17学习项全部Mastered）。
+最后整理：2026-10-09（Stage16/17 Mastered；S18.1 Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,25 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；不自动启动Stage18。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete，Learning Run/Modify/Explain待本人验证；下一小任务S18.2等待明确请求。**
+
+## S18.1 现场工程验证（2026-10-09，Zero）
+
+本人明确请求；起始pwd正确/git status空，WSL2 Ubuntu24.04.5/kernel6.18.33.2。
+当前conda hook激活mujoco，同执行shell核验环境与所属Python3.12.14；NumPy2.5.3/Matplotlib3.11.2 metadata/实际imports/module paths通过。
+无安装或requirements变更；仅两包、无local helper，不执行MuJoCo/ROS，未在Python3.11运行（语法解析通过）。
+新增[incremental_reference.py](../examples/19_teleoperation_dexterous/incremental_reference.py)、[学习包](21_1_incremental_teleoperation.md)、新示例README。
+相邻master位移→R_WM world+90°Z转轴→norm限幅→world box投影；纯reference，无actual robot/qpos/control。
+固定mapper scale1，dt20ms，v_sample norm cap20mm/s，world anchor[-.45,.20,.30]m，half widths[.04,.04,.02]m。
+`python examples/19_teleoperation_dexterous/incremental_reference.py`与`--master-amplitude 2`各exit0、550×25CSV。
+requested峰80/160mm/s，applied reference峰20mm/s（浮点容差1e−12）；speed-limited100/100、workspace-limited50/100sample。
+首workspace裁剪3.02/2.02s；4.02s反向第一帧world Y−.2/−.4mm，立即释放，不保存拒绝增量欠账。
+末bounded参考[-.47,.22,.31]/[-.49,.20,.32]m；unbounded末Y.36/.52m，预期超速/越界。
+常量master offset不变/对角线norm与方向/斜向边界投影及nonfinite/dt/rotation/outside initial拒绝、输入不变静态checks通过。
+`python tmp/s18_1_validation/check.py`独立轴公式/norm/box投影/累加/解析milestones、绝对锚定裁剪粘界对照及3.11语法通过。
+CLI amplitude0/nan各exit2，两PNG目视、本地Markdown links/git diff --check通过；产物仅ignored tmp/s18_1_*及/tmp日志。
+只证明离散样本reference约束；无连续导数/加速度界、实际可达/避碰/速度/contact/GUI/device/安全验证。
+S18.2可调scale/clutch/recenter与S18.3实际控制未实施；README Engineering三项完成，Learning三项空，Run/Modify/五问见学习包。
 
 ## S17.9 现场工程验证（2026-10-09，Zero）
 
