@@ -490,11 +490,11 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 - S18.1（0.5～2h）：[Cartesian incremental teleoperation](docs/21_1_incremental_teleoperation.md)：synthetic master增量→world参考，norm限速与workspace裁剪。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
-- S18.2（0.5～2h）：Motion scaling / clutch / recenter：reference连续、master锚点与workspace。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.2（0.5～2h）：[Motion scaling / clutch / recenter](docs/21_2_scaling_clutch.md)：reference连续、master锚点与workspace。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
-- S18.3（0.5～2h）：Teleoperation + impedance：低频master与独立local torque loop。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.3（0.5～2h）：[Teleoperation + impedance](docs/21_3_teleoperation_impedance.md)：低频master与独立local torque loop。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
 
 - S18.4（0.5～2h）：Force feedback concept：力的frame/sign/scale、synthetic反馈/图形，无真实haptic device。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned

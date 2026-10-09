@@ -1,6 +1,6 @@
 # Stage 18 — Teleoperation & Dexterous Foundations
 
-**S18.1 Engineering Complete + Learning Mastered；其余Task为规划 skeleton。** 状态见[根README](../README.md#stage-18--teleoperation--dexterous-foundations)。
+**S18.1/18.2 Engineering Complete + Learning Mastered；S18.3 Engineering Complete，Learning待本人验证；S18.4起为规划 skeleton。** 状态见[根README](../README.md#stage-18--teleoperation--dexterous-foundations)。
 基础复用[Stage17](20_compliant_contact_control.md)，两个分支最终分别做Integration。
 
 ## Problem / Why / Intuition
@@ -24,7 +24,7 @@ force closure是在给定接触/摩擦模型下可抵抗任意方向小wrench的
 
 ## Tasks / Minimal Experiments / Expected evidence
 
-每项0.5～2h；[S18.1学习包](21_1_incremental_teleoperation.md)含可运行synthetic master映射、norm/workspace界、独立数值检查和Run/Modify/Explain；其余Task尚未实施。
+每项0.5～2h；[S18.1学习包](21_1_incremental_teleoperation.md)含可运行synthetic master映射、norm/workspace界、独立数值检查和Run/Modify/Explain；[S18.2学习包](21_2_scaling_clutch.md)包含scale/clutch/recenter；[S18.3学习包](21_3_teleoperation_impedance.md)包含低频参考与1kHz本地反馈的实际动力学及失败对照。S18.4起尚未实施。
 
 | Task | 单一概念 / 最小实验 | 验收设计 |
 | --- | --- | --- |
@@ -43,7 +43,7 @@ force closure是在给定接触/摩擦模型下可抵抗任意方向小wrench的
 
 ## Expected / Actual / Explanation
 
-S18.1两master幅度实验通过：requested峰80/160mm/s，bounded参考峰均20mm/s，首次workspace裁剪3.02/2.02s，反向第一帧释放；详见[学习包](21_1_incremental_teleoperation.md)。其余Task的Expected是验收计划，Actual未执行。
+S18.1两master幅度实验通过：requested峰80/160mm/s，bounded参考峰均20mm/s，首次workspace裁剪3.02/2.02s，反向第一帧释放；详见[学习包](21_1_incremental_teleoperation.md)。S18.2两scale已完成并Mastered。S18.3两master周期/三case工程通过，本地反馈稳定；10Hz packet-feedback对照末tracking失败，详见[学习包](21_3_teleoperation_impedance.md)。S18.4起Expected为计划，Actual未执行。
 固定palm是局部hand学习fixture；不宣称移动手腕抓取/双臂/完整humanoid。
 
 ## Failure Cases / Stability / Robotics Context
