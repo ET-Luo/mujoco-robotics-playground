@@ -1,8 +1,8 @@
 # 学习路线与仓库评估
 
-更新：2026-10-09。任务与 Engineering/Learning checkbox 唯一维护在
+更新：2026-10-10。任务与 Engineering/Learning checkbox 唯一维护在
 [README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
-P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；P2 S16.1–S16.6 Engineering Complete + Learning Mastered（2026-10-08 本人确认）。
+P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；P2 Stage16–18 Engineering Complete + Learning Mastered；P3仅S19.1 Engineering Complete，Learning待用户验证。
 
 ## 当前代码如何使用
 
@@ -74,3 +74,9 @@ S13.3b [Vision Pick-and-Place Package](16_3b_vision_pick_place.md) Engineering C
 S13.4 [Error Propagation Package](16_4_perception_noise.md) Engineering Complete；单一post-fit pose/extrinsic fault、显式frame/pivot、精确传播、独立pipeline outcomes；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered。
 S13.5 [Repeated Trials Package](16_5_repeated_trials.md) Engineering Complete；seeded场景/观测、全部attempts统计、成功条件误差、失败phase、Wilson区间与wall/sim time；本人于2026-10-06确认Run/Modify/Explain，Learning Mastered。
 S14.1 [Collision Checking Package](17_motion_planning.md) Engineering Complete：独立MjData、具体pair/phase/depth政策、持物变换与13个固定配置；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.2 [Configuration Space Package](17_2_configuration_space.md) Engineering Complete：二维障碍、含端点edge采样、粗细分辨率与独立解析评分；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.3 [RRT Package](17_3_rrt.md) Engineering Complete：单树sample/nearest/steer/edge/parent、固定seed与三类预算，独立解析评分；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.4 [RRT-Connect Package](17_4_rrt_connect.md) Engineering Complete：EXTEND三态/CONNECT循环、双树回溯拼接、8seed与统一预算比较；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.5 [Path Smoothing Package](17_5_path_smoothing.md) Engineering Complete：vertex shortcut、长度对比与最终全部边复查、粗oracle反例；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.6 [Timing Package](17_6_time_parameterization.md) Engineering Complete：逐段解析速度/加速度限制配时、零端速停点、C1与加速度jump；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.7a [UR5e Package](17_7a_ur5e_obstacle_planning.md) Engineering Complete：私有IK、六维双树/shortcut/cubic、reference与actual分别检查；本人于2026-10-06确认实验、预测与五项Explain，Learning Mastered。S14.7b [Collision-Aware Pick Package](17_7b_collision_aware_pick_place.md) Engineering Complete：名义T_GO/phase接触、held双树与shortcut、自由物体实际取放、3seed与失败统计；本人确认实验、预测与Explain，Learning Mastered。Stage14学习项均完成；S15.1 Engineering Complete，系统Python/Jazzy默认与Modify真实收发通过；本人已确认Run/Modify/Explain，Learning Mastered；S15.2已工程完成且本人确认Run/Modify/Explain，Learning Mastered，见[Service学习包](18_2_ros2_service.md)。S15.3已明确请求并准备[Action包](18_3_ros2_action.md)，核心真实action实验与直接graph通过，Engineering Complete；CLI daemon图查询未解决；本人已确认Run/Modify/Explain，Learning Mastered；S15.4已完成[TF2工程包](18_4_ros2_tf2.md)且本人确认Run/Modify/Explain，Learning Mastered；S15.5已按请求完成[URDF/JointState工程包](18_5_urdf_joint_states.md)，本人已确认Run/Modify并补齐Explain，Learning Mastered；S15.6a已按请求准备[adapters包](18_6a_ros2_adapters.md)，独立worker/IPC、typed接口build及完整ROS执行/拒绝/cancel已通过，Engineering Complete；本人确认Run/Modify/Explain，Learning Mastered；S15.6b已按请求完成[完整manipulation包](18_6b_ros2_manipulation.md)：typed task action、视觉抓放、sim clock/actual JointState/TF、取消/超时/输入拒绝/闭爪失败与回归通过，Engineering Complete；本人确认Run/Modify并补正初始planning与后续action的范围，Learning Mastered；Stage15学习项全部完成。
+
+## P3 导航
+
+[P2审查与P3计划](p3_plan.md)；Stage19 [LfD](22_learning_from_demonstrations.md) → Stage20 [ACT](23_act_temporal_policy.md) → Stage21 [Diffusion](24_diffusion_policy.md) → Stage22 [Contact-aware](25_contact_aware_robot_learning.md)。
+当前代码 `examples/20_learning_from_demonstrations/episode_contract.py` 只实现S19.1 expert transition与MuJoCo replay；BC/ACT/Diffusion未实现。
+不重复P0/P1/P2，不进入P4。下一小任务S19.2等待授权。

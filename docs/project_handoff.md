@@ -1,8 +1,30 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-10（Stage16/17/18 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-10（P2完成；P3规划与S19.1 Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
+
+## P3 当前边界与下一步（2026-10-10）
+
+用户明确确认P0/P1/P2完成，授权Stage19–22规划及仅S19.1实现；本轮截止这里。
+[P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
+根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain均未勾选。
+[当前学习包](22_1_episode_contract.md)含Run、goal_x反向Modify与五问Explain；下一小任务S19.2等待明确请求。
+Stage20–22只有skeleton，BC/ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+
+2026-10-10 DESKTOP-781D67A现场：起始pwd正确/git status空；WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda hook激活mujoco，同执行shell核验环境与所属Python3.12.14；MuJoCo3.14.0/
+NumPy2.5.3/Matplotlib3.11.2 metadata、actual imports/API/module及cartesian_spring helper路径通过。
+requirements与helper imports已读，无安装、无依赖声明改动；本Task不需要Torch。
+新增episode_contract.py，复用Stage17 XY无接触XML/gear/cap，50Hz expert reference与1kHz impedance/physics。
+`python examples/20_learning_from_demonstrations/episode_contract.py`及`--goal-x -.01`均exit0；
+各3episode×2000physics步，obs(101,6)/action(100,2)，每条另fresh-data replay，误差0；两组success各3/3。
+默认tail最大error2.179e−9m/speed2.764e−8m/s；反向8.854e−9m/1.122e−7m/s。
+独立重载六NPZ校验schema/clock/terminated/truncated并重放通过；CLI nan及越界goal拒绝exit2。
+3.11语法解析、本文及新文档本地目标链接与README阶段anchors、git diff --check通过。
+输出仅ignored tmp/s19_1_goal*；未实际运行Python3.11、GUI、历史P2脚本或learned policy。
+旧P2 runtime是2026-10-08～10的历史证据；本轮静态确认不扩大GUI/真实设备/通用控制能力。
+已有teleoperation是scripted master，真人采集需后续最小输入adapter；旧日志不能直接当统一训练集。
 
 ## 当前边界与下一步
 

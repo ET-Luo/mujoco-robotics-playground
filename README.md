@@ -19,12 +19,14 @@
 - Robot Learning：环境接口、奖励、PPO/SAC 与 sim-to-real 基础。
 - P1：CPU geometry perception、vision manipulation、自写 motion planning，最后 ROS2 integration。
 - P2：Force & Dynamics → compliant/contact-rich control → teleoperation/dexterous foundations；CPU-first。
+- P3：demonstrations → BC → ACT → Diffusion → contact-aware learning；CPU state-based。
 
 ## Current Progress
 
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
 P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2审查](docs/p2_plan.md)。
-当前推进 **P2 — Contact-Rich Manipulation & Dexterous Robotics**；S16.1 Engineering Complete + Learning Mastered（2026-10-08 本人确认）。
+P2（Stage 16–18）Engineering Complete + Learning Mastered（用户确认）。
+当前开始 **P3 — Learning-Based Robot Manipulation**；本轮只完成 S19.1 Engineering，Learning 待 Run / Modify / Explain。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -47,7 +49,8 @@ P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2
 | S13.5 Repeated-Trial Evaluation | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | Stage 14 | S14.1–S14.7b collision / planning / pick-place | Engineering Complete + Learning Mastered（全阶段） |
 | Stage 15 | S15.1–S15.6b Engineering Complete | S15.1–S15.6b Learning Mastered |
-| P2 / S16.1 Actuator Semantics | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| P2 / Stage16–18 | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| P3 / S19.1 Episode Contract | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人完成 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a/b 在固定场景验证；S14.7b已完成固定场景持物避障。
@@ -108,7 +111,10 @@ examples/13_perception_geometry/   # P1 frames / projection / RGB-depth / calibr
 examples/14_vision_manipulation/    # P1 vision-based pick-and-place
 examples/15_motion_planning/        # P1 collision / RRT / timed tracking
 examples/16_ros2_integration/       # P1 final ROS2 manipulation pipeline
-examples/17_force_dynamics/         # P2 Stage 16，当前只有S16.1
+examples/17_force_dynamics/         # P2 Stage 16
+examples/18_compliant_control/      # P2 Stage 17
+examples/19_teleoperation_dexterous/ # P2 Stage 18
+examples/20_learning_from_demonstrations/ # P3 Stage 19，当前S19.1
 controllers/ environments/ rl/     # 既有学习代码与占位，详见路线索引
 assets/ scripts/ notebooks/ tests/ # 资源、工具与验证说明
 docs/                             # 笔记、P1/P2 规划、交接
@@ -422,7 +428,7 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 [P0/P1审查、去重与P2规划](docs/p2_plan.md)。CPU MuJoCo + NumPy优先；不推进RL/ACT/Diffusion Policy/VLA，
 不引入Isaac、大型触觉视觉网络、真实haptic device或完整humanoid。
 高频inner loop留在MuJoCo/controller worker；ROS2只处理command/state/action/feedback/monitoring。
-以下每项0.5～2小时，Integration已拆小；当前已授权并实现S16.1–S16.7，其余仅规划。
+以下每项0.5～2小时，Integration已拆小；Stage16–18均已完成，细项状态见下方。
 
 ### Stage 16 — Force & Dynamics Foundations
 
@@ -532,3 +538,122 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
 Stage 10 起采用 Sprint Learning Mode：Codex 一次完成当前 Task 的 Engineering package，
 然后本人按指定内容完成 Run → Modify → Explain；三项均明确完成后才标记 Learning Mastered。
 纯文档维护不虚构实验；Stage 1 Task 1 已由本人确认完成。
+
+## P3 — Learning-Based Robot Manipulation
+
+核心问题：**How can a robot learn manipulation behavior from demonstrations?**
+[P2能力审查、复用清单与统一benchmark合同](docs/p3_plan.md)。
+CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视觉encoder，不进入P4 VLA/World Model。
+每项0.5～2小时。先demonstrations/dataset/BC/closed-loop failure，再chunk/ACT。
+所有核心learned policy必须closed-loop MuJoCo rollout；同轨道固定task/split/metrics，loss下降不是任务成功。
+
+### Stage 19 — Learning from Demonstrations
+
+[阶段学习包 / skeleton](docs/22_learning_from_demonstrations.md)。
+
+- S19.1（0.5～2h）：[Observation / Action / Episode Contract](docs/22_1_episode_contract.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-10）；学习待本人验证
+
+- S19.2（0.5～2h）：Expert demonstration generation / trajectory dataset。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S19.3（0.5～2h）：Episode-level split / normalization。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S19.4（0.5～2h）：Tiny CPU Behavior Cloning。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S19.5（0.5～2h）：Closed-loop rollout / offline vs rollout。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S19.6（0.5～2h）：Covariate shift / compounding error。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S19.7（0.5～2h）：Recovery data / DAgger intuition。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S19.8（0.5～2h）：BC integration benchmark。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+### Stage 20 — ACT / Temporal Policy
+
+[阶段学习包 / skeleton](docs/23_act_temporal_policy.md)。
+
+- S20.1（0.5～2h）：Sequence dataset / boundaries / mask。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S20.2（0.5～2h）：Action chunking baseline / replan。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S20.3（0.5～2h）：Necessary Transformer concepts。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S20.4（0.5～2h）：ACT CVAE latent / KL / prior。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S20.5（0.5～2h）：Tiny state-based ACT / closed-loop。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S20.6（0.5～2h）：Temporal ensembling / ablation。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S20.7（0.5～2h）：BC vs ACT evaluation。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+### Stage 21 — Diffusion Policy
+
+[阶段学习包 / skeleton](docs/24_diffusion_policy.md)。
+
+- S21.1（0.5～2h）：Multimodal paths / regression averaging。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S21.2（0.5～2h）：Diffusion basics / noising。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S21.3（0.5～2h）：Conditional diffusion / tiny denoiser。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S21.4（0.5～2h）：Action-sequence diffusion / sampling。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S21.5（0.5～2h）：Tiny state-based Diffusion Policy rollout。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S21.6（0.5～2h）：Multimodal path / sampling latency。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S21.7（0.5～2h）：BC / ACT / Diffusion comparison。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+### Stage 22 — Contact-Aware Robot Learning
+
+[阶段学习包 / skeleton](docs/25_contact_aware_robot_learning.md)。
+
+- S22.1（0.5～2h）：Proprioception + force + tactile contract。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.2（0.5～2h）：Teleoperation demonstrations / recorder。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.3（0.5～2h）：Contact-aware BC / observation ablation。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.4（0.5～2h）：Contact ACT / Diffusion comparison。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.5（0.5～2h）：Dexterous/contact task / expert feasibility。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.6（0.5～2h）：Dexterous learned policy rollout。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.7（0.5～2h）：Friction / mass / domain generalization。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.8（0.5～2h）：Noise / latency robustness。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+- S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
+  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+
+本轮截止 S19.1。下一任务 S19.2 等待明确请求，不自动推进。
