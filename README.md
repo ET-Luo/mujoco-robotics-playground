@@ -506,10 +506,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）
 
 - S18.7（0.5～2h）：[Fingertip FK / Jacobian](docs/21_7_fingertip_jacobian.md)：复用既有方法，核验新hand site/dof/frame与数值差分。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）
 
-- S18.8（0.5～2h）：Simple touch/contact sensing：named触点/force、touch区域与测量边界。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.8（0.5～2h）：[Simple touch/contact sensing](docs/21_8_contact_sensing.md)：named触点/force、touch区域与测量边界。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
 
 - S18.9（0.5～2h）：Multi-Contact Grasp Integration：多指close/hold、force分布、滑移与漂移。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
