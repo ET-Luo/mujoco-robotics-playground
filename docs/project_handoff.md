@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-09（Stage16/17、S18.1–S18.6 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-10（Stage16/17、S18.1–S18.6 Mastered；S18.7 Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,22 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；下一小任务S18.7等待明确请求。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.7 Engineering Complete；Learning待本人Run/Modify/Explain；下一小任务S18.8等待明确请求。**
+
+## S18.7 现场工程验证（2026-10-10，DESKTOP-781D67A）
+
+本人明确继续请求；pwd正确/git status空。WSL2 Ubuntu24.04.5/kernel6.6.87.2；当前hook激活mujoco，同shell所属Python3.12.14核验。
+MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/import/API与hand_fixture路径通过；无安装/requirements改变。
+新增[fingertip_jacobian.py](../examples/19_teleoperation_dexterous/fingertip_jacobian.py)、[学习包](21_7_fingertip_jacobian.md)，不修改hand模型/helper。
+`python examples/19_teleoperation_dexterous/fingertip_jacobian.py`及`--delta .01`各exit0，9records/36×4FD CSV/9×8prediction CSV/PNG。
+三个配置×三site：解析world p/R/Jp/Jr与MuJoCo一致，FKmax2.776e−17m；所属两dof列非零，其余四列零。
+全DOF中心差分epsilon1e−2/4/6/8，Jp max errors1.167e−6/1.166e−10/1.517e−11/9.311e−10m/rad；极小epsilon舍入回升。
+非零qvel的world v/omega及独立q+hqvel位移核验通过；probe独立MjData、基准qpos/qvel不变、time0，无mj_step。
+delta.001/.01最大线性预测误差.0254/2.54µm，ratio99.99975；wrong frame误差.120594m/rad、actuator id误选列明确失败。
+独立JSON/CSV与compiled world轴/anchor的cross公式检查全部site/列与open rank1/bent rank2通过。
+CLI delta0/nan/−1 exit2；3.11语法/两PNG目视/本地links/status/git diff --check通过；产物只ignored tmp/s18_7_*。
+3.11未实际执行；纯离线FK/J，无GUI/实际tracking/碰撞可行性/IK或硬件验证；open差分可超限，仅数学probe。
+README Code/Experiment/Docs完成；Learning三项未确认；下一步默认Run、Modify delta.01、学习包五问；不自动推进S18.8。
 
 ## S18.6 现场工程验证（2026-10-09，DESKTOP-781D67A）
 
