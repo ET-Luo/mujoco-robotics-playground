@@ -150,3 +150,5 @@ Explain：
 3. small touch=0能否证明整指无接触？site区域匹配哪一个body，normal ray有何影响？
 4. sensor id与sensor_adr有什么区别？移动site为什么能改读数而不改physics？
 5. 自接触总world合力为0且touch为正，是否矛盾？为什么这些结果不能证明物体被稳定抓取？
+
+2026-10-10 本人确认实验与预测完成，并提交全部五项Explain；根README记录Run/Modify/Explain完成，Learning Mastered。解释精度：本课active contact定义为`efc_address >= 0`，有效力阈值是独立判断；讨论内部力矩抵消时须统一参考点，本课实际核验的是内部world合力抵消。此次仅更新学习状态，运行证据沿用本课2026-10-10工程验证。

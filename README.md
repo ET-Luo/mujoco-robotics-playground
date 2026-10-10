@@ -509,10 +509,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）
 
 - S18.8（0.5～2h）：[Simple touch/contact sensing](docs/21_8_contact_sensing.md)：named触点/force、touch区域与测量边界。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-10 本人确认）
 
-- S18.9（0.5～2h）：Multi-Contact Grasp Integration：多指close/hold、force分布、滑移与漂移。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.9（0.5～2h）：[Multi-Contact Grasp Integration](docs/21_9_multi_contact_grasp.md)：多指close/hold、force分布、滑移与漂移。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
 
 - S18.10a（0.5～2h）：Friction cone intuition：normal load/切向扰动/friction扫描。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
