@@ -1,6 +1,6 @@
 # S18.9 — Multi-contact grasp：从接触到自由物体保持
 
-Engineering Complete（2026-10-10）；Learning Run / Modify / Explain等待本人验证，状态以[根README](../README.md)为准。
+Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain），状态以[根README](../README.md)为准。
 [代码](../examples/19_teleoperation_dexterous/multi_contact_grasp.py)复用[hand.xml](../examples/19_teleoperation_dexterous/hand.xml)和`hand_fixture.mapping`；本课约0.5～2小时。
 
 ## Problem → Why → Intuition
@@ -141,7 +141,7 @@ python examples/19_teleoperation_dexterous/multi_contact_grasp.py
 
 ## My Verification — Run / Modify / Explain
 
-根README的学习框保持未勾选，助手执行不代替本人学习。
+2026-10-10 本人明确确认实验与预测完成，并准确回答全部五项Explain；根README记录Run/Modify/Explain全部完成，Learning Mastered。
 
 **Run：** 执行默认命令，查看图、events与四case的`hold_accepted`，区分“程序PASS”与“case通过”。
 
@@ -160,3 +160,5 @@ python examples/19_teleoperation_dexterous/multi_contact_grasp.py --load .3
 3. 三指normal总和大于0.1 N，而world合力约0.1 N，二者分别表示什么？力矩为什么必须统一到物体COM？
 4. object COM速度与contact相对切向速度有何不同？净力约0为什么仍可能持续漂移？
 5. 低摩擦case最终静止、仍有每指法向力，为什么保持失败？0.3 N三指通过又为何不能证明任意方向force closure？
+
+此次仅同步学习状态与进度文档；本地链接、状态一致性及git diff --check通过。未重跑仿真或GUI，运行证据沿用本课2026-10-10工程验证。
