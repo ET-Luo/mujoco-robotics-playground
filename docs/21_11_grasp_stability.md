@@ -1,6 +1,6 @@
 # S18.11 — Disturbance / Grasp Stability Integration：全过程验证与全部 trials
 
-Engineering Complete（2026-10-10）；Learning Run / Modify / Explain待本人验证，以[根README](../README.md)为准。
+Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；Run / Modify / Explain全部完成，以[根README](../README.md)为准。
 [代码](../examples/19_teleoperation_dexterous/grasp_stability.py)复用[三指夹持](21_9_multi_contact_grasp.md)，本课约0.5～2小时。
 
 ## Problem → Why → Intuition
@@ -189,7 +189,7 @@ wrench有作用点/frame/unit；xfrc是F:torque，objectVelocity是angular:linea
 
 ## My Verification — Run / Modify / Explain
 
-根README学习框保持未勾选。S18.11是Stage18最后一个工程任务，完成本人验证后再回顾整个阶段；不自动实现新阶段。
+2026-10-10 本人明确确认实验与预测完成，并准确完成五项Explain；根README Run/Modify/Explain全部勾选，Learning Mastered。Stage18工程与学习任务全部完成。此次仅同步文档，检查本地链接、状态一致性与git diff --check；未重跑仿真或GUI，运行证据沿用上述2026-10-10验证。
 
 **Run：** 执行默认命令，查看24trial结果矩阵、ready/delivered/accepted区别和正常摩擦四条指标图，确认低摩擦/缺指失败仍在分母。
 
