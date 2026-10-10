@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-10（Stage16/17、S18.1–S18.9及S18.10a Mastered；S18.10b Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-10（Stage16/17、S18.1–S18.9及S18.10a/b Mastered；S18.11 Engineering Complete，Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -16,7 +16,24 @@ Learning Run/Modify/Explain全部完成，Mastered；
 具体命令/Modify/五问见[学习包](19_force_dynamics.md#my-verification--run--modify--explain)。
 本次仅同步README、学习包、示例README、roadmap、P2 plan与本文；本地链接与git diff --check通过。
 未重跑Python、仿真或GUI；runtime沿用2026-10-07工程验证。
-**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.7 Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.8 Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.9已按请求完成[学习包](21_9_multi_contact_grasp.md)，Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.10a已按请求完成[学习包](21_10a_friction_cone.md)，Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.10b已按请求完成[学习包](21_10b_force_closure.md)，Engineering Complete；Learning待本人Run/Modify/Explain；下一步为本课学习验证。**
+**Stage16学习项全部完成；S17.1 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.2 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.3 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.4 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.5 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.6 Engineering Complete + Learning Mastered（本人确认Run/Modify并提交五项Explain；坐标/gate精度见学习包）；S17.7 Engineering Complete + Learning Mastered（本人确认Run/Modify并完成五项Explain）；S17.8a Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.8b Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S17.9 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；Stage17学习项全部完成；S18.1 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.2 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.3 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.4 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.5 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.6 Engineering Complete + Learning Mastered（2026-10-09 本人确认实验、预测并完成五项Explain）；S18.7 Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.8 Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.9已按请求完成[学习包](21_9_multi_contact_grasp.md)，Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.10a已按请求完成[学习包](21_10a_friction_cone.md)，Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.10b已按请求完成[学习包](21_10b_force_closure.md)，Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain）；S18.11已按请求完成[学习包](21_11_grasp_stability.md)，Engineering Complete；Learning待本人Run/Modify/Explain；下一步为本课学习验证，不自动新增阶段。**
+
+## S18.11 现场工程验证（2026-10-10，DESKTOP-781D67A）
+
+本人明确请求；pwd正确，保留起始七份modified学习状态文档。WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda hook激活mujoco，同shell Python3.12.14；MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2 metadata/import/API与helpers实际路径核验，无安装。
+新增[grasp_stability.py](../examples/19_teleoperation_dexterous/grasp_stability.py)、[学习包](21_11_grasp_stability.md)。
+复用S18.9 build_model/object_contacts与hand_fixture；原hand.xml/旧课代码不改。自由圆柱、0.1N object-only负载、1ms、normal contact gate。
+三条件×八pulse=24计划trial/命令；2.5s检查ready，2.5～2.7s半正弦world COM F/T pulse，全trial固定4s/4000physics步。
+默认及`--pulse-scale 4`均exit0，各24×4001×73CSV(12位有效数)/快照JSON/summary JSON+CSV/两PNG，只ignored tmp/s18_11_scale*。
+全分母通过8/24→4/24；ready8/24，两条件低摩擦/缺指都未ready且抑制pulse。正常摩擦条件8/8→4/8；每设置7个有pulse的trial。
+强Fx±及Tx±因contact/slip/pose等失败；strong Fx+ drift15.340mm/angle32.406°，Tx drift1.430mm却angle5.342°。
+低摩擦load后drop/palm支撑，缺指2s超时；failure时刻锁存，恢复末帧不能抹除。实际输出peak .046850/.069297Nm，48trial saturation0，不声称验证动态饱和响应。
+每帧mj_objectVelocity rot:lin与COM jp/jr一致；object generalized contact F/T分量投影误差最大6.67e−16(平移N/旋转Nm)，Newton线力最大3.77e−8N。
+独立48CSV/73columns/时序/脉冲窗口与4倍缩放/ready抑制/50帧gate/冻结target/失败锁存/全部分母/servo/快照F/T/slip/线动量检查通过。
+当前baseline与已存2026-10-10 S18.9基准轨迹一致(未重跑旧课)；紧凑CSV序列化、CLI/guards/3.11语法(实际3.12)/四PNG/links/diff检查通过。
+无GUI/硬件/长期或任意三维wrench稳定性证明。Stage18所有任务Engineering Complete；Learning仅S18.11待本人Run/Modify/Explain。
+下一步默认Run、Modify pulse-scale4、学习包五问；不自动开始新阶段。
 
 ## S18.10b 现场工程验证（2026-10-10，DESKTOP-781D67A）
 
@@ -31,7 +48,7 @@ Learning Run/Modify/Explain全部完成，Mastered；
 独立world力/叉积/摩擦与normal cap、手推解析不等式1248负载(固定48+seed随机1200)、同等参考点平移1248项不变；归一化balance最大2.32e−16N。
 CLI/geometry/wrench guards、3.11语法(非3.11执行)、四PNG目视、links/状态/git diff --check通过。
 官方正span/证书依据见学习包；不证明真实三维closure、动态保持或硬件稳定，不自动推进S18.11。
-README Code/Experiment/Docs完成；Learning三项待本人。下一步默认Run、Modify μ.1、学习包五问。
+2026-10-10 本人确认实验与预测完成，并准确回答五项Explain，涵盖G/C/W、正span/内部夹紧、有限力能力及参考点一致变换(C不变)。README Run/Modify/Explain全部完成，Learning Mastered。此次仅同步七份文档，链接/状态/git diff --check通过；未重跑数值实验或GUI，沿用上述2026-10-10运行证据。下一小任务S18.11等待明确请求，不自动实施。
 
 ## S18.10a 现场工程验证（2026-10-10，DESKTOP-781D67A）
 

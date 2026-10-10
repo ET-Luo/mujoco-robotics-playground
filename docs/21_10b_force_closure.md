@@ -1,6 +1,6 @@
 # S18.10b — Force closure intuition：从局部接触力到物体 wrench
 
-Engineering Complete（2026-10-10）；Learning Run / Modify / Explain待本人验证，以[根README](../README.md)为准。
+Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain），以[根README](../README.md)为准。
 [代码](../examples/19_teleoperation_dexterous/force_closure.py)，约0.5～2小时。依赖已有NumPy/Matplotlib，无新安装。
 
 ## Problem → Why → Intuition
@@ -175,7 +175,7 @@ G只组合world力；C加摩擦/单边约束；W=GC；rank不是正span；内部
 
 ## My Verification — Run / Modify / Explain
 
-根README学习框保持未勾选，助手运行不代替本人学习。
+2026-10-10 本人明确确认实验与预测完成，并准确回答全部五项Explain；根README记录Run/Modify/Explain全部完成，Learning Mastered。
 
 **Run：** 运行默认命令，查看三布局证书、图与逐负载的可行力分配；找出same_side/push_x_plus的无约束解为何不能执行。
 
@@ -194,3 +194,5 @@ python examples/19_teleoperation_dexterous/force_closure.py --mu .1
 3. 严格正零空间权重表示什么内部力？为什么无摩擦案例仍不能closure？
 4. μ降低后对向布局仍closure，为什么有限负载通过数下降？为何无约束lstsq残差小仍不够？
 5. 更换力矩参考点时需同时改变哪些量？本课平面静态证书为何不能证明真实三维动态抓取稳定？
+
+此次仅同步七份学习/进度文档，检查本地链接、状态一致性与git diff --check；未重跑静态数值实验或GUI，运行证据沿用本课2026-10-10工程验证。
