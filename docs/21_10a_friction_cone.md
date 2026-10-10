@@ -1,6 +1,6 @@
 # S18.10a — Friction cone intuition：一个接触能承受多大切向力？
 
-Engineering Complete（2026-10-10）；Learning Run / Modify / Explain待本人验证，状态以[根README](../README.md)为准。
+Engineering Complete + Learning Mastered（2026-10-10 本人确认实验、预测并完成五项Explain），状态以[根README](../README.md)为准。
 [代码](../examples/19_teleoperation_dexterous/friction_cone.py)；本课约0.5～2小时，无新增依赖。
 
 ## Problem → Why → Intuition
@@ -144,7 +144,7 @@ python examples/19_teleoperation_dexterous/friction_cone.py
 
 ## My Verification — Run / Modify / Explain
 
-根README学习框保持未勾选，助手实验不代替本人学习。
+2026-10-10 本人明确确认实验与预测完成，并准确回答全部五项Explain；根README记录Run/Modify/Explain完成，Learning Mastered。
 
 **Run：** 执行默认命令，查看三条扫描曲线与3D力锥，比较理想能力、near_boundary和first_slip三个数值，确认CSV实际步数。
 
@@ -163,3 +163,5 @@ python examples/19_teleoperation_dexterous/friction_cone.py --normal-scale 2
 3. 外加切向载荷超过预测能力，为什么实际contact力仍在锥内？动态fn为何可能不同于法向外载？
 4. `u<1`、`first_slip_time=null`分别能说明什么，为什么都不能证明严格零滑动？
 5. 法向载荷翻倍为何改变首次报告时间和仿真步数，却不改变dt？单接触实验为什么不能证明多指force closure？
+
+解释精度：动态法向力一般可能受夹紧控制影响，但本课滑台没有夹紧控制器；本课由外加载荷、接触与运动状态共同决定。此次仅同步七份文档，链接/状态/git diff --check通过；未重跑仿真或GUI，运行证据沿用本课2026-10-10工程验证。

@@ -515,10 +515,10 @@ CPU-first；无 Isaac/大型视觉模型；ICP 与规划先手写；ROS2 最后�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-10 本人确认）
 
 - S18.10a（0.5～2h）：[Friction cone intuition](docs/21_10a_friction_cone.md)：normal load/切向扰动/friction扫描。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-10 本人确认）
 
-- S18.10b（0.5～2h）：Force closure intuition：简化平面点接触，grasp matrix与wrench方向可行性，不宣称一般3D证明。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
+- S18.10b（0.5～2h）：[Force closure intuition](docs/21_10b_force_closure.md)：简化平面点接触，grasp matrix与wrench方向可行性，不宣称一般3D证明。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证
 
 - S18.11（0.5～2h）：Disturbance / Grasp Stability Integration：受控wrench脉冲、friction对照、全trials统计。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Planned
