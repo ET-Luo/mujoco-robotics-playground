@@ -149,4 +149,6 @@ python examples/20_learning_from_demonstrations/recovery_data.py --prepared tmp/
 原validation变差，best_step0保留父weights，learner0/4；continued best310也0/4。
 Modify weight0使两支weights/训练曲线相同，不改变采集；同state标签与executed actions必须分开，不能把counterfactual标签当真实轨迹重放。
 独立32采集+32rollout物理/source/label/scorer/hash、checkpoint/normalizer及CLI/3.11语法/两PNG/links通过。
-不是完整多轮DAgger或learner恢复成功；Learning三项待本人验证，下一任务S19.8等待明确请求。
+不是完整多轮DAgger或learner恢复成功；Learning Run/Modify/Explain全部完成，Learning Mastered（2026-10-11 本人确认）；下一任务S19.8等待明确请求。
+
+Validation闭环已执行，所选learner仍0/4；尚无改善证据、更新策略的多轮采集或新的独立泛化评价。此次学习状态同步未重跑Python/MuJoCo，工程结果沿用2026-10-11验证。

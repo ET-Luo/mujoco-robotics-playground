@@ -139,7 +139,7 @@ Must Remember：同状态查询；执行与标签分开；派生来源不跨spli
 
 ## My Verification — Run / Modify / Explain
 
-状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。Learning三项待本人完成。
+状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。Learning Run/Modify/Explain全部完成，Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）。
 Run：执行默认命令，核对三类row计数、source_group、collection成功分母、selected_step与validation rollout。
 Modify：先预测只将new-weight1→0会改变哪些训练结果、哪些采集数据不变，再运行：
 
@@ -156,3 +156,5 @@ Explain（五问）：
 5. 本课体现DAgger的什么核心思路？还缺什么才能称完整多轮DAgger及证明泛化改善？
 
 下一小任务S19.8 BC integration benchmark，等待明确请求；本轮停止。
+
+2026-10-11 学习核验：本人已区分expert label与executed action、连续动力学接管、来源分组防泄漏、拟合与闭环表现，以及单轮聚合与多轮DAgger。补充边界：本课已执行validation闭环评价，所选learner仍0/4；缺少的是改善证据、更新策略后的多轮采集及新的独立泛化评价。Expert恢复16/16不代表learner成功。本次仅同步学习状态，未重跑仿真；工程结果沿用2026-10-11验证。

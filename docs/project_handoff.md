@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Engineering Complete / Learning待本人验证）。
+最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -19,7 +19,7 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning三项留空；下一小任务S19.8等待明确请求。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；下一小任务S19.8等待明确请求。
 Stage20–22只有skeleton，BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
 
 ## S19.7 现场工程验证（2026-10-11，DESKTOP-781D67A）
@@ -39,7 +39,12 @@ weight0两支CSV/weights相同；两命令采集数组相同。training wall默�
 32collection+32rollout保存结果独立重算192000Euler步、同状态标签/executed动作/scorer/hash/分组/聚合row映射通过。
 CSV argmin、checkpoint weights-only重载、normalizer/父SHA不变、CLI/3.11语法、两PNG目视、links/anchors/git diff --check通过。
 生成物只ignored tmp，无GUI/第二轮聚合/接触或新盲测。DAgger原论文参考链接见学习包；单轮教学实验不提供完整保证。
-Engineering Complete，Learning待本人Run/Modify/Explain；本轮停S19.7。
+Engineering Complete；本人随后确认Run/Modify/Explain完成，Learning Mastered（2026-10-11）；本轮停S19.7。
+
+S19.7学习确认（2026-10-11）：本人报告实验与预测完成并回答五问，Run/Modify/Explain全部完成。
+已理解同状态expert标注与executed action不同、连续接管、来源分组防泄漏及loss不能代替任务成功。
+精确边界：validation闭环已测但selected learner仍0/4；缺少改善证据、更新策略后的多轮采集和新的独立泛化评价。Expert恢复16/16不等于learner成功。
+本次仅同步六份文档；未重跑Python/MuJoCo/GUI，runtime沿用2026-10-11工程验证；未推进S19.8。
 
 ## S19.6 现场工程验证（2026-10-11，DESKTOP-781D67A）
 
