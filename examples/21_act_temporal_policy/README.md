@@ -91,4 +91,4 @@ D32/2head/FF64/latent4，posterior/memory encoder与decoder各1层，H10、默�
 新ignored tmp/s20_5/run_*含protocol/act.pt/offline/12trial/results/rollout.png，训练另含loss.csv。
 2026-10-11 best20/priorRMSE .829mm，E5 4/4、E1 2/4，expert均4/4、constant均0/4；trainloop25.443s。
 24trial独立48000physics步/动作时序/hash/checkpoint/梯度与infer隔离通过；有限单seed/4validation reset，不是完整论文复现或统一算法benchmark。
-Engineering Complete，Learning三项待本人确认；temporal ensembling留S20.6等待请求。
+Engineering Complete；本人已确认实验、预测与五项Explain，Learning Run/Modify/Explain全部完成，Mastered（2026-10-11）；temporal ensembling留S20.6等待请求。

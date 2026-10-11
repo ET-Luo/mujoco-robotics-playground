@@ -164,7 +164,10 @@ E比较固定checkpoint；offline相同不代表rollout相同。保留单seed/�
 
 ## My Verification / Run → Modify → Explain
 
-README为Engineering/Learning状态唯一来源；本人三项暂未确认。
+README为Engineering/Learning状态唯一来源；2026-10-11 本人确认实验、预测与五项Explain，Run/Modify/Explain全部完成，Learning Mastered。
+解释覆盖CLS posterior与mask、query/memory形状、prior部署与实际动力学、选模路径及固定checkpoint的E消融边界。
+精度补充：代码先由requested force除gear得到ctrl，actuator force cap在MuJoCo中生效；独立动力学重算使用等价的clipped generalized force。
+本次仅同步文档，未重跑Python/MuJoCo/GUI；runtime沿用2026-10-11工程验证。
 
 **Run：**运行默认训练，核对best_epoch、prior指标、4个ACT trial及expert/constant，查看rollout.png。
 

@@ -23,6 +23,6 @@ Robotics Applications：平滑连续操作与示范时序学习。
 30秒 Interview：ACT学习动作chunk；后续ACT将保留生成latent与Transformer，用低维状态替代视觉；当前S20.2是MLP baseline。
 2分钟 Interview：解释CVAE train/inference差别、chunk/replan、ensemble、同BC协议闭环评估。
 Must Remember：deterministic Transformer baseline不是完整ACT。
-My Verification / Run / Modify / Explain：S20.1命令与五问见学习包；本人已确认实验、预测与五问Explain，S20.1 Learning Mastered（2026-10-11）；S20.2 Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.3 Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.4 Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.5工程完成、Learning待本人验证，其余任务仍规划。
+My Verification / Run / Modify / Explain：S20.1命令与五问见学习包；本人已确认实验、预测与五问Explain，S20.1 Learning Mastered（2026-10-11）；S20.2 Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.3 Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.4 Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.5 Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain），其余任务仍规划。
 Follow-up：mask排除什么？prior如何用？何时长chunk更差？ensemble怎样对齐？
 算法依据：[ACT原论文](https://arxiv.org/abs/2304.13705)。
