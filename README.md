@@ -598,8 +598,8 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S20.4（0.5～2h）：[ACT CVAE latent / KL / prior](docs/23_4_cvae_latent.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；MLP CVAE机制、KL/梯度与训练推理隔离通过，非完整ACT（2026-10-11）
 
-- S20.5（0.5～2h）：Tiny state-based ACT / closed-loop。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S20.5（0.5～2h）：[Tiny state-based ACT / closed-loop](docs/23_5_tiny_act.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；Transformer CVAE/prior-zero闭环，固定checkpoint E5成功4/4、E1成功2/4（validation，2026-10-11）
 
 - S20.6（0.5～2h）：Temporal ensembling / ablation。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-当前截止 S20.4 Engineering Complete + Learning Mastered（2026-10-11 本人确认）。下一任务 S20.5 等待明确请求。
+当前截止 S20.5 Engineering Complete，Learning待本人Run/Modify/Explain；S20.1–4已Learning Mastered。下一任务 S20.6 等待明确请求。

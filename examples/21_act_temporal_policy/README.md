@@ -1,6 +1,6 @@
 # Stage 20 — ACT / Temporal Policy
 
-当前实现[S20.1 sequence dataset / boundaries / mask](../../docs/23_1_sequence_dataset.md)、[S20.2 chunk baseline](../../docs/23_2_chunk_baseline.md)、[S20.3 attention basics](../../docs/23_3_attention_basics.md)与[S20.4 CVAE latent](../../docs/23_4_cvae_latent.md)。
+当前实现[S20.1 sequence dataset / boundaries / mask](../../docs/23_1_sequence_dataset.md)、[S20.2 chunk baseline](../../docs/23_2_chunk_baseline.md)、[S20.3 attention basics](../../docs/23_3_attention_basics.md)、[S20.4 CVAE latent](../../docs/23_4_cvae_latent.md)与[S20.5 tiny state ACT](../../docs/23_5_tiny_act.md)。
 状态唯一来源：[根README](../../README.md#stage-20--act--temporal-policy)。
 S20.1仅依赖requirements已有NumPy；无Torch/MuJoCo/local helper导入，无新依赖。
 
@@ -18,7 +18,7 @@ prepared为S19.3目录；缺失时按[Stage19](../20_learning_from_demonstration
 仅train/validation；冻结split与normalizer，不读取test数组、不训练、不推进物理。
 输出新ignored tmp/s20_1/run_*：train/validation NPZ与results.json；--output必须新目录。
 2026-10-11本机两组exit0：train1600/validation400窗口；H10 train有效15280/padding720，H20有效28960/padding3040。
-短episode跨界与masked loss反例通过；本人已确认Run/Modify/Explain，S20.1 Learning Mastered（2026-10-11），详见学习包。S20.2见下节，S20.3见后节，S20.4见后节，S20.5及后续尚未实现。
+短episode跨界与masked loss反例通过；本人已确认Run/Modify/Explain，S20.1 Learning Mastered（2026-10-11），详见学习包。S20.2见下节，S20.3见后节，S20.4见后节，S20.5见后节，S20.6及后续尚未实现。
 
 ## S20.2 — MLP chunk baseline / execute prefix / replan
 
@@ -70,4 +70,25 @@ posterior输入o+masked expert chunk+valid；infer仅接受o/可选z，默认z=0
 新ignored tmp/s20_4/run_*保存protocol/checkpoint/loss/validation predictions/results。
 2026-10-11两组exit0；beta .01/1的KL .001552/.0000641，prior-zero RMSE .804/.819mm。
 手算/Normal KL/梯度、padding隔离、infer禁用encoder检查、checkpoint/hash/CSV与CLI通过，详见学习包。
-Engineering Complete；本人已确认实验、预测与五项Explain，Learning Run/Modify/Explain全部完成，Mastered（2026-10-11）；下一小任务S20.5等待明确请求。
+Engineering Complete；本人已确认实验、预测与五项Explain，Learning Run/Modify/Explain全部完成，Mastered（2026-10-11）；S20.5见下节。
+
+## S20.5 — Tiny state ACT / Transformer CVAE / closed-loop
+
+[学习包与五问](../../docs/23_5_tiny_act.md)。依赖已有CPU Torch/NumPy/MuJoCo/Matplotlib，
+helper为attention_basics/cvae_latent/sequence_dataset/chunk_baseline及旧S19 controller，无安装。
+核验上述mujoco环境后运行：
+
+```bash
+python examples/21_act_temporal_policy/tiny_act.py --prepared tmp/s19_3/verified193
+python examples/21_act_temporal_policy/tiny_act.py --prepared tmp/s19_3/verified193 \
+  --checkpoint tmp/s20_5/default/act.pt --execute 1
+```
+
+第二命令将checkpoint替换为第一命令实际打印目录下act.pt；prepared缺失按S19.2→3重建。
+D32/2head/FF64/latent4，posterior/memory encoder与decoder各1层，H10、默认E5、31146参数。
+100epochs/seed205，train posterior R+.01KL，validation **prior-zero** MSE选checkpoint；test不打开。
+推理仅actual o/z0，reference50Hz/inner反馈1kHz；--checkpoint模式不训练，固定weights改E。
+新ignored tmp/s20_5/run_*含protocol/act.pt/offline/12trial/results/rollout.png，训练另含loss.csv。
+2026-10-11 best20/priorRMSE .829mm，E5 4/4、E1 2/4，expert均4/4、constant均0/4；trainloop25.443s。
+24trial独立48000physics步/动作时序/hash/checkpoint/梯度与infer隔离通过；有限单seed/4validation reset，不是完整论文复现或统一算法benchmark。
+Engineering Complete，Learning三项待本人确认；temporal ensembling留S20.6等待请求。

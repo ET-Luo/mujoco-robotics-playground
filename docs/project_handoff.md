@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（S20.4 Engineering Complete + Learning Mastered；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
+最后整理：2026-10-11（S20.5 Engineering Complete、Learning待验证；S20.4 Engineering Complete + Learning Mastered；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8与S20.1–4；当前截止S20.4 Engineering Complete + Learning Mastered。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8与S20.1–5；当前截止S20.5工程，S20.1–4已Learning Mastered。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -19,8 +19,29 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；下一小任务S20.5等待明确请求。
-Stage20已实现S20.1窗口数据、S20.2 MLP chunk/replan、S20.3 attention basics与S20.4 MLP CVAE机制，其余Stage20–22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.5已Engineering Complete、Learning待本人Run/Modify/Explain；下一小任务S20.6等待明确请求。
+Stage20已实现S20.1窗口数据、S20.2 MLP chunk/replan、S20.3 attention basics、S20.4 MLP CVAE机制与S20.5 tiny state ACT，其余Stage20–22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；tiny state ACT已实现validation闭环；Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S20.5 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+用户请求继续S20.5；pwd正确/git status空；WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda info hook激活mujoco，同shell所属Python3.12.14核验；NumPy2.5.3/Torch2.14.0+cpu/
+MuJoCo3.14.0/Matplotlib3.11.2 metadata/真实路径/API通过，CUDA build None，无安装。
+新增[tiny_act.py](../examples/21_act_temporal_policy/tiny_act.py)与[学习包](23_5_tiny_act.md)。
+helper为attention_basics/cvae_latent/sequence_dataset/chunk_baseline→S19/controller，复用旧dynamics/scorer，冻结split/normalizer、不打开test。
+D32/2head/FF64/latent4，posterior encoder/obs-latent memory encoder/learned query decoder各1层；31146参数，H10/L1。
+100epochs/seed205/CPU1thread/batch64/lr.001，train masked R+.01KL；validation prior-zero MSE选checkpoint，非rollout选模。
+命令：python examples/21_act_temporal_policy/tiny_act.py --prepared tmp/s19_3/verified193 --output tmp/s20_5/default；
+同输入--checkpoint tmp/s20_5/default/act.pt --execute 1 --output tmp/s20_5/execute1，均exit0，各12trial。
+best20，prior/posterior valRMSE .829188/.829245mm，KL .00158380；E5成功4/4/finalmean .499317mm，E1成功2/4/.874740mm。
+两组expert4/4、constant0/4；E5/E1 calls每trial20/100。trainloop25.443s含epoch评分，第二组不训练/wall null。
+24trial独立48000Euler步/reset/clock/scorer/hash与actual状态重预测、plan anchor/offset/action通过；
+同weights/normalizer/offline逐值一致、expert/constant轨迹一致；checkpoint重载/CSV argmin/目标组合/保存统计通过。
+部署全过程禁用posterior，infer/ACT rollout仍成功；padding NaN不改posterior；重建梯度通过posterior/memory/decoder，padding梯度0。
+empty posterior labels/T13-E5末段截断、checkpoint-split mismatch/四CLI exit2、3.11语法通过，实际3.12；两PNG已查看。
+产物仅ignored tmp/s20_5；无GUI/OOD/test/多seed/模式覆盖/统一BC比较；tiny state教学变体非原论文性能复现。
+README Engineering三项完成、Learning三项空；本轮新增两文件、同步六份导航/状态文档；链接/git diff --check通过。
+下一步本人Run、同checkpoint E5→E1 Modify与五问Explain；S20.6等待明确请求，不自动实施。
 
 ## S20.4 现场工程验证（2026-10-11，DESKTOP-781D67A）
 
