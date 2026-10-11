@@ -70,4 +70,4 @@ posterior输入o+masked expert chunk+valid；infer仅接受o/可选z，默认z=0
 新ignored tmp/s20_4/run_*保存protocol/checkpoint/loss/validation predictions/results。
 2026-10-11两组exit0；beta .01/1的KL .001552/.0000641，prior-zero RMSE .804/.819mm。
 手算/Normal KL/梯度、padding隔离、infer禁用encoder检查、checkpoint/hash/CSV与CLI通过，详见学习包。
-Engineering Complete，Learning三项待本人确认；下一小任务S20.5等待明确请求。
+Engineering Complete；本人已确认实验、预测与五项Explain，Learning Run/Modify/Explain全部完成，Mastered（2026-10-11）；下一小任务S20.5等待明确请求。

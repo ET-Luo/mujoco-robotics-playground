@@ -156,7 +156,9 @@ z=0为prior mean并非sample或posterior mean；非线性decoder在均值处输�
 
 ## My Verification / Run → Modify → Explain
 
-状态见根README，Engineering与Learning分开；本人三项暂未确认。
+状态见根README，Engineering与Learning分开；2026-10-11 本人确认实验与预测完成，并正确回答五项Explain；Run/Modify/Explain全部完成，Learning Mastered。
+解释覆盖posterior/prior输入边界、logvar与重参数化梯度、KL归约与beta权衡、zero/mean/sample区别及padding双重保护。
+本次仅同步文档，未重跑Python/MuJoCo/GUI；runtime沿用2026-10-11工程验证。
 
 **Run：**运行默认命令，核对math_probe、KL、四种validation误差及infer isolation结果。
 

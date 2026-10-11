@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（S20.4 Engineering Complete、Learning待验证；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
+最后整理：2026-10-11（S20.4 Engineering Complete + Learning Mastered；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8与S20.1–4；当前截止S20.4工程，S20.1–3已Learning Mastered。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8与S20.1–4；当前截止S20.4 Engineering Complete + Learning Mastered。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -19,7 +19,7 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete、Learning待本人Run/Modify/Explain；下一小任务S20.5等待明确请求。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；下一小任务S20.5等待明确请求。
 Stage20已实现S20.1窗口数据、S20.2 MLP chunk/replan、S20.3 attention basics与S20.4 MLP CVAE机制，其余Stage20–22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
 
 ## S20.4 现场工程验证（2026-10-11，DESKTOP-781D67A）
@@ -40,8 +40,10 @@ padding NaN不改posterior；真实labels+1改mu max .188169/.045115；禁用pos
 两checkpoint/normalizer/source/hash/保存预测/CSV目标与argmin/同eval及prior noise核验通过；五CLI exit2；3.11仅语法，实际3.12。
 初次独立检查未沿用1thread，预测差3.6e−7；统一1thread后逐值一致。NumPy/Torch float32 MSE归约差9.3e−10，交叉检查atol2e−9通过。
 产物仅ignored tmp/s20_4；无Transformer/物理/GUI/OOD/多模式/ACT性能；小KL不是collapse证明，posterior误差不是部署指标。
-README Engineering三项完成，Learning三项空；本轮新增两文件、同步六份导航/状态文档；链接/git diff --check通过。
-下一步本人Run、beta .01→1 Modify与五问Explain；S20.5等待明确请求，不自动实施。
+README Engineering三项完成；本人随后确认实验、预测与五项Explain，Learning三项全部完成，Mastered；本轮新增两文件、同步六份导航/状态文档；链接/git diff --check通过。
+本人解释覆盖输入隔离、重参数化梯度、KL归约与beta、prior mean与输出期望的区别，以及padding对encoder/loss的双重保护。
+本次仅同步七份文档，本地链接与git diff --check通过；未重跑Python/MuJoCo/GUI，runtime沿用2026-10-11工程验证。
+S20.5等待明确请求，不自动实施。
 
 ## S20.3 现场工程验证（2026-10-11，DESKTOP-781D67A）
 
