@@ -33,7 +33,7 @@ Ryzen 7 7840HS / WSL2 Ubuntu24.04：CPU PyTorch，首选2层32–64宽MLP、
 无大型视觉encoder、image-based ACT、大型Diffusion、VLA或World Model。
 S19.1仅需已有NumPy/MuJoCo/Matplotlib helper；Torch从BC任务起核验CPU版本，不提前安装。
 
-## 共同 benchmark 合同（规划，尚未实现）
+## 共同 benchmark 合同（A轨道BC已实现，B/C及后续policy仍规划）
 
 A：xy_goal_reach_v1作为契约/BC起点；B：同XY fixture上下绕障碍双路径任务，供BC/ACT/Diffusion统一比较；
 C：contact surface following，最后选一个小三指保持/扰动任务。它们是不同benchmark轨道，不能把跨task数字排优劣。
@@ -65,8 +65,9 @@ Offline loss衡量expert分布上的预测；rollout衡量policy诱导状态分�
 同一observation可能允许多个绕行模式，平方回归均值可能落入障碍；条件生成也需检验模式覆盖和连贯性。
 Generalization必须区分held-out同分布与未见物理参数/噪声/延迟；有限seed通过不证明通用操作能力。
 
-当前已完成S19.1–S19.7工程；S19.1–S19.7均已Learning Mastered（2026-10-11 本人确认）。
+当前已完成S19.1–S19.8工程；S19.1–S19.7均已Learning Mastered（2026-10-11 本人确认）。
 BC test offline RMSE1.532mm、2s/4s closed-loop0/4；test已用于冻结评价，不能用于选择模型后再称独立盲测。
 S19.6 validation诊断显示BC同状态expert动作RMSE .734mm→3.728mm，干预效应可放大但末帧误差非单调。
 S19.7仅一轮train来源数据聚合，expert恢复16/16；新label loss下降但原validation选step0，learner0/4，不标改善或完整DAgger。
-下一个小任务S19.8等待用户请求。
+S19.8冻结benchmark已完成，Learning待本人Run/Modify/Explain；同协议两组expert4/4、BC与聚合0/4，test为公开复测，不调参。
+下一个小任务S20.1等待用户请求。

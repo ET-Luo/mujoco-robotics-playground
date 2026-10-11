@@ -152,3 +152,23 @@ Modify weight0使两支weights/训练曲线相同，不改变采集；同state�
 不是完整多轮DAgger或learner恢复成功；Learning Run/Modify/Explain全部完成，Learning Mastered（2026-10-11 本人确认）；下一任务S19.8等待明确请求。
 
 Validation闭环已执行，所选learner仍0/4；尚无改善证据、更新策略的多轮采集或新的独立泛化评价。此次学习状态同步未重跑Python/MuJoCo，工程结果沿用2026-10-11验证。
+
+## S19.8 — Frozen BC integration benchmark
+
+[完整学习包与五问](../../docs/22_8_bc_integration_benchmark.md)。依赖已有CPU Torch/NumPy/MuJoCo/Matplotlib；无新增依赖。
+同prepared/split/normalizer/controller/reset/判据下expert、constant、BC与可选聚合checkpoint分别评价validation和已公开test：
+
+```bash
+python examples/20_learning_from_demonstrations/integration_benchmark.py \
+  --prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt \
+  --additional-checkpoint tmp/s19_7/default/aggregated_bc.pt
+```
+
+先按上文核验mujoco环境；缺ignored输入时按S19.2→3→4→7重建并使用实际路径。
+Modify先预测再加`--duration-scale 2`，统一延长所有policy，不改变模型或成功阈值。
+protocol先写入，保存hash/全部trial NPZ/summary.csv/results.json；输出新ignored tmp/s19_8/run_*。
+2026-10-11 DESKTOP-781D67A：2s/4s两组expert均4/4，其余均0/4；聚合与BC轨迹完全相同。
+Test BC offline1.532mm，2s/4s终态均误差11.909/12.000mm；CPU batch1 mean/p95约.0217/.0252ms（默认test）。
+64trial独立192000Euler步、scorer/hash/reset/相同前缀核验与非法CLI通过；3.11仅语法，无GUI/OOD。
+工程PASS不等于任务成功；test是S19.5已公开的描述性复测，无选模/训练；历史training wall有单独provenance。
+Engineering Complete，Learning Run/Modify/Explain待本人完成；本轮停S19.8，S20.1等待明确请求。
