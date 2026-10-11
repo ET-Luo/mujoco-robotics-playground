@@ -6,7 +6,7 @@ README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8；当前截止S19.8。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8与S20.1；当前截止S20.1工程。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -19,8 +19,26 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；下一小任务S20.1等待明确请求。
-Stage20–22只有skeleton，BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S20.2等待明确请求。
+Stage20已实现S20.1窗口数据，其余Stage20–22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S20.1 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+用户请求推进S20.1；起始pwd正确/git status空；WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda info定位hook，激活mujoco，同shell核验所属Python3.12.14；NumPy2.5.3 metadata/真实模块路径/API通过。
+仅依赖已有NumPy，无local helper/Torch/MuJoCo导入，无安装/requirements变动。
+新增[sequence_dataset.py](../examples/21_act_temporal_policy/sequence_dataset.py)、示例README与[学习包](23_1_sequence_dataset.md)。
+冻结S19.3 split/normalizer，读train/validation，不打开test数组；history左补/action右补normalized0，valid=True。
+命令：python examples/21_act_temporal_policy/sequence_dataset.py --prepared tmp/s19_3/verified193 --output tmp/s20_1/default；
+同输入--chunk 20 --output tmp/s20_1/chunk20，均exit0；每组1600train/400validation窗口。
+L4/H10 train有效action15280/padding720，H20有效28960/padding3040；history有效6304不变。
+长度3/2合成乱序episode的跨界/因果/mask反例通过；有效误差1，padding预测1000或NaN时masked MSE仍1。
+4000保存窗口独立逐token核对source ID/timestep/value/padding通过；H1与H>T、empty loss mask拒绝、
+四CLI非法/缺输入/已有output拒绝exit2；3.11仅语法核验，实际3.12。
+产物只ignored tmp/s20_1；无physics/GUI/训练/ACT性能验证，重叠标签并非新增独立示范。
+README Engineering Code/Experiment/Docs完成，Learning三项均空；下一步本人Run、H10→20 Modify及五问Explain。
+七份文档本地链接与git diff --check通过；本轮新增三份文件、同步五份文档。
+下一小任务S20.2等待明确请求，不自动实施。
 
 ## S19.8 现场工程验证（2026-10-11，DESKTOP-781D67A）
 

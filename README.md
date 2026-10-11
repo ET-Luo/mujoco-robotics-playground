@@ -586,8 +586,8 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 
 [阶段学习包 / skeleton](docs/23_act_temporal_policy.md)。
 
-- S20.1（0.5～2h）：Sequence dataset / boundaries / mask。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S20.1（0.5～2h）：[Sequence dataset / boundaries / mask](docs/23_1_sequence_dataset.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；L4/H10与H20窗口/边界/masked loss通过（2026-10-11）
 
 - S20.2（0.5～2h）：Action chunking baseline / replan。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-本轮截止 S19.8。下一任务 S20.1 等待明确请求，不自动推进。
+当前截止 S20.1 Engineering Complete，Learning Run/Modify/Explain待本人验证；下一任务 S20.2 等待明确请求。
