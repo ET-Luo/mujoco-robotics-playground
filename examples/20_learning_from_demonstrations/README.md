@@ -1,6 +1,6 @@
 # Stage 19 — Learning from Demonstrations
 
-当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)、[S19.3 split/normalization](../../docs/22_3_split_normalization.md)与[S19.4 CPU BC](../../docs/22_4_behavior_cloning.md)。
+当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)、[S19.3 split/normalization](../../docs/22_3_split_normalization.md)、[S19.4 CPU BC](../../docs/22_4_behavior_cloning.md)与[S19.5 closed-loop评价](../../docs/22_5_closed_loop_evaluation.md)。
 状态唯一来源：[根README](../../README.md#stage-19--learning-from-demonstrations)。
 复用Stage17 cartesian_spring XML/常量；helper也导入Matplotlib。
 依赖requirements已声明mujoco/numpy/matplotlib；没有Torch或新依赖。
@@ -83,4 +83,26 @@ train1600rows/val400rows，Adam lr.001/batch64，val选择checkpoint；test文�
 2026-10-11 DESKTOP-781D67A：200/20epochs exit0；best79/20、val RMSE .734/1.063mm，constant8.002mm；
 两设置expert4/4、constant0/4、BC0/4，工程PASS不代表机器人成功。训练wall约1.730/.167s（不含rollout）。
 saved checkpoint、24rollout独立物理/动作/scorer、MSE梯度/CLI/hash/3.11语法与两PNG检查通过；无GUI/OOD/test评价。
-完整学习包解释offline loss与闭环失败；Learning待本人Run/Modify/Explain。下一任务S19.5等待明确请求。
+完整学习包解释offline loss与闭环失败；Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）。下一任务S19.5等待明确请求。
+解释补充：用有效action_scale反归一化，reference→阻抗force→ctrl=force/gear；BC闭环结果仍0/4。
+本次仅同步状态文档，未重跑训练/仿真；runtime沿用2026-10-11工程验证。
+
+
+## S19.5 — Frozen test closed-loop evaluation
+
+复用behavior_cloning.rollout与相同expert/controller；依赖已有CPU Torch/NumPy/MuJoCo/Matplotlib，无安装。
+先核验上文mujoco/interpreter，传入同一S19.3 split与S19.4 checkpoint：
+
+```bash
+python examples/20_learning_from_demonstrations/evaluate_rollout.py --prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt
+python examples/20_learning_from_demonstrations/evaluate_rollout.py --prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt --duration-scale 2
+```
+
+其他电脑按S19.2→3→4重建ignored输入，使用实际打印路径，不能混split/hash。
+输出新ignored tmp/s19_5/run_*：results.json、offline_predictions.npz、12rollout NPZ、rollout.png。
+2026-10-11 DESKTOP-781D67A：test400rows/4episode，BC RMSE1.532mm vs constant9.586mm；
+2s/4s expert4/4、constant0/4、BC0/4，BC全分母final mean11.909/12.000mm，speed门限通过但位置未通过。
+Modify只延长三个policy执行horizon100→200；offline数据不变，成功容差不变，属于不同duration协议。
+24保存轨迹独立Euler/动作/scorer/hash与共同前缀检查通过；checkpoint-split mismatch/损坏输入/非法CLI拒绝。
+两PNG已查看、3.11仅验语法；没有重训/normalizer refit/GUI/OOD/恢复实验。test已使用，不再当未见盲测调参。
+学习Run/Modify/五问见学习包，当前仅工程完成；下一任务S19.6等待明确请求。

@@ -129,7 +129,7 @@ Must Remember：grad更新只用train；validation选择；test独立；action�
 
 ## My Verification — Run / Modify / Explain
 
-状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。Learning三项待本人完成。
+状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。2026-10-11 本人确认实验与预测完成，并提交五项Explain；Run / Modify / Explain全部完成，Learning Mastered。
 Run：执行默认命令，读loss.png/CSV的selected epoch与results.json，区分offline RMSE及三policy success分母。
 Modify：先预测仅减少epochs200→20（split/seed/width/lr不变）的影响，再运行：
 
@@ -145,3 +145,10 @@ Explain（五问）：
 5. BC validation动作RMSE较小却闭环0/4说明什么？还缺哪些实验才能解释shift或泛化？
 
 下一小任务S19.5 closed-loop evaluation / offline vs rollout，等待明确请求；本轮停止。
+
+Explain精度补充：反归一化使用保存的有效action_scale与action_mean；恒定通道不能直接用raw std0。
+本例物理action是world XY绝对reference（m），低层以F=K(reference−qpos)−D*qvel生成slide广义力（N），
+ctrl=F/gear，经motor transmission与force cap进入实际mj_step积分；不存在另一个黑盒Action Decoder。
+本人解释已覆盖监督目标、梯度更新、validation/deepcopy、物理动作合同及offline/closed-loop差异。
+Learning Mastered表示完成Run/Modify/Explain，BC任务成功率仍为0/4；失败原因尚未通过干预实验归因。
+本次仅同步文档，未重跑Python、训练、MuJoCo或GUI；runtime沿用2026-10-11工程验证。

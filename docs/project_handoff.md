@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Engineering Complete / Learning待本人验证）。
+最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Engineering Complete / Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.4；当前截止S19.4。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.5；当前截止S19.5。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -16,8 +16,26 @@ replay边界与BC闭环分布偏移。本次仅同步五份状态文档，链接
 当前[S19.2学习包](22_2_expert_demonstrations.md)含Run、horizon100→20 Modify与五问Explain；
 README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）。
 当前[S19.3学习包](22_3_split_normalization.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning三项留空；下一小任务S19.5等待明确请求。
-Stage20–22只有skeleton，BC已训练与validation rollout（0/4），test未加载；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
+当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning三项留空；下一小任务S19.6等待明确请求。
+Stage20–22只有skeleton，BC已训练且validation/test rollout均0/4，test本轮已用于冻结评价不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S19.5 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+保留起始六份modified学习状态文档；pwd正确，WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前hook激活mujoco，同shell所属Python3.12.14；requirements与helper imports已读。
+MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2/Torch2.14.0+cpu metadata/import/API/helper路径通过，CPU tensor/CUDA build None。
+新evaluate_rollout.py复用behavior_cloning.rollout；无安装/依赖改动/重训或normalizer refit。
+--prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt --output tmp/s19_5/default；
+同输入--duration-scale 2 --output tmp/s19_5/long，均exit0；checkpoint79冻结，加载test400rows/4reset。
+三policy paired init/goal/controller/判据；2s/4s分别24000/48000physics步，全部attempt存NPZ。
+BC offline RMSE1.532095mm（constant9.585531mm）；normalized MSE.030931（constant1.159639）。
+两duration expert4/4、constant0/4、BC0/4；BC final全分母mean11.909423/11.999548mm，tail max17.387335/17.731416mm；
+speed max1.922612/.114500mm/s均通过，位置未通过。延时未改善成功，不标shift完整归因/鲁棒性。
+24保存rollout独立Euler/因果动作/初态/clock/scorer/aggregate/hash及共同prefix通过，checkpoint SHA不变。
+非法CLI/已有output/不同split/hash损坏拒绝；3.11语法、两PNG目视、links/anchors/git diff --check通过。
+生成物仅ignored tmp；无GUI/扰动/recovery/新训练seed。test已使用，后续不可调参后再称独立盲测。
+学习待本人Run/Modify/Explain；下个任务S19.6等待明确请求。
 
 ## S19.4 现场工程验证（2026-10-11，DESKTOP-781D67A）
 
@@ -33,7 +51,13 @@ training wall1.730/.167s不含input/save/rollout。相同validation4reset×exper
 工程完成但BC任务失败，状态分布偏移/固定点等为解释候选，尚未干预归因，不标泛化/鲁棒性完成。
 checkpoint weights-only CPU reload/prediction exact、独立val MSE/CSV argmin、24保存rollout Euler/因果动作/scorer通过。
 MSE数值梯度、非法CLI/已有output/hash损坏拒绝、3.11语法、两lossPNG目视、links/anchors/git diff --check通过。
-生成物仅ignored tmp；无GUI/物体抓取/test/OOD/恢复数据或ACT；本轮停S19.4，学习待本人验证。
+生成物仅ignored tmp；无GUI/物体抓取/test/OOD/恢复数据或ACT；本轮停S19.4；本人随后确认实验、预测与五项Explain，Learning Mastered。
+
+2026-10-11 S19.4学习状态同步：本人解释BC数据合同、梯度更新、validation选checkpoint/deepcopy和闭环shift边界。
+精度补充：action反变换使用有效scale；物理reference经impedance force与gear转换到motor ctrl。
+Learning Mastered不改变BC validation rollout0/4，不提前归因失败或启动S19.5。
+本次仅同步README、学习包、示例README、roadmap、P3 plan、handoff；链接/一致性/git diff --check通过。
+未重跑Python/训练/MuJoCo/GUI，runtime沿用上述2026-10-11工程验证。
 
 ## S19.3 现场工程验证（2026-10-11，DESKTOP-781D67A）
 
