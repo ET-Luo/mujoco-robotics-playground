@@ -137,7 +137,7 @@ Must Remember：协议先于结果；全部attempt入分母；时间要注明测
 
 ## My Verification — Run / Modify / Explain
 
-Engineering完成；Learning三项待本人确认，状态唯一来源为根README。
+Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；Learning Run/Modify/Explain全部完成，状态唯一来源为根README。
 Run：运行上文命令，查看protocol、summary.csv与results中的training provenance，区分工程PASS与task success。
 Modify：先预测只加`--duration-scale 2`会改变哪些结果，再运行；
 检查offline RMSE/weights/split不变、所有policy horizon一起延长，2s轨迹是4s轨迹的相同前缀。
@@ -150,5 +150,7 @@ Explain：
 4. Train wall、batch1推理延迟、rollout wall与simulation time各包括什么？小p95为何不是实时保证？
 5. 为什么本课Test是公开复测？怎样设计下一次独立泛化评价，避免边看结果边选模型？
 
-本轮停S19.8；Stage19 Engineering全部完成不等于本人Learning全部完成。
+本轮停S19.8；Stage19全部任务已Engineering Complete + Learning Mastered。
 下一小任务S20.1 sequence dataset / boundaries / mask，等待明确请求，不自动实施。
+
+2026-10-11学习核验：本人已理解冻结协议、公平配对、失败分母与null、offline/闭环差别和公开Test的评价边界。耗时精度补充：本课training wall来自历史训练循环，未包括数据采集；inference包含归一化、forward和动作反归一化；rollout wall还包括controller、physics与检查。小样本p95不证明硬实时或最坏时延。本人Learning完成不改变BC/聚合0/4结果。本次仅更新文档，未重跑Python/MuJoCo，工程结果沿用2026-10-11验证。

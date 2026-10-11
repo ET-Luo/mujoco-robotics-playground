@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -19,7 +19,7 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete，Learning三项待本人验证；下一小任务S20.1等待明确请求。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；下一小任务S20.1等待明确请求。
 Stage20–22只有skeleton，BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
 
 ## S19.8 现场工程验证（2026-10-11，DESKTOP-781D67A）
@@ -38,11 +38,17 @@ rollout wall含物理/assert，train wall仅历史sidecar（1.730/.336s），标
 64保存trial独立192000Euler步、hash/全分母/scorer/action变化/同reset/2s-4s精确前缀通过。
 CLI invalid duration/已有output/缺checkpoint及人为checkpoint-split mismatch均exit2；Python3.11仅语法验证，实际3.12。
 结果仅ignored tmp/s19_8，无GUI/OOD/contact/UR5e/新盲测；每组仅4reset/单既有训练seed，不能声称完整泛化验证。
-README Engineering Code/Experiment/Docs完成，Learning Run/Modify/Explain均留空；本轮停S19.8。
+README Engineering Code/Experiment/Docs完成；本人随后确认实验、预测与五项Explain，Learning Run/Modify/Explain全部完成，Mastered；本轮停S19.8。
 七份文档本地链接与状态一致性、git diff --check通过；新增一份代码和一份学习包，同步六份既有文档。
 下一小任务S20.1 sequence dataset / boundaries / mask，等待明确请求，不自动推进。
 
+S19.8学习确认（2026-10-11）：本人报告实验与预测完成，并准确回答五问；Stage19全部任务Engineering Complete + Learning Mastered。
+补充测量边界：training wall为历史训练循环；inference包括归一化/forward/动作解码，小p95不是硬实时保证。
+保留BC/聚合0/4、公开Test复测与有限seed边界；本次仅同步六份文档，未重跑Python/MuJoCo，runtime沿用2026-10-11工程验证。
+下一步S20.1等待明确请求，不自动实施。
+
 ## S19.7 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
 
 用户明确推进S19.7；起始pwd正确/git status空。WSL2 Ubuntu24.04.5/kernel6.6.87.2。
 当前hook激活mujoco，同shell所属Python3.12.14；requirements与helper imports已读。

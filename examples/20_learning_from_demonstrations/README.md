@@ -171,4 +171,4 @@ protocol先写入，保存hash/全部trial NPZ/summary.csv/results.json；输出
 Test BC offline1.532mm，2s/4s终态均误差11.909/12.000mm；CPU batch1 mean/p95约.0217/.0252ms（默认test）。
 64trial独立192000Euler步、scorer/hash/reset/相同前缀核验与非法CLI通过；3.11仅语法，无GUI/OOD。
 工程PASS不等于任务成功；test是S19.5已公开的描述性复测，无选模/训练；历史training wall有单独provenance。
-Engineering Complete，Learning Run/Modify/Explain待本人完成；本轮停S19.8，S20.1等待明确请求。
+Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain），Learning Run/Modify/Explain全部完成；本轮停S19.8，S20.1等待明确请求。
