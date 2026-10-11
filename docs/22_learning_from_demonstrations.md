@@ -7,7 +7,7 @@ Intuition：示范是闭环控制沿时间产生的episode，不是独立图片�
 | Task（每项0.5～2h） | 核心概念 / 最小实验 / 验收 |
 | --- | --- |
 | S19.1 | [observation/action/episode契约](22_1_episode_contract.md)；expert transition生成与实际MuJoCo replay |
-| S19.2 | expert demonstration generation：复用controller、采样start/goal、轨迹dataset与manifest，失败episode保留 |
+| S19.2 | [expert demonstration generation](22_2_expert_demonstrations.md)：复用controller、采样start/goal、轨迹dataset与manifest，失败episode保留 |
 | S19.3 | episode-level train/val/test split；训练集normalization；泄漏与constant-channel检查 |
 | S19.4 | CPU tiny MLP Behavior Cloning；MSE数学到Torch训练，held-out loss与constant baseline |
 | S19.5 | closed-loop MuJoCo rollout；同reset下expert vs BC，offline loss vs任务成功 |
@@ -18,8 +18,8 @@ Intuition：示范是闭环控制沿时间产生的episode，不是独立图片�
 Core Concepts：o_t、a_t、o_(t+1)、episode、采样频率、expert vs learned policy。
 Mathematics：BC最小化 train 的 mean ||πθ(norm(o_t))−norm(a_t)||²；只拟合train统计。
 Math-to-Code：episode IDs→split→training tensors→optimizer→反归一化action→同MuJoCo执行器。
-Minimal Experiment：从S19.1开始，后续训练未实施。
-Expected/Actual：预计expert闭环恢复；S19.1实际结果见学习包，不存在BC loss或BC success结果。
+Minimal Experiment：S19.1合同与S19.2批量expert采集已实现；后续split/训练未实施。
+Expected/Actual：预计expert闭环恢复；S19.1/S19.2实际结果见各学习包，不存在BC loss或BC success结果。
 Explanation：π的动作改变后续输入，监督验证与执行分布不同。
 Failure Cases：时序错位、future-state泄漏、按row split、normalizer泄漏、动作单位错误、只报告成功episode。
 Robotics Applications：classical专家蒸馏、遥操作模仿、恢复行为。

@@ -103,3 +103,10 @@ Explain（五问）：
 5. fresh-data replay一致证明了什么？为何不证明未来BC闭环或泛化成功？
 
 下一小任务S19.2：多episode expert demonstration/dataset generation。等待明确请求；本轮STOP。
+
+2026-10-11：本人明确确认实验与预测完成，并准确回答上述五问，Run / Modify / Explain全部完成，Learning Mastered。
+解释精度：通常BC配对为`observations[:-1]`与`actions`，最后观测保留用于终态与transition验证；
+本例action是世界XY绝对reference（m），ctrl为motor输入，经gear映射为slide广义力（N），qpos为实际slide位置（m）。
+1kHz是本例配置；无接触模型的gravity为零，持续反馈在本例仍用于惯性与跟踪误差修正。
+重放一致只覆盖记录过程；未来BC闭环、扰动鲁棒性与泛化需独立测试。
+本次仅更新学习状态文档，未重跑仿真；runtime证据仍为2026-10-10。

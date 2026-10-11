@@ -1,16 +1,40 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-10（P2完成；P3规划与S19.1 Engineering Complete，Learning待本人验证）。
+最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Engineering Complete / Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
-## P3 当前边界与下一步（2026-10-10）
+## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划及仅S19.1实现；本轮截止这里。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2；当前截止S19.2。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
-根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain均未勾选。
-[当前学习包](22_1_episode_contract.md)含Run、goal_x反向Modify与五问Explain；下一小任务S19.2等待明确请求。
+根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
+2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
+解释覆盖N次转移需要N+1观测、action/ctrl/qpos契约、持续反馈、truncation与success独立、
+replay边界与BC闭环分布偏移。本次仅同步五份状态文档，链接/一致性与git diff --check通过；
+未重跑Python/MuJoCo/GUI，runtime沿用2026-10-10工程验证。
+当前[S19.2学习包](22_2_expert_demonstrations.md)含Run、horizon100→20 Modify与五问Explain；
+README S19.2 Code/Experiment/Docs完成，Learning均留空。下一小任务S19.3等待明确请求。
 Stage20–22只有skeleton，BC/ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S19.2 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+保留起始五份modified学习状态文档；pwd正确，WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda hook激活mujoco，同shell所属Python3.12.14；MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2
+metadata/import/API/local helper路径核验；requirements与imports已读，无安装/依赖改动。
+新增generate_demonstrations.py、学习包；run_episode仅增加可选horizon（旧默认100不变），复用旧expert/XY装置。
+命令generate_demonstrations.py --output tmp/s19_2/default、--horizon 20 --output tmp/s19_2/short、
+--output tmp/s19_2/repeat均exit0；24/24、0/24、24/24，所有attempt保存。
+默认2400transitions/48000physics+48000replay步；短组480transitions/9600+9600步。
+采集wall4.931/1.043/4.773s含replay/save/load不含plot，非纯simulation benchmark。
+manifest记录source/model hash、版本、reset分布、seeds、criterion；split unassigned/no normalization。
+72NPZ独立hash/shape/clock/outcome/Euler重算通过；repeat数组完全一致、short前缀一致。
+默认tail max9.046e−6m/1.119e−4m/s，短组.041858m/.055783m/s；失败bc_candidateFalse但不删。
+旧episode_contract.py默认回归exit0；非法CLI/已有目录exit2；3.11语法、两PNG目视、links/anchors/git diff --check通过。
+生成物仅ignored tmp，默认约226KB/短组155KB；无GUI、真实物体、human teleop、split/normalizer或learned policy训练。
+short与default不同horizon，不混入同protocol benchmark。仅工程完成，学习Run/Modify/Explain待本人验证。
+
+## S19.1 历史工程验证（2026-10-10）
 
 2026-10-10 DESKTOP-781D67A现场：起始pwd正确/git status空；WSL2 Ubuntu24.04.5/kernel6.6.87.2。
 当前conda hook激活mujoco，同执行shell核验环境与所属Python3.12.14；MuJoCo3.14.0/

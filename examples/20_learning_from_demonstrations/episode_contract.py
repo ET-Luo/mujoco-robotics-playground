@@ -35,7 +35,9 @@ def advance(model, data, action):
         mujoco.mj_step(model, data)  # In-place physical integration; never assign execution qpos.
 
 
-def run_episode(seed, goal_x):
+def run_episode(seed, goal_x, horizon=HORIZON):
+    if isinstance(horizon, bool) or not isinstance(horizon, int) or horizon < 10:
+        raise ValueError("horizon must be an integer >= 10 for the tail criterion")
     rng = np.random.default_rng(seed)
     model = mujoco.MjModel.from_xml_string(XML)  # Compile Stage17 geometry/masses/motors.
     data = mujoco.MjData(model)  # New independent mutable simulation state.
@@ -44,7 +46,7 @@ def run_episode(seed, goal_x):
     mujoco.mj_forward(model, data)
     observations = [observe(data, goal)]
     actions = []
-    for _ in range(HORIZON):
+    for _ in range(horizon):
         obs = observations[-1]
         # Expert label uses only o_t. Bound the reference displacement to 5 mm.
         action = obs[:2] + np.clip(obs[4:6] - obs[:2], -.005, .005)
@@ -52,7 +54,7 @@ def run_episode(seed, goal_x):
         advance(model, data, action)
         observations.append(observe(data, goal))
     observations, actions = np.asarray(observations), np.asarray(actions)
-    assert observations.shape == (HORIZON + 1, 6) and actions.shape == (HORIZON, 2)
+    assert observations.shape == (horizon + 1, 6) and actions.shape == (horizon, 2)
     assert np.isfinite(observations).all() and np.isfinite(actions).all()
     np.testing.assert_allclose(actions - observations[:-1, :2],
                                np.clip(observations[:-1, 4:6] - observations[:-1, :2], -.005, .005))
@@ -65,20 +67,20 @@ def run_episode(seed, goal_x):
     for t, action in enumerate(actions):
         advance(model, replay, action)
         replay_error = max(replay_error, float(np.max(np.abs(observe(replay, goal) - observations[t+1]))))
-    assert replay_error < 1e-12 and np.isclose(data.time, HORIZON * POLICY_DT)
+    assert replay_error < 1e-12 and np.isclose(data.time, horizon * POLICY_DT)
     # Fixed horizon: terminal sample is retained; time limit is truncation, not success termination.
     tail = observations[-10:]
     error = np.linalg.norm(tail[:, :2] - goal, axis=1)
     speed = np.linalg.norm(tail[:, 2:4], axis=1)
     success = bool(np.all(error < .001) and np.all(speed < .002))
-    terminated = np.zeros(HORIZON, dtype=bool)
-    truncated = np.zeros(HORIZON, dtype=bool)
+    terminated = np.zeros(horizon, dtype=bool)
+    truncated = np.zeros(horizon, dtype=bool)
     truncated[-1] = True
-    return dict(observations=observations, actions=actions, time_s=np.arange(HORIZON+1)*POLICY_DT,
+    return dict(observations=observations, actions=actions, time_s=np.arange(horizon+1)*POLICY_DT,
                 terminated=terminated, truncated=truncated), dict(
                     episode_id=f'expert_{seed}', seed=seed, success=success,
                     tail_max_error_m=float(error.max()), tail_max_speed_m_s=float(speed.max()),
-                    replay_max_error=replay_error, physics_steps=HORIZON*STRIDE)
+                    replay_max_error=replay_error, physics_steps=horizon*STRIDE)
 
 
 def main():

@@ -1,8 +1,8 @@
 # 学习路线与仓库评估
 
-更新：2026-10-10。任务与 Engineering/Learning checkbox 唯一维护在
+更新：2026-10-11。任务与 Engineering/Learning checkbox 唯一维护在
 [README](../README.md#learning-roadmap)。助手验证不能替代本人 Run/Modify/Explain。
-P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；P2 Stage16–18 Engineering Complete + Learning Mastered；P3仅S19.1 Engineering Complete，Learning待用户验证。
+P0（Stage0–11）与P1（Stage12–15）已由本人确认完成；P2 Stage16–18 Engineering Complete + Learning Mastered；P3 S19.1 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.2 Engineering Complete，Learning待本人验证。
 
 ## 当前代码如何使用
 
@@ -78,5 +78,5 @@ S14.1 [Collision Checking Package](17_motion_planning.md) Engineering Complete�
 ## P3 导航
 
 [P2审查与P3计划](p3_plan.md)；Stage19 [LfD](22_learning_from_demonstrations.md) → Stage20 [ACT](23_act_temporal_policy.md) → Stage21 [Diffusion](24_diffusion_policy.md) → Stage22 [Contact-aware](25_contact_aware_robot_learning.md)。
-当前代码 `examples/20_learning_from_demonstrations/episode_contract.py` 只实现S19.1 expert transition与MuJoCo replay；BC/ACT/Diffusion未实现。
-不重复P0/P1/P2，不进入P4。下一小任务S19.2等待授权。
+当前代码 `examples/20_learning_from_demonstrations/episode_contract.py` 实现S19.1 expert transition；`generate_demonstrations.py` 实现[S19.2批量采集](22_2_expert_demonstrations.md)、NPZ/manifest/source与失败保留。split/normalization/BC/ACT/Diffusion未实现。
+不重复P0/P1/P2，不进入P4。下一小任务S19.3等待授权。
