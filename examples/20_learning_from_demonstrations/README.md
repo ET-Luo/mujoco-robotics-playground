@@ -1,6 +1,6 @@
 # Stage 19 — Learning from Demonstrations
 
-当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)、[S19.3 split/normalization](../../docs/22_3_split_normalization.md)、[S19.4 CPU BC](../../docs/22_4_behavior_cloning.md)、[S19.5 closed-loop评价](../../docs/22_5_closed_loop_evaluation.md)与[S19.6 shift诊断](../../docs/22_6_covariate_shift.md)。
+当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)、[S19.3 split/normalization](../../docs/22_3_split_normalization.md)、[S19.4 CPU BC](../../docs/22_4_behavior_cloning.md)、[S19.5 closed-loop评价](../../docs/22_5_closed_loop_evaluation.md)、[S19.6 shift诊断](../../docs/22_6_covariate_shift.md)与[S19.7 recovery数据](../../docs/22_7_recovery_data.md)。
 状态唯一来源：[根README](../../README.md#stage-19--learning-from-demonstrations)。
 复用Stage17 cartesian_spring XML/常量；helper也导入Matplotlib。
 依赖requirements已声明mujoco/numpy/matplotlib；没有Torch或新依赖。
@@ -130,3 +130,23 @@ python examples/20_learning_from_demonstrations/covariate_shift.py --prepared tm
 完整五问见学习包；Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；下一任务S19.7等待明确请求。
 解释精度：repeated bias仅.4s，不是长期恒定偏置稳态实验；paired最大偏离与末帧goal error不同。
 本次仅同步文档，未重跑仿真；BC各条件仍0/4，runtime沿用2026-10-11记录。
+
+
+## S19.7 — Recovery data / one-round aggregation
+
+已有CPU Torch/NumPy/MuJoCo/Matplotlib，复用behavior_cloning、covariate_shift的predict/expert_action及旧physics。
+先核验上文mujoco环境，传入匹配的prepared/checkpoint：
+
+```bash
+python examples/20_learning_from_demonstrations/recovery_data.py --prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt
+python examples/20_learning_from_demonstrations/recovery_data.py --prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt --new-weight 0
+```
+
+只从16train来源采集：2s frozen BC执行+同状态expert query，再连续2s expert接管；1600relabel+1600recovery rows。
+原train1600rows与new group损失加权，normalizer冻结；对照/聚合都500update、同父weights/原batch序列，validation选模型，不加载test。
+输出新ignored tmp/s19_7/run_*：collection NPZ、relabel_pairs、results、两checkpoint/CSV、16validation rollout NPZ及recovery.png。
+2026-10-11 DESKTOP-781D67A：BC前缀1/16、expert接管16/16；默认聚合新标签loss .043627→.010218，
+原validation变差，best_step0保留父weights，learner0/4；continued best310也0/4。
+Modify weight0使两支weights/训练曲线相同，不改变采集；同state标签与executed actions必须分开，不能把counterfactual标签当真实轨迹重放。
+独立32采集+32rollout物理/source/label/scorer/hash、checkpoint/normalizer及CLI/3.11语法/两PNG/links通过。
+不是完整多轮DAgger或learner恢复成功；Learning三项待本人验证，下一任务S19.8等待明确请求。

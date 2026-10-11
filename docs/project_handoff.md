@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Engineering Complete + Learning Mastered）。
+最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Engineering Complete / Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.6；当前截止S19.6。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.7；当前截止S19.7。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -18,8 +18,28 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.3学习包](22_3_split_normalization.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；下一小任务S19.7等待明确请求。
+当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning三项留空；下一小任务S19.8等待明确请求。
 Stage20–22只有skeleton，BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S19.7 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+用户明确推进S19.7；起始pwd正确/git status空。WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前hook激活mujoco，同shell所属Python3.12.14；requirements与helper imports已读。
+MuJoCo3.14.0/NumPy2.5.3/Matplotlib3.11.2/Torch2.14.0+cpu metadata/import/API/helper路径通过，CPU/CUDA build None；无安装。
+新recovery_data.py与学习包，复用旧predict/expert/controller。仅原train16来源，先100tick BC+同状态expert query，
+再同一MjData连续100tick expert recovery，qpos/qvel只reset赋值；original1600/relabel1600/recovery1600。
+--prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt --output tmp/s19_7/default；
+同输入--new-weight 0 --output tmp/s19_7/no_new，均exit0，各64000collection+32000validation physics步。
+collection learner前缀1/16、expert接管16/16；source IDs只train，无validation/test训练来源；test未加载，normalizer冻结。
+continued/aggregated同父weights/Adam.001/500update/原batch序列；λ默认1是old/new各50%损失权重，非均匀4800rows。
+默认continued best310/valMSE.007112，aggregated best0/val.007599；聚合最后new-label loss .043627→.010218，val.018021。
+validation expert4/4、frozen/continued/aggregated各0/4；不改变选择规则，selected aggregation精确保留父weights，不标learner改善。
+weight0两支CSV/weights相同；两命令采集数组相同。training wall默认.301/.336s，weight0约.234/.225s，仅训练循环。
+32collection+32rollout保存结果独立重算192000Euler步、同状态标签/executed动作/scorer/hash/分组/聚合row映射通过。
+CSV argmin、checkpoint weights-only重载、normalizer/父SHA不变、CLI/3.11语法、两PNG目视、links/anchors/git diff --check通过。
+生成物只ignored tmp，无GUI/第二轮聚合/接触或新盲测。DAgger原论文参考链接见学习包；单轮教学实验不提供完整保证。
+Engineering Complete，Learning待本人Run/Modify/Explain；本轮停S19.7。
 
 ## S19.6 现场工程验证（2026-10-11，DESKTOP-781D67A）
 

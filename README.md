@@ -26,7 +26,7 @@
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
 P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2审查](docs/p2_plan.md)。
 P2（Stage 16–18）Engineering Complete + Learning Mastered（用户确认）。
-当前开始 **P3 — Learning-Based Robot Manipulation**；S19.1 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.2 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.3 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.4 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.5 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.6 Engineering Complete + Learning Mastered（2026-10-11 本人确认）。
+当前开始 **P3 — Learning-Based Robot Manipulation**；S19.1 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.2 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.3 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.4 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.5 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.6 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；当前 S19.7 Engineering Complete，Learning 待本人验证。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -56,6 +56,7 @@ P2（Stage 16–18）Engineering Complete + Learning Mastered（用户确认）�
 | P3 / S19.4 Tiny CPU BC | Code + Experiment + Docs 完成；validation rollout BC 0/4 | Run / Modify / Explain 已完成 — Mastered |
 | P3 / S19.5 Closed-loop Evaluation | Code + Experiment + Docs 完成；test BC 0/4 | Run / Modify / Explain 已完成 — Mastered |
 | P3 / S19.6 Covariate Shift | Code + Experiment + Docs 完成；validation干预BC未达标 | Run / Modify / Explain 已完成 — Mastered |
+| P3 / S19.7 Recovery Data | Code + Experiment + Docs 完成；单轮聚合learner未改善 | Run / Modify / Explain 待本人完成 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a/b 在固定场景验证；S14.7b已完成固定场景持物避障。
@@ -119,7 +120,7 @@ examples/16_ros2_integration/       # P1 final ROS2 manipulation pipeline
 examples/17_force_dynamics/         # P2 Stage 16
 examples/18_compliant_control/      # P2 Stage 17
 examples/19_teleoperation_dexterous/ # P2 Stage 18
-examples/20_learning_from_demonstrations/ # P3 Stage 19，当前S19.1–S19.6
+examples/20_learning_from_demonstrations/ # P3 Stage 19，当前S19.1–S19.7
 controllers/ environments/ rl/     # 既有学习代码与占位，详见路线索引
 assets/ scripts/ notebooks/ tests/ # 资源、工具与验证说明
 docs/                             # 笔记、P1/P2 规划、交接
@@ -574,8 +575,8 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S19.6（0.5～2h）：[Covariate shift / compounding error](docs/22_6_covariate_shift.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；BC各条件仍0/4
 
-- S19.7（0.5～2h）：Recovery data / DAgger intuition。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S19.7（0.5～2h）：[Recovery data / DAgger intuition](docs/22_7_recovery_data.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-11）；expert恢复16/16，聚合selected learner仍0/4，学习待本人验证
 
 - S19.8（0.5～2h）：BC integration benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -661,4 +662,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-本轮截止 S19.6。下一任务 S19.7 等待明确请求，不自动推进。
+本轮截止 S19.7。下一任务 S19.8 等待明确请求，不自动推进。
