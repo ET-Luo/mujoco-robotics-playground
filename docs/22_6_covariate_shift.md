@@ -140,7 +140,7 @@ Must Remember：shift是访问分布变化；propagation不是必然发散；控
 
 ## My Verification — Run / Modify / Explain
 
-状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。Learning三项待本人完成。
+状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。2026-10-11 本人确认实验与预测完成，并准确回答五项Explain；Run / Modify / Explain全部完成，Learning Mastered。
 Run：执行默认命令，读nominal的两种状态误差、paired最大偏离、2s/4s结果与shift.png。
 Modify：先预测bias2→4mm会如何改变峰值与末帧误差，再运行：
 
@@ -157,3 +157,8 @@ Explain（五问）：
 5. 本课对shift/propagation已验证哪些证据，还缺哪些证据才能完整定位BC失败或证明恢复能力？
 
 下一小任务S19.7 recovery data / DAgger intuition，等待明确请求；本轮停止。
+
+本人Explain准确区分expert/BC访问分布、有限样本NN代理、reference干预与直接状态干预、paired比较及因果证据边界。
+精度补充：本例repeated bias只持续20ticks/.4s，测的是有限持续输入及撤除后响应，不证明长期恒定偏置稳态。
+最大paired偏离不是最终goal error；更大偏置不保证末帧误差更大。Learning Mastered不改变BC各条件0/4或根因尚未完整定位。
+本次仅同步文档，未重跑Python/MuJoCo/GUI；runtime沿用2026-10-11工程验证，不推进S19.7。

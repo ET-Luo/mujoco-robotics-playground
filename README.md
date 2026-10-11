@@ -26,7 +26,7 @@
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
 P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2审查](docs/p2_plan.md)。
 P2（Stage 16–18）Engineering Complete + Learning Mastered（用户确认）。
-当前开始 **P3 — Learning-Based Robot Manipulation**；S19.1 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.2 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.3 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.4 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.5 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；当前 S19.6 Engineering Complete，Learning 待本人验证。
+当前开始 **P3 — Learning-Based Robot Manipulation**；S19.1 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.2 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.3 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.4 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.5 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.6 Engineering Complete + Learning Mastered（2026-10-11 本人确认）。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -55,7 +55,7 @@ P2（Stage 16–18）Engineering Complete + Learning Mastered（用户确认）�
 | P3 / S19.3 Split / Normalization | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | P3 / S19.4 Tiny CPU BC | Code + Experiment + Docs 完成；validation rollout BC 0/4 | Run / Modify / Explain 已完成 — Mastered |
 | P3 / S19.5 Closed-loop Evaluation | Code + Experiment + Docs 完成；test BC 0/4 | Run / Modify / Explain 已完成 — Mastered |
-| P3 / S19.6 Covariate Shift | Code + Experiment + Docs 完成；validation干预BC未达标 | Run / Modify / Explain 待本人完成 |
+| P3 / S19.6 Covariate Shift | Code + Experiment + Docs 完成；validation干预BC未达标 | Run / Modify / Explain 已完成 — Mastered |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a/b 在固定场景验证；S14.7b已完成固定场景持物避障。
@@ -572,7 +572,7 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测并完成五项Explain）；test BC仍0/4（2s/4s）
 
 - S19.6（0.5～2h）：[Covariate shift / compounding error](docs/22_6_covariate_shift.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-11）；仅诊断，BC各条件仍0/4，学习待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；BC各条件仍0/4
 
 - S19.7（0.5～2h）：Recovery data / DAgger intuition。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划

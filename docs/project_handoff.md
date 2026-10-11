@@ -1,6 +1,6 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Engineering Complete / Learning待本人验证）。
+最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Engineering Complete + Learning Mastered）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
@@ -18,7 +18,7 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.3学习包](22_3_split_normalization.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning三项留空；下一小任务S19.7等待明确请求。
+当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；下一小任务S19.7等待明确请求。
 Stage20–22只有skeleton，BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
 
 ## S19.6 现场工程验证（2026-10-11，DESKTOP-781D67A）
@@ -40,7 +40,12 @@ BC nominal2/4s mean final7.24174/7.47038mm，repeated2mm8.19989/7.84598mm，4mm6
 相同nominal跨幅度全部数组一致、checkpoint不变；非法bias/已有output/split错配拒绝exit2。
 初版诊断运行后补齐100/200tick对齐统计，再运行上述最终两命令；不根据结果改变模型或成功门限。
 3.11语法、两PNG目视、links/anchors/git diff --check通过；仅ignored tmp生成物，无GUI/recovery/DAgger或完整失败根因证明。
-Engineering Complete，Learning三项待本人验证；本轮停S19.6。
+Engineering Complete；本人随后确认实验、预测与五项Explain，Learning Mastered；本轮停S19.6。
+
+2026-10-11 S19.6学习状态同步：本人解释访问分布、NN边界、reference/状态干预、paired差异与根因证据限制。
+精度补充：repeated bias仅20ticks/0.4s，未验证长期恒定偏置稳态；BC0/4与未完整归因边界保留。
+本次仅同步README、学习包、示例README、roadmap、P3 plan、handoff；链接/一致性/git diff --check通过。
+未重跑Python/MuJoCo/GUI，runtime沿用上述2026-10-11工程验证；不启动S19.7。
 
 ## S19.5 现场工程验证（2026-10-11，DESKTOP-781D67A）
 

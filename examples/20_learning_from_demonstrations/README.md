@@ -127,4 +127,6 @@ python examples/20_learning_from_demonstrations/covariate_shift.py --prepared tm
 单次2mm peak paired delta expert.208/BC1.856mm；重复2mm1.952/20.318mm；重复4mm3.905/26.707mm。
 末帧goal error非单调，不能说bias加倍必然更差或compounding必然发散。
 48保存trial独立物理/动作/NN/scorer/prefix/hash核验，CLI/3.11语法/两PNG/links通过；无GUI/新训练/recovery数据。
-完整五问见学习包；仅Engineering完成，Learning待本人验证；下一任务S19.7等待明确请求。
+完整五问见学习包；Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；下一任务S19.7等待明确请求。
+解释精度：repeated bias仅.4s，不是长期恒定偏置稳态实验；paired最大偏离与末帧goal error不同。
+本次仅同步文档，未重跑仿真；BC各条件仍0/4，runtime沿用2026-10-11记录。
