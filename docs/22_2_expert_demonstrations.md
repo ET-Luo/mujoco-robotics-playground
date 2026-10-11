@@ -26,7 +26,8 @@ expert生成动作，低层controller执行；实际状态只由mj_step积分，
 
 默认24条episode，seed1900…1923，每条100次action/2s。短horizon对照T20/.4s。
 `bc_candidate`只是成功标记，不是已完成训练筛选；全部attempt的NPZ和record都保留。
-不合格expert轨迹不能自动当正确BC标签；失败数据可供诊断，未来恢复/relabel另行明确。
+Episode失败不等于每一步动作错误：短horizon可能只因时间不足未达标，仍包含正确expert动作。
+失败数据保留用于诊断；是否用于BC应结合失败原因与动作质量制定明确策略，未来恢复/relabel另行处理。
 source为classical_controller，不是人类teleoperation；没有外部dataset。
 
 ## Mathematics → Math-to-Code
@@ -117,7 +118,7 @@ Must Remember：先验证expert再训练；失败保留但不自动模仿；数�
 
 ## My Verification — Run / Modify / Explain
 
-状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。Learning三项待本人完成。
+状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。2026-10-11 本人确认实验与预测完成，并准确回答五问；Run / Modify / Explain全部完成，Learning Mastered。
 Run：执行默认命令，核对24条episode、2400 transitions、success分母与一条NPZ的shape；查看dataset.png。
 Modify：先预测仅将horizon100→20会改变哪些字段、哪些同seed数据保持一致，再运行：
 
@@ -134,3 +135,8 @@ Explain（五问）：
 5. expert闭环成功与saved-action replay一致分别证明什么？为何都不等于未来learned policy闭环成功？
 
 下一小任务S19.3：episode-level split / train-only normalization。等待明确请求，本轮停止。
+
+本人Explain确认的关键区分：episode之间不能构造transition或连续chunk，但划分集合后可以混合独立BC样本训练。
+不同seed不保证覆盖充分；复现还需代码、依赖与环境记录。当前`bc_candidate`仅反映episode成功，
+不提供逐动作质量判断，不能把False解释成全部动作不可用。
+本次仅同步学习状态与说明；未重跑Python、MuJoCo或GUI，runtime沿用2026-10-11工程验证。

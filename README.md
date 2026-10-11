@@ -26,7 +26,7 @@
 P0（Stage 0–11）已由本人于 2026-10-04 明确确认完成。Stage 10–11 的细分状态见下方。
 P1（Stage 12–15）已完成 Engineering + Learning，最终集成边界见[P2审查](docs/p2_plan.md)。
 P2（Stage 16–18）Engineering Complete + Learning Mastered（用户确认）。
-当前开始 **P3 — Learning-Based Robot Manipulation**；S19.1 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；当前 S19.2 Engineering Complete，Learning 待本人验证。
+当前开始 **P3 — Learning-Based Robot Manipulation**；S19.1 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S19.2 Engineering Complete + Learning Mastered（2026-10-11 本人确认）；当前 S19.3 Engineering Complete，Learning 待本人验证。
 
 | 内容 | Engineering | Learning |
 | --- | --- | --- |
@@ -51,7 +51,8 @@ P2（Stage 16–18）Engineering Complete + Learning Mastered（用户确认）�
 | Stage 15 | S15.1–S15.6b Engineering Complete | S15.1–S15.6b Learning Mastered |
 | P2 / Stage16–18 | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
 | P3 / S19.1 Episode Contract | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
-| P3 / S19.2 Expert Dataset | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人完成 |
+| P3 / S19.2 Expert Dataset | Code + Experiment + Docs 完成 | Run / Modify / Explain 已完成 — Mastered |
+| P3 / S19.3 Split / Normalization | Code + Experiment + Docs 完成 | Run / Modify / Explain 待本人完成 |
 
 P0 最终 trials 使用已知 sampled object xy，且从 grasp 初始化；完整 home→approach 动力学串联、
 视觉输入已由 S13.3a/b 在固定场景验证；S14.7b已完成固定场景持物避障。
@@ -115,7 +116,7 @@ examples/16_ros2_integration/       # P1 final ROS2 manipulation pipeline
 examples/17_force_dynamics/         # P2 Stage 16
 examples/18_compliant_control/      # P2 Stage 17
 examples/19_teleoperation_dexterous/ # P2 Stage 18
-examples/20_learning_from_demonstrations/ # P3 Stage 19，当前S19.1–S19.2
+examples/20_learning_from_demonstrations/ # P3 Stage 19，当前S19.1–S19.3
 controllers/ environments/ rl/     # 既有学习代码与占位，详见路线索引
 assets/ scripts/ notebooks/ tests/ # 资源、工具与验证说明
 docs/                             # 笔记、P1/P2 规划、交接
@@ -556,10 +557,10 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测并完成五项Explain）
 
 - S19.2（0.5～2h）：[Expert demonstration generation / trajectory dataset](docs/22_2_expert_demonstrations.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-11）；学习待本人验证
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测并完成五项Explain）
 
-- S19.3（0.5～2h）：Episode-level split / normalization。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S19.3（0.5～2h）：[Episode-level split / normalization](docs/22_3_split_normalization.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-11）；学习待本人验证
 
 - S19.4（0.5～2h）：Tiny CPU Behavior Cloning。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -657,4 +658,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-本轮截止 S19.2。下一任务 S19.3 等待明确请求，不自动推进。
+本轮截止 S19.3。下一任务 S19.4 等待明确请求，不自动推进。

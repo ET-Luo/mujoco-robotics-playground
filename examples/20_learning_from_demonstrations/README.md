@@ -1,6 +1,6 @@
 # Stage 19 — Learning from Demonstrations
 
-当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)与[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)。
+当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)与[S19.3 split/normalization](../../docs/22_3_split_normalization.md)。
 状态唯一来源：[根README](../../README.md#stage-19--learning-from-demonstrations)。
 复用Stage17 cartesian_spring XML/常量；helper也导入Matplotlib。
 依赖requirements已声明mujoco/numpy/matplotlib；没有Torch或新依赖。
@@ -40,3 +40,26 @@ absolute reference与旧expert/低层controller不变。Modify只缩短horizon10
 重复数组完全一致/短组前缀一致，72保存episode独立动力学重算与hash/clock/outcome通过；两PNG已查看。
 旧S19.1默认回归exit0；CLI非法参数/已有目录拒绝exit2。3.11仅语法验证，无GUI。
 详细结果、五项Explain及边界见学习包；split/normalization/BC留到后续任务。
+
+2026-10-11 本人确认S19.2实验与预测完成，并准确回答五项Explain；Learning Mastered。
+补充：超时episode仍可能含正确expert动作；bc_candidate是成功标记，不是逐动作质量判定。
+本次只同步文档，未重跑仿真；下一小任务S19.3等待明确请求。
+
+
+## S19.3 — Episode-level split / train-only normalization
+
+只依赖requirements已有NumPy，无local helper、MuJoCo/Torch或新安装。
+先核验上文mujoco环境；传入一份明确的S19.2 dataset目录：
+
+```bash
+python examples/20_learning_from_demonstrations/prepare_dataset.py --dataset tmp/s19_2/default
+python examples/20_learning_from_demonstrations/prepare_dataset.py --dataset tmp/s19_2/default --split-seed 194
+```
+
+如果本机没有tmp/s19_2/default，先采集S19.2，将打印目录代入--dataset。
+输出新ignored tmp/s19_3/run_*：split.json、normalizer.npz、train/validation/test.npz。
+默认success-only是明确选择，排除IDs保留；不是逐动作质量判定。--selection all仅显式预处理，不保证适合BC。
+2026-10-11 DESKTOP-781D67A：193/194均16/4/4、1600/400/400 rows、正确episode交集0；
+错误row split每对共享24episode；held-out X+100mm时train统计不变，错误all-data均值+33.333mm。
+常量合成probe/独立保存统计与映射/roundtrip/hash/非法输入检查通过；3.11只验语法，未重跑physics/GUI。
+Run/Modify/五问Explain见学习包；只完成工程，Learning待本人验证；下一任务S19.4等待明确请求。

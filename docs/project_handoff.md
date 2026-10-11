@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Engineering Complete / Learning待本人验证）。
+最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Engineering Complete / Learning待本人验证）。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2；当前截止S19.2。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2与S19.3；当前截止S19.3。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -14,8 +14,26 @@ README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 replay边界与BC闭环分布偏移。本次仅同步五份状态文档，链接/一致性与git diff --check通过；
 未重跑Python/MuJoCo/GUI，runtime沿用2026-10-10工程验证。
 当前[S19.2学习包](22_2_expert_demonstrations.md)含Run、horizon100→20 Modify与五问Explain；
-README S19.2 Code/Experiment/Docs完成，Learning均留空。下一小任务S19.3等待明确请求。
+README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）。
+当前[S19.3学习包](22_3_split_normalization.md)Code/Experiment/Docs完成，Learning三项留空；下一小任务S19.4等待明确请求。
 Stage20–22只有skeleton，BC/ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S19.3 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+保留起始六份modified学习状态文档；pwd正确，WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前hook激活mujoco，同shell所属Python3.12.14；requirements已读，NumPy2.5.3 metadata/import/API路径核验。
+新增prepare_dataset.py与学习包，依赖仅NumPy，无helper/MuJoCo导入、安装或依赖声明改动。
+使用已有tmp/s19_2/default（2026-10-11采集）；未重跑MuJoCo/GUI/旧示例或训练policy。
+prepare_dataset.py --dataset tmp/s19_2/default --output tmp/s19_3/verified193；
+同命令--split-seed 194 --output tmp/s19_3/verified194，各exit0。
+16/4/4episode、1600/400/400row，success-only排除0条；输出split.json/normalizer与三split NPZ仅ignored tmp。
+correct episode交集0；wrong row split每对交集24；合成heldout X+100mm后train-only μ/scale不变，
+错误all-data X mean变化+.033333m。常量probe mask[False,True]/fallback scale1、finite/roundtrip通过。
+各组roundtrip max≤6.94e−18（原channel单位）；val/test不要求0均值/1std。
+独立保存μ/σ/z-score、raw row-source/timestep映射与hash检查通过；seed可复现/输入顺序不影响split，194成员改变。
+duplicate source/corrupt SHA拒绝；缺dataset/invalid seed/existing output/short success-only空集合均CLI exit2。
+short --selection all exit0，保留24失败episode供预处理诊断，不声明全部适合BC。
+3.11语法解析、链接/README anchors/状态/git diff --check通过；学习Run/Modify/Explain待本人完成。
 
 ## S19.2 现场工程验证（2026-10-11，DESKTOP-781D67A）
 
@@ -32,7 +50,13 @@ manifest记录source/model hash、版本、reset分布、seeds、criterion；spl
 默认tail max9.046e−6m/1.119e−4m/s，短组.041858m/.055783m/s；失败bc_candidateFalse但不删。
 旧episode_contract.py默认回归exit0；非法CLI/已有目录exit2；3.11语法、两PNG目视、links/anchors/git diff --check通过。
 生成物仅ignored tmp，默认约226KB/短组155KB；无GUI、真实物体、human teleop、split/normalizer或learned policy训练。
-short与default不同horizon，不混入同protocol benchmark。仅工程完成，学习Run/Modify/Explain待本人验证。
+short与default不同horizon，不混入同protocol benchmark。工程完成；本人随后确认实验、预测与五项Explain，Run/Modify/Explain全部完成，Learning Mastered。
+
+2026-10-11 学习状态同步：本人准确解释episode边界、覆盖与seed、manifest复现、失败分母及BC闭环shift。
+补充：可混合独立BC样本，但不能跨episode造transition/chunk；超时失败不等于动作错误，
+bc_candidate只标记episode成功，筛选须按失败原因与动作质量决定。
+本次仅更新README、学习包、示例README、roadmap、P3 plan、handoff；本地链接与git diff --check通过。
+未重跑Python/MuJoCo/GUI，runtime沿用上述2026-10-11工程验证；不启动S19.3。
 
 ## S19.1 历史工程验证（2026-10-10）
 

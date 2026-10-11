@@ -65,5 +65,5 @@ Offline loss衡量expert分布上的预测；rollout衡量policy诱导状态分�
 同一observation可能允许多个绕行模式，平方回归均值可能落入障碍；条件生成也需检验模式覆盖和连贯性。
 Generalization必须区分held-out同分布与未见物理参数/噪声/延迟；有限seed通过不证明通用操作能力。
 
-当前已完成S19.1–S19.2工程；S19.1已Mastered，S19.2学习验证待本人完成。
-下一个小任务S19.3 split/normalization等待用户请求。
+当前已完成S19.1–S19.3工程；S19.1与S19.2均已Learning Mastered（本人确认）；S19.3学习待本人验证。
+下一个小任务S19.4 CPU tiny BC等待用户请求。
