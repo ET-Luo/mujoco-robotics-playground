@@ -587,16 +587,16 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 [阶段学习包 / skeleton](docs/23_act_temporal_policy.md)。
 
 - S20.1（0.5～2h）：[Sequence dataset / boundaries / mask](docs/23_1_sequence_dataset.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；L4/H10与H20窗口/边界/masked loss通过（2026-10-11）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；L4/H10与H20窗口/边界/masked loss通过
 
-- S20.2（0.5～2h）：Action chunking baseline / replan。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S20.2（0.5～2h）：[Action chunking baseline / replan](docs/23_2_chunk_baseline.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；H10/E1,5,10成功1/4,1/4,2/4，H20/E1,5,20成功1/4,2/4,4/4（validation，2026-10-11）
 
-- S20.3（0.5～2h）：Necessary Transformer concepts。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S20.3（0.5～2h）：[Necessary Transformer concepts](docs/23_3_attention_basics.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；QKV手算/MHA/SDPA/mask与slots5→7小前向通过（2026-10-11）
 
-- S20.4（0.5～2h）：ACT CVAE latent / KL / prior。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S20.4（0.5～2h）：[ACT CVAE latent / KL / prior](docs/23_4_cvae_latent.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；MLP CVAE机制、KL/梯度与训练推理隔离通过，非完整ACT（2026-10-11）
 
 - S20.5（0.5～2h）：Tiny state-based ACT / closed-loop。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-当前截止 S20.1 Engineering Complete，Learning Run/Modify/Explain待本人验证；下一任务 S20.2 等待明确请求。
+当前截止 S20.4 Engineering Complete，Learning待本人Run/Modify/Explain；S20.1–3已Learning Mastered。下一任务 S20.5 等待明确请求。

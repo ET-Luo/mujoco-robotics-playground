@@ -120,4 +120,7 @@ Engineering与Learning状态见根README；助手执行不计本人Run。Runtime
 4. masked MSE的分母为何是2×valid token数？若按完整B×H×2平均会发生什么？
 5. 训练的未来动作标签与推理输入有什么差别？预测H步是否意味着必须开环执行H步？
 
-本人Run/Modify/Explain待报告；下一小任务S20.2等待明确请求。
+2026-10-11 本人确认实验与预测完成，五问Explain正确；Run/Modify/Explain全部完成，Learning Mastered。
+精度补充：本课L=4，t99的历史索引为96…99，动作只a99有效；一般历史有效数为min(L,t+1)。
+时间集成的具体对齐与权重留S20.6。本次仅同步文档，未重跑Python/MuJoCo/GUI；runtime沿用2026-10-11工程验证。
+下一小任务S20.2等待明确请求。

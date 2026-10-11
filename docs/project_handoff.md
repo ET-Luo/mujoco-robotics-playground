@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-11（P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
+最后整理：2026-10-11（S20.4 Engineering Complete、Learning待验证；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-11）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8与S20.1；当前截止S20.1工程。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8与S20.1–4；当前截止S20.4工程，S20.1–3已Learning Mastered。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -19,8 +19,75 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete，Learning待本人Run/Modify/Explain；下一小任务S20.2等待明确请求。
-Stage20已实现S20.1窗口数据，其余Stage20–22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete、Learning待本人Run/Modify/Explain；下一小任务S20.5等待明确请求。
+Stage20已实现S20.1窗口数据、S20.2 MLP chunk/replan、S20.3 attention basics与S20.4 MLP CVAE机制，其余Stage20–22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；ACT/Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S20.4 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+用户请求继续S20.4；pwd正确，保留全部起始modified/untracked文件。WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda info hook激活mujoco，同shell所属Python3.12.14核验；NumPy2.5.3/Torch2.14.0+cpu metadata/
+真实模块路径/Adam与distributions API通过，CUDA build None；无安装。helper仅sequence_dataset，无MuJoCo/Matplotlib。
+新增[cvae_latent.py](../examples/21_act_temporal_policy/cvae_latent.py)与[学习包](23_4_cvae_latent.md)。
+H10/latent4/MLP encoder-decoder，masked posterior输入/重建、reparameterization、KL sumlatent/meanbatch；
+infer无actions参数，默认prior z0，可传独立标准正态sample；不是完整ACT，作者论文/实现链接见学习包。
+100epochs/seed204/CPU1thread/batch64/lr.001，validation固定noise R+beta KL选checkpoint，不打开test/不做rollout。
+命令：python examples/21_act_temporal_policy/cvae_latent.py --prepared tmp/s19_3/verified193 --output tmp/s20_4/default；
+同输入--beta 1 --output tmp/s20_4/beta1，均exit0；best均80；KL .00155199/.000064119。
+val posterior mean/sample .804/.782与.819/.803mm；prior zero/sample .804/.779与.819/.802mm。
+trainloop wall2.072/2.011s含epoch评分/selection，不含window/checkpoint；非推理benchmark。
+手算z2/KL1.30685/重参数化梯度通过；Normal KL独立交叉核对与解析梯度、重建向encoder传梯度/padding梯度0通过。
+padding NaN不改posterior；真实labels+1改mu max .188169/.045115；禁用posterior后infer仍精确一致。
+两checkpoint/normalizer/source/hash/保存预测/CSV目标与argmin/同eval及prior noise核验通过；五CLI exit2；3.11仅语法，实际3.12。
+初次独立检查未沿用1thread，预测差3.6e−7；统一1thread后逐值一致。NumPy/Torch float32 MSE归约差9.3e−10，交叉检查atol2e−9通过。
+产物仅ignored tmp/s20_4；无Transformer/物理/GUI/OOD/多模式/ACT性能；小KL不是collapse证明，posterior误差不是部署指标。
+README Engineering三项完成，Learning三项空；本轮新增两文件、同步六份导航/状态文档；链接/git diff --check通过。
+下一步本人Run、beta .01→1 Modify与五问Explain；S20.5等待明确请求，不自动实施。
+
+## S20.3 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+用户请求继续S20.3；pwd正确，保留起始七modified文档与两untracked S20.2文件。
+WSL2 Ubuntu24.04.5/kernel6.6.87.2，当前conda info hook激活mujoco，同shell所属Python3.12.14核验；
+NumPy2.5.3/Torch2.14.0+cpu metadata、真实模块路径与MHA/SDPA API通过，CUDA build None；无安装。
+新增[attention_basics.py](../examples/21_act_temporal_policy/attention_basics.py)与[学习包](23_3_attention_basics.md)。
+仅NumPy/Torch，无local helper/MuJoCo/Matplotlib导入；随机权重、手算self-attention、2head投影/MHA/SDPA核对、
+padding/causal/位置编码probe与residual/LayerNorm/FFN/cross-query小前向。官方Torch文档核对mask极性，链接见学习包。
+命令：python examples/21_act_temporal_policy/attention_basics.py --output tmp/s20_3/default；
+同命令--slots 7 --output tmp/s20_3/slots7，均exit0；默认action_slots(1,5,2)，Modify(1,7,2)。
+MHA手写max误差2.776e−17；改padding/未来token时有效/过去输出变化0；无mask污染1000.598888。
+无PE置换等变、固定PE换内容差.807034；key mask不清零query输出，block显式清零invalid query；全屏蔽行拒绝。
+独立scalar-loop重算保存scores/softmax/output、hash/weights行归一化/query清零通过；
+slots5→7 encoder完全一致/前5输出1e−15容差通过；三CLI exit2、三invalid mask拒绝、3.11语法通过，实际3.12。
+产物仅ignored tmp/s20_3；无训练/dataset/physics/GUI/CVAE/ACT policy验证，random action槽输出无物理单位含义。
+README Engineering三项完成；本人随后确认实验、预测与五项Explain，Learning三项全部完成，Mastered；本轮新增两文件，同步六份导航/状态文档；本地链接/git diff --check通过。
+本人解释覆盖QKV/缩放、self等变/cross memory不变、mask极性与query处理、权重形状及并行future query无标签泄漏。
+本课query独立；query间双向交互本身不等于泄漏，仍需检查实际输入与约束。
+本次仅同步七份文档，本地链接与git diff --check通过；未重跑Python/MuJoCo/GUI，runtime沿用2026-10-11工程验证。
+S20.4等待明确请求，不自动实施。
+
+## S20.2 现场工程验证（2026-10-11，DESKTOP-781D67A）
+
+用户请求继续S20.2；pwd正确，保留起始七份modified状态文档。WSL2 Ubuntu24.04.5/kernel6.6.87.2。
+当前conda info定位hook，同shellmujoco/所属Python3.12.14核验；NumPy2.5.3/MuJoCo3.14.0/
+Matplotlib3.11.2/Torch2.14.0+cpu metadata、真实模块路径/API通过，CUDA build None；无安装。
+新增[chunk_baseline.py](../examples/21_act_temporal_policy/chunk_baseline.py)与[学习包](23_2_chunk_baseline.md)。
+复用S20.1 window/load_prepared、S19 expert/constant rollout与controller；冻结split/normalizer，不打开test。
+L1当前状态6→32→32→2H，CPU1thread/200epochs/seed202/batch64/lr.001，validation masked loss选checkpoint。
+命令：python examples/21_act_temporal_policy/chunk_baseline.py --prepared tmp/s19_3/verified193 --output tmp/s20_2/default；
+同输入--chunk 20 --output tmp/s20_2/chunk20，均exit0；各20trial，prediction前先写protocol。
+H10 selected136，val全chunk/首动作RMSE .762/.781mm，E1/5/10成功1/4,1/4,2/4；
+H20 selected172，RMSE .543/.691mm，E1/5/20成功1/4,2/4,4/4；两组expert4/4、constant0/4。
+train loop wall2.485/2.587s（含epoch评分，不含rollout）；未测单次推理latency。
+40trial独立80000Euler步、clock/reset/scorer/hash、actual状态重预测与plan[k]/anchor/offset通过；
+同H首plan/前5动作、checkpoint精确重载、normalizer冻结、CSV argmin/offline分数核验通过。
+masked Torch loss/有效梯度/padding梯度0、T13/E5末段截断、五CLI exit2/损坏prepared hash拒绝通过；
+3.11仅语法核验，实际3.12；两PNG已查看。产物只ignored tmp/s20_2。
+单seed/4validation reset/名义无扰动，不声称长E通用更优或根因已分离；H改变同时改变监督/输出参数量。
+无GUI/test/OOD/恢复/ACT实验。README Engineering三项完成；本人随后确认实验、预测与五项Explain，Learning三项全部完成，Mastered。
+本轮新增代码/学习包，同步根README、示例README、Stage20总览、roadmap、P3 plan与handoff；
+本人解释覆盖anchor/offset、高低层反馈、offline/rollout区分、replan取舍与H变更的混杂因素。
+精度补充：E1始终执行首动作；动作抖动仅为一般可能机制，未单独验证根因。
+本次仅同步七份文档，本地链接与git diff --check通过；未重跑Python/MuJoCo/GUI，runtime沿用2026-10-11工程验证。
+S20.3等待明确请求，不自动实施。
 
 ## S20.1 现场工程验证（2026-10-11，DESKTOP-781D67A）
 
@@ -36,7 +103,9 @@ L4/H10 train有效action15280/padding720，H20有效28960/padding3040；history�
 4000保存窗口独立逐token核对source ID/timestep/value/padding通过；H1与H>T、empty loss mask拒绝、
 四CLI非法/缺输入/已有output拒绝exit2；3.11仅语法核验，实际3.12。
 产物只ignored tmp/s20_1；无physics/GUI/训练/ACT性能验证，重叠标签并非新增独立示范。
-README Engineering Code/Experiment/Docs完成，Learning三项均空；下一步本人Run、H10→20 Modify及五问Explain。
+README Engineering Code/Experiment/Docs完成；本人随后确认实验、预测与五问Explain，Learning三项全部完成，Mastered。
+解释覆盖边界索引、真实zero与padding、episode reset、有效标量loss及预测/执行长度区分。
+本次仅同步七份状态文档，本地链接与git diff --check通过；未重跑Python/MuJoCo/GUI，runtime沿用2026-10-11工程验证。
 七份文档本地链接与git diff --check通过；本轮新增三份文件、同步五份文档。
 下一小任务S20.2等待明确请求，不自动实施。
 
