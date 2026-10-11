@@ -126,7 +126,7 @@ Must Remember：模拟真实执行；相同task/split/metrics；loss下降不是
 
 ## My Verification — Run / Modify / Explain
 
-状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。Learning三项留待本人完成。
+状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。2026-10-11 本人确认实验与预测完成，并准确回答五项Explain；Run / Modify / Explain全部完成，Learning Mastered。
 Run：执行默认命令，核对offline指标、全部attempt成功率、位置与速度通过标记，查看rollout.png。
 Modify：先预测只把duration翻倍是否一定改善位置成功，再运行：
 
@@ -143,3 +143,8 @@ Explain（五问）：
 5. test已经评价后，为什么不能用它继续选模型却仍宣称独立泛化验证？
 
 下一小任务S19.6 covariate shift / compounding error，等待明确请求；本轮停止。
+
+本人Explain准确区分expert-state动作拟合与真实闭环任务误差、paired条件、公平scorer、action replay和直接qpos赋值。
+结论边界：当前四reset延时2→4s仍失败，只说明该延时对照未满足判据，不证明更长时间必然失败或已找到根因。
+首次冻结模型/normalizer/协议后test评价仍是独立评估；之后若依据其结果调参，则需新的独立评价集。
+Learning Mastered不改变BC任务0/4。本次仅同步文档，未重跑Python/MuJoCo/GUI；runtime沿用2026-10-11工程验证。

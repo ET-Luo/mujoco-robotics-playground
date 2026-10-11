@@ -1,6 +1,6 @@
 # Stage 19 — Learning from Demonstrations
 
-当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)、[S19.3 split/normalization](../../docs/22_3_split_normalization.md)、[S19.4 CPU BC](../../docs/22_4_behavior_cloning.md)与[S19.5 closed-loop评价](../../docs/22_5_closed_loop_evaluation.md)。
+当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)、[S19.3 split/normalization](../../docs/22_3_split_normalization.md)、[S19.4 CPU BC](../../docs/22_4_behavior_cloning.md)、[S19.5 closed-loop评价](../../docs/22_5_closed_loop_evaluation.md)与[S19.6 shift诊断](../../docs/22_6_covariate_shift.md)。
 状态唯一来源：[根README](../../README.md#stage-19--learning-from-demonstrations)。
 复用Stage17 cartesian_spring XML/常量；helper也导入Matplotlib。
 依赖requirements已声明mujoco/numpy/matplotlib；没有Torch或新依赖。
@@ -105,4 +105,26 @@ python examples/20_learning_from_demonstrations/evaluate_rollout.py --prepared t
 Modify只延长三个policy执行horizon100→200；offline数据不变，成功容差不变，属于不同duration协议。
 24保存轨迹独立Euler/动作/scorer/hash与共同前缀检查通过；checkpoint-split mismatch/损坏输入/非法CLI拒绝。
 两PNG已查看、3.11仅验语法；没有重训/normalizer refit/GUI/OOD/恢复实验。test已使用，不再当未见盲测调参。
-学习Run/Modify/五问见学习包，当前仅工程完成；下一任务S19.6等待明确请求。
+学习Run/Modify/五问见学习包，Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；下一任务S19.6等待明确请求。
+本人解释已确认首次冻结test评价与后续test调参泄漏的区别；延时反例不证明根因或更长时间必然失败。
+本次仅同步状态文档，未重跑仿真；BC结果仍0/4，runtime沿用2026-10-11工程验证。
+
+
+## S19.6 — Covariate shift / error propagation
+
+冻结checkpoint/normalizer，读取train+validation，不重新用test选模型。
+依赖已有CPU Torch/NumPy/MuJoCo/Matplotlib与behavior_cloning/episode_contract/cartesian_spring，无新安装。
+
+```bash
+python examples/20_learning_from_demonstrations/covariate_shift.py --prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt
+python examples/20_learning_from_demonstrations/covariate_shift.py --prepared tmp/s19_3/verified193 --checkpoint tmp/s19_4/default/policy.pt --bias-mm 4
+```
+
+先核验上文mujoco/interpreter，按本机匹配路径替换输入。默认+world X reference2mm，Modify4mm；
+0.5s单次或持续20ticks，actual状态仍由mj_step推进。每命令24trial×4s，分别在2/4s按原判据评分。
+输出新ignored tmp/s19_6/run_*：24NPZ/results.json/shift.png。NN是goal-relative state coverage代理，不是OOD证明。
+2026-10-11 DESKTOP-781D67A：expert各条件4/4，BC各条件0/4；nominal前2s BC动作误差在expert/BC状态上.734/3.728mm。
+单次2mm peak paired delta expert.208/BC1.856mm；重复2mm1.952/20.318mm；重复4mm3.905/26.707mm。
+末帧goal error非单调，不能说bias加倍必然更差或compounding必然发散。
+48保存trial独立物理/动作/NN/scorer/prefix/hash核验，CLI/3.11语法/两PNG/links通过；无GUI/新训练/recovery数据。
+完整五问见学习包；仅Engineering完成，Learning待本人验证；下一任务S19.7等待明确请求。
