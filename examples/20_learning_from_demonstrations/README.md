@@ -1,6 +1,6 @@
 # Stage 19 — Learning from Demonstrations
 
-当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)与[S19.3 split/normalization](../../docs/22_3_split_normalization.md)。
+当前实现[S19.1 episode contract](../../docs/22_1_episode_contract.md)、[S19.2 expert dataset](../../docs/22_2_expert_demonstrations.md)、[S19.3 split/normalization](../../docs/22_3_split_normalization.md)与[S19.4 CPU BC](../../docs/22_4_behavior_cloning.md)。
 状态唯一来源：[根README](../../README.md#stage-19--learning-from-demonstrations)。
 复用Stage17 cartesian_spring XML/常量；helper也导入Matplotlib。
 依赖requirements已声明mujoco/numpy/matplotlib；没有Torch或新依赖。
@@ -62,4 +62,25 @@ python examples/20_learning_from_demonstrations/prepare_dataset.py --dataset tmp
 2026-10-11 DESKTOP-781D67A：193/194均16/4/4、1600/400/400 rows、正确episode交集0；
 错误row split每对共享24episode；held-out X+100mm时train统计不变，错误all-data均值+33.333mm。
 常量合成probe/独立保存统计与映射/roundtrip/hash/非法输入检查通过；3.11只验语法，未重跑physics/GUI。
-Run/Modify/五问Explain见学习包；只完成工程，Learning待本人验证；下一任务S19.4等待明确请求。
+Run/Modify/五问Explain见学习包；Engineering Complete + Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；下一任务S19.4等待明确请求。
+解释精度：仅train内部混合BC rows；反归一化使用保存的有效scale（恒定通道为1），不用原始零std。
+本次仅同步文档，未重跑Python/仿真；runtime沿用2026-10-11工程验证。
+
+
+## S19.4 — Tiny CPU Behavior Cloning
+
+依赖requirements已有torch==2.14.0+cpu/numpy/mujoco/matplotlib；复用episode_contract→cartesian_spring。
+先核验mujoco/interpreter；prepared是S19.3输出，不是S19.2原数据。
+
+```bash
+python examples/20_learning_from_demonstrations/behavior_cloning.py --prepared tmp/s19_3/verified193
+python examples/20_learning_from_demonstrations/behavior_cloning.py --prepared tmp/s19_3/verified193 --epochs 20
+```
+
+若本机没有该目录，运行S19.3并传入其输出路径。6→32→32→2 Tanh MLP，1346参数，CPU1thread，
+train1600rows/val400rows，Adam lr.001/batch64，val选择checkpoint；test文件未加载。
+输出新ignored tmp/s19_4/run_*：policy.pt（带normalizer/split hash）、results.json、loss CSV/PNG与12rollout NPZ。
+2026-10-11 DESKTOP-781D67A：200/20epochs exit0；best79/20、val RMSE .734/1.063mm，constant8.002mm；
+两设置expert4/4、constant0/4、BC0/4，工程PASS不代表机器人成功。训练wall约1.730/.167s（不含rollout）。
+saved checkpoint、24rollout独立物理/动作/scorer、MSE梯度/CLI/hash/3.11语法与两PNG检查通过；无GUI/OOD/test评价。
+完整学习包解释offline loss与闭环失败；Learning待本人Run/Modify/Explain。下一任务S19.5等待明确请求。

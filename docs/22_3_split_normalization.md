@@ -106,7 +106,7 @@ Must Remember：split先于fit；test不能调参；normalize与denormalize必�
 
 ## My Verification — Run / Modify / Explain
 
-状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。Learning三项留待本人完成。
+状态唯一来源：[README](../README.md#stage-19--learning-from-demonstrations)。2026-10-11 本人确认实验与预测完成，并提交五项Explain；Run / Modify / Explain全部完成，Learning Mastered。
 Run：执行默认命令，核对split.json的16/4/4、无交集、train-only统计与train均值/标准差。
 Modify：先预测仅将split seed193→194的影响，再执行：
 
@@ -123,3 +123,9 @@ Explain（五问）：
 5. 本课检查通过为何不能证明learned policy闭环成功或OOD泛化？
 
 下一小任务S19.4 CPU tiny BC，等待明确请求；本轮停止。
+
+Explain精度补充：可以混合train内部不同episode的独立BC rows，validation/test不能混入权重训练；
+模型选择完成后的最终test仍保持独立。本例反归一化使用保存的有效scale而非直接使用原始std：
+恒定通道std=0、scale=1，公式为action=normalized_action*action_scale+action_mean。
+本人已解释时序泄漏、三集合用途、train-only统计与闭环/OOD验证边界；以上两处是文档精度澄清。
+本次仅同步状态与说明，未重跑Python、MuJoCo或GUI；runtime沿用2026-10-11工程验证。
