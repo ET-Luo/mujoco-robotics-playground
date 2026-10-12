@@ -149,9 +149,10 @@ Explain（请用自己的话回答）：
 
 My Verification：根README是状态唯一来源；学习Run/Modify/Explain仅在本人报告后勾选。下一小任务S22.6等待明确请求。
 
-2026-10-12 本人确认实验与预测均完成，README Run/Modify已勾选。Explain第3–5项核心通过；
-第1项nq/nv正确，但还需具体说明本课6维absolute position reference[rad]及具名actuator映射；
-第2项需区分三指>0.15N持续50ms的CLOSE→HOLD gate、2.5s时HOLD且此前无失败的ready、
+2026-10-12 本人确认实验与预测均完成，随后补齐第1–2项Explain；README Run/Modify/Explain全部勾选，Learning Mastered。
+解释覆盖nq/nv、本课6维absolute position reference[rad]及具名actuator映射、servo与实际动力学；
+准确区分三指>0.15N持续50ms的CLOSE→HOLD gate、2.5s时HOLD且此前无失败的ready、
 以及全程无锁存失败并通过末250ms恢复的accepted。ready不预判扰动后成功，accepted不是文件验收。
 时序精度：接触力在当前reference写入后mj_forward求解、积分前记录，属action条件反馈，非必然已积分后的反馈。
 本次仅文档状态更新，未重跑Python/MuJoCo/GUI；runtime沿用2026-10-12工程验证。
+物理范围补充：本课全局gravity=0；重力项在该模型为零，2s后对HOLD物体施加的world向下0.1N是显式外载荷，不是全系统重力。

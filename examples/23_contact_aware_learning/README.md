@@ -1,6 +1,6 @@
 # Stage 22 — Contact-Aware Robot Learning
 
-当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC、S22.4同任务ACT/Diffusion比较与S22.5三指专家可行性；后续子任务仍为规划。
+当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC、S22.4同任务ACT/Diffusion比较、S22.5三指专家可行性与S22.6因果BC闭环；后续子任务仍为规划。
 [学习包](../../docs/25_1_observation_contract.md) · [Engineering / Learning状态唯一来源](../../README.md#stage-22--contact-aware-robot-learning)。
 
 依赖已有mujoco/numpy/matplotlib，无local helper或新依赖。两slide球指端接触平面，headless。
@@ -112,4 +112,28 @@ output须新目录，24个全部attempt保存NPZ、JSON及正常摩擦PNG，仅i
 
 2026-10-12 DESKTOP-781D67A：Engineering Complete；默认正常三指8/8、四倍4/8，全部计划8/24→4/24，低摩擦/缺指均未ready。
 两组48trial合同／独立scorer／pulse审计、六条保存动作重积分通过，PNG已查看。
-注意normal在当前reference写入后求解，仅审计proxy；S22.6须重整先观测后决策的数据时序。Learning Run/Modify完成，Explain待第1–2项补正。
+注意normal在当前reference写入后求解，仅审计proxy；S22.6须重整先观测后决策的数据时序。Learning Run/Modify/Explain全部完成，Learning Mastered（2026-10-12 本人确认）。
+
+## S22.6 — Dexterous BC closed-loop rollout
+
+[学习包](../../docs/25_6_dexterous_bc_rollout.md) · [任务](dexterous_task.py) · [训练／评价](dexterous_bc.py)。
+依赖已有mujoco/numpy/matplotlib/torch==2.14.0+cpu；local helpers为S18.11 grasp_stability→multi_contact_grasp→hand_fixture/hand.xml，无新包。
+重新以50Hz因果循环采集专家，1kHz物理／scorer：先上一ctrl下观测，再预测6维absolute reference[rad]，经box/rate/servo执行。
+38维输入包含past ctrl和在线phase，仿真object pose/velocity/contact是proxy；HOLD时monitor不替BC冻结参考。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/23_contact_aware_learning/dexterous_bc.py --output tmp/s22_6/my_run
+python examples/23_contact_aware_learning/dexterous_bc.py --models-from tmp/s22_6/my_run/cohort --pulse-scale 4 --output tmp/s22_6/my_strong
+```
+
+output须新目录，data/cohort/rollouts/results/PNG仅ignored tmp。12train/3val reset groups，test3组仅预留；200action/201obs。
+2026-10-12 DESKTOP-781D67A：15expert示范成功，2400/600 label行；三seed各7046参数、120epoch，offline validation选择checkpoint。
+默认expert15/15、BC合计0/45 ready/success；冻结四倍expert3/15、BC0/45，未ready无pulse且分母保留。
+`rollout.png`中多数BC无漂移是因为没有进入合格HOLD、没有加载／pulse，不能解释为稳定抓持。
+无test/GUI/真人、真实sensor、mass/friction/noise/latency扫描或硬件验证；Learning待本人Run/Modify/Explain。
+
+S22.6 Engineering Complete（2026-10-12）：135trial数据／因果观测／scorer独立核验，六条保存ctrl+载荷重积分与两条完整observer回放通过；链接/语法/git diff --check通过。Learning三项待本人完成，不自动进入S22.7。
