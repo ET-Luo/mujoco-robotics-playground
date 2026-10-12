@@ -1,4 +1,4 @@
-# Stage 21 — Diffusion Policy（S21.1–S21.7已实现，S21.7学习待验证）
+# Stage 21 — Diffusion Policy（S21.1–S21.7已实现，全阶段Engineering Complete + Learning Mastered）
 
 前置：BC→ACT；[状态与任务](../README.md#stage-21--diffusion-policy)。
 Why / Intuition：多条合法路径的平均动作可能不合法，用条件生成建模动作序列分布。
@@ -23,6 +23,6 @@ Robotics Applications：多解操作与连续动作生成；CPU小模型教学�
 30秒 Interview：Diffusion Policy条件去噪生成动作序列，并在闭环中只执行短前缀。
 2分钟 Interview：从平均动作失败讲起，解释forward/noise objective/reverse sampling、条件、horizon与延迟取舍。
 Must Remember：机器人时间与diffusion timestep不同；必须测试真实MuJoCo rollout。
-My Verification / Run / Modify / Explain：S21.1 Engineering Complete，Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；命令/练习/五问见[S21.1学习包](24_1_multimodal_paths.md)，S21.2 Engineering Complete、Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认），命令/练习/五问见[S21.2学习包](24_2_noising_basics.md)；[S21.3](24_3_conditional_denoiser.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认Run/Modify与五项Explain）；[S21.4](24_4_sequence_diffusion.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S21.5](24_5_diffusion_rollout.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S21.6](24_6_sampling_diagnostics.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S21.7](24_7_policy_benchmark.md) Engineering Complete、Learning待验证；不自动实施Stage22。
+My Verification / Run / Modify / Explain：S21.1 Engineering Complete，Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；命令/练习/五问见[S21.1学习包](24_1_multimodal_paths.md)，S21.2 Engineering Complete、Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认），命令/练习/五问见[S21.2学习包](24_2_noising_basics.md)；[S21.3](24_3_conditional_denoiser.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认Run/Modify与五项Explain）；[S21.4](24_4_sequence_diffusion.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S21.5](24_5_diffusion_rollout.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S21.6](24_6_sampling_diagnostics.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S21.7](24_7_policy_benchmark.md) Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；不自动实施Stage22。
 Follow-up：均值为何撞障碍？conditioning提供什么？如何统计mode coverage？采样steps影响什么？
 算法依据：[Diffusion Policy原论文](https://arxiv.org/abs/2303.04137)。

@@ -609,7 +609,7 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 
 ### Stage 21 — Diffusion Policy
 
-[阶段学习包](docs/24_diffusion_policy.md)，S21.1–S21.7已实现；S21.7 Learning待本人验证。
+[阶段学习包](docs/24_diffusion_policy.md)，S21.1–S21.7已实现；Stage21 Engineering Complete + Learning Mastered（2026-10-12 本人确认）。
 
 - S21.1（0.5～2h）：[Multimodal paths / regression averaging](docs/24_1_multimodal_paths.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；B轨道成对双路径/几何禁入区，mean碰撞2/2；重训BC/ACT E1/E5成功0/2、1/2、2/2，p=.8解析mean安全2/2（validation，2026-10-12），未实现Diffusion
@@ -630,7 +630,7 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；冻结H10/K100/E5，DDPM100与DDIM100/25/10（Modify50）均0/8，成功上下路线覆盖0/2；少步降低本轮median延迟（2026-10-12）
 
 - S21.7（0.5～2h）：[BC / ACT / Diffusion comparison](docs/24_7_policy_benchmark.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；三training seeds，val/test BC0/6、ACT E1 1/6与0/6、ACT E5均6/6、DDPM100/DDIM25均0/24（2026-10-12）；B test已首次冻结评价，后续公开复测不调参
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；三training seeds，val/test BC0/6、ACT E1 1/6与0/6、ACT E5均6/6、DDPM100/DDIM25均0/24（2026-10-12）；B test已首次冻结评价，后续公开复测不调参
 
 ### Stage 22 — Contact-Aware Robot Learning
 
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-当前截止S21.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.7 Engineering Complete，Learning待本人Run/Modify/Explain；Stage21工程项全部完成，Stage22等待明确请求。
+当前截止S21.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage21工程与学习项全部完成，Stage22等待明确请求。

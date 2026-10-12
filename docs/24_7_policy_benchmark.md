@@ -2,7 +2,7 @@
 
 [状态唯一来源](../README.md#stage-21--diffusion-policy) · [代码](../examples/22_diffusion_policy/policy_benchmark.py)
 前置S21.6；0.5～2小时。主概念：共同实验合同与多training seeds，让policy比较有明确证据范围。
-Engineering Complete不代表所有policy成功；Learning待本人Run/Modify/Explain。
+Engineering Complete不代表所有policy成功；Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
 
 ## Problem → Why → Intuition
 
@@ -166,7 +166,9 @@ Must Remember：same task不等于equal budget；offline不等于闭环；traini
 
 ## My Verification / Run → Modify → Explain
 
-Engineering Complete，Learning待本人验证，根README为状态唯一来源。
+Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain），根README为状态唯一来源。
+解释覆盖共同合同与预算、training/sampling seeds及分母、不同loss与当前槽RMSE边界、全过程成功判据、test冻结与有限样本可靠性。
+第四问精度补充：ACT E1 test的tail到达trial因途中collision而失败，本任务没有额外姿态要求；不把假设的超时或姿态问题当作本例实际原因。
 Run：运行默认命令，查看benchmark.png、分组/per-replica成功率、collision与tail、训练成本和计时范围。当前test是公开复测。
 Modify：先预测冻结模型换sampling streams后哪些结果不变，替换Run打印的cohort路径：
 
@@ -183,4 +185,4 @@ Explain（五问）：
 4. 为什么ACT E1 test tail到达仍失败？为什么成功条件误差不能替代全分母失败统计？
 5. test冻结/首次评价/公开复测有何区别？为什么ACT E5 6/6与低延迟仍不足以证明普遍优越或硬实时？
 
-完成当前Run/Modify/Explain后，Stage21学习项才能全部Mastered；下一步复盘或S22.1需明确请求，不自动进入Stage22。
+本人已完成当前Run/Modify/Explain，Stage21学习项全部Mastered；下一步复盘或S22.1需明确请求，不自动进入Stage22。

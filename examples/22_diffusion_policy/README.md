@@ -2,7 +2,7 @@
 
 当前实现[S21.1双路径示范/回归均值反例/BC与ACT重训](../../docs/24_1_multimodal_paths.md)。
 [根README](../../README.md#stage-21--diffusion-policy)是Engineering / Learning状态唯一来源。
-S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4已实现H10反向采样，S21.5已实现生成策略闭环，S21.6已实现采样/覆盖/延迟诊断，S21.7已实现三training seeds共同B轨道benchmark，Learning待验证。
+S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4已实现H10反向采样，S21.5已实现生成策略闭环，S21.6已实现采样/覆盖/延迟诊断，S21.7已实现三training seeds共同B轨道benchmark，Learning Mastered（2026-10-12 本人确认）。
 
 依赖requirements已有NumPy/CPU Torch/MuJoCo/Matplotlib；复用Stage20 TinyACT、BC、window、latent helpers和旧XY fixture，无新安装。
 使用WSL2 Ubuntu24.04，在mujoco环境核验后运行：
@@ -149,4 +149,4 @@ python examples/22_diffusion_policy/policy_benchmark.py \
 2026-10-12 Zero val/test BC0/6、ACT E1 1/6与0/6、ACT E5均6/6、Diffusion均0/24。
 B test首次在冻结后评价，现已暴露；Modify为公开复测，不调参/挑seed。
 所有actual预测/执行/Euler/评分/offline指标/冻结weights与hash验证通过，产物仅ignored tmp/s21_7。
-Engineering Complete，Learning待本人Run/Modify/Explain；无GUI/OOD/硬件实时或普遍算法排名，Stage22等待请求。
+Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；无GUI/OOD/硬件实时或普遍算法排名，Stage22等待请求。
