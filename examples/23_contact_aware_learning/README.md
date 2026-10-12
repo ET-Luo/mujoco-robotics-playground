@@ -1,6 +1,6 @@
 # Stage 22 — Contact-Aware Robot Learning
 
-当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC、S22.4同任务ACT/Diffusion比较、S22.5三指专家可行性与S22.6因果BC闭环；后续子任务仍为规划。
+当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC、S22.4同任务ACT/Diffusion比较、S22.5三指专家可行性、S22.6因果BC闭环与S22.7物理域诊断；后续子任务仍为规划。
 [学习包](../../docs/25_1_observation_contract.md) · [Engineering / Learning状态唯一来源](../../README.md#stage-22--contact-aware-robot-learning)。
 
 依赖已有mujoco/numpy/matplotlib，无local helper或新依赖。两slide球指端接触平面，headless。
@@ -134,6 +134,54 @@ output须新目录，data/cohort/rollouts/results/PNG仅ignored tmp。12train/3v
 2026-10-12 DESKTOP-781D67A：15expert示范成功，2400/600 label行；三seed各7046参数、120epoch，offline validation选择checkpoint。
 默认expert15/15、BC合计0/45 ready/success；冻结四倍expert3/15、BC0/45，未ready无pulse且分母保留。
 `rollout.png`中多数BC无漂移是因为没有进入合格HOLD、没有加载／pulse，不能解释为稳定抓持。
-无test/GUI/真人、真实sensor、mass/friction/noise/latency扫描或硬件验证；Learning待本人Run/Modify/Explain。
+无test/GUI/真人、真实sensor、mass/friction/noise/latency扫描或硬件验证；Learning Run/Modify/Explain全部完成，Learning Mastered（2026-10-12 本人确认）。
 
-S22.6 Engineering Complete（2026-10-12）：135trial数据／因果观测／scorer独立核验，六条保存ctrl+载荷重积分与两条完整observer回放通过；链接/语法/git diff --check通过。Learning三项待本人完成，不自动进入S22.7。
+S22.6 Engineering Complete（2026-10-12）：135trial数据／因果观测／scorer独立核验，六条保存ctrl+载荷重积分与两条完整observer回放通过；链接/语法/git diff --check通过。Learning三项已由本人完成，Learning Mastered（2026-10-12），不自动进入S22.7。
+
+## S22.7 — Separate friction/mass domain probes
+
+[学习包](../../docs/25_7_physics_domain_generalization.md) · [入口](domain_generalization.py)。
+依赖已有mujoco/numpy/matplotlib/torch==2.14.0+cpu；helper链沿用dexterous_bc→dexterous_task→S18.11/hand.xml，无新依赖。
+nominal训练域仅m=.03kg/μ=.7；冻结权重/normalizer，用同3validation resets分别改变object-contact μ=.3/.1/.03或m=.015/.06/.09kg。
+object priority控制有效μ，finger自身摩擦不变；质量／惯量通过XML一同编译。零重力、固定HOLD物体向下.1N，是惯性／接触响应实验。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/23_contact_aware_learning/domain_generalization.py --output tmp/s22_7/my_run
+python examples/23_contact_aware_learning/domain_generalization.py --models-from tmp/s22_7/my_run/cohort --pulse Fx_plus --output tmp/s22_7/my_fx
+```
+
+也可第一条加 --models-from tmp/s22_6/my_run/cohort复用已冻结S22.6模型；登记两个准确历史source SHA，其余helper/checkpoint/data SHA仍须匹配。
+新旧nominal示范、统计／权重／轨迹逐值回归；不改写旧training provenance，评价source独立记录。
+output须新目录。默认nominal采集／训练后才评价OOD，协议先保存；每组7domain×3reset×4controller=84attempt全部保留。
+2026-10-12 DESKTOP-781D67A baseline专家18/21、Fx+12/21；μ.3/.1从3/3→0/3，μ.03始终未ready/drop，mass各组均3/3。
+BC所有域均0/9 ready/success，合计各0/63；ID已失败，不能宣称泛化。三test reset未用，已有val resets的公开physics-held-out诊断，非blind test。
+产物仅ignored tmp；无GUI/真实sensor/真人、域随机化训练、noise/latency或硬件验证。Learning Run/Modify/Explain已由本人确认完成（2026-10-12）。
+
+S22.7 Engineering Complete（2026-10-12）：单因素模型field/168trial全physics/scorer/33768因果输入/实际μ核验、六条重积分与两条observer回放、S22.6 nominal逐值回归、guards/3.11语法/links/git diff --check通过。Learning三项已由本人完成，Learning Mastered（2026-10-12），不自动进入S22.8。
+
+## S22.8 — Force noise / sampled observation latency
+
+[学习包](../../docs/25_8_noise_latency.md) · [入口](noise_latency.py)。
+依赖原mujoco/numpy/matplotlib/torch==2.14.0+cpu和S18.11 helpers；cohort/data/checkpoint校验复用S22.7 loader，无新依赖。
+冻结nominal三BC和train-only normalizer；只污染策略输入，真值physics/monitor/scorer不变。
+六条件clean、σ=.05/.15N力噪声、20/60ms物理通道延迟、.05N+20ms；capture加噪截断后延迟，启动重复首帧。
+过去ctrl、当前time/干净phase不延迟；原专家只作干净监视器参照，不是带噪专家鲁棒性评价。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/23_contact_aware_learning/noise_latency.py --models-from tmp/s22_7/nominal_pipeline/cohort --output tmp/s22_8/my_run
+python examples/23_contact_aware_learning/noise_latency.py --models-from tmp/s22_7/nominal_pipeline/cohort --noise-scale 2 --output tmp/s22_8/my_noise2
+```
+
+可省略models-from，仅在nominal采集/训练后冻结评价。output须新目录，Modify必须显式冻结cohort。
+各54条BC+3条干净专家，保留真值/实际policy input/capture/noise/source tick和未执行的同状态干净raw反事实。
+2026-10-12默认expert3/3；BC全部0/9ready/success，各条件raw敏感度见学习包；pure delay全close_timeout、无接触力，未drop不是稳定性。
+validation参与过选模，独立test未用；无GUI、真实传感器、执行延迟、wall-clock实时或硬件验证。
+Engineering Complete（2026-10-12）：默认与noise翻倍各57trial、21600策略输入/432108 BC physics行、24clean回归、四条重积分与27配对轨迹通过；两PNG已查看，links/git diff --check通过。Learning三项待本人完成，不自动进入S22.9。

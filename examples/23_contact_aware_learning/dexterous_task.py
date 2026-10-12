@@ -6,7 +6,7 @@ FOUNDATIONS = Path(__file__).resolve().parents[1] / '19_teleoperation_dexterous'
 sys.path.insert(0, str(FOUNDATIONS))
 import grasp_stability as limits
 from hand_fixture import CLOSED, JOINTS, KP, KV, TORQUE_CAP, mapping
-from multi_contact_grasp import build_model, object_contacts, MASS
+from multi_contact_grasp import build_model, object_contacts
 import mujoco
 import numpy as np
 
@@ -84,12 +84,14 @@ def score(physics):
                 tail_linear_speed_m_s=tail_linear, tail_angular_speed_rad_s=tail_angular)
 
 
-def rollout(parameters, pulse='baseline', pulse_scale=1., policy=None, replay_actions=None):
+def rollout(parameters, pulse='baseline', pulse_scale=1., policy=None, replay_actions=None, domain_model=None):
     """Observe under PREVIOUS ctrl, decide at 50Hz, solve/score and integrate at 1kHz."""
     limits.pulse_wrench(0., pulse, pulse_scale)
     if replay_actions is not None and (policy is not None or np.shape(replay_actions) != (HORIZON, 6)):
         raise ValueError('replay requires exactly 200 actions and no learned policy')
-    model, _ = build_model('three_finger')
+    model = build_model('three_finger')[0] if domain_model is None else domain_model
+    if (model.nq, model.nv, model.nu) != (13, 12, 6) or model.opt.timestep != DT or np.any(model.opt.gravity != 0) or model.neq:
+        raise ValueError('same free-object geometry/state/action contract required')
     # Uniform tighter solver for every new expert/learner trial, not a relaxed force check.
     model.opt.tolerance = 1e-14; model.opt.iterations = 200
     data = mujoco.MjData(model)
@@ -151,7 +153,7 @@ def rollout(parameters, pulse='baseline', pulse_scale=1., policy=None, replay_ac
         requested = KP*(data.ctrl[aa]-data.qpos[qa])-KV*data.qvel[va]
         actual = data.actuator_force[aa].copy()
         np.testing.assert_allclose(actual, np.clip(requested, -TORQUE_CAP, TORQUE_CAP), atol=1e-10)
-        residual = float(np.max(np.abs(force+applied[:3]-MASS*data.qacc[ov:ov+3])))
+        residual = float(np.max(np.abs(force+applied[:3]-model.body_mass[body]*data.qacc[ov:ov+3])))
         max_newton = max(max_newton, residual)
         assert residual < 1e-6, residual
         if step == 2000:

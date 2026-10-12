@@ -189,5 +189,10 @@ Explain：
 4. 为什么按reset group切分、normalizer只用train？200action需要多少obs，terminal行是否参与统计？
 5. offline RMSE小为何还会闭环失败？ready／success／末段恢复怎样区分，为什么不删未ready试验？
 
-My Verification：Engineering和Learning状态以根README为准；本人Run/Modify/Explain未报告前保持未勾选。
+My Verification：2026-10-12 本人确认实验与预测完成，并准确回答五项Explain；根README Run/Modify/Explain全部完成，Engineering Complete + Learning Mastered。
 下一小任务S22.7等待明确请求，本课不自动实施。
+
+本人解释覆盖pre/post-action力的因果时序、previous_ctrl与在线phase的来源、reference/rate/torque三层限制、
+reset group隔离与train-only transition-start统计，以及闭环分布偏移与未ready不能证明抗扰。
+范围精度：HOLD后丢失接触的trial仍可能施加2s后的.1N载荷，pulse另由ready门控，不能把无pulse等同无外载荷。
+本次仅文档状态同步，未重跑Python/MuJoCo/GUI；runtime沿用2026-10-12工程验证。

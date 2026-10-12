@@ -31,6 +31,21 @@ def sources():
     return {p.name: sha(p) for p in paths}
 
 
+# Registered S22.6 implementation: preserve its exact training provenance after the
+# additive model-injection hook / actual-body-mass Newton check introduced by S22.7.
+# Every other source hash must still match. Nominal behavior is independently replayed.
+S22_6_SOURCE_HASHES = {
+    'dexterous_task.py': 'b6ff8fed832c1ca504b105e6e750be56b261329db845761cac578885735a96dd',
+    'dexterous_bc.py': 'a8befe87a627c217127da79a9cf18321e2ea5e552c24d24ce483fa29f0f58313',
+}
+
+
+def compatible_sources(training_sources):
+    current = sources()
+    registered = dict(current, **S22_6_SOURCE_HASHES)
+    return training_sources == current or training_sources == registered
+
+
 def network():
     return nn.Sequential(nn.Linear(38, 64), nn.Tanh(), nn.Linear(64, 64), nn.Tanh(), nn.Linear(64, 6))
 
@@ -119,7 +134,7 @@ def restore(directory, entry):
     ckpt = torch.load(directory/name, map_location='cpu', weights_only=True)
     if (ckpt['task'], ckpt['observation_schema'], ckpt['action_schema']) != (task.TASK, task.OBS_SCHEMA, task.ACTION_SCHEMA):
         raise ValueError('task/schema mismatch')
-    if ckpt['source_sha256'] != sources() or ckpt['training_seed'] != entry['seed']:
+    if not compatible_sources(ckpt['source_sha256']) or ckpt['training_seed'] != entry['seed']:
         raise ValueError('checkpoint implementation/seed mismatch')
     norm = {k: np.array(v) for k, v in ckpt['normalizer'].items()}
     for key, dim in [('observations', 38), ('actions', 6)]:
@@ -160,7 +175,7 @@ def main():
                       data_manifest_sha256=sha(args.output/'data'/'manifest.json'),
                       runtime={k: importlib.metadata.version(k) for k in ('mujoco', 'numpy', 'torch')})
         (directory/'cohort.json').write_text(json.dumps(cohort, indent=2)+'\n')
-    if cohort['source_sha256'] != sources() or cohort['groups'] != GROUPS or cohort['task'] != task.TASK:
+    if not compatible_sources(cohort['source_sha256']) or cohort['groups'] != GROUPS or cohort['task'] != task.TASK:
         raise ValueError('cohort implementation/task/split mismatch')
     if len(cohort['entries']) != 3 or {e['seed'] for e in cohort['entries']} != set(TRAINING_SEEDS):
         raise ValueError('three training seeds required')
