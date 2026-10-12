@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-12（S21.7 Engineering Complete + Learning Mastered；Stage21全阶段完成；S21.6 Engineering Complete + Learning Mastered；S21.5 Engineering Complete + Learning Mastered；S21.4 Engineering Complete + Learning Mastered；S21.3 Engineering Complete + Learning Mastered；S21.2 Engineering Complete + Learning Mastered；S21.1 Engineering Complete + Learning Mastered；S20.7 Engineering Complete + Learning Mastered；S20.6 Engineering Complete + Learning Mastered；S20.5 Engineering Complete + Learning Mastered；S20.4 Engineering Complete + Learning Mastered；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
+最后整理：2026-10-12（S22.3 Engineering Complete，Learning Run/Modify完成、Explain待补第①⑤项；S22.2 Engineering Complete + Learning Mastered；S22.1 Engineering Complete + Learning Mastered；S21.7 Engineering Complete + Learning Mastered；Stage21全阶段完成；S21.6 Engineering Complete + Learning Mastered；S21.5 Engineering Complete + Learning Mastered；S21.4 Engineering Complete + Learning Mastered；S21.3 Engineering Complete + Learning Mastered；S21.2 Engineering Complete + Learning Mastered；S21.1 Engineering Complete + Learning Mastered；S20.7 Engineering Complete + Learning Mastered；S20.6 Engineering Complete + Learning Mastered；S20.5 Engineering Complete + Learning Mastered；S20.4 Engineering Complete + Learning Mastered；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-12）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8、S20.1–7与S21.1–S21.7；当前截止S21.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8、S20.1–7与S21.1–S21.7与S22.1–S22.3；当前截止S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -19,8 +19,81 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.5已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.6已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S20.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；[S21.2](24_2_noising_basics.md) Engineering Complete（2026-10-12），Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；[S21.3](24_3_conditional_denoiser.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.4](24_4_sequence_diffusion.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.5](24_5_diffusion_rollout.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.6](24_6_sampling_diagnostics.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.7](24_7_policy_benchmark.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；B test已首次冻结评价，后续公开复测不调参；Stage22等待请求。
-Stage20已实现S20.1窗口数据、S20.2 MLP chunk/replan、S20.3 attention basics、S20.4 MLP CVAE机制与S20.5 tiny state ACT，S20.6已实现temporal ensembling、S20.7统一冻结benchmark，S21.1已实现B轨道双路径示范/均值反例/BC与ACT重训，Stage21工程与学习项全部完成；Stage22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；tiny state ACT已实现validation闭环；Diffusion闭环已实现但E5/E1均0/2且有发散；contact-aware policy尚未实现；不进入P4。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.5已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.6已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S20.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；[S21.2](24_2_noising_basics.md) Engineering Complete（2026-10-12），Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；[S21.3](24_3_conditional_denoiser.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.4](24_4_sequence_diffusion.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.5](24_5_diffusion_rollout.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.6](24_6_sampling_diagnostics.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；[S21.7](24_7_policy_benchmark.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；B test已首次冻结评价，后续公开复测不调参；S22.1 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.3 Engineering Complete，Learning Run/Modify完成、Explain待补第①⑤项；S22.4等待请求。
+Stage20已实现S20.1窗口数据、S20.2 MLP chunk/replan、S20.3 attention basics、S20.4 MLP CVAE机制与S20.5 tiny state ACT，S20.6已实现temporal ensembling、S20.7统一冻结benchmark，S21.1已实现B轨道双路径示范/均值反例/BC与ACT重训，Stage21工程与学习项全部完成；Stage22已实现S22.1观测合同、S22.2 scripted-master recorder与S22.3 contact BC，其余为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；tiny state ACT已实现validation闭环；Diffusion闭环已实现但E5/E1均0/2且有发散；contact BC已实现validation闭环，contact ACT/Diffusion尚未实现；不进入P4。
+
+## S22.3 现场工程验证（2026-10-12，Zero）
+
+本人明确请求，保留起始五份modified文档与S22.1/2学习包和示例untracked；pwd正确。
+新增[contact_task.py](../examples/23_contact_aware_learning/contact_task.py)、[contact_bc.py](../examples/23_contact_aware_learning/contact_bc.py)、[学习包](25_3_contact_bc.md)，同步根/示例README/阶段/roadmap/P3计划。
+WSL2 Ubuntu24.04.5/kernel6.18.33.2；conda info定位hook激活mujoco，同shell所属Python3.12.14。
+MuJoCo3.13.0/NumPy2.5.3/Matplotlib3.11.2/Torch2.14.0+cpu metadata/真实import paths/API核验通过，无安装或新依赖。
+复用S22.1球/水平面/position servo，旧文件不改；S22.2脚本数据不足且非反馈专家，另采集contact-feedback controller expert（human0）。
+新tip_surface_follow_v1/obs v3为q/qdot/x_goal[m]/F_target[N]/world force/touch；action是actual-q锚定reference delta[m]，统一box/delta限幅与position servo，50Hz/1kHz/3s。
+16train/4val reset groups，±方向同group；40expert全部成功，无标签排除；4800train/1200val行，train-only normalizer；4test seeds仅保留未采集/评估。
+两层32宽Tanh/Adam.001/100epoch/batch128/CPU1thread；四模式各training seeds223/224/225，共12模型，独立batch generator保证同seed各模式训练行顺序一致，val offline选checkpoint。
+初专家dx偏移过小导致摩擦停滞，训练前补摩擦项与contact gate；初轮mean干预Newton断言失败，未计PASS。
+同reset/旧checkpoint定位：solver tolerance1e−8时Newton残差1.681e−5N/contact映射残差0；1e−12时4.44e−16N。统一更严格容差，不放宽断言，完整重采集/训练/评估。
+最终python examples/23_contact_aware_learning/contact_bc.py --output tmp/s22_3/final；同脚本
+--models-from tmp/s22_3/final/cohort --contact-input mean --output tmp/s22_3/mean_final，均exit0。
+measured val expert8/8；state/force/touch/full成功24/20/24/23（各24=3training×4reset×2direction）；冻结mean干预24/13/11/12，test未用。
+默认五次失败均末段x误差超1mm，其中两次速度超2mm/s；两组全部无实际contact-loss/overforce锁存。state成功不证明接触通道无价值，mean干预下降不证明优于state重训。
+offline delta RMSE .365–.396/.353–.363/.349–.357/.357–.380mm；参数1346/1442/1378/1474；trainloop1.472–1.721s/model，非完整实时latency。
+1kHz scorer：0.6s后contact gate及任意>5N锁存；末250ms全点x<1mm/force error<.25N/speed<2mm/s；评分锁存非安全制动。
+独立40expert split/label/统计、12checkpoint loss/offline NumPy MLP、两组208trial/624208physics snapshots时间/积分/Newton/31200动作输出与scorer/aggregate重算通过；另26条stored-reference重积分/原observer全151观测一致。
+冻结state/expert对应轨迹逐值一致；早期overforce/loss合成注入即使tail成功仍失败，checkpoint tamper/非法CLI×2/nonfinite action拒绝，3.11语法通过（actual3.12）。
+PNG已查看；local文件links/状态/git diff --check通过；产物只ignored tmp。无GUI/test/真人传感器、OOD参数/noise/latency或硬件验证，未进入S22.4。
+本人确认实验与预测完成，README S22.3 Run/Modify已勾选；Explain第②③④通过，第①⑤仅称需核对实现，待本人补充具体语义/判据，尚非Mastered。
+需补goal第二槽F_target[N]、actual-q锚定reference delta与absolute ctrl；score无独立scan_complete状态，0.6s接触gate/任意>5N锁存+末250ms稳定条件。
+本次仅同步七份状态文档；未重跑Python示例/MuJoCo/GUI，runtime沿用2026-10-12工程验证；local文件links/状态/git diff --check通过。
+下一步本人补第①⑤项Explain，不自动进入S22.4。
+
+## S22.2 现场工程验证（2026-10-12，Zero）
+
+本人明确请求，保留起始五份modified文档与S22.1学习包/示例untracked；pwd正确。
+新增[demonstration_recorder.py](../examples/23_contact_aware_learning/demonstration_recorder.py)、[学习包](25_2_demonstration_recorder.md)，同步示例README/根README/阶段/roadmap/P3计划。
+读取requirements/mapper与helpers，WSL2 Ubuntu24.04.5/kernel6.18.33.2；conda info定位hook激活mujoco，同shell所属Python3.12.14。
+MuJoCo3.13.0/NumPy2.5.3/Matplotlib3.11.2 metadata/真实imports/paths/API核验通过；无新依赖/安装。
+复用S18.2 map_sample→incremental_reference及S22.1 build_model/observe/position servo，未改旧算法或S22.1。
+新tip_contact_task_observation_v2仍10维，goal为固定task context，reference单独action避免输入标签泄漏。
+全部source scripted_master/human0；50Hz mapper/观测、1kHz physics；N action/N+1 observation与held_ctrl/source/时钟/quality/manifest SHA。
+默认脚本smoke通过，完善runtime/loader guards后最终命令python examples/23_contact_aware_learning/demonstration_recorder.py --output tmp/s22_2/verified；
+同脚本 --scale .5 --output tmp/s22_2/scale05；--replay tmp/s22_2/verified --output tmp/s22_2/replayed；--horizon 100 --output tmp/s22_2/short100，均exit0。
+默认三条370action/371obs/7.4sim秒，正负scan各contact fraction1/peak touch1.122636N、release通过，quality eligible2/3；低面无接触失败完整保留。
+scale .5下降reference仅18mm，三条均未建立>0.2N接触/eligible0/3；记录与回放仍通过。
+short100有100/101、2sim秒、eligible0/3、无scan fraction null；terminatedFalse/truncatedTrue不等同失败或成功。
+最终全部12次episode action replay的10通道误差均0；只恢复initial state，之后实际mj_step，无中间qpos复制。
+独立九条采集NPZ逐sample NumPy mapper/范数cap/box/clutch/rebase、CSV对齐/固定goal/sample scorer核对通过。
+shifted action/terminal缺失/错时间/schema/tampered SHA拒绝，NaN CLI exit2与3.11语法通过（actual3.12）；PNG已查看。
+local文件links/状态/git diff --check通过；产物只ignored tmp，未分split/拟合normalizer/训练policy。
+quality为50Hz采样审计，非1kHz全过程安全scorer；无真人键盘/设备、GUI、网络lease/延迟、硬件或可学习性证明。
+本人确认实验与预测完成，五项Explain通过；README S22.2 Run/Modify/Explain全勾选，Engineering Complete + Learning Mastered。
+解释覆盖N/N+1转移、task/action/held ctrl与泄漏、clutch/rebase连续性、动力学回放证据边界、失败保留及episode split。
+精度补充：held_ctrl是上一position reference[m]；truncated为采集预算结束，完整370步也为True；相关reset变体须按来源组隔离，失败action不自动作正确模仿标签。
+本次仅同步七份状态文档，未重跑Python示例/MuJoCo/GUI；runtime沿用2026-10-12工程验证。
+local文件links/状态/git diff --check通过；下一小任务S22.3等待本人明确请求，不自动训练policy或开展键盘采集。
+
+## S22.1 现场工程验证（2026-10-12，Zero）
+
+本人明确请求，起始pwd正确/git status空；新增[observation_contract.py](../examples/23_contact_aware_learning/observation_contract.py)、[示例README](../examples/23_contact_aware_learning/README.md)、[学习包](25_1_observation_contract.md)，同步阶段/根README/roadmap/P3计划。
+WSL2 Ubuntu24.04.5/kernel6.18.33.2；conda info定位hook、激活mujoco，同执行shell所属Python3.12.14；
+MuJoCo3.13.0/NumPy2.5.3/Matplotlib3.11.2 metadata/真实import paths/API通过，无新依赖/安装或local helper。
+两slide球指端/水平面；10维q/qdot/goal/world接触合力/touch，physics1kHz/同步观测100Hz。
+force是具名pair仿真真值proxy，touch是MuJoCo pad法向力和[N]；不冒充硬件力计或触觉图像。
+python examples/23_contact_aware_learning/observation_contract.py（默认tmp/s22_1/default）与
+同脚本 --force-noise .2 --output tmp/s22_1/noise02 均exit0，train两轨迹402行拟合normalizer；validation201行。
+paired同q/qdot/goal/ctrl，隐藏表面高度不同，法向力1.355968/0N；state-only相同；ablation输入6/9/7/10维。
+validation touch峰7.335705N、min Fx−3.101051N；接触/滑动/释放与低面无接触通过。
+全部观测touch/local normal sum、Fx/Fz/qfrc_constraint核对；独立NPZ时间/统计/normalization/ablation/noise隔离通过。
+noise只改测量，clean物理轨迹/统计逐值不变；touch此场景与Fz冗余，不等于合力模长，无策略性能结论。
+首轮paired ctrl0导致微穿透求解力0/断言失败，改两快照相同向下ctrl后重跑通过；不把首轮计PASS。
+NaN CLI exit2、Python3.11语法检查通过（actual3.12）；PNG已查看；links/git diff --check通过。
+产物只ignored tmp，无GUI、策略训练、真人示范、延迟、硬件或通用Markov性证明。
+README S22.1 Engineering Complete + Learning Mastered：本人确认实验与预测完成，五项Explain通过，Run/Modify/Explain全部勾选。
+解释覆盖完整物理状态/观测歧义、contact轴与受力对象符号、touch法向标量、积分后派生量刷新、train-only归一化与通道消融。
+补充归一化填0表示train mean，属于固定值消融，与移除通道合同不同；本节noise仅改测量，非物理扰动。
+本次仅同步七份状态文档，未重跑Python示例/MuJoCo/GUI；runtime沿用2026-10-12工程验证。
+本地文件链接、状态一致性与git diff --check通过；下一小任务S22.2等待本人明确请求。
 
 ## S21.7 现场工程验证（2026-10-12，Zero）
 
