@@ -173,7 +173,9 @@ Must Remember：chunk的delta按执行时actual q换成reference；E不是K；�
 
 ## My Verification / Run → Modify → Explain
 
-学习状态仅根README记录；助手执行不算本人Run。
+学习状态仅根README记录；助手执行不算本人Run。本人于2026-10-12确认实验、预测及以下五项Explain完成，Run/Modify/Explain全部完成，Learning Mastered。
+
+精度补充：部署z=0是本实验的确定性prior选择，不代表所有ACT必须如此；冻结pulse时应比较轨迹/计划值，wall-clock latency不要求逐值一致。
 **Run：** 执行my_run，核对九模型、nominal与两个fault组，查看comparison.png；在results中找一个load_recovered=True但success=False的trial。
 **Modify：** 先预测哪些结果必然不变、哪些可能变化，再用冻结cohort只缩短pulse：
 

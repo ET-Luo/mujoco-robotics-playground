@@ -88,4 +88,4 @@ output须新目录；默认采集同40专家，训练九模型；模型恢复只
 Modify.1s nominal逐值不变，Diff E5 loss恢复37→41/48，任务成功仍0；不宣称缩短pulse普遍改善表现。
 训练采集solver1e−12/100，全部评价统一1e−14/200；九checkpoint不变，保留训练provenance并单独记录evaluation driver版本。
 两组1056trial独立physics/scorer/plan检查、96stored-reference重积分与144DDIM plan逐步NumPy核对通过；PNG已查看。
-无GUI/test/真人、真实移动表面或硬件验证。Engineering Complete；Learning待本人Run/Modify/Explain，不自动进入S22.5。
+无GUI/test/真人、真实移动表面或硬件验证。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain），不自动进入S22.5。

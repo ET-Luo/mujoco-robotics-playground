@@ -1,7 +1,7 @@
 # Stage 22 — Contact-Aware Robot Learning
 
 [状态与任务](../README.md#stage-22--contact-aware-robot-learning)。
-S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete（2026-10-12），Learning待本人验证；其余任务仅规划。
+S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；其余任务仅规划。
 [示例入口](../examples/23_contact_aware_learning/README.md)。
 
 Why / Intuition：几何相近的状态可能处于不同接触模式；force/tactile提供操作反馈。
@@ -35,4 +35,4 @@ S22.2具体Run/replay、scale .5 Modify与五问Explain见[学习包](25_2_demon
 
 S22.3具体Run、冻结mean-input Modify与五问Explain见[学习包](25_3_contact_bc.md)；Learning已Mastered（2026-10-12 本人确认），不自动进入S22.4。
 
-S22.4具体Run、冻结pulse duration Modify与五问Explain见[学习包](25_4_contact_policy_comparison.md)；Learning待本人验证，不自动进入S22.5。
+S22.4具体Run、冻结pulse duration Modify与五问Explain见[学习包](25_4_contact_policy_comparison.md)；Learning已Mastered（2026-10-12 本人确认），不自动进入S22.5。
