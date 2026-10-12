@@ -2,7 +2,7 @@
 
 当前实现[S21.1双路径示范/回归均值反例/BC与ACT重训](../../docs/24_1_multimodal_paths.md)。
 [根README](../../README.md#stage-21--diffusion-policy)是Engineering / Learning状态唯一来源。
-S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4及以后仍规划，尚无反向采样。
+S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4已实现H10反向采样，S21.5及以后仍规划，尚无生成策略闭环。
 
 依赖requirements已有NumPy/CPU Torch/MuJoCo/Matplotlib；复用Stage20 TinyACT、BC、window、latent helpers和旧XY fixture，无新安装。
 使用WSL2 Ubuntu24.04，在mujoco环境核验后运行：
@@ -64,5 +64,25 @@ python examples/22_diffusion_policy/conditional_denoiser.py --conditioning none
 两次独立新输出目录；现场生成同paired train/validation示范，不读test，不重训BC/ACT。
 H1/4930参数/K100/100epoch/CPU1thread，固定validation noise选模、新noise audit；checkpoint保存日程与normalizer。
 2026-10-12 Zero state/none audit epsilon MSE .039117/.307293，恢复reference RMSE5.109/17.436mm；两组exit0与独立指标检查通过。
-输出protocol/data/normalizer/checkpoint/loss/audit/results/PNG仅ignored tmp/s21_3；Engineering Complete、Learning待验证。
+输出protocol/data/normalizer/checkpoint/loss/audit/results/PNG仅ignored tmp/s21_3；Engineering Complete + Learning Mastered（2026-10-12 本人确认Run/Modify与五项Explain）。
 这不是反向采样或生成策略执行；单seed/两validation reset不证明安全/模式覆盖或优于ACT。
+
+## S21.4 — Sequence diffusion / sampling
+
+[学习包](../../docs/24_4_sequence_diffusion.md)；复用conditional_denoiser.collect与sequence_dataset.make_windows，依赖已有NumPy/CPU Torch/MuJoCo/Matplotlib。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/22_diffusion_policy/sequence_diffusion.py
+# checkpoint路径换成上一命令打印的实际目录
+python examples/22_diffusion_policy/sequence_diffusion.py \
+  --checkpoint tmp/s21_4/final/chunk.pt --sample-seed 215
+```
+
+H10/23956参数、masked loss/input/output、DDPM100相邻步骤/k1无噪声、反归一化。
+2026-10-12 Zero两组exit0；audit MSE .089860，seed214/215 sample对配对expert RMSE3.685/3.713mm。
+窗口/100步独立重算/解析posterior/mask/reload与冻结Modify通过，样本仍抖动；无闭环/碰撞/模式覆盖证明。
+产物仅ignored tmp/s21_4，Engineering Complete、Learning待本人Run/Modify/Explain；下一步S21.5等待请求。

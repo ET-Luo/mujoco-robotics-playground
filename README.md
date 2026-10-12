@@ -609,7 +609,7 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 
 ### Stage 21 — Diffusion Policy
 
-[阶段学习包](docs/24_diffusion_policy.md)，S21.1–S21.3已实现，其余仍规划。
+[阶段学习包](docs/24_diffusion_policy.md)，S21.1–S21.4已实现，其余仍规划。
 
 - S21.1（0.5～2h）：[Multimodal paths / regression averaging](docs/24_1_multimodal_paths.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；B轨道成对双路径/几何禁入区，mean碰撞2/2；重训BC/ACT E1/E5成功0/2、1/2、2/2，p=.8解析mean安全2/2（validation，2026-10-12），未实现Diffusion
@@ -618,10 +618,10 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — 2026-10-12 本人确认实验与预测完成，五项Explain通过，Learning Mastered；forward noising/累计日程/oracle恢复/50000样本边缘矩验证通过（2026-10-12）；未训练denoiser或反向采样
 
 - S21.3（0.5～2h）：[Conditional diffusion / tiny denoiser](docs/24_3_conditional_denoiser.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；H1条件MLP，state/none audit epsilon MSE .039117/.307293（2026-10-12），无反向采样或生成策略rollout
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；H1条件MLP，state/none audit epsilon MSE .039117/.307293（2026-10-12），无反向采样或生成策略rollout
 
-- S21.4（0.5～2h）：Action-sequence diffusion / sampling。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S21.4（0.5～2h）：[Action-sequence diffusion / sampling](docs/24_4_sequence_diffusion.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；H10 masked MLP/DDPM100步/反归一化，audit epsilon MSE .089860；80sample存在抖动，无闭环执行（2026-10-12）
 
 - S21.5（0.5～2h）：Tiny state-based Diffusion Policy rollout。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-当前截止S21.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete，Learning待本人Run/Modify/Explain；S21.4等待明确请求。
+当前截止S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.4 Engineering Complete，Learning待本人Run/Modify/Explain；S21.5等待明确请求。

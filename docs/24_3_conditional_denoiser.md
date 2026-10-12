@@ -142,7 +142,9 @@ Must Remember：输出是噪声；k提供噪声语境；o提供任务语境；�
 
 ## My Verification / Run → Modify → Explain
 
-Engineering Complete，Learning待本人验证，根README为唯一状态来源。
+Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain），根README为唯一状态来源。
+解释覆盖监督输入边界、k与state条件、多模态歧义、fresh/fixed/audit噪声、恢复误差与两类条件干预。
+精度补充：动作误差幅度乘sqrt((1-alpha_bar)/alpha_bar)，动作MSE乘(1-alpha_bar)/alpha_bar；当前单步denoiser尚未验证多模态生成。
 Run：运行上方默认命令，查看loss.csv/denoising.png和results.json的四个k区间。
 Modify：先预测关闭状态条件的结果，再保持seed与epoch不变重训：
 
