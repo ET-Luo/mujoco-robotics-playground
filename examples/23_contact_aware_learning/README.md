@@ -1,6 +1,6 @@
 # Stage 22 — Contact-Aware Robot Learning
 
-当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC与S22.4同任务ACT/Diffusion比较；后续子任务仍为规划。
+当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC、S22.4同任务ACT/Diffusion比较与S22.5三指专家可行性；后续子任务仍为规划。
 [学习包](../../docs/25_1_observation_contract.md) · [Engineering / Learning状态唯一来源](../../README.md#stage-22--contact-aware-robot-learning)。
 
 依赖已有mujoco/numpy/matplotlib，无local helper或新依赖。两slide球指端接触平面，headless。
@@ -89,3 +89,27 @@ Modify.1s nominal逐值不变，Diff E5 loss恢复37→41/48，任务成功仍0�
 训练采集solver1e−12/100，全部评价统一1e−14/200；九checkpoint不变，保留训练provenance并单独记录evaluation driver版本。
 两组1056trial独立physics/scorer/plan检查、96stored-reference重积分与144DDIM plan逐步NumPy核对通过；PNG已查看。
 无GUI/test/真人、真实移动表面或硬件验证。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain），不自动进入S22.5。
+
+## S22.5 — Dexterous expert feasibility
+
+[学习包](../../docs/25_5_dexterous_feasibility.md) · [入口](dexterous_feasibility.py)。
+依赖mujoco/numpy/matplotlib；local helpers为S18.11 grasp_stability→multi_contact_grasp→hand_fixture及hand.xml。
+复用原1kHz接触门控专家／模型／scorer，旧源码不改，无新包、policy训练或test。
+28维sim proxy与6维absolute position reference[rad]，每trial4000 action/4001 observation。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/23_contact_aware_learning/dexterous_feasibility.py --output tmp/s22_5/my_run
+python examples/23_contact_aware_learning/dexterous_feasibility.py --pulse-scale 4 --output tmp/s22_5/my_strong
+```
+
+output须新目录，24个全部attempt保存NPZ、JSON及正常摩擦PNG，仅ignored tmp。
+专家带接触计数／冻结目标记忆；当前obs不包含全部内部状态；不能把1kHz轨迹抽样冒充50Hz部署。
+无GUI、真人、真实sensor、主动重抓、split或独立test，学习状态见根README。
+
+2026-10-12 DESKTOP-781D67A：Engineering Complete；默认正常三指8/8、四倍4/8，全部计划8/24→4/24，低摩擦/缺指均未ready。
+两组48trial合同／独立scorer／pulse审计、六条保存动作重积分通过，PNG已查看。
+注意normal在当前reference写入后求解，仅审计proxy；S22.6须重整先观测后决策的数据时序。Learning Run/Modify完成，Explain待第1–2项补正。

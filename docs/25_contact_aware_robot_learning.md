@@ -1,7 +1,7 @@
 # Stage 22 — Contact-Aware Robot Learning
 
 [状态与任务](../README.md#stage-22--contact-aware-robot-learning)。
-S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；其余任务仅规划。
+S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.5 Engineering Complete（2026-10-12），Learning Run/Modify完成、Explain待补正；其余任务仅规划。
 [示例入口](../examples/23_contact_aware_learning/README.md)。
 
 Why / Intuition：几何相近的状态可能处于不同接触模式；force/tactile提供操作反馈。
@@ -12,7 +12,7 @@ Why / Intuition：几何相近的状态可能处于不同接触模式；force/ta
 | [S22.2](25_2_demonstration_recorder.md) | 已复用teleoperation mapper与指端servo记录scripted master；N/N+1、全部attempt保留与actual action replay；真人0，键盘采集仍另拆子任务 |
 | [S22.3](25_3_contact_bc.md) | 已实现水平面surface-following反馈专家与BC闭环；state/force/touch/full重训与冻结输入干预，三training seeds、test保留 |
 | [S22.4](25_4_contact_policy_comparison.md) | 已同contact task重训九个BC/ACT/Diffusion模型；E1/E5、接触丢失/超力与负载恢复，保留失败锁存与独立test |
-| S22.5 | 小三指free-object保持/扰动task，复用gate/slip/drop scorer与专家；先验证expert可行性 |
+| [S22.5](25_5_dexterous_feasibility.md) | 已实现三指free-object专家可行性入口、N/N+1合同与独立评分审计；默认8/24、四倍4/24，无policy训练 |
 | S22.6 | dexterous/contact-aware policy闭环，动作限幅与contact failure锁存 |
 | S22.7 | friction/mass各自改变，训练域/held-out域与domain generalization |
 | S22.8 | noise/latency分别扫描；观测时间对齐与历史buffer，多因素组合另列 |
@@ -36,3 +36,5 @@ S22.2具体Run/replay、scale .5 Modify与五问Explain见[学习包](25_2_demon
 S22.3具体Run、冻结mean-input Modify与五问Explain见[学习包](25_3_contact_bc.md)；Learning已Mastered（2026-10-12 本人确认），不自动进入S22.4。
 
 S22.4具体Run、冻结pulse duration Modify与五问Explain见[学习包](25_4_contact_policy_comparison.md)；Learning已Mastered（2026-10-12 本人确认），不自动进入S22.5。
+
+S22.5学习与工程结果见[学习包](25_5_dexterous_feasibility.md)，Learning Run/Modify完成，Explain待第1项具体动作与第2项协议补正。

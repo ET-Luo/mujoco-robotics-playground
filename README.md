@@ -634,7 +634,7 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 
 ### Stage 22 — Contact-Aware Robot Learning
 
-[阶段学习包](docs/25_contact_aware_robot_learning.md)，S22.1–S22.4已实现，其余子任务仍为规划。
+[阶段学习包](docs/25_contact_aware_robot_learning.md)，S22.1–S22.5已实现，其余子任务仍为规划。
 
 - S22.1（0.5～2h）：[Proprioception + force + tactile contract](docs/25_1_observation_contract.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；10维同步schema/6,9,7,10维ablation；paired同state法向力1.355968/0N，noise .2仅改变测量，无policy训练
@@ -648,8 +648,8 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.4（0.5～2h）：[Contact ACT / Diffusion comparison](docs/25_4_contact_policy_comparison.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；同C轨道九模型，nominal BC23/24、ACT E1/E5各9/24、Diff E1/E5为0/48与16/48；接触丢失/超力恢复不清锁存，test未用
 
-- S22.5（0.5～2h）：Dexterous/contact task / expert feasibility。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S22.5（0.5～2h）：[Dexterous/contact task / expert feasibility](docs/25_5_dexterous_feasibility.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[ ] Explain — Engineering Complete（2026-10-12）；三指free-object接触门控专家，默认8/24、四倍扰动4/24；正常三指8/8→4/8，未ready保留；28维审计proxy／6维absolute reference[rad]、1kHz，后续训练需重整因果观测时序
 
 - S22.6（0.5～2h）：Dexterous learned policy rollout。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-当前学习截止S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage21工程与学习项全部完成；S22.1 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.5等待明确请求。
+当前学习截止S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage21工程与学习项全部完成；S22.1 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.5 Engineering Complete（2026-10-12），Learning Run/Modify完成，Explain待第1项具体动作与第2项协议补正。
