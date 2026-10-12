@@ -150,7 +150,7 @@ Explain：
 4. 同状态raw action RMSE与两条闭环动作差异分别说明什么？限幅会如何影响解释？
 5. BC在clean与受污染条件都未ready，能否说明鲁棒？未pulse、未drop能否说明抗扰，是否必然没有.1N载荷？
 
-My Verification：Engineering验证结果见下方；Learning Run/Modify/Explain均待本人明确报告。下一小任务S22.9等待明确请求。
+My Verification：本人已确认实验与预测完成，并准确回答五项Explain；Run/Modify/Explain全部完成，Engineering Complete + Learning Mastered（2026-10-12），状态以根README为准。下一小任务S22.9等待明确请求。
 
 ## Engineering Verification（2026-10-12，DESKTOP-781D67A）
 
@@ -169,4 +169,6 @@ python tmp/s22_8/verify_channels.py tmp/s22_8/noise2
 27条clean/pure-delay配对轨迹除wall推理耗时外全部数组逐值不变，确认noise-scale只影响预定条件。
 非法σ/delay被拒；CLI已有output、nan scale、Modify无frozen各exit2；Python3.11语法通过（actual3.12），两张PNG已查看，文档本地链接/git diff --check通过。
 未重新运行fresh-training分支；本次执行明确复用已核验S22.7 cohort。无GUI/真实sensor/硬件/完整链延迟验证。
-Engineering Complete；Learning Run/Modify/Explain待本人明确报告，不自动实施S22.9。
+Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain），不自动实施S22.9。
+
+学习核验覆盖capture噪声与因果延迟、当前metadata及干净phase的结论边界、非负截断偏置与force RMSE、同状态raw敏感度与闭环差异、ready/drop/pulse及基础载荷的区别。本人明确完成Run/Modify/Explain；本次仅更新学习状态与文档，不新增运行或GUI验证，工程证据沿用2026-10-12。

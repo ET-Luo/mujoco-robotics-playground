@@ -634,7 +634,7 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 
 ### Stage 22 — Contact-Aware Robot Learning
 
-[阶段学习包](docs/25_contact_aware_robot_learning.md)，S22.1–S22.8已实现，其余子任务仍为规划。
+[阶段学习包](docs/25_contact_aware_robot_learning.md)，S22.1–S22.9 Engineering Complete + Learning Mastered（2026-10-12 本人确认），Stage22工程与学习任务全部完成。
 
 - S22.1（0.5～2h）：[Proprioception + force + tactile contract](docs/25_1_observation_contract.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；10维同步schema/6,9,7,10维ablation；paired同state法向力1.355968/0N，noise .2仅改变测量，无policy训练
@@ -658,15 +658,17 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；冻结nominal三BC、单因素物体μ/m网格；baseline expert18/21、Fx+12/21，BC均0/63（nominal已失败）；实际contact μ与质量/惯量核验，公开OOD诊断、test reset未用
 
 - S22.8（0.5～2h）：[Noise / latency robustness](docs/25_8_noise_latency.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — Engineering Complete（2026-10-12）；冻结BC、force noise与20/60ms观测延迟；默认与noise翻倍各57trial，BC全未ready，真值评分/因果buffer/同状态动作审计通过，test未用
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；冻结BC、force noise与20/60ms观测延迟；默认与noise翻倍各57trial，BC全未ready，真值评分/因果buffer/同状态动作审计通过，test未用
 
-- S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S22.9（0.5～2h）：[Final Learning-Based Manipulation Benchmark](docs/25_9_final_learning_benchmark.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；A历史审计/B公开复测/C-D首次test与冻结采样流Modify；同轨道全分母与覆盖缺口明确，独立观测/scorer/物理回放通过
 
-当前学习截止S22.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage21工程与学习项全部完成；S22.1 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）。
+当前学习截止S22.9 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2 Engineering Complete，Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；S21.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage21工程与学习项全部完成；S22.1 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.5 Engineering Complete + Learning Mastered（2026-10-12 本人确认）。
 
 S22.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认）。
 
 S22.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
 
-S22.8 Engineering Complete（2026-10-12），Learning待本人Run/Modify/Explain；下一小任务S22.9等待明确请求。
+S22.8 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
+
+S22.9 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；P3课程工程与学习收尾，后续复盘或新任务等待本人选择，不自动进入P4。

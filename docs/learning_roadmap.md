@@ -87,4 +87,6 @@ S22.1观测合同、[S22.2记录器](25_2_demonstration_recorder.md)与[S22.3 co
 
 [S22.7](25_7_physics_domain_generalization.md)冻结nominal BC、object μ/m分别改变，实际contact μ与质量/惯量检查；baseline expert18/21、Fx+12/21，BC均0/63（nominal已失败）；同val resets的公开physics-held-out诊断，test reset未用。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
 
-[S22.8](25_8_noise_latency.md)冻结nominal BC，用合成法向力噪声与物理观测延迟诊断输入/动作敏感度；真值monitor/scorer不变，专家为干净参照；validation诊断，test未用。Engineering Complete（2026-10-12），Learning待Run/Modify/Explain。
+[S22.8](25_8_noise_latency.md)冻结nominal BC，用合成法向力噪声与物理观测延迟诊断输入/动作敏感度；真值monitor/scorer不变，专家为干净参照；validation诊断，test未用。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
+
+[S22.9](25_9_final_learning_benchmark.md)已实现四轨道冻结benchmark：A历史产物审计，B本机重建/公开复测，C/D预留test与采样流Modify；分轨道合同/覆盖矩阵/全分母统计，不做跨任务排名。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；P3课程工程与学习完成，算法覆盖缺口仍按未评价报告，不自动进入P4。

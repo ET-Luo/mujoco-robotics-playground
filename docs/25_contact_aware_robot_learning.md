@@ -1,7 +1,7 @@
 # Stage 22 — Contact-Aware Robot Learning
 
 [状态与任务](../README.md#stage-22--contact-aware-robot-learning)。
-S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.5 Engineering Complete（2026-10-12），Learning Mastered（2026-10-12 本人确认）；S22.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.8 Engineering Complete（2026-10-12），Learning待Run/Modify/Explain；S22.9仅规划。
+S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.5 Engineering Complete（2026-10-12），Learning Mastered（2026-10-12 本人确认）；S22.6 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.8 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.9 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
 [示例入口](../examples/23_contact_aware_learning/README.md)。
 
 Why / Intuition：几何相近的状态可能处于不同接触模式；force/tactile提供操作反馈。
@@ -16,7 +16,7 @@ Why / Intuition：几何相近的状态可能处于不同接触模式；force/ta
 | [S22.6](25_6_dexterous_bc_rollout.md) | 已实现50Hz因果三指BC闭环、box/rate/servo与1kHz contact失败锁存；默认expert15/15、BC0/45，test未用 |
 | [S22.7](25_7_physics_domain_generalization.md) | 已实现冻结三指BC、独立μ/m网格与有效contact μ／质量惯量检查；expert18/21→Fx+12/21，BC均0/63，test reset未用 |
 | [S22.8](25_8_noise_latency.md) | 已实现冻结BC的force noise与20/60ms观测延迟、同状态动作敏感度；干净monitor/专家参照，BC各0/9ready/success |
-| S22.9 | final Learning-Based Manipulation Benchmark：各轨道BC/ACT/Diffusion，统一split/seed/metrics与总结 |
+| [S22.9](25_9_final_learning_benchmark.md) | 已实现A历史审计、B公开复测、C/D冻结预留test、覆盖矩阵与全分母报告；缺少对应任务模型明确未评价 |
 
 Core Concepts / Mathematics：o=[q,qdot,goal,F_W,touch]；F单位N、touch按各sensor定义；
 policy动作仍经已有低层controller执行，不把学习输出直接当无界torque。
@@ -43,4 +43,4 @@ S22.6具体Run、冻结四倍pulse Modify与五问Explain见[学习包](25_6_dex
 
 S22.7具体Run、冻结Fx+ Modify与五问Explain见[学习包](25_7_physics_domain_generalization.md)，Learning已Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
 
-[S22.8学习包](25_8_noise_latency.md)已实现冻结BC的force noise/capture delay，干净monitor与真值评分、同状态raw反事实；Engineering Complete（2026-10-12），Learning待本人Run/Modify/Explain。S22.9仅规划。
+[S22.8学习包](25_8_noise_latency.md)已实现冻结BC的force noise/capture delay，干净monitor与真值评分、同状态raw反事实；Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。S22.9 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。

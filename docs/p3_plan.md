@@ -33,10 +33,10 @@ Ryzen 7 7840HS / WSL2 Ubuntu24.04：CPU PyTorch，首选2层32–64宽MLP、
 无大型视觉encoder、image-based ACT、大型Diffusion、VLA或World Model。
 S19.1仅需已有NumPy/MuJoCo/Matplotlib helper；Torch从BC任务起核验CPU版本，不提前安装。
 
-## 共同 benchmark 合同（A/B已实现，C已实现BC/ACT/Diffusion验证比较，test/final benchmark仍规划）
+## 共同 benchmark 合同（S22.9已实现分轨道最终报告，算法覆盖缺口见下文）
 
 A：xy_goal_reach_v1作为契约/BC起点；B：同XY fixture上下绕几何禁入区双路径任务，S21.1已实现示范与BC/ACT重训；S21.7已完成BC/ACT/Diffusion三training seeds统一冻结test比较，B test现已暴露；
-C：S22.3已实现两slide水平面contact surface following/BC通道ablation；新obs为x_goal[m]/F_target[N]，action为actual-q锚定reference delta[m]，50Hz/1kHz、三training seeds、test未用。S22.4已在该任务重训九个BC/ACT/Diffusion模型，nominal及接触丢失/超力恢复分别评价；test仍未用；最后选一个小三指保持/扰动任务。它们是不同benchmark轨道，不能把跨task数字排优劣。
+C：S22.3已实现两slide水平面contact surface following/BC通道ablation；新obs为x_goal[m]/F_target[N]，action为actual-q锚定reference delta[m]，50Hz/1kHz、三training seeds、test未用。S22.4已在该任务重训九个BC/ACT/Diffusion模型，nominal及接触丢失/超力恢复分别评价；S22.9首次评价预留test；D已实现三指BC保持/扰动，ACT/Diffusion未在D训练。它们是不同benchmark轨道，不能把跨task数字排优劣。
 每次新增轨道，三类policy都必须在该轨道重训/重测；固定model/schema版本、obs、action语义、
 50Hz policy/1kHz inner loop、reset分布、episode IDs/split、normalization、horizon、成功阈值与evaluation seeds。
 保留独立test episode/reset seeds；val仅用于选择模型，test不调参。OOD friction/mass/noise/latency单列。
@@ -76,4 +76,6 @@ S20.1 sequence dataset已Engineering Complete（2026-10-11）；Learning Mastere
 
 [S22.7](25_7_physics_domain_generalization.md)冻结nominal BC、object μ/m分别改变，实际contact μ与质量/惯量检查；baseline expert18/21、Fx+12/21，BC均0/63（nominal已失败）；同val resets的公开physics-held-out诊断，test reset未用。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
 
-[S22.8](25_8_noise_latency.md)冻结nominal BC，用合成法向力噪声与物理观测延迟诊断输入/动作敏感度；真值monitor/scorer不变，专家为干净参照；validation诊断，test未用。Engineering Complete（2026-10-12），Learning待Run/Modify/Explain。
+[S22.8](25_8_noise_latency.md)冻结nominal BC，用合成法向力噪声与物理观测延迟诊断输入/动作敏感度；真值monitor/scorer不变，专家为干净参照；validation诊断，test未用。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。
+
+[S22.9](25_9_final_learning_benchmark.md)最终报告分A/B/C/D：A Diffusion与D ACT/Diffusion未训练，明确未评价；C/D首次test后均公开，不调模型/E/阈值；缺失B/C产物按原预算在本机重建，不能冒充另一机器checkpoint。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；P3课程工程与学习完成，算法覆盖缺口仍按未评价报告，不自动进入P4。

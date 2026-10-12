@@ -1,6 +1,6 @@
 # Stage 22 — Contact-Aware Robot Learning
 
-当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC、S22.4同任务ACT/Diffusion比较、S22.5三指专家可行性、S22.6因果BC闭环与S22.7物理域诊断；后续子任务仍为规划。
+当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC、S22.4同任务ACT/Diffusion比较、S22.5三指专家可行性、S22.6因果BC闭环与S22.7物理域诊断、S22.8观测噪声/延迟与S22.9最终分轨道benchmark；学习状态以根README为准。
 [学习包](../../docs/25_1_observation_contract.md) · [Engineering / Learning状态唯一来源](../../README.md#stage-22--contact-aware-robot-learning)。
 
 依赖已有mujoco/numpy/matplotlib，无local helper或新依赖。两slide球指端接触平面，headless。
@@ -184,4 +184,28 @@ python examples/23_contact_aware_learning/noise_latency.py --models-from tmp/s22
 各54条BC+3条干净专家，保留真值/实际policy input/capture/noise/source tick和未执行的同状态干净raw反事实。
 2026-10-12默认expert3/3；BC全部0/9ready/success，各条件raw敏感度见学习包；pure delay全close_timeout、无接触力，未drop不是稳定性。
 validation参与过选模，独立test未用；无GUI、真实传感器、执行延迟、wall-clock实时或硬件验证。
-Engineering Complete（2026-10-12）：默认与noise翻倍各57trial、21600策略输入/432108 BC physics行、24clean回归、四条重积分与27配对轨迹通过；两PNG已查看，links/git diff --check通过。Learning三项待本人完成，不自动进入S22.9。
+Engineering Complete（2026-10-12）：默认与noise翻倍各57trial、21600策略输入/432108 BC physics行、24clean回归、四条重积分与27配对轨迹通过；两PNG已查看，links/git diff --check通过。Learning Run/Modify/Explain已由本人完成，Learning Mastered（2026-10-12），不自动进入S22.9。
+
+## S22.9 — Final task-separated benchmark
+
+[学习包](../../docs/25_9_final_learning_benchmark.md) · [入口](final_benchmark.py)。
+沿用requirements已有mujoco/numpy/matplotlib/torch==2.14.0+cpu与Stage19–22 helper，无新依赖。
+A仅审计S20.7历史产物；B缺文件时按原S21.7预算重建；C按原S22.4预算准备九模型，冻结后首次test；D复用三指BC，首次test。
+A/B的test已暴露；C/D首次S22.9运行后也公开。各任务独立scorer/单位/分母，未训练的A Diffusion与D ACT/Diffusion明确未评价。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/23_contact_aware_learning/final_benchmark.py --output tmp/s22_9/my_run
+python examples/23_contact_aware_learning/final_benchmark.py --b-results tmp/s22_9/my_run/B --c-models tmp/s22_9/my_run/C/cohort --sample-seed 226 --repeat --output tmp/s22_9/my_stream226
+```
+
+默认A路径tmp/s20_7/default、D cohort为tmp/s22_7/nominal_pipeline/cohort，可分别用a-results/d-models指定；缺少它们时先运行对应课程。B/C可复用外部b-results/c-models。
+每组C528/D60attempt全部保留；协议先写，九C模型与三D BC不按test换权重/normalizer；恢复不清除failure latch。
+summary.csv/benchmark.png展示分轨道成功率，results索引contracts/成本/误差/latency/来源SHA；无跨任务总排名。
+`--reuse-rollouts --output <已有输出> --b-results <B目录>`仅审计已有C/D并重建报告，保存report_plan，不重训/重跑，也不改写原rollout protocol。
+Engineering Complete（2026-10-12）：两组1176 C/D attempt、3649176 physics行/183576因果obs、1152首末DDIM重建/10条重积分，A/B独立Euler560000步，300确定性配对与全分母汇总核验通过；两PNG/CLI/3.11 syntax/links/git diff --check通过。Learning Run/Modify/Explain已由本人确认完成，Learning Mastered（2026-10-12）；Stage22与P3课程工程及学习完成，不自动进入P4或后续研究。
+
+本机S22.9工程运行已暴露C/D test，后续Run加`--repeat`；可复用`--b-results tmp/s22_9/B --c-models tmp/s22_9/final/C/cohort`避免重训，保持公开冻结复测。
