@@ -1,6 +1,6 @@
 # Stage 22 — Contact-Aware Robot Learning
 
-当前实现S22.1观测合同、S22.2示范记录器与S22.3 contact BC；后续子任务仍为规划。
+当前实现S22.1观测合同、S22.2示范记录器、S22.3 contact BC与S22.4同任务ACT/Diffusion比较；后续子任务仍为规划。
 [学习包](../../docs/25_1_observation_contract.md) · [Engineering / Learning状态唯一来源](../../README.md#stage-22--contact-aware-robot-learning)。
 
 依赖已有mujoco/numpy/matplotlib，无local helper或新依赖。两slide球指端接触平面，headless。
@@ -65,4 +65,27 @@ python examples/23_contact_aware_learning/contact_bc.py --models-from tmp/s22_3/
 冻结mean输入为24/13/11/12，expert均8/8。增加通道不保证成功率提高，触觉与法向力在本例冗余。
 50Hz policy/1kHz physics/3s；每trial150/151、3001physics snapshots，全程接触/超力失败锁存，末250ms稳定条件。
 统一solver tolerance1e−12后完整重跑通过；两组208trial独立输出/physics/scorer核验与26独立action replay通过。
-产物仅ignored tmp，output必须新目录；无test/GUI/真人、OOD或硬件验证。Engineering Complete，Learning Run/Modify完成、Explain待补第①⑤项；不自动进入S22.4。
+产物仅ignored tmp，output必须新目录；无test/GUI/真人、OOD或硬件验证。Engineering Complete + Learning Mastered（2026-10-12 本人确认）；不自动进入S22.4。
+
+## S22.4 — Contact ACT / Diffusion comparison
+
+[学习包](../../docs/25_4_contact_policy_comparison.md) · [比较代码](contact_policy_comparison.py) · [模型代码](contact_sequence.py)。
+同C轨道full10维观测与actual-q锚定delta动作，九模型BC/真实Transformer ACT/H10 epsilon Diffusion各三training seeds。
+依赖已有mujoco/numpy/matplotlib/torch==2.14.0+cpu；helpers含S22.3数据/任务、S20.5 ACT及其导入链与noise_schedule，无新库，旧课程源码不改。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/23_contact_aware_learning/contact_policy_comparison.py --output tmp/s22_4/my_run
+python examples/23_contact_aware_learning/contact_policy_comparison.py --models-from tmp/s22_4/my_run/cohort --pulse-duration .1 --output tmp/s22_4/my_short
+```
+
+output须新目录；默认采集同40专家，训练九模型；模型恢复只读原cohort及其父data，全部产物只ignored tmp。
+2026-10-12 Zero严格评价nominal expert8/8、BC23/24、ACT E1/E5各9/24、Diff E1/E5为0/48与16/48；test4组未用。
+默认1s geometry pulse持续.2s：loss−15mm、overforce+30mm；所有fault任务失败锁存，但负载恢复与末段到达分别报告。
+Modify.1s nominal逐值不变，Diff E5 loss恢复37→41/48，任务成功仍0；不宣称缩短pulse普遍改善表现。
+训练采集solver1e−12/100，全部评价统一1e−14/200；九checkpoint不变，保留训练provenance并单独记录evaluation driver版本。
+两组1056trial独立physics/scorer/plan检查、96stored-reference重积分与144DDIM plan逐步NumPy核对通过；PNG已查看。
+无GUI/test/真人、真实移动表面或硬件验证。Engineering Complete；Learning待本人Run/Modify/Explain，不自动进入S22.5。

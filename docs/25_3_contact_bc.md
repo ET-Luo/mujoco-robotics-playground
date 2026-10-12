@@ -1,7 +1,7 @@
 # S22.3 — Contact-aware BC / observation ablation
 
 [状态唯一来源](../README.md#stage-22--contact-aware-robot-learning) · [训练代码](../examples/23_contact_aware_learning/contact_bc.py) · [任务代码](../examples/23_contact_aware_learning/contact_task.py)
-前置S22.2；0.5～2小时。Engineering Complete（2026-10-12）；Learning Run/Modify已完成，Explain待补第①⑤项（2026-10-12 本人反馈）。
+前置S22.2；0.5～2小时。Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测并补齐五项Explain）。
 
 ## Problem → Why → Intuition
 
@@ -165,8 +165,7 @@ Must Remember：schema包含物理语义；split隔离共享reset；mean-input�
 
 ## My Verification / Run → Modify → Explain
 
-状态仅根README记录；2026-10-12 本人确认实验与预测完成，Run/Modify已记录。
-Explain第②③④项通过，第①⑤项仍需本人给出本节具体定义/判据，不以“需核对实现”替代回答。
+状态仅根README记录；2026-10-12 本人确认实验与预测完成，并补齐第①②⑤项具体解释，结合已通过第③④项，Run/Modify/Explain全部完成，Learning Mastered。
 补充：goal第二槽为F_target[N]；delta是相对actual q的reference偏移[m]，ctrl为限幅后absolute reference[m]，actual Δq由物理积分产生。
 normalizer使用4800条successful train expert的transition-start rows，排除terminal/val/test。
 score无额外“扫描完成”状态：无全过程锁存失败且末250ms所有采样满足x/force/velocity阈值才成功。

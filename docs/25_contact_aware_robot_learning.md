@@ -1,7 +1,7 @@
 # Stage 22 — Contact-Aware Robot Learning
 
 [状态与任务](../README.md#stage-22--contact-aware-robot-learning)。
-S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete（2026-10-12），Learning Run/Modify完成、Explain待补第①⑤项；其余任务仅规划。
+S22.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S22.3 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S22.4 Engineering Complete（2026-10-12），Learning待本人验证；其余任务仅规划。
 [示例入口](../examples/23_contact_aware_learning/README.md)。
 
 Why / Intuition：几何相近的状态可能处于不同接触模式；force/tactile提供操作反馈。
@@ -11,7 +11,7 @@ Why / Intuition：几何相近的状态可能处于不同接触模式；force/ta
 | [S22.1](25_1_observation_contract.md) | 已实现两slide指端接触观测合同；frame、同步时间、force noise、train-only normalization与6/9/7/10维通道ablation |
 | [S22.2](25_2_demonstration_recorder.md) | 已复用teleoperation mapper与指端servo记录scripted master；N/N+1、全部attempt保留与actual action replay；真人0，键盘采集仍另拆子任务 |
 | [S22.3](25_3_contact_bc.md) | 已实现水平面surface-following反馈专家与BC闭环；state/force/touch/full重训与冻结输入干预，三training seeds、test保留 |
-| S22.4 | ACT/Diffusion在同contact task重训重测；接触丢失/超力与恢复 |
+| [S22.4](25_4_contact_policy_comparison.md) | 已同contact task重训九个BC/ACT/Diffusion模型；E1/E5、接触丢失/超力与负载恢复，保留失败锁存与独立test |
 | S22.5 | 小三指free-object保持/扰动task，复用gate/slip/drop scorer与专家；先验证expert可行性 |
 | S22.6 | dexterous/contact-aware policy闭环，动作限幅与contact failure锁存 |
 | S22.7 | friction/mass各自改变，训练域/held-out域与domain generalization |
@@ -33,4 +33,6 @@ Follow-up：哪些通道部署可得？延迟怎样模拟？为何保留未ready
 
 S22.2具体Run/replay、scale .5 Modify与五问Explain见[学习包](25_2_demonstration_recorder.md)；Learning已Mastered（2026-10-12 本人确认），不自动启动S22.3。
 
-S22.3具体Run、冻结mean-input Modify与五问Explain见[学习包](25_3_contact_bc.md)；Learning Run/Modify完成、Explain待补第①⑤项，不自动进入S22.4。
+S22.3具体Run、冻结mean-input Modify与五问Explain见[学习包](25_3_contact_bc.md)；Learning已Mastered（2026-10-12 本人确认），不自动进入S22.4。
+
+S22.4具体Run、冻结pulse duration Modify与五问Explain见[学习包](25_4_contact_policy_comparison.md)；Learning待本人验证，不自动进入S22.5。
