@@ -2,7 +2,7 @@
 
 当前实现[S21.1双路径示范/回归均值反例/BC与ACT重训](../../docs/24_1_multimodal_paths.md)。
 [根README](../../README.md#stage-21--diffusion-policy)是Engineering / Learning状态唯一来源。
-S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4已实现H10反向采样，S21.5已实现生成策略闭环，S21.6及以后仍规划。
+S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4已实现H10反向采样，S21.5已实现生成策略闭环，S21.6已实现采样/覆盖/延迟诊断，S21.7已实现三training seeds共同B轨道benchmark，Learning待验证。
 
 依赖requirements已有NumPy/CPU Torch/MuJoCo/Matplotlib；复用Stage20 TinyACT、BC、window、latent helpers和旧XY fixture，无新安装。
 使用WSL2 Ubuntu24.04，在mujoco环境核验后运行：
@@ -106,3 +106,47 @@ python examples/22_diffusion_policy/diffusion_rollout.py \
 2026-10-12 Zero两组exit0，Diffusion均0/2、有发散；expert上下各2/2。
 全actual Euler/geometry/scorer、360次actual重采样与执行索引、checkpoint/frozen Modify通过；不通过重训/裁剪隐藏失败。
 产物仅ignored tmp/s21_5；Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。无test/GUI/硬件实时或可靠策略证明。
+
+## S21.6 — Sampling / coverage / latency diagnostics
+
+[学习包](../../docs/24_6_sampling_diagnostics.md)；依赖已有NumPy/CPU Torch/MuJoCo/Matplotlib及S21.4/5/task helpers，无新安装。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/22_diffusion_policy/sampling_diagnostics.py
+# 换成Run打印的实际training/chunk.pt路径，冻结模型
+python examples/22_diffusion_policy/sampling_diagnostics.py \
+  --checkpoint tmp/s21_6/default/training/chunk.pt --ddim-steps 100 50 10
+```
+
+默认准备同一S21.4包；DDPM100基线/DDIM eta0 100/25/10次调用，E5、两validation reset×四sampling stream。
+每config每reset64个初始chunk probe，分别记录局部符号倾向、实际穿越、成功路线覆盖；不把局部多样性当成功覆盖。
+2026-10-12 Zero全部config均0/8，collision2/8或4/8、成功上下覆盖0/2；DDIM50 Modify仍0/8。
+本轮batch1 pipeline median DDIM100/25/10为7.164/2.038/.899ms，不含physics/传感器/I/O，无硬件实时证明。
+全部采样公式/actual动力学与评分/1920个anchor独立验证、冻结Modify/旧DDPM回归通过；产物仅ignored tmp/s21_6。
+Engineering Complete、Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；无test/GUI/因果模式切换定位，S21.7等待请求。
+
+## S21.7 — BC / ACT / Diffusion benchmark
+
+[学习包](../../docs/24_7_policy_benchmark.md)；依赖已有NumPy/CPU Torch/MuJoCo/Matplotlib及BC/ACT/Diffusion helpers，无新安装。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/22_diffusion_policy/policy_benchmark.py
+# cohort路径换成Run打印的实际目录，冻结全部模型
+python examples/22_diffusion_policy/policy_benchmark.py \
+  --models-from tmp/s21_7/default/cohort --sample-seed 225
+```
+
+默认准备三组training seeds/九个checkpoint；共同paired data/normalizer/task/scorer；选择仅offline validation。
+固定BC E1、ACT E1/E5、DDPM100/DDIM25 E5；确定性分母6，Diffusion分母24（四sampling streams）。
+2026-10-12 Zero val/test BC0/6、ACT E1 1/6与0/6、ACT E5均6/6、Diffusion均0/24。
+B test首次在冻结后评价，现已暴露；Modify为公开复测，不调参/挑seed。
+所有actual预测/执行/Euler/评分/offline指标/冻结weights与hash验证通过，产物仅ignored tmp/s21_7。
+Engineering Complete，Learning待本人Run/Modify/Explain；无GUI/OOD/硬件实时或普遍算法排名，Stage22等待请求。

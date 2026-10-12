@@ -61,8 +61,8 @@ def make_dataset(output):
     return manifest, arrays, norm
 
 
-def train(kind, arrays, norm, output, dataset_hash, epochs):
-    seed = 211 if kind=='bc' else 212
+def train(kind, arrays, norm, output, dataset_hash, epochs, seed=None):
+    seed = (211 if kind=='bc' else 212) if seed is None else seed
     torch.manual_seed(seed)
     policy = bc.make_policy() if kind=='bc' else act.TinyACT()
     tensors = {}

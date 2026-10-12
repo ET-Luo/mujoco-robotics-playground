@@ -78,10 +78,11 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--epochs',type=int,default=150)
     parser.add_argument('--sample-seed',type=int,default=214)
+    parser.add_argument('--train-seed',type=int,default=214)
     parser.add_argument('--checkpoint',type=Path)
     parser.add_argument('--output',type=Path)
     args=parser.parse_args()
-    if args.epochs<1 or args.sample_seed<0:parser.error('epochs >=1 and sample-seed >=0 required')
+    if args.epochs<1 or args.sample_seed<0 or args.train_seed<0:parser.error('epochs >=1 and both seeds >=0 required')
     output=args.output or Path('tmp/s21_4')/datetime.now(timezone.utc).strftime('run_%Y%m%dT%H%M%S_%f')
     output.mkdir(parents=True,exist_ok=False)
     torch.set_num_threads(1);torch.use_deterministic_algorithms(True)
@@ -101,13 +102,13 @@ def main():
     data_hash=digest.hexdigest()
     protocol=dict(task=task.TASK,H=H,K=K,groups=groups,data_sha256=data_hash,
                   source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-                  training_seed=214,epochs=args.epochs,sample_seed=args.sample_seed,
+                  training_seed=args.train_seed,epochs=args.epochs,sample_seed=args.sample_seed,
                   beta_end=.1,selection_noise_seed=21401,audit_noise_seed=21402,
                   padding='zero normalized; masked input/loss/reverse output; mask is boundary metadata',
                   sampler='full100 DDPM posterior variance; no clipping; k1 noise disabled',
                   test='reserved seeds only',checkpoint_from=str(args.checkpoint) if args.checkpoint else None)
     (output/'protocol.json').write_text(json.dumps(protocol,indent=2)+'\n')
-    torch.manual_seed(214);model=ChunkDenoiser()
+    torch.manual_seed(args.train_seed);model=ChunkDenoiser()
     training={};history=[]
     if args.checkpoint:
         saved=torch.load(args.checkpoint,map_location='cpu',weights_only=True)
@@ -121,7 +122,7 @@ def main():
         clean,obs,valid,_,_,_=cases(windows['train'],abar,21400)
         vc,vo,vm,vk,ve,vn=cases(windows['validation'],abar,21401)
         opt=torch.optim.Adam(model.parameters(),lr=.001)
-        g=torch.Generator().manual_seed(215);best=float('inf');state=None;best_epoch=0
+        g=torch.Generator().manual_seed(args.train_seed+1);best=float('inf');state=None;best_epoch=0
         began=time.perf_counter()
         for epoch in range(args.epochs+1):
             if epoch:
@@ -140,7 +141,7 @@ def main():
             if v<best:best,best_epoch,state=v,epoch,copy.deepcopy(model.state_dict())
             if epoch%30==0:print(f'epoch={epoch} val_masked_epsilon_mse={v:.6f}',flush=True)
         model.load_state_dict(state)
-        training=dict(epochs=args.epochs,best_epoch=best_epoch,selection_mse=best,
+        training=dict(seed=args.train_seed,epochs=args.epochs,best_epoch=best_epoch,selection_mse=best,
                       initial_mse=history[0][1],training_wall_s=time.perf_counter()-began)
         saved=dict(task=task.TASK,H=H,K=K,data_sha256=data_hash,state_dict=state,
                    normalizer={k:torch.tensor(v) for k,v in norm.items()},beta=beta,alpha_bar=abar,
