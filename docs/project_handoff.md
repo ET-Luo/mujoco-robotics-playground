@@ -1,12 +1,12 @@
 # 项目经验与进度交接
 
-最后整理：2026-10-12（S21.1 Engineering Complete + Learning Mastered；S20.7 Engineering Complete + Learning Mastered；S20.6 Engineering Complete + Learning Mastered；S20.5 Engineering Complete + Learning Mastered；S20.4 Engineering Complete + Learning Mastered；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
+最后整理：2026-10-12（S21.2 Engineering Complete + Learning Mastered；S21.1 Engineering Complete + Learning Mastered；S20.7 Engineering Complete + Learning Mastered；S20.6 Engineering Complete + Learning Mastered；S20.5 Engineering Complete + Learning Mastered；S20.4 Engineering Complete + Learning Mastered；S20.3 Engineering Complete + Learning Mastered；S20.2 Engineering Complete + Learning Mastered；S20.1 Engineering Complete + Learning Mastered；P2完成；S19.1 Mastered，S19.2 Mastered；S19.3 Mastered；S19.4 Mastered；S19.5 Mastered；S19.6 Mastered；S19.7 Mastered；S19.8 Engineering Complete + Learning Mastered（2026-10-11 本人确认））。
 新会话先读 [AGENTS.md](../AGENTS.md) → 本文 → [README](../README.md) → 当次示例。
 README 是 Stage 10 起 Engineering / Learning 的唯一状态来源。
 
 ## P3 当前边界与下一步（2026-10-12）
 
-用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8、S20.1–7与S21.1；当前截止S21.1 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。
+用户明确确认P0/P1/P2完成，授权Stage19–22规划，随后明确请求S19.2–S19.8、S20.1–7与S21.1–S21.3；当前截止S21.2 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。
 [P3审查与计划](p3_plan.md)记录已有能力、可复用expert/teleoperation、CPU预算与统一benchmark合同。
 根README为状态唯一来源：S19.1 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成。
 2026-10-11 本人明确确认实验与预测完成，并准确回答五问；Learning Mastered。
@@ -19,8 +19,27 @@ README S19.2 Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完�
 当前[S19.4学习包](22_4_behavior_cloning.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.5学习包](22_5_closed_loop_evaluation.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
 当前[S19.6学习包](22_6_covariate_shift.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；
-当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.5已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.6已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S20.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；[S21.2](24_2_noising_basics.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain待本人验证；S21.3等待请求。
+当前[S19.7学习包](22_7_recovery_data.md)Code/Experiment/Docs完成，Learning Run/Modify/Explain全部完成（2026-10-11 本人确认）；S19.8已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.1已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.2已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.3已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.4已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.5已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；S20.6已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S20.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；[S21.2](24_2_noising_basics.md) Engineering Complete（2026-10-12），Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；[S21.3](24_3_conditional_denoiser.md) Engineering Complete（2026-10-12），Learning待本人Run/Modify/Explain；S21.4等待请求。
 Stage20已实现S20.1窗口数据、S20.2 MLP chunk/replan、S20.3 attention basics、S20.4 MLP CVAE机制与S20.5 tiny state ACT，S20.6已实现temporal ensembling、S20.7统一冻结benchmark，S21.1已实现B轨道双路径示范/均值反例/BC与ACT重训，Stage21后续与Stage22仍为规划；BC已训练且validation/test rollout均0/4，test已在S19.5冻结评价；S19.6只用validation做诊断，不调参；tiny state ACT已实现validation闭环；Diffusion/contact-aware policy尚未实现；不进入P4。
+
+## S21.3 现场工程验证（2026-10-12，Zero）
+
+用户明确请求，保留起始七份modified文档，pwd正确。新增[conditional_denoiser.py](../examples/22_diffusion_policy/conditional_denoiser.py)与[学习包](24_3_conditional_denoiser.md)，同步导航与状态。
+WSL2 Ubuntu24.04.5/kernel6.18.33.2；conda info hook激活mujoco，同shell核验所属Python3.12.14。
+NumPy2.5.3/Torch2.14.0+cpu/MuJoCo3.13.0/Matplotlib3.11.2 metadata、真实paths/API通过；无安装。
+复用dual_path_task/episode_contract/cartesian_spring与noising_basics；相同paired split，现场生成2400train/600validation行，test只留seeds。
+H1 MLP9→64→64→2/4930参数，normalized a_k+k/K+state→epsilon；route/phase/干净动作无输入泄漏。
+K100/linear beta .0001… .1/seed213/100epoch/batch128/Adam.001/CPU1thread；每batch新noise。
+命令python examples/22_diffusion_policy/conditional_denoiser.py --output tmp/s21_3/state_checked；
+再--conditioning none --output tmp/s21_3/none_checked，两组exit0。
+fixed val seed21301选模，独立noise21302 audit但同val状态；best100/99，trainloop1.132/1.141s。
+state/none audit epsilon MSE .039117/.307293，恢复reference RMSE5.109/17.436mm。
+冻结state模型错配状态MSE4.246114、wrong-k .295785；不把离线干预视为机器人失败率。
+首轮verified训练后float32/float64公式检查失败，max约1.913e-6；将交叉检查atol4e-7改3e-6后完整重跑通过，初版不计PASS。
+独立NumPy指标/forward、paired split/train-only norm、匹配数据/noise、none状态不变性与checkpoint reload通过。
+3.11语法、非法CLI、local links/状态/git diff --check通过；actual3.12，默认PNG已查看。
+产物仅ignored tmp/s21_3；无test/GUI/反向采样/生成策略rollout/碰撞或模式覆盖评价。
+README S21.3 Engineering Complete，Learning三项空；下一步本人Run/Modify/Explain，S21.4等待请求。
 
 ## S21.2 现场工程验证（2026-10-12，Zero）
 
@@ -34,7 +53,12 @@ alpha_bar末端.005618761/.363563248；oracle最大误差2.443e-15/2.220e-16；e
 各50000独立Markov样本末端均值/方差预设统计容差通过；快照复用epsilon不是Markov轨迹，oracle不是反向采样。
 默认PNG已查看；产物仅ignored tmp/s21_2；无MuJoCo/GUI/数据集/test/denoiser训练。
 Python3.11语法、非法CLI与本地链接/git diff --check通过；runtime为实际3.12，不声称3.11执行验证。
-根README S21.2 Engineering Complete；Learning三项未勾选，下一步本人Run/Modify/Explain；S21.3等待明确请求。
+根README S21.2 Engineering Complete；Learning Run/Modify/Explain全部由本人完成，Learning Mastered；S21.3等待明确请求。
+
+本人确认实验与预测完成，随后提交五项Explain，全部通过，Learning Mastered。
+解释覆盖累计乘积与平方根、k与h、累计噪声与单步增量、训练标签与部署oracle边界、误差放大及日程修改的信号残留。
+精度补充：闭式epsilon为加权噪声归一化后的标准高斯变量；代码h从0起，h=5是第六个槽。
+本次仅同步状态文档，未重跑Python或GUI；runtime沿用2026-10-12工程验证；文档一致性与git diff --check通过。
 
 ## S21.1 现场工程验证（2026-10-12，DESKTOP-781D67A）
 
@@ -106,7 +130,7 @@ ablation.png已查看；本地Markdown链接、三个非法decay CLI exit2与git
 本人随后明确确认实验和预测完成，并准确回答五项Explain；README Run/Modify/Explain全部完成，Learning Mastered。
 解释覆盖同tick槽位与有效范围、零reference validity、新旧权重方向、过时预测与跟踪误差、推理频率开销。
 本次仅同步六份状态文档；本地链接、状态一致性与git diff --check通过。
-未重跑Python示例/MuJoCo/GUI；runtime沿用2026-10-12工程验证。下一小任务S20.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；[S21.2](24_2_noising_basics.md) Engineering Complete（2026-10-12），Learning Run/Modify/Explain待本人验证；S21.3等待请求。
+未重跑Python示例/MuJoCo/GUI；runtime沿用2026-10-12工程验证。下一小任务S20.7 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；S21.1已Engineering Complete + Learning Mastered（2026-10-12 本人确认）；[S21.2](24_2_noising_basics.md) Engineering Complete（2026-10-12），Learning Run/Modify完成、Explain全部完成、Learning Mastered（2026-10-12 本人确认）；[S21.3](24_3_conditional_denoiser.md) Engineering Complete（2026-10-12），Learning待本人Run/Modify/Explain；S21.4等待请求。
 
 ## S20.5 现场工程验证（2026-10-11，DESKTOP-781D67A）
 

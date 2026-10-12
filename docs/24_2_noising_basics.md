@@ -45,7 +45,7 @@ SNR_k = alpha_bar_k / (1-alpha_bar_k)  # k=0无噪声，SNR无限
 ```
 
 sqrt是标准差/幅度系数，不可直接用方差代替。
-闭式epsilon不是最后一步的z_k，而是所有独立增量的加权合成噪声。
+闭式epsilon不是最后一步的z_k，而是所有独立增量的加权合成噪声除以sqrt(1-alpha_bar_k)后得到的标准高斯变量（k>0）。
 直接采样和逐步采样具有相同条件边缘分布，不要求同seed时逐元素相同。
 图中各k复用一个epsilon以隔离schedule效果；这组快照不是Markov轨迹。
 
@@ -123,7 +123,7 @@ Must Remember：累计乘积；标准差取平方根；累计epsilon不同于最
 
 ## My Verification / Run → Modify → Explain
 
-Engineering已完成，Learning状态见根README；以下仅本人完成后再勾选。
+Engineering已完成，Learning状态见根README。2026-10-12 本人确认实验与预测完成：Run/Modify完成；五项Explain均通过，Learning Mastered。解释覆盖累计信号与平方根、k与h、累计噪声与单步增量、训练标签与部署oracle边界、恢复误差放大与末端信号残留。
 
 Run：运行上述命令，查看JSON和PNG，用arrays.npz对照k=0/50/100。
 

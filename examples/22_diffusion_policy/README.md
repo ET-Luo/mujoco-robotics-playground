@@ -2,7 +2,7 @@
 
 当前实现[S21.1双路径示范/回归均值反例/BC与ACT重训](../../docs/24_1_multimodal_paths.md)。
 [根README](../../README.md#stage-21--diffusion-policy)是Engineering / Learning状态唯一来源。
-S21.2已实现forward noising；S21.3及以后仍规划，尚无训练denoiser/反向采样。
+S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4及以后仍规划，尚无反向采样。
 
 依赖requirements已有NumPy/CPU Torch/MuJoCo/Matplotlib；复用Stage20 TinyACT、BC、window、latent helpers和旧XY fixture，无新安装。
 使用WSL2 Ubuntu24.04，在mujoco环境核验后运行：
@@ -46,4 +46,23 @@ python examples/22_diffusion_policy/noising_basics.py --output tmp/s21_2/verifie
 python examples/22_diffusion_policy/noising_basics.py --beta-end .02 --output tmp/s21_2/beta002
 ```
 
-输出arrays.npz/results.json/noising.png。2026-10-12 Zero两组exit0；oracle/偏差解析式与50000独立Markov样本边缘矩通过。Engineering Complete，Learning待本人Run/Modify/Explain；无MuJoCo/GUI/模型训练。
+输出arrays.npz/results.json/noising.png。2026-10-12 Zero两组exit0；oracle/偏差解析式与50000独立Markov样本边缘矩通过。Engineering Complete；2026-10-12 本人确认Run/Modify完成，五项Explain通过，Learning Mastered；无MuJoCo/GUI/模型训练。
+
+## S21.3 — Conditional denoiser
+
+[学习包](../../docs/24_3_conditional_denoiser.md)；依赖已有NumPy/CPU Torch/MuJoCo/Matplotlib，local helpers为dual_path_task→episode_contract→cartesian_spring以及noising_basics，无新依赖。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/22_diffusion_policy/conditional_denoiser.py
+python examples/22_diffusion_policy/conditional_denoiser.py --conditioning none
+```
+
+两次独立新输出目录；现场生成同paired train/validation示范，不读test，不重训BC/ACT。
+H1/4930参数/K100/100epoch/CPU1thread，固定validation noise选模、新noise audit；checkpoint保存日程与normalizer。
+2026-10-12 Zero state/none audit epsilon MSE .039117/.307293，恢复reference RMSE5.109/17.436mm；两组exit0与独立指标检查通过。
+输出protocol/data/normalizer/checkpoint/loss/audit/results/PNG仅ignored tmp/s21_3；Engineering Complete、Learning待验证。
+这不是反向采样或生成策略执行；单seed/两validation reset不证明安全/模式覆盖或优于ACT。
