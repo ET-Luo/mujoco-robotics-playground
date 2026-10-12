@@ -601,8 +601,8 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S20.5（0.5～2h）：[Tiny state-based ACT / closed-loop](docs/23_5_tiny_act.md)。
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；Transformer CVAE/prior-zero闭环，固定checkpoint E5成功4/4、E1成功2/4（validation，2026-10-11）
 
-- S20.6（0.5～2h）：Temporal ensembling / ablation。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S20.6（0.5～2h）：[Temporal ensembling / ablation](docs/23_6_temporal_ensemble.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；固定checkpoint E1/E5/uniform/newer/older成功2/4、4/4、2/4、3/4、1/4（validation，2026-10-12）
 
 - S20.7（0.5～2h）：BC vs ACT evaluation。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-当前截止 S20.5 Engineering Complete + Learning Mastered（2026-10-11 本人确认）。下一任务 S20.6 等待明确请求。
+当前S20.6 Engineering Complete，Learning Run/Modify/Explain待本人验证；S20.5及之前已Mastered。S20.7等待明确请求。

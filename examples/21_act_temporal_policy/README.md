@@ -18,7 +18,7 @@ prepared为S19.3目录；缺失时按[Stage19](../20_learning_from_demonstration
 仅train/validation；冻结split与normalizer，不读取test数组、不训练、不推进物理。
 输出新ignored tmp/s20_1/run_*：train/validation NPZ与results.json；--output必须新目录。
 2026-10-11本机两组exit0：train1600/validation400窗口；H10 train有效15280/padding720，H20有效28960/padding3040。
-短episode跨界与masked loss反例通过；本人已确认Run/Modify/Explain，S20.1 Learning Mastered（2026-10-11），详见学习包。S20.2见下节，S20.3见后节，S20.4见后节，S20.5见后节，S20.6及后续尚未实现。
+短episode跨界与masked loss反例通过；本人已确认Run/Modify/Explain，S20.1 Learning Mastered（2026-10-11），详见学习包。S20.2见下节，S20.3见后节，S20.4见后节，S20.5见后节，S20.6见后节，S20.7及后续尚未实现。
 
 ## S20.2 — MLP chunk baseline / execute prefix / replan
 
@@ -91,4 +91,19 @@ D32/2head/FF64/latent4，posterior/memory encoder与decoder各1层，H10、默�
 新ignored tmp/s20_5/run_*含protocol/act.pt/offline/12trial/results/rollout.png，训练另含loss.csv。
 2026-10-11 best20/priorRMSE .829mm，E5 4/4、E1 2/4，expert均4/4、constant均0/4；trainloop25.443s。
 24trial独立48000physics步/动作时序/hash/checkpoint/梯度与infer隔离通过；有限单seed/4validation reset，不是完整论文复现或统一算法benchmark。
-Engineering Complete；本人已确认实验、预测与五项Explain，Learning Run/Modify/Explain全部完成，Mastered（2026-10-11）；temporal ensembling留S20.6等待请求。
+Engineering Complete；本人已确认实验、预测与五项Explain，Learning Run/Modify/Explain全部完成，Mastered（2026-10-11）；temporal ensembling见S20.6。
+
+## S20.6 — Temporal ensembling / ablation
+
+[学习包、公式、结果与五问](../../docs/23_6_temporal_ensemble.md)。沿用S20.5依赖与checkpoint，无安装或训练。
+
+```bash
+python examples/21_act_temporal_policy/temporal_ensemble.py \
+  --prepared tmp/s19_3/verified193 --checkpoint tmp/s20_5/default/act.pt
+```
+
+先核验mujoco环境；checkpoint替换为自己的S20.5输出。按同一执行tick对齐历史chunk，显式时间mask保留零reference。
+固定weights对比E1/E5/uniform/newer/older；正age decay偏新，负偏旧；不打开test。
+2026-10-12默认±.5成功2/4、4/4、2/4、3/4、1/4；追加--decay .01两方向均2/4，接近uniform。
+输出新ignored tmp/s20_6/run_*，20trial NPZ/results/ablation.png。默认40000步独立Euler/actual-state预测/scorer/E1-E5精确复核通过。
+Engineering Complete；Learning Run/Modify/Explain待本人验证；不自动推进S20.7。
