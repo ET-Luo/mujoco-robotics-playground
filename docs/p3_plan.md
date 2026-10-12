@@ -33,9 +33,9 @@ Ryzen 7 7840HS / WSL2 Ubuntu24.04：CPU PyTorch，首选2层32–64宽MLP、
 无大型视觉encoder、image-based ACT、大型Diffusion、VLA或World Model。
 S19.1仅需已有NumPy/MuJoCo/Matplotlib helper；Torch从BC任务起核验CPU版本，不提前安装。
 
-## 共同 benchmark 合同（A轨道BC已实现，B/C及后续policy仍规划）
+## 共同 benchmark 合同（A已实现，B已完成示范/BC与ACT初步验证，Diffusion/C仍规划）
 
-A：xy_goal_reach_v1作为契约/BC起点；B：同XY fixture上下绕障碍双路径任务，供BC/ACT/Diffusion统一比较；
+A：xy_goal_reach_v1作为契约/BC起点；B：同XY fixture上下绕几何禁入区双路径任务，S21.1已实现示范与BC/ACT重训；Diffusion及统一test比较待后续；
 C：contact surface following，最后选一个小三指保持/扰动任务。它们是不同benchmark轨道，不能把跨task数字排优劣。
 每次新增轨道，三类policy都必须在该轨道重训/重测；固定model/schema版本、obs、action语义、
 50Hz policy/1kHz inner loop、reset分布、episode IDs/split、normalization、horizon、成功阈值与evaluation seeds。
@@ -70,4 +70,4 @@ BC test offline RMSE1.532mm、2s/4s closed-loop0/4；test已用于冻结评价�
 S19.6 validation诊断显示BC同状态expert动作RMSE .734mm→3.728mm，干预效应可放大但末帧误差非单调。
 S19.7仅一轮train来源数据聚合，expert恢复16/16；新label loss下降但原validation选step0，learner0/4，不标改善或完整DAgger。
 S19.8冻结benchmark已Engineering Complete + Learning Mastered（2026-10-11 本人确认）；同协议两组expert4/4、BC与聚合0/4，test为公开复测，不调参。
-S20.1 sequence dataset已Engineering Complete（2026-10-11）；Learning Mastered（2026-10-11 本人确认实验、预测与五问Explain），S20.2 MLP chunk/replan已Engineering Complete；Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain），S20.3 attention basics已Engineering Complete，Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.4 MLP CVAE机制已Engineering Complete，Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.5 tiny state ACT已Engineering Complete，Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；[S20.6](23_6_temporal_ensemble.md)已Engineering Complete（2026-10-12），Learning Run/Modify/Explain待本人验证；S20.7等待请求。
+S20.1 sequence dataset已Engineering Complete（2026-10-11）；Learning Mastered（2026-10-11 本人确认实验、预测与五问Explain），S20.2 MLP chunk/replan已Engineering Complete；Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain），S20.3 attention basics已Engineering Complete，Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.4 MLP CVAE机制已Engineering Complete，Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；S20.5 tiny state ACT已Engineering Complete，Learning Mastered（2026-10-11 本人确认实验、预测与五项Explain）；[S20.6](23_6_temporal_ensemble.md)已Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S20.7](23_7_policy_comparison.md)已Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；[S21.1](24_1_multimodal_paths.md)已Engineering Complete（2026-10-12），Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；S21.2等待请求。

@@ -18,7 +18,7 @@ prepared为S19.3目录；缺失时按[Stage19](../20_learning_from_demonstration
 仅train/validation；冻结split与normalizer，不读取test数组、不训练、不推进物理。
 输出新ignored tmp/s20_1/run_*：train/validation NPZ与results.json；--output必须新目录。
 2026-10-11本机两组exit0：train1600/validation400窗口；H10 train有效15280/padding720，H20有效28960/padding3040。
-短episode跨界与masked loss反例通过；本人已确认Run/Modify/Explain，S20.1 Learning Mastered（2026-10-11），详见学习包。S20.2见下节，S20.3见后节，S20.4见后节，S20.5见后节，S20.6见后节，S20.7及后续尚未实现。
+短episode跨界与masked loss反例通过；本人已确认Run/Modify/Explain，S20.1 Learning Mastered（2026-10-11），详见学习包。S20.2见下节，S20.3见后节，S20.4见后节，S20.5见后节，S20.6见后节，S20.7见后节，Stage21及后续尚未实现。
 
 ## S20.2 — MLP chunk baseline / execute prefix / replan
 
@@ -106,4 +106,23 @@ python examples/21_act_temporal_policy/temporal_ensemble.py \
 固定weights对比E1/E5/uniform/newer/older；正age decay偏新，负偏旧；不打开test。
 2026-10-12默认±.5成功2/4、4/4、2/4、3/4、1/4；追加--decay .01两方向均2/4，接近uniform。
 输出新ignored tmp/s20_6/run_*，20trial NPZ/results/ablation.png。默认40000步独立Euler/actual-state预测/scorer/E1-E5精确复核通过。
-Engineering Complete；Learning Run/Modify/Explain待本人验证；不自动推进S20.7。
+Engineering Complete；Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；不自动推进S20.7。
+
+## S20.7 — BC / chunk / ACT 统一评估
+
+[学习包、合同与五问](../../docs/23_7_policy_comparison.md)。沿用CPU Torch/NumPy/MuJoCo/Matplotlib，无安装或训练。
+先核验mujoco环境；输入缺失按S19.2→3→4、S20.2、S20.5重建。
+
+```bash
+python examples/21_act_temporal_policy/compare_policies.py \
+  --prepared tmp/s19_3/verified193 \
+  --bc-checkpoint tmp/s19_4/default/policy.pt \
+  --chunk-checkpoint tmp/s20_2/default/policy.pt \
+  --act-checkpoint tmp/s20_5/default/act.pt
+```
+
+同reset/控制/scorer对比expert/constant/BC/chunk E1,E5/ACT E1,E5/uniform；test为已暴露的公开冻结复测，不选模。
+2026-10-12 val成功4,0,0,1,1,2,4,2/4；test4,0,0,0,1,2,2,3/4；追加--duration-scale 2次数不变。
+新ignored tmp/s20_7/run_*含protocol/results/CSV/offline/64trial NPZ/comparison.png；当前槽离线误差、全分母与成功条件误差、CPU latency分别报告。
+两组128trial独立384000Euler步/actual预测/执行索引/scorer核对通过；单seed/四reset，不作架构因果或泛化结论。
+Engineering Complete；Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；不自动启动S21.1。

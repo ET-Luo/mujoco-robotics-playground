@@ -602,17 +602,17 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
   - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-11 本人确认实验、预测与五项Explain）；Transformer CVAE/prior-zero闭环，固定checkpoint E5成功4/4、E1成功2/4（validation，2026-10-11）
 
 - S20.6（0.5～2h）：[Temporal ensembling / ablation](docs/23_6_temporal_ensemble.md)。
-  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 待本人验证；固定checkpoint E1/E5/uniform/newer/older成功2/4、4/4、2/4、3/4、1/4（validation，2026-10-12）
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；固定checkpoint E1/E5/uniform/newer/older成功2/4、4/4、2/4、3/4、1/4（validation，2026-10-12）
 
-- S20.7（0.5～2h）：BC vs ACT evaluation。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S20.7（0.5～2h）：[BC / chunk / ACT统一评估](docs/23_7_policy_comparison.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；BC/chunk E1,E5/ACT E1,E5,uniform的validation成功0,1,1,2,4,2/4，公开test为0,0,1,2,2,3/4；2s/4s次数不变（2026-10-12）
 
 ### Stage 21 — Diffusion Policy
 
-[阶段学习包 / skeleton](docs/24_diffusion_policy.md)。
+[阶段学习包](docs/24_diffusion_policy.md)，S21.1已实现，其余仍规划。
 
-- S21.1（0.5～2h）：Multimodal paths / regression averaging。
-  - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
+- S21.1（0.5～2h）：[Multimodal paths / regression averaging](docs/24_1_multimodal_paths.md)。
+  - Engineering：[x] Code　[x] Experiment　[x] Docs；Learning：[x] Run　[x] Modify　[x] Explain — Mastered（2026-10-12 本人确认实验、预测与五项Explain）；B轨道成对双路径/几何禁入区，mean碰撞2/2；重训BC/ACT E1/E5成功0/2、1/2、2/2，p=.8解析mean安全2/2（validation，2026-10-12），未实现Diffusion
 
 - S21.2（0.5～2h）：Diffusion basics / noising。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
@@ -663,4 +663,4 @@ CPU-first / PyTorch CPU / state-based / 小网络小数据；不训练大型视�
 - S22.9（0.5～2h）：Final Learning-Based Manipulation Benchmark。
   - Engineering：[ ] Code　[ ] Experiment　[ ] Docs；Learning：[ ] Run　[ ] Modify　[ ] Explain — 仅规划
 
-当前S20.6 Engineering Complete，Learning Run/Modify/Explain待本人验证；S20.5及之前已Mastered。S20.7等待明确请求。
+当前截止S21.1 Engineering Complete + Learning Mastered（2026-10-12 本人确认）；Stage20学习项全部完成。S21.2等待明确请求。

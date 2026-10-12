@@ -106,4 +106,6 @@ E5变化较大却全部成功；uniform更平滑但误差更大。数据支持�
 - Modify：追加`--decay .01`，先预测±方向差距是否缩小，再对比reference RMS和误差。
 - Explain：①t=7分别取s=2、s=6的哪个槽？②为什么零reference不能当缺失？③age正衰减偏新，作者row正衰减为何偏旧？④uniform更平滑为什么可能更差？⑤为何ensemble比E5多调用模型，而不是省计算？
 
-本人Run/Modify/Explain均待确认；不自动推进S20.7。
+本人已确认实验和预测完成，并准确回答五项Explain；Run/Modify/Explain全部完成，Learning Mastered（2026-10-12）。
+解释覆盖k=t−s与有效范围、零reference的独立validity、新旧权重方向、过时预测与跟踪误差、推理频率开销。
+不自动推进S20.7。
