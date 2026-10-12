@@ -137,7 +137,9 @@ Must Remember：联合chunk；合法边界mask；posterior variance；k1无噪�
 
 ## My Verification / Run → Modify → Explain
 
-Engineering Complete，Learning三项待本人验证，根README为唯一状态来源。
+Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain），根README为唯一状态来源。
+解释覆盖H/K/t、masked scalar分母、相邻DDPM更新、生成监督边界、reference与ctrl以及seed实验的证据范围。
+精度补充：本节k1 posterior variance为零，所以最后不注入噪声；生成A0并不保证是准确或安全动作。归一化padding0对应train mean，不是不存在动作的物理命令。
 Run：运行默认命令，检查loss/sample图、samples.npz的trace(101,80,10,2)与mask。
 Modify：先预测换seed会改变什么，把下面checkpoint路径换成Run打印的实际目录，冻结weights：
 

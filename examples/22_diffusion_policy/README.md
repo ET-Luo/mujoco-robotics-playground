@@ -2,7 +2,7 @@
 
 当前实现[S21.1双路径示范/回归均值反例/BC与ACT重训](../../docs/24_1_multimodal_paths.md)。
 [根README](../../README.md#stage-21--diffusion-policy)是Engineering / Learning状态唯一来源。
-S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4已实现H10反向采样，S21.5及以后仍规划，尚无生成策略闭环。
+S21.2已实现forward noising，S21.3已训练单步条件denoiser；S21.4已实现H10反向采样，S21.5已实现生成策略闭环，S21.6及以后仍规划。
 
 依赖requirements已有NumPy/CPU Torch/MuJoCo/Matplotlib；复用Stage20 TinyACT、BC、window、latent helpers和旧XY fixture，无新安装。
 使用WSL2 Ubuntu24.04，在mujoco环境核验后运行：
@@ -85,4 +85,24 @@ python examples/22_diffusion_policy/sequence_diffusion.py \
 H10/23956参数、masked loss/input/output、DDPM100相邻步骤/k1无噪声、反归一化。
 2026-10-12 Zero两组exit0；audit MSE .089860，seed214/215 sample对配对expert RMSE3.685/3.713mm。
 窗口/100步独立重算/解析posterior/mask/reload与冻结Modify通过，样本仍抖动；无闭环/碰撞/模式覆盖证明。
-产物仅ignored tmp/s21_4，Engineering Complete、Learning待本人Run/Modify/Explain；下一步S21.5等待请求。
+产物仅ignored tmp/s21_4，Engineering Complete、Learning Run/Modify/Explain全部完成、Mastered（2026-10-12 本人确认）；下一步S21.5等待请求。
+
+## S21.5 — Closed-loop Diffusion Policy
+
+[学习包](../../docs/24_5_diffusion_rollout.md)；依赖已有NumPy/CPU Torch/MuJoCo/Matplotlib与S21.4/task helpers，无新安装。
+
+```bash
+conda activate mujoco
+pwd
+echo "$CONDA_DEFAULT_ENV"
+which python
+python examples/22_diffusion_policy/diffusion_rollout.py
+# 换成Run打印的实际training/chunk.pt路径，冻结模型
+python examples/22_diffusion_policy/diffusion_rollout.py \
+  --checkpoint tmp/s21_5/default/training/chunk.pt --execute 1
+```
+
+默认自动准备相同S21.4包；可显式--checkpoint跳过准备。H10/K100、E5默认与E1 Modify、actual反馈和预算mask。
+2026-10-12 Zero两组exit0，Diffusion均0/2、有发散；expert上下各2/2。
+全actual Euler/geometry/scorer、360次actual重采样与执行索引、checkpoint/frozen Modify通过；不通过重训/裁剪隐藏失败。
+产物仅ignored tmp/s21_5；Engineering Complete + Learning Mastered（2026-10-12 本人确认实验、预测与五项Explain）。无test/GUI/硬件实时或可靠策略证明。
