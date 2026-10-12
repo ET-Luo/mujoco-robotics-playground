@@ -1,4 +1,4 @@
-# Stage 21 — Diffusion Policy（S21.1已实现，其余规划）
+# Stage 21 — Diffusion Policy（S21.1–S21.2已实现，其余规划）
 
 前置：BC→ACT；[状态与任务](../README.md#stage-21--diffusion-policy)。
 Why / Intuition：多条合法路径的平均动作可能不合法，用条件生成建模动作序列分布。
@@ -6,7 +6,7 @@ Why / Intuition：多条合法路径的平均动作可能不合法，用条件�
 | Task（各0.5～2h） | 内容 / 最小实验 |
 | --- | --- |
 | [S21.1](24_1_multimodal_paths.md) | 已实现：成对XY双路径/几何禁入区、条件均值碰撞反例、BC/ACT新任务重训与validation对照 |
-| S21.2 | diffusion basics：noise schedule、forward noising、epsilon prediction的小数组实验 |
+| [S21.2](24_2_noising_basics.md) | 已实现：noise schedule、forward noising、oracle epsilon恢复与独立Markov边缘矩验证 |
 | S21.3 | conditional diffusion：state/timestep conditioning、小MLP denoiser训练 |
 | S21.4 | action-sequence diffusion：window/mask、反向采样与反归一化 |
 | S21.5 | tiny state Diffusion Policy闭环MuJoCo执行；短前缀/receding horizon |
@@ -23,6 +23,6 @@ Robotics Applications：多解操作与连续动作生成；CPU小模型教学�
 30秒 Interview：Diffusion Policy条件去噪生成动作序列，并在闭环中只执行短前缀。
 2分钟 Interview：从平均动作失败讲起，解释forward/noise objective/reverse sampling、条件、horizon与延迟取舍。
 Must Remember：机器人时间与diffusion timestep不同；必须测试真实MuJoCo rollout。
-My Verification / Run / Modify / Explain：S21.1 Engineering Complete，Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；命令/练习/五问见[S21.1学习包](24_1_multimodal_paths.md)，不自动实施S21.2。
+My Verification / Run / Modify / Explain：S21.1 Engineering Complete，Learning Run/Modify/Explain全部完成，Mastered（2026-10-12 本人确认实验、预测与五项Explain）；命令/练习/五问见[S21.1学习包](24_1_multimodal_paths.md)，S21.2 Engineering Complete、Learning待验证，命令/练习/五问见[S21.2学习包](24_2_noising_basics.md)；不自动实施S21.3。
 Follow-up：均值为何撞障碍？conditioning提供什么？如何统计mode coverage？采样steps影响什么？
 算法依据：[Diffusion Policy原论文](https://arxiv.org/abs/2303.04137)。
